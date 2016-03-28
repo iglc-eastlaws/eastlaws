@@ -21,6 +21,7 @@ namespace Eastlaws
         public void Configure(IApplicationBuilder app)
         {
             //Middleware
+            //test 2
             app.UseIISPlatformHandler();
 
             app.Run(async (context) =>
