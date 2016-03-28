@@ -1,2 +1,2 @@
-﻿Select * From tblCountryList
+﻿Select * From MyErrors
 

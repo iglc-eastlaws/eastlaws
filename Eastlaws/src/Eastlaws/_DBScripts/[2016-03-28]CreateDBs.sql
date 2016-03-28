@@ -2,12 +2,12 @@
 
 Go 
 
-Create DataBase EastlawsData 
+Create DataBase IGLCData 
 
 Go 
 
 
-Create DataBase EastlawsUsers 
+Create DataBase IGLCUsers 
 
 Go 
 
