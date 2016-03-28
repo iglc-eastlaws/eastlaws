@@ -43,3 +43,96 @@ IpAddress nvarchar(18) ,ExtraInfo nvarchar(max) ,isSpecific bit ,BrowserInfo nva
 
 Go 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Use IGLCData 
+
+Go 
+
+
+Create Table Countries 
+(ID int Primary Key , Name nvarchar(128) , EnName nvarchar(128) , FlagPic varchar(32) , IsMasterCountry bit , Abbrev nvarchar(64) , AbbrevSlang nvarchar(64))
+
+Go 
+
+Create Table CountriesServicesAvailabality 
+(ServiceID int , CountryID int , MyOrder int , PriceM float  )
+
+Go 
+
+Create Table Mahakem
+(ID int Primary Key , CountryID int not null , Name nvarchar(128) , EnName nvarchar(128) , MyOrder int )
+
+Go 
+
+
+Create Table Ahkam
+(ID int Primary Key ,MahkamaID int not null , CountryID int  , CaseNo int  , CaseYear int ,OfficeYear int , OfficeSuffix varchar(8) , PageNo int, PartNo int  
+,IfAgree int  , ImagesCount int , TashCount int  , TashMawadCount int , CaseDateDay int , CaseDateMonth int , CaseDateYear int , CaseDate date )
+
+
+Go 
+
+Create Table AhkamFakarat 
+(ID int Primary Key , HokmID int , FakraNo int , Text nvarchar(max) , EnText nvarchar(max) ,MogazText nvarchar(max) , TashCount int  , TashMawadCount int   )
+
+Go 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Create Table MasterSortTypes
+(ID int Primary Key , Name nvarchar(64))
+
+Go 
+
+Insert Into MasterSortTypes (Name)
+ Values ('CaseNo' )
+ ,('CaseYear' )
+ ,('CaseDate' )
+ ,('OfficeYear' )
+
+
+Go 
+
+
+Create Table MasterSort
+(ServiceID int not null ,SortType int ,ItemId int ,Value Sql_Variant  )
+
+Go 
+
+Create Table MasterTextTypes 
+(ID int Identity Primary Key , Name nvarchar(64) )
+
+Go 
+
+Create Table MasterText 
+()
+
+
