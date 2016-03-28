@@ -20,7 +20,7 @@ Go
 
 
 Create Table Services
-(ID int Primary Key , ApplicationID int null , Name nvarchar(64) , Description nvarchar(512), IsDirectoryService bit , CountryPriceM float, FullPriceM float )
+(ID int Primary Key , ApplicationID int null , Name nvarchar(64) , Description nvarchar(512), IsMultipleCountries bit , CountryPriceM float, FullPriceM float )
 
 Go 
 
