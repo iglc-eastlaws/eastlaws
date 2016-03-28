@@ -28,12 +28,14 @@ namespace Eastlaws.Services
 
         public void Add(Restaurant newRestaurant)
         {
+            
             newRestaurant.Id = _restaurants.Max(r => r.Id) + 1;
            _restaurants.Add(newRestaurant);
         }
 
         public Restaurant Get(int id)
         {
+ 
             return _restaurants.FirstOrDefault(r => r.Id == id);
         }
 
