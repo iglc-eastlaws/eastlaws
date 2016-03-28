@@ -38,7 +38,8 @@ on UserSettings (ApplicationID , UserID , Name )
 Go 
 
 
+CREATE TABLE Errors(ID int IDENTITY Primary Key ,UserID nvarchar(255) ,theDate datetime ,URL nvarchar(1000) ,ExceptionType nvarchar(750) ,ExceptionMessage nvarchar(max) ,
+IpAddress nvarchar(18) ,ExtraInfo nvarchar(max) ,isSpecific bit ,BrowserInfo nvarchar(250) ,PreviousPage nvarchar(1500) ,RequestParams nvarchar(max) )
 
-
-
+Go 
 
