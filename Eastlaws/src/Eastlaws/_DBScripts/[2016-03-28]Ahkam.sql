@@ -1,4 +1,7 @@
-﻿Use EastlawsData 
+﻿
+-- ahkam tables
+
+Use EastlawsData 
 
 Go 
 
