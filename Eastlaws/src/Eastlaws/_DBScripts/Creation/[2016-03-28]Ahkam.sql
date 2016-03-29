@@ -1,5 +1,26 @@
-﻿
-Use IGLCUsers 
+﻿Use master
+
+Go 
+
+if not Exists (Select 1 from sys.databases where name = 'EastlawsData')
+Begin 
+	Create DataBase EastlawsData 
+End
+
+
+Go 
+if not Exists (Select 1 from sys.databases where name = 'EastlawsUsers')
+Begin 
+	Create DataBase EastlawsUsers 
+End
+
+
+Go 
+
+
+
+
+Use EastlawsUsers 
 
 Go 
 
@@ -20,14 +41,32 @@ Go
 
 
 Create Table Services
-(ID int Primary Key , ApplicationID int null , Name nvarchar(64) , Description nvarchar(512), IsMultipleCountries bit , CountryPriceM float, FullPriceM float )
+(ID int Primary Key , ApplicationID int null , Name nvarchar(64) , Description nvarchar(512), IsMultipleCountries bit , IsEnabled bit , CountryPriceM float, FullPriceM float )
 
 Go 
+
+Alter Table Services 
+Add CONSTRAINT Services_FK FOREIGN KEY (ApplicationID )  References Applications(ID) on delete cascade on update cascade
+
+Go
+
+Insert Into Services(ID , ApplicationID , Name , Description , IsMultipleCountries , IsEnabled , CountryPriceM , FullPriceM )
+Values 
+(1 , 0 , 'Ahkam' , N'أحكام المحاكم العربية العليا' , 1 , 1 , 500 , 2000)
+,(1 , 0 , 'Tashree3at' , N'التشريعات العربية' , 1 , 1 , 500 , 2000)
+,(1 , 0 , 'Fatawa' , N'إدارات الفتوى والتشريع ' , 1 , 1 , 500 , 2000) -- فتاوى مجلس الدولة
+,(1 , 0 , 'Etefa2eyat' , N'الإتفاقيات والمعاهدات الدولية' , 1 , 1 , 500 , 2000)
+
+Go
+
 
 
 
 Create Table UserSettings 
 (ApplicationID int null ,  UserID nvarchar(255) , Name varchar(32) , Value Sql_Variant , LastChanged DateTime2(0) )
+
+Go 
+
 
 
 Go 
@@ -38,8 +77,9 @@ on UserSettings (ApplicationID , UserID , Name )
 Go 
 
 
-CREATE TABLE Errors(ID int IDENTITY Primary Key ,UserID nvarchar(255) ,theDate datetime ,URL nvarchar(1000) ,ExceptionType nvarchar(750) ,ExceptionMessage nvarchar(max) ,
-IpAddress nvarchar(18) ,ExtraInfo nvarchar(max) ,isSpecific bit ,BrowserInfo nvarchar(250) ,PreviousPage nvarchar(1500) ,RequestParams nvarchar(max) )
+CREATE TABLE Errors(ID int IDENTITY Primary Key,ApplicationID int not null ,UserID nvarchar(255) ,theDate datetime ,URL nvarchar(1000) ,ExceptionType nvarchar(750)
+ ,ExceptionMessage nvarchar(max) ,IpAddress nvarchar(18) ,ExtraInfo nvarchar(max) ,isSpecific bit ,BrowserInfo nvarchar(250) ,PreviousPage nvarchar(1500)
+  ,RequestParams nvarchar(max) )
 
 Go 
 
@@ -59,7 +99,9 @@ Go
 
 
 
-Use IGLCData 
+
+
+Use EastlawsData 
 
 Go 
 
@@ -69,12 +111,12 @@ Create Table Countries
 
 Go 
 
-Create Table CountriesServicesAvailabality 
+Create Table CountriesServices
 (ServiceID int , CountryID int , MyOrder int , PriceM float  )
 
 Go 
 
-Create Table Mahakem
+Create Table AhkamMahakem
 (ID int Primary Key , CountryID int not null , Name nvarchar(128) , EnName nvarchar(128) , MyOrder int )
 
 Go 
@@ -94,45 +136,45 @@ Go
 
 
 
+Create Table ServicesImages 
+(ServiceID int not null , ItemID int not null , ImageID int not null , ImagePath nvarchar(1024) not null )
 
-
-
-
-
-
-
-
-
-
-
-
-
-Create Table MasterSortTypes
-(ID int Primary Key , Name nvarchar(64))
-
-Go 
-
-Insert Into MasterSortTypes (Name)
- Values ('CaseNo' )
- ,('CaseYear' )
- ,('CaseDate' )
- ,('OfficeYear' )
 
 
 Go 
 
 
-Create Table MasterSort
+
+
+
+
+Create Table ServicesSortTypes
+(ID int Primary Key , ServiceID int not null , Name nvarchar(64) , TableName varchar(64) , ColumnName varchar(64))
+
+
+Go 
+
+Insert Into ServicesSortTypes (ServiceID , Name,TableName,ColumnName)
+ Values (1,'CaseNo' , 'Ahkam' , 'CaseNo')
+ ,(1,'CaseYear' , 'Ahkam' , 'CaseYear')
+ ,(1,'CaseDate' , 'Ahkam' , 'CaseDate')
+ ,(1,'OfficeYear' , 'Ahkam' , 'OfficeYear')
+
+
+Go 
+
+
+Create Table ServicesSort
 (ServiceID int not null ,SortType int ,ItemId int ,Value Sql_Variant  )
 
 Go 
 
-Create Table MasterTextTypes 
-(ID int Identity Primary Key , Name nvarchar(64) )
+Create Table ServicesTextTypes 
+(ID int Identity Primary Key ,ServiceID int not null , Name nvarchar(64) , TableName varchar(64) , ColumnName varchar(64) )
 
 Go 
 
-Create Table MasterText 
+Create Table ServicesText 
 ()
 
 
