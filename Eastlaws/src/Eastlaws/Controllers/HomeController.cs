@@ -17,12 +17,14 @@ namespace Eastlaws.Controllers
             _greeter = "Hello Home Controller";
         }
 
-        public ViewResult Index()
+        public ViewResult Index(int? Test)
         {
+            ViewBag.Test = Test.HasValue ? Test.Value.ToString() : "No Test Value has been defined ";
+
             var model = new HomePageViewModel();
             model.Restaurants = _restaurantData.GetAll();
             model.CurrentGreeeting = _greeter;
-
+            
             return View(model);
         }
 
