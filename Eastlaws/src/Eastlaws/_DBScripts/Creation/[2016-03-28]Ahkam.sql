@@ -162,8 +162,6 @@ Insert Into ServicesSortTypes (ServiceID , Name,TableName,ColumnName)
 
 
 Go 
-
-
 Create Table ServicesSort
 (ServiceID int not null ,SortType int ,ItemId int ,Value Sql_Variant  )
 
@@ -175,6 +173,10 @@ Create Table ServicesTextTypes
 Go 
 
 Create Table ServicesText 
-()
+(int ID Identity , ServiceID int not null , ItemID int , ItemParentID int , Text nvarchar(max) )
+
+Go 
+
+
 
 
