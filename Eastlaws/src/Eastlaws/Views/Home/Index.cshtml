@@ -1,12 +1,11 @@
 ﻿@model Eastlaws.ViewModels.HomePageViewModel
 
-<h1>Hello World</h1>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title>Home</title>
-</head>
-<body>
+@{ 
+    ViewBag.Title = "Home";
+
+}
+
     <h1>Welcome</h1>
     <h3>@Model.CurrentGreeeting</h3>
     <br /><br />
@@ -22,6 +21,4 @@
                 </tr>
             }
         </table>
-    </div>
-</body>
-</html>
+   </div>
