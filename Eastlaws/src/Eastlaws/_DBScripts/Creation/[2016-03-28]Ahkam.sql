@@ -12,7 +12,7 @@ Insert Into Applications(ID , Name , ApplicationType , Description)
 Values 
 (0,N'Eastlaws.com' , N'WebApp' , N'Eastlaws.com Main website ')
 ,(1,N'EastlawsAcademy.com' , N'WebApp' , N'EastlawsAcademy.com  website ')
-,(2,N'EastlawsMobileApp' , N'MobileApp' , N'Eastlaws.com MobileApp backend  ')
+,(2,N'MobileAppEastlaws' , N'MobileApp' , N'Eastlaws.com MobileApp backend  ')
 --,(3,N'IGLC EXE' , N'DesktopClient' , N'Eastlaws.com MobileApp backend  ')
 
 
