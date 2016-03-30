@@ -1,6 +1,7 @@
-﻿1-Tasdeer database
-2-Entity
+﻿0-Create Databse
+1-Tasdeer database
+2-Entity Framework from Database
 3-Image viewer 
-4 - Identity
-5 - publish on IIS
+4-Identity
+5-publish on IIS
 
