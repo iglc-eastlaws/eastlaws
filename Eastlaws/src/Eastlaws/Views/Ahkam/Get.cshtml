@@ -1,0 +1,27 @@
+﻿@using System.Data;
+
+@model System.Data.DataTable
+
+
+<table>
+    
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Country_ID</th>
+            <th>Name</th>
+            <th>LastModify</th>
+        </tr>
+    </thead>
+
+    @foreach (DataRow dr in Model.Rows)
+    {
+        <tr>
+            <td>@dr["ID"]</td>
+            <td>@dr["Country_ID"]</td>
+            <td>@dr["Name"]</td>
+            <td>@dr["LastModify"]</td>
+        </tr>
+    }
+
+</table>
