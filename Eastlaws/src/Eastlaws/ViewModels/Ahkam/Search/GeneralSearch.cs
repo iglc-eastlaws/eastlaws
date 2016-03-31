@@ -1,6 +1,8 @@
 ﻿
 namespace Eastlaws.ViewModels.Ahkam
 {
+
+  
     public class GeneralSearchVM
     {
         public string Filter { get; set; }
