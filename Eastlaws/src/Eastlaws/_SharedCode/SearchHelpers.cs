@@ -5,9 +5,6 @@ using System.Threading.Tasks;
 
 namespace Eastlaws
 {
-    //************************ I suppose   
-
-    // searchOptions
     public enum MatchType
     {
         Gomla = 0 , AllWords = 1 , AnyWord  = 2
@@ -15,22 +12,35 @@ namespace Eastlaws
 
     public class SimpleInputSearch
     {
-        public string Input { get; set; } // input
+        private string m_Input = null;
 
-        MatchType Match { get; set; } // searchOptions
-
+        public string Input
+        {
+            get
+            {   
+                return m_Input;
+            }
+            set
+            {
+                m_Input = value.Trim();
+            }
+        }
+        MatchType Match{ get; set; } 
         public bool isEmpty
         {
             get
             {
-                if (string.IsNullOrEmpty(Filter) || Filter.Trim() == "")
+                if (string.IsNullOrEmpty(Input) || Input.Trim() == "")
                 {
-                    return false;
+                    return true;
                 }
-                return true;
+                if(Input.Length  < 3)
+                {
+                    return true;
+                }
+                return false;
             }
         }
-
     }
 
 }
