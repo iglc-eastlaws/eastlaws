@@ -21,7 +21,7 @@ namespace Eastlaws.Controllers
 
 
         [HttpPost]
-        public IActionResult GeneralSearch(GeneralSearchVM Model , int? Test)
+        public IActionResult GeneralSearch(SimpleInputSearch Model , int? Test)
         {
             return View(Model);
         }
