@@ -1,2 +1,18 @@
 ﻿
+//Your Dependency Injection ready ASP.NET : ASP.NET 5
 http://codewala.net/2015/04/30/your-dependency-injection-ready-asp-net-asp-net-5/
+
+
+//dapper-dot-net
+worth to take a look ,  Dapper.net
+https://github.com/StackExchange/dapper-dot-net
+
+what i noticed
+-- deal with objects and list without lose performance
+-- write pure sql query (our problem)
+-- I can make realtion between two database ( our problem)
+-- too easy to learn (just take half hour to install and test ), in fact no time to learn I just write sql query
+-- prevent from sql injection
+-- mixed between  raw ado.net and entity framework 
+-- created and maintanance by stackoverflow team
+-- tested by millions of developers
