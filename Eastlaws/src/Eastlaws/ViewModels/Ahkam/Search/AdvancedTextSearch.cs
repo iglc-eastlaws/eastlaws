@@ -13,5 +13,9 @@
         GeneralSearchVM Destoreya { get; set; }
         GeneralSearchVM Mantoo2Hokm { get; set; }
         GeneralSearchVM HaytheyatHokm { get; set; }
+
+
+
+
     }
 }

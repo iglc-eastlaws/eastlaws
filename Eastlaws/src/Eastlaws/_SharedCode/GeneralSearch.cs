@@ -1,17 +1,21 @@
 ﻿
-namespace Eastlaws.ViewModels.Ahkam
+namespace Eastlaws
 {
     public class GeneralSearchVM
     {
         public string Filter { get; set; }
 
-        TextSearchMatch Match { get; set; }
+        public TextSearchMatch Match { get; set; }
 
         public bool isEmpty
         {
             get
             {
                 if (string.IsNullOrEmpty(Filter) || Filter.Trim() == "")
+                {
+                    return false;
+                }
+                if(Filter.Length < 3)
                 {
                     return false;
                 }
