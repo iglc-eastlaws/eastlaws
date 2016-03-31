@@ -8,7 +8,7 @@ namespace Eastlaws
     //************************ I suppose   
 
     // searchOptions
-    public enum TextSearchMatch
+    public enum MatchType
     {
         Gomla = 0 , AllWords = 1 , AnyWord  = 2
     }
@@ -17,7 +17,7 @@ namespace Eastlaws
     {
         public string Filter { get; set; } // input
 
-        TextSearchMatch Match { get; set; } // searchOptions
+        MatchType Match { get; set; } // searchOptions
 
         public bool isEmpty
         {
