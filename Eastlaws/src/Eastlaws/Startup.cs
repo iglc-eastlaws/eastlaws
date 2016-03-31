@@ -48,6 +48,7 @@ namespace Eastlaws
             app.UseMvcWithDefaultRoute();
 
 
+
             string ConnectionString = Configuration["ConnectionString"];
 
 

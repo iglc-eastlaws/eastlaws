@@ -5,6 +5,26 @@ using System.Threading.Tasks;
 
 namespace Eastlaws
 {
+    public static class Global
+    {
+        public static string ConnectionStringData
+        {
+            get
+            {
+                return "Server=192.168.1.251;Database=EastlawsData;User ID=DevUser;Password=DevUser123456";
+            }
+        }
+        public static string ConnectionStringUsers
+        {
+            get
+            {
+                return "Server=192.168.1.251;Database=EastlawsUsers;User ID=DevUser;Password=DevUser123456";
+            }
+        }
+    }
+
+
+
     public enum MatchType
     {
         Gomla = 0 , AllWords = 1 , AnyWord  = 2
