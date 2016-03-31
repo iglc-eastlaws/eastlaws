@@ -15,7 +15,7 @@ namespace Eastlaws
 
     public class SimpleInputSearch
     {
-        public string Filter { get; set; } // input
+        public string Input { get; set; } // input
 
         MatchType Match { get; set; } // searchOptions
 
