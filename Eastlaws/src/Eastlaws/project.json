@@ -17,8 +17,7 @@
   },
 
   "frameworks": {
-    "dnx451": { }
-    
+    "dnx451": { }    
   },
   "exclude": [
     "wwwroot",
