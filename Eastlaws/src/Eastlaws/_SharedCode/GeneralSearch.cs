@@ -6,7 +6,7 @@ namespace Eastlaws.ViewModels.Ahkam
     {
         public string Filter { get; set; }
 
-        TextSearchMatch Match { get; set; }
+        MatchType Match { get; set; }
 
         public bool isEmpty
         {
