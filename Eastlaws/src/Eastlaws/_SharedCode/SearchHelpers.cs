@@ -13,7 +13,7 @@ namespace Eastlaws
         Gomla = 0 , AllWords = 1 , AnyWord  = 2
     }
 
-    public class simpleInputSearch
+    public class SimpleInputSearch
     {
         public string Filter { get; set; } // input
 
