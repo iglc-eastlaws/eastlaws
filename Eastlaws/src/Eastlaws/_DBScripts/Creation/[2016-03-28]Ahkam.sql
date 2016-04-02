@@ -295,6 +295,7 @@ End
 
 
 Go 
+-- Not Complete (Needs to be fully dynamic ! ) 
 Create Proc ExportServicesText 
 @MyServiceID int = null 
 as 
@@ -342,3 +343,28 @@ Begin
 	End
 
 End
+
+
+Go 
+
+Alter View VW_Ahkam  
+as 
+Select A.* , AM.Name as MahkamaName , C.Name as CountryName From Ahkam A With(NoLock)
+join AhkamMahakem AM With(NoLock) on A.MahkamaID = AM.ID
+Join Countries C With(NoLock) on C.ID = A.CountryID 
+
+
+
+
+
+-- Dummy 
+Create Table Tashree3at 
+(ID int Primary Key nonclustered   , TashTypeID int , TashNo int , TashYear int , TashDate Date , Title nvarchar(max) )
+
+Go 
+
+
+Create Table Tashree3atMawad 
+(ID int Primary Key NonClustered , Tashree3ID int not null , MadaNo int ,     )
+
+
