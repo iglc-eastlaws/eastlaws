@@ -8,7 +8,7 @@ ORDER BY name
 
 
 
--- Countries 
+--Countries 
 
 DELETE FROM EastlawsData..Countries 
 WHERE ID NOT IN (SELECT ID FROM dbo.Country c)
@@ -33,7 +33,7 @@ GO
 
 
 
--- ServiceCountries 
+--ServiceCountries 
 TRUNCATE TABLE EastlawsData..CountriesServices
 
 INSERT INTO EastlawsData..CountriesServices(ServiceID,CountryID,MyOrder,PriceM)
@@ -50,7 +50,7 @@ GO
 
 
 
--- Mahakem 
+--Mahakem 
 DELETE FROM EastlawsData..AhkamMahakem WHERE ID NOT IN (
 SELECT ID FROM dbo.AH_Ma7akem am
 )
@@ -130,4 +130,15 @@ GO
 INSERT INTO EastlawsData..AhkamFakarat(ID,HokmID,FakraNo,Text,EnText)
 SELECT ID , Master_ID , Fakra_No , Fakra_Text , EnText  FROM dbo.AH_SubMaster S 
 WHERE ID NOT IN (SELECT ID FROM EastlawsData..AhkamFakarat)
+
+
+
+
+
+
+Go 
+
+
+Exec EastlawsData..ExportServicesSort
+
 
