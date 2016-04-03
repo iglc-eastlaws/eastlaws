@@ -5,7 +5,7 @@
     "bootstrap": "3.0.3",
     "bootstrap-touch-carousel": "0.8.0",
     "jquery": "2.1.4",
-    "Font-Awesome": "4.5.0"
+    "Font-Awesome":"4.5.0"
     
   }
 }
