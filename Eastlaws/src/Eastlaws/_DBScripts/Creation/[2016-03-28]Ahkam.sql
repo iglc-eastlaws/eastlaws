@@ -151,9 +151,13 @@ Create Table Ahkam
 Go 
 
 Create Table AhkamFakarat 
-(ID int Primary Key , HokmID int , FakraNo int , Text nvarchar(max) , EnText nvarchar(max) ,MogazText nvarchar(max) , TashCount int  , TashMawadCount int   )
+(ID int Primary Key NonClustered , HokmID int , FakraNo int , Text nvarchar(max) , EnText nvarchar(max) ,MogazText nvarchar(max) , TashCount int  , TashMawadCount int   )
 
 Go 
+
+Create Clustered Index IX_AhkamFakarat 
+on AhkamFakarat (HokmID)
+
 
 
 

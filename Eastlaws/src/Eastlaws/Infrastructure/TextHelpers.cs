@@ -37,5 +37,11 @@ namespace Eastlaws.Infrastructure
         {
             return Regex.Replace(InputText.ToString(), @"(مع)|(و)|(هو)|(كما)|(على)|(ألى)|(إلى)|(الى)|(في)|(فى)|(من)", string.Empty);
         }
+
+
+
+
+
+
     }
 }

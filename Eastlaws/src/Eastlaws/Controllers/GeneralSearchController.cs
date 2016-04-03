@@ -26,5 +26,14 @@ namespace Eastlaws.Controllers
             int x = 0;
             return View();
         }
+
+        public IActionResult Test2()
+        {
+            string Input = "القتل العمد مع سبق الإصرار ";
+
+            FTSPredicate p = new FTSPredicate(Input );
+            string dbLiteral = p.BuildPredicate(MatchType.AllWords);
+            return View();
+        }
     }
 }
