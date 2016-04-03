@@ -347,14 +347,14 @@ End
 
 Go 
 
-Alter View VW_Ahkam  
+Create View VW_Ahkam  
 as 
 Select A.* , AM.Name as MahkamaName , C.Name as CountryName From Ahkam A With(NoLock)
 join AhkamMahakem AM With(NoLock) on A.MahkamaID = AM.ID
 Join Countries C With(NoLock) on C.ID = A.CountryID 
 
 
-
+Go 
 
 
 -- Dummy 
@@ -365,6 +365,11 @@ Go
 
 
 Create Table Tashree3atMawad 
-(ID int Primary Key NonClustered , Tashree3ID int not null , MadaNo int ,     )
+(ID int Primary Key NonClustered , Tashree3ID int not null , TashFehresID int  , MadaNo int ,  MadaSuffix nvarchar(64) , Text nvarchar(max) , MyOrder Int , ImageID int      )
+
+
+
+Select top 100 * From Tash_Master
+
 
 

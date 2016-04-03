@@ -6,7 +6,19 @@ sp_helpindex ServicesText
 Select * From ServicesSortTypes
 
 
---Default Sort Relevance 
+
+--No Sort 
+Select ST.ItemParentID 
+From ServicesText ST WITH (NOLOCK)
+Where ST.ServiceID = 1 And ST.ServiceTypeID = 1 
+And Contains(Text , '(سرقة And بالإكراه) OR ("قتل عمد") OR ("محكمة النقض") OR (محكمة And الأسرة)')
+Group By ST.ItemParentID 
+
+
+
+
+
+--Default Sort = {Relevance} 
 Select ST.ItemParentID , Sum(TT.[Rank]) as MyRank , Sum(TT.[Rank]) As SortValue 
 From ContainsTable(ServicesText , Text , '(سرقة And بالإكراه) OR ("قتل عمد") OR ("محكمة النقض") OR (محكمة And الأسرة)') TT 
 Join ServicesText ST on ST.ID = TT.[Key]
@@ -35,19 +47,18 @@ Order By SS.Value Desc
 
 
 
-Declare @PageNo int = 1 , @PageSize int = 200 
+Declare @PageNo int = 1 , @PageSize int = 2000
 Declare @ResultsPage Table(ItemID int , MyRank int , SortValue Sql_Variant )
 Insert Into @ResultsPage 
 Select  ItemParentID , MyRank , SortValue From (
 		Select Row_Number() Over (order By SortValue desc) as Serial , *  From 
 		(
 			Select ST.ItemParentID , Sum(TT.[Rank]) as MyRank  , SS.Value as SortValue 
-			From ContainsTable(ServicesText , Text , '(سرقة And بالإكراه) OR ("قتل عمد") ') TT   
+			From ContainsTable(ServicesText , Text , '(سرقة And بالإكراه) OR ("قتل عمد") OR ("محكمة النقض") OR (محكمة And الأسرة) ') TT   
 			Join ServicesText ST WITH (NOLOCK) on ST.ID = TT.[Key]
 			Join ServicesSort SS WITH (NOLOCK) on SS.ServiceID = ST.ServiceID And SS.SortType = 1 And SS.ItemId = ST.ItemParentID				
 			Where ST.ServiceID = 1 And ST.ServiceTypeID = 1 
 			Group By ST.ItemParentID , SS.Value 		
-
 		) ResultsTableInner  
 ) ResultsTableOuter
 Where Serial > ((@PageNo - 1 ) * @PageSize ) And Serial <= (@PageNo * @PageSize)
