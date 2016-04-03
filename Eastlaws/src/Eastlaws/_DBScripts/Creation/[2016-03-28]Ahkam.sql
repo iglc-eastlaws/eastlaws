@@ -11,7 +11,9 @@ DROP DATABASE EastlawsUsers
 
 GO 
 
+DROP DATABASE EastlawsGeneralSearch
 
+GO 
 
 
 
@@ -32,7 +34,12 @@ End
 
 Go 
 
+if not Exists (Select 1 from sys.databases where name = 'EastlawsGeneralSearch')
+Begin 
+	Create DataBase EastlawsGeneralSearch 
+End
 
+Go
 
 
 Use EastlawsUsers 
@@ -368,3 +375,6 @@ Create Table Tashree3atMawad
 (ID int Primary Key NonClustered , Tashree3ID int not null , MadaNo int ,     )
 
 
+
+-- General search
+use EastlawsGeneralSearch
