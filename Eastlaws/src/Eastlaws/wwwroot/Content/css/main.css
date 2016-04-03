@@ -375,7 +375,7 @@ nav.sidebar:hover{margin-right: 0px;}
 .paging-search .pagination > .active > a, .paging-search .pagination > .active > a:focus, .paging-search .pagination > .active > a:hover, .paging-search .pagination > .active > span, .paging-search .pagination > .active > span:focus, .paging-search .pagination > .active > span:hover{ background-color:#4d4a4a; border-color:#4d4a4a;}
 .paging-search .pagination > a, .paging-search .pagination >  a:focus, .paging-search .pagination >  a:hover, .paging-search .pagination >  span, .paging-search .pagination > span:focus, .paging-search .pagination  > span:hover{ background-color:#4d4a4a; border-color:#4d4a4a;}
 .pagination > li:hover > a, .pagination > li:hover > span{ background-color:#D9B672; color:#FFF;}
-.hightlight{ background-color:#e45625; padding:0 5px; color:#FFF;}
+.hightlight{ padding:0 5px; color:#e45625;}
 .title-define{color:#e45625; font-size:1.2em;}
 .total-chart{ }
 .dropdown-menu > li > a{ text-align:right; font:0.8em "Droid Arabic Kufi";}
