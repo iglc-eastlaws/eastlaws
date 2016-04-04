@@ -18,7 +18,7 @@ namespace Eastlaws
         public Startup()
         {
             ConfigurationBuilder builder = new ConfigurationBuilder();
-            builder.AddJsonFile("Settings.json"); 
+            builder.AddJsonFile("Settings.json");
             m_Config = builder.Build();
         }
         public IConfiguration Configuration
@@ -28,14 +28,14 @@ namespace Eastlaws
                 return m_Config;
             }
         }
-        
+
 
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            
+
             services.AddMvc();
             services.AddScoped<IRestaurantData, InMemopryRestaurantData>();
         }
