@@ -32,7 +32,7 @@ namespace Eastlaws.Controllers
             string Input = "القتل العمد مع سبق الإصرار ";
 
             FTSPredicate p = new FTSPredicate(Input );
-            string dbLiteral = p.BuildPredicate(MatchType.AllWords);
+            //string dbLiteral = p.BuildPredicate(MatchType.AllWords);
             return View();
         }
     }
