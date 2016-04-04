@@ -41,7 +41,7 @@ section{ margin:0 0 20px;}
 .main-menu li a{ font:1em Droid Arabic Kufi; color:#000;}
 .navbar-nav > li > a{ padding-top:5px; padding-bottom:5px;}
 .navbar-nav > li > a:hover{ color:#D9B672;}
-.search{ margin-bottom:5px; padding-top:10px; padding-left:16px;}
+.search{ margin-bottom:5px;  padding:10px 5px 0 16px;}
 .navbar { padding:0px;  margin:0px;}
 .control .navbar-nav > li:first-child{ background:rgba(0, 0, 0, 0) url("../images/spacer.png") no-repeat scroll left center;}
 .control .navbar-nav > li > a{font:0.8em "Droid Arabic Kufi"; margin:0 4px}
@@ -52,8 +52,8 @@ section{ margin:0 0 20px;}
 .search .btn-success:hover, .search .btn-success:focus .news-butt:hover, .input-group-btn > .btn-hover{ background-color: #E2C894!important; color:#000;}
 .description{font-size:1.2em; color:#47423d; font-family:"Droid Arabic Kufi";}
 .new-eastlaws{ margin-top:40px;}
-.new-eastlaws h1{ text-align:center; color:#daae4f; text-shadow:0 1px 0px rgba(0, 0, 0, 0.6); font-size:1.4em;}
-.new-eastlaws .description{ text-align:center;margin-bottom:0px; font-size:1em;}
+.new-eastlaws h1{ text-align:center; color:#daae4f; text-shadow:0 1px 0px rgba(0, 0, 0, 0.6); font-size:2em;}
+.new-eastlaws .description{ text-align:center;margin-top:20px; font-size:1em;}
 .new-eastlaws article{overflow:hidden; margin-bottom:20px; padding-bottom:20px;transition:400ms ease all; direction:rtl;}
 .image{ overflow:hidden;}
 .new-eastlaws .col-lg-4:first-of-type article{ background-color:#008add;}
@@ -93,9 +93,9 @@ section{ margin:0 0 20px;}
 .manzoma .manzoma-content{ border-right:1px solid #dddcdc; margin:0 35px 0 0; padding:15px 35px 15px 0; position:relative;}
 .manzoma .manzoma-content div{ width:50px; height:50px; text-align:center; background-color:#d9b672; color:#FFF; position:absolute; right:-25px;top:25px; /*display: flex;align-items: center;*/ padding-top:10px;}
 .block-about{ background:url(../images/about.jpg) no-repeat center center / cover; margin-top:40px;}
-.content-about{  background:rgb(217,182,114);  padding:30px 20px;}
-.content-about h3{ text-align:center; color:#FFF; line-height:50px;}
-.content-about p{font: 1em droid arabic kufi;line-height: 30px; text-align:justify;}
+.content-about{  background:rgb(217,182,114);  padding:0px 20px;}
+.content-about h3{ text-align:center; color:#FFF; line-height:40px;}
+.content-about p{font:0.86em/30px droid arabic kufi;line-height: 30px; text-align:justify;}
 .about p.description{ text-align:center;}
 .updates-day{ margin:50px 0; text-align:center;}
 .updates-day h3{ text-align:center;}
@@ -213,7 +213,7 @@ font-family: Raleway;
 .list-menu h2{ background-color:#4D4A4A; color:#FFF; font-size:1em; margin:0px; padding-right:15px; line-height:3em;}
 .list-menu ul{ list-style:none outside none; margin:10px 2px; padding:0px;}
 .list-menu ul li{ margin-bottom:2px; width:98%; border:1px solid #dddcdc;}
-.list-menu .manzoma .manzoma-content{  padding:10px 2px; margin:0; float:left; width:90%;}
+.list-menu .manzoma .manzoma-content{  padding:8px 2px; margin:0; float:left; width:90%;}
 .list-menu .manzoma .manzoma-content div{ height:auto; width:auto; padding:2px; position:relative; right:auto; top:auto; float:right;}
 .list-menu .manzoma .manzoma-content h3{ padding:0 20px 5px 0; margin:5px;font-size:0.8em;}
 .list-menu .manzoma .manzoma-content h3 a{  color:#4D4A4A; text-decoration:none;}
@@ -232,6 +232,7 @@ nav.sidebar, .main{-webkit-transition: margin 200ms ease-out; -moz-transition: m
 /* .....NavBar: Icon only with coloring/layout.....*/
 nav.sidebar .navbar-nav .open .dropdown-menu>li>a:hover, nav.sidebar .navbar-nav .open .dropdown-menu>li>a:focus {
 color: #CCC;background-color: transparent;}
+.about{ background:url(../images/shadow.png) no-repeat left -100px;}
 nav:hover .forAnimate{opacity: 1;}
 .inside .navbar-inverse{ background-image: none;background-color:#FFF;  }
 .inside .navbar-inverse  li { position:relative;}
@@ -375,8 +376,8 @@ nav.sidebar:hover{margin-right: 0px;}
 .paging-search .pagination > .active > a, .paging-search .pagination > .active > a:focus, .paging-search .pagination > .active > a:hover, .paging-search .pagination > .active > span, .paging-search .pagination > .active > span:focus, .paging-search .pagination > .active > span:hover{ background-color:#4d4a4a; border-color:#4d4a4a;}
 .paging-search .pagination > a, .paging-search .pagination >  a:focus, .paging-search .pagination >  a:hover, .paging-search .pagination >  span, .paging-search .pagination > span:focus, .paging-search .pagination  > span:hover{ background-color:#4d4a4a; border-color:#4d4a4a;}
 .pagination > li:hover > a, .pagination > li:hover > span{ background-color:#D9B672; color:#FFF;}
-.hightlight{ padding:0 5px; color:#e45625;}
-.title-define{color:#e45625; font-size:1.2em;}
+.hightlight{ color:#F00; padding:0 5px;}
+.title-define{color:#9f7324; font-size:1.2em;}
 .total-chart{ }
 .dropdown-menu > li > a{ text-align:right; font:0.8em "Droid Arabic Kufi";}
 .concept{ font-size:0.8em;}
@@ -387,7 +388,7 @@ p.total-chart {color:#666; font:bold 14px arial;}
 .filter-search .well{ padding:0px;border-color:transparent;}
 .filter-search .search{ padding:0px; margin-bottom:15px;}
 .filter-search .list-group-item:first-child,  .filter-search .list-group-item,  .filter-search .list-group-item:last-child, .filter-search .list-group{ border-radius:0px; border:0 none; }
-.filter-search .list-group-item{font:bold 0.99em arial;border-radius:0px;  border:1px solid #CCC; padding:10px 12px; background-color:#dcefef;  }
+.filter-search .list-group-item{font:bold 0.99em arial;border-radius:0px;  border:1px solid #CCC; padding:10px 12px; /*background-color:#dcefef;*/  }
 .filter-section{ clear:both; display:block;}
 .filter-section h5{ background-color:#4d4a4a; color:#FFF; padding:12px 10px;} 
 .filter-section .list-group-item.active, .filter-section .list-group-item.active:focus, .filter-section .list-group-item.active:hover{ background-color:#1b9e74; background-image:none; margin-left:2px; border-bottom:1px solid #CCC;}
@@ -404,4 +405,4 @@ p.total-chart {color:#666; font:bold 14px arial;}
 .nav-control ul li a{ color:#666;}
 .nav-control ul li a:hover, .nav-control ul li a:hover i{ color:#000;}
 .signature{ text-align:left;color:#1f3945; font:bold 1em arial; }
-.signature span{color:#F60;}
+.signature span{color:#9f7324;}
