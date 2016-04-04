@@ -50,7 +50,7 @@ namespace Eastlaws
 
 
 
-            string ConnectionString = Configuration["ConnectionString"];
+            //string ConnectionString = Configuration["ConnectionString"];
 
 
             app.Run(async (context) =>
