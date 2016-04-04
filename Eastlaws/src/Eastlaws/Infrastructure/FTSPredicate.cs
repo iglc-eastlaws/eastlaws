@@ -16,7 +16,7 @@ namespace Eastlaws.Infrastructure
         private string m_Input = "";
 
         //Escaped : (' , * ,  ! , " , # , ; , " , . )
-        private Regex m_RgxSpecialChars = new Regex("['!\\*#;\\\"@]", RegexOptions.Compiled);
+        private static Regex m_RgxSpecialChars = new Regex("['!\\*#;\\\"@]", RegexOptions.Compiled);
 
 
 
@@ -56,19 +56,24 @@ namespace Eastlaws.Infrastructure
             return FTSSqlModes.None;
         }
 
+        public string BuildPredicate()
+        {
+            this.Output =  BuildPredicate(Input, SqlMode);
+            return this.Output;
+        }
 
         public string BuildPredicate(string Input  , FTSSqlModes  Mode)
         {
             string retValue =  RemoveSpecialChars(Input);                   
             if (Mode == FTSSqlModes.None)
             {
-                retValue = "('\"" + retValue + "\"' )";
+                retValue = " ('\"" + retValue + "\"' ) ";
             }
             else
             {
                 string Operator =  " " + Mode.ToString()  + " ";               
                 string[] Vals = m_Input.Split(new char[] { ' '}  , StringSplitOptions.RemoveEmptyEntries);
-                retValue = "( " + string.Join( Operator , Vals) + " )";
+                retValue = " ( " + string.Join( Operator , Vals) + " ) ";
             }          
             return retValue;
         }
