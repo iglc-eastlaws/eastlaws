@@ -67,13 +67,13 @@ namespace Eastlaws.Infrastructure
             string retValue =  RemoveSpecialChars(Input);                   
             if (Mode == FTSSqlModes.None)
             {
-                retValue = " ('\"" + retValue + "\"' ) ";
+                retValue = " '\"" + retValue + "\"' ";
             }
             else
             {
                 string Operator =  " " + Mode.ToString()  + " ";               
                 string[] Vals = m_Input.Split(new char[] { ' '}  , StringSplitOptions.RemoveEmptyEntries);
-                retValue = " ( " + string.Join( Operator , Vals) + " ) ";
+                retValue = " '" + string.Join( Operator , Vals) + "' ";
             }          
             return retValue;
         }

@@ -3,8 +3,5 @@
     public class CustomSearchVM
     {
         public int? PageNo {get;set;}
-
-
-
     }
 }
