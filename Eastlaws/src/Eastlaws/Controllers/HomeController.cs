@@ -24,7 +24,7 @@ namespace Eastlaws.Controllers
             var model = new HomePageViewModel();
             model.Restaurants = _restaurantData.GetAll();
             model.CurrentGreeeting = _greeter;
-            
+
             return View(model);
         }
 
@@ -32,6 +32,6 @@ namespace Eastlaws.Controllers
         {
             return View();
         }
-        
+
     }
 }

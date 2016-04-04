@@ -1,7 +1,7 @@
 ﻿@model Eastlaws.ViewModels.HomePageViewModel
 
 
-@{ 
+@{
     ViewBag.Title = "Home";
 
 }
@@ -375,22 +375,22 @@
 
 
 
-    <h1>Welcome</h1>
-    <h3>@Model.CurrentGreeeting</h3>
-    <br /><br />
-    <div>
-        <table>
-            @foreach (var item in Model.Restaurants)
+<h1>Welcome</h1>
+<h3>@Model.CurrentGreeeting</h3>
+<br /><br />
+<div>
+    <table>
+        @foreach (var item in Model.Restaurants)
             {
-                <tr>
-                    <td>
-                        @Html.ActionLink(item.Id.ToString(), "Details", new { id = item.Id })
-                    </td>
-                    <td>@item.Name</td>
-                </tr>
-            }
-        </table>
-   </div>
+            <tr>
+                <td>
+                    @Html.ActionLink(item.Id.ToString(), "Details", new { id = item.Id })
+                </td>
+                <td>@item.Name</td>
+            </tr>
+        }
+    </table>
+</div>
 
 <hr />
 Test : @ViewBag.Test
