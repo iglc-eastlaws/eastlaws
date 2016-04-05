@@ -47,9 +47,7 @@ $(".filter-search .well").mCustomScrollbar({
 
 });
     // muilt check
-$('#insightList').multiselect({
-    enableClickableOptGroups: true
-});
+
 
 });
 
