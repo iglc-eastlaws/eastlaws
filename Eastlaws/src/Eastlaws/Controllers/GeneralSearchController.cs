@@ -23,7 +23,7 @@ namespace Eastlaws.Controllers
 
             string outputtextor = TextHelpers.Build_and(inputtext, Build_Option.or).ToString();
 
-            int x = 0;
+            //int x = 0;
             return View();
         }
 
