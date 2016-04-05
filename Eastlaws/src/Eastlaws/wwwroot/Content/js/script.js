@@ -21,7 +21,7 @@
 $('#myCarousel').carousel({
     interval: 10000
 })
-
+$(document).ready(function () {
 $('.carousel .item').each(function () {
     var next = $(this).next();
     if (!next.length) {
@@ -35,5 +35,21 @@ $('.carousel .item').each(function () {
     else {
         $(this).siblings(':first').children(':first-child').clone().appendTo($(this));
     }
+});
+
+$("#slide-slides").cslide();
+$("#cslide-slides").cslide();
+// Scroll 
+$(".filter-search .well").mCustomScrollbar({
+    setHeight: "200px",
+    theme: "3d",
+    scrollButtons: "1"
+
+});
+    // muilt check
+$('#insightList').multiselect({
+    enableClickableOptGroups: true
+});
+
 });
 
