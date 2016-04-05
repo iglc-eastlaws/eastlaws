@@ -237,7 +237,7 @@ nav:hover .forAnimate{opacity: 1;}
 .inside .navbar-inverse{ background-image: none;background-color:#FFF;  }
 .inside .navbar-inverse  li { position:relative;}
 .inside .navbar-inverse .navbar-nav > li > a{ line-height:40px; padding:0 50px 0 0; font-size:0.8em;color:#333;}
-.inside .navbar-inverse .glyphicon, .inside .navbar-inverse .fa{ background-image:linear-gradient(to bottom, #d9b163 0px, #f0c675 100%); padding:10px 0; width:40px; text-align:center; }
+.inside .navbar-inverse .glyphicon, .inside .navbar-inverse .fa{ background-image:linear-gradient(to bottom, #d9b163 0px, #f0c675 100%); padding:9px 0; width:40px; text-align:center; }
 .navbar-inverse .navbar-brand,.navbar-inverse .navbar-brand:hover{color:#FFF; background-color:#4d4a4a;}
 .navbar-inverse .navbar-brand:hover  .move-right{ transform:translate(-152px, 0px);}
 .navbar-brand {color:#FFF; font-size:1em; background-color:#4D4A4A; text-align:right; }
@@ -373,7 +373,7 @@ nav.sidebar:hover{margin-right: 0px;}
 .row-search p{ font:bold 1.0em arial;}
 .row-search p a:hover{ color:#d3ae67; }
 .pagination > li > a, .pagination > li > span{ transition:all 0.4s ease 0s; background-color:#FFF; color:#4D4A4A; box-shadow:0 2px 4px rgba(0, 0, 0, 0.2);}
-.paging-search .pagination > .active > a, .paging-search .pagination > .active > a:focus, .paging-search .pagination > .active > a:hover, .paging-search .pagination > .active > span, .paging-search .pagination > .active > span:focus, .paging-search .pagination > .active > span:hover{ background-color:#4d4a4a; border-color:#4d4a4a;}
+.paging-search .pagination > .active > a, .paging-search .pagination > .active > a:focus, .paging-search .pagination > .active > a:hover, .paging-search .pagination > .active > span, .paging-search .pagination > .active > span:focus, .paging-search .pagination > .active > span:hover{ background-color:#675650; border-color:#675650;}
 .paging-search .pagination > a, .paging-search .pagination >  a:focus, .paging-search .pagination >  a:hover, .paging-search .pagination >  span, .paging-search .pagination > span:focus, .paging-search .pagination  > span:hover{ background-color:#4d4a4a; border-color:#4d4a4a;}
 .pagination > li:hover > a, .pagination > li:hover > span{ background-color:#D9B672; color:#FFF;}
 .hightlight{ color:#F00; padding:0 5px;}
@@ -390,12 +390,17 @@ p.total-chart {color:#666; font:bold 14px arial;}
 .filter-search .list-group-item:first-child,  .filter-search .list-group-item,  .filter-search .list-group-item:last-child, .filter-search .list-group{ border-radius:0px; border:0 none; }
 .filter-search .list-group-item{font:bold 0.99em arial;border-radius:0px;  border:1px solid #CCC; padding:10px 12px; /*background-color:#dcefef;*/  }
 .filter-section{ clear:both; display:block;}
-.filter-section h5{ background-color:#4d4a4a; color:#FFF; padding:12px 10px;} 
+.filter-section h5{ background-color:#675650; color:#FFF; padding:12px 10px; border-bottom:4px solid #e8bf6f;} 
 .filter-section .list-group-item.active, .filter-section .list-group-item.active:focus, .filter-section .list-group-item.active:hover{ background-color:#1b9e74; background-image:none; margin-left:2px; border-bottom:1px solid #CCC;}
-/*.filter-search .navbar-header, .filter-search .navbar-brand{ display:block; clear:both; float:none; padding:0px; height:auto; background-image:linear-gradient(to bottom, #4D4A4A 0px, #4D4A4A 100%); background-color:transparent; font:0.9em "Droid Arabic Kufi"}
-.filter-search nav.sidebar .navbar-brand{ padding:0px;}
-.filter-search .navbar-nav > li{ float:none; clear:both;}
-.filter-search .navbar-inverse .glyphicon, .filter-search  .navbar-inverse .fa{ padding:5px;background-image:linear-gradient(to bottom, #d9b163 0px, #f0c675 100%); background-color:transparent;}*/
+.filter-element{ margin:10px 0 20px;}
+.filter-element ul{ list-style:none outside none; padding:0px; margin:0px;}
+.filter-element ul li{display:inline; margin-left:5px; }
+.filter-element ul li a{ background-color:#675650; font:0.8em "Droid Arabic Kufi"; color:#FFF;padding:3px 8px 3px 0; border-bottom:4px solid #1B9E74; box-shadow:0 2px 4px rgba(0, 0, 0, 0.2);  }
+.filter-element ul li a .number{ font-family:Arial; font-size:1.2em;}
+.filter-element ul li a:hover{ text-decoration:none; color:#daae4f;}
+.filter-element ul li a i{ background-color:#FF6A6D; padding:8px 5px;}
+.filter-element ul li a:hover i{ color:#000;}
+.concept{ font-size:0.8em;} 
 .nav-control{ border-top:1px solid #CCC;}
 .nav-control ul{list-style:none outside none; padding:0px; margin:8px 0; }
 .nav-control ul li{ display:inline; margin-bottom:5px; border-left:1px solid #ccc;}
