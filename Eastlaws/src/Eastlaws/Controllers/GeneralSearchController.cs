@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Eastlaws.Infrastructure;
+using Eastlaws.Services;
 
 namespace Eastlaws.Controllers
 {
@@ -13,6 +14,22 @@ namespace Eastlaws.Controllers
         {
             return View();
         }
+        public ViewResult Index1()
+        {
+            var m = GeneralSearchQuery.Search("القتل العمد");
+            return View(m);
+        }
+
+        public ViewResult SearchResult(string q = "")
+        {
+            //   q = "القتل العمد";
+            if (q.Trim() == string.Empty){ return View();}
+
+            var m = GeneralSearchQuery.Search(q);
+            ViewBag.mCount = m.Count();
+            return View(m);
+        }
+
 
         public ViewResult test()
         {

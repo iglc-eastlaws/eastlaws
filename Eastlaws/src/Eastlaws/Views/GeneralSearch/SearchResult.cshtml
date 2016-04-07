@@ -1,0 +1,33 @@
+﻿@{ 
+    Layout = null;
+}
+ 
+ @if (ViewBag.mCount > 0)
+ {
+ @foreach (var item in Model)
+ {
+
+    <div class="result-block">
+        <h4><i class="fa fa-bank fa-2x icon"></i>@item.serviceID</h4>
+        <div class="row-search">
+            <h3><img src="images/eg.gif" width="16" height="11" alt="" />@item.datatext</h3>
+            <p> <a href="#"> بشأن اعتبار المشروع رقم <span class="hightlight"></span> @item.countryID</a> </p>
+            <p><span class="title-define">المادة 1 :</span> <a href="#"> @item.countryName <span class="hightlight">1111</span> لسنة 1974 المشار إليه وذلك فيما لايتعارض مع أحكام القانون رقم 97 لسنة 1983 المشار إليه.</a></p>
+            <p class="signature"><i class="fa fa-pencil-square"></i> توقيع :<span> حسن زكي - وزير الأشغال</span></p>
+            <div class="nav-control">
+                <ul>
+                    <li><a href="#"><i class="fa fa-desktop"></i> قراءة النص</a></li>
+                    <li><a href="#"><i class="fa fa-camera"></i> صورة التشريع</a></li>
+                    <li><a href="#"><i class="fa fa-print"></i> طباعة </a></li>
+                </ul>
+            </div>
+            <hr class="spacer" />
+        </div>
+    </div>
+ }
+ }
+ else
+
+ { 
+     <h3>لا يوجد نتائج</h3>
+ }

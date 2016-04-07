@@ -28,6 +28,11 @@ GO
 
 go
 
+--- need to add rank when export data
+-- Data_Text
+-- cluster index in (progid + recid)
+-- remove id column 
+-- tash ProgID = 1   and ahkam progID = 2   
 CREATE TABLE [dbo].[Data_1](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
 	[ServiceID] [int] NULL,
