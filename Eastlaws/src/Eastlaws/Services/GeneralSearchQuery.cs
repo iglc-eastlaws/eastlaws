@@ -13,7 +13,7 @@ namespace Eastlaws.Services
 
         public static List<Data> Search(string q)
         {
-            using (SqlConnection _db = new DataHelpers2(DataBases.GeneralSearch).GetConnection())
+            using (SqlConnection _db = new DataHelpers2(DbConnections.GeneralSearch).GetConnection())
             {
                 var orderBy = "ID";//"country desc"; 
                 string textQuery = TextHelpers.Build_and(q, Build_Option.and).ToString();
@@ -53,7 +53,7 @@ namespace Eastlaws.Services
 
         public static int SearchCount(string q)
         {
-            using (SqlConnection _db = new DataHelpers2(DataBases.GeneralSearch).GetConnection())
+            using (SqlConnection _db = new DataHelpers2(DbConnections.GeneralSearch).GetConnection())
             {
                 int Result = 0;
                 string textQuery = TextHelpers.Build_and(q, Build_Option.and).ToString();

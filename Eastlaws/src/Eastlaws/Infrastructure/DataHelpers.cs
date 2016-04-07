@@ -37,23 +37,19 @@ namespace Eastlaws.Infrastructure
 
     // recomanded to use non static class in booling 
     // https://msdn.microsoft.com/en-us/library/8xx3tyca(v=vs.110).aspx
-    public enum DataBases
-    {
-        Data,Users, GeneralSearch
-    }
     public class DataHelpers2
     {
         string database = "EastlawsData";
-        public DataHelpers2(DataBases data) {
+        public DataHelpers2(DbConnections data) {
             switch (data)
             {
-                case DataBases.Data:
+                case DbConnections.Data:
                     database = "EastlawsData";
                     break;
-                case DataBases.Users:
+                case DbConnections.Users:
                     database = "EastlawsUsers";
                     break;
-                case DataBases.GeneralSearch:
+                case DbConnections.GeneralSearch:
                     database = "EastlawsGeneralSearch";
                     break;
 
