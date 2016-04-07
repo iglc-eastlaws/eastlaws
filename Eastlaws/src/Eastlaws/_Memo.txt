@@ -16,3 +16,7 @@ what i noticed
 -- mixed between  raw ado.net and entity framework 
 -- created and maintanance by stackoverflow team
 -- tested by millions of developers
+
+//static or instance  class for connection bool
+https://msdn.microsoft.com/en-us/library/8xx3tyca(v=vs.110).aspx
+http://stackoverflow.com/questions/2098393/what-are-the-pros-cons-of-choosing-between-static-and-instance-data-access-class

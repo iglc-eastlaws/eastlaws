@@ -13,37 +13,47 @@ namespace Eastlaws.Services
 
         public static List<Data> Search(string q)
         {
-            using (SqlConnection _db = new DataHelpers2(DataBases.GeneralSearch).GetConnection())
+            using (SqlConnection _db = new DataHelpers2(DbConnections.GeneralSearch).GetConnection())
             {
                 var orderBy = "ID";//"country desc"; 
                 string textQuery = TextHelpers.Build_and(q, Build_Option.and).ToString();
                 string searchRest = "";// " and progID = 1 ";
                 var PageFrom = 1;
                 var PageTo = 50;
-                return _db.Query<Data>(@"with tbl_search as 
-                                    (
-	                                    select ROW_NUMBER() over (Order by @orderBy) as RowNum,t1.ID
-	                                    from dbo.Data_1 as t1 where contains(t1.Text,@textQuery) " + searchRest + ""
-                                        + @"),
-                                    tbl_IDs as
-                                    (
-                                        select ID from tbl_search where RowNum between @PageFrom and @PageTo
-                                    ),
-                                    tbl_result as
-                                    (
-                                        select t2.*
-                                        from dbo.Data_1 as t1
-                                        CROSS APPLY fn_SearchResult(t1.ProgID, t1.recID) as t2
-                                        where t1.ID in (select ID from tbl_IDs)
-                                    )
-                                    select serviceID,datatext,countryID,countryName from tbl_result", new { orderBy, textQuery, PageFrom, PageTo }).ToList();
+                return _db.Query<Data>(@"with tbl_result as
+                                        (
+	                                        select ROW_NUMBER() over (Order by @orderBy) as RowNum,t2.*
+	                                        from dbo.Data_1 as t1
+	                                        CROSS APPLY fn_SearchResult(t1.ProgID,t1.recID) as t2
+	                                        where contains(t1.Text,@textQuery) " + searchRest + ""
+                                        +@")select serviceID, datatext, countryID, countryName from tbl_result
+                                           where RowNum between @PageFrom and @PageTo", new { orderBy, textQuery, PageFrom, PageTo }).ToList();
+
+
+                //return _db.Query<Data>(@"with tbl_search as 
+                //                    (
+                //                     select ROW_NUMBER() over (Order by @orderBy) as RowNum,t1.ID
+                //                     from dbo.Data_1 as t1 where contains(t1.Text,@textQuery) " + searchRest + ""
+                //                        + @"),
+                //                    tbl_IDs as
+                //                    (
+                //                        select ID from tbl_search where RowNum between @PageFrom and @PageTo
+                //                    ),
+                //                    tbl_result as
+                //                    (
+                //                        select t2.*
+                //                        from dbo.Data_1 as t1
+                //                        CROSS APPLY fn_SearchResult(t1.ProgID, t1.recID) as t2
+                //                        where t1.ID in (select ID from tbl_IDs)
+                //                    )
+                //                    select serviceID,datatext,countryID,countryName from tbl_result", new { orderBy, textQuery, PageFrom, PageTo }).ToList();
             }
         }
 
 
         public static int SearchCount(string q)
         {
-            using (SqlConnection _db = new DataHelpers2(DataBases.GeneralSearch).GetConnection())
+            using (SqlConnection _db = new DataHelpers2(DbConnections.GeneralSearch).GetConnection())
             {
                 int Result = 0;
                 string textQuery = TextHelpers.Build_and(q, Build_Option.and).ToString();
