@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Eastlaws.Infrastructure;
 using Eastlaws.Services;
 
+
 namespace Eastlaws.Controllers
 {
     public class GeneralSearchController : Controller
@@ -16,8 +17,8 @@ namespace Eastlaws.Controllers
         }
         public ViewResult Index1()
         {
-            var m = GeneralSearchQuery.Search("القتل العمد");
-            return View(m);
+           // var m = GeneralSearchQuery.Search("القتل العمد");
+            return View();
         }
 
         public ViewResult SearchResult(string q = "")
@@ -28,6 +29,14 @@ namespace Eastlaws.Controllers
             var m = GeneralSearchQuery.Search(q);
             ViewBag.mCount = m.Count();
             return View(m);
+        }
+
+        public JsonResult SearchCount(string q = "")
+        {
+         
+
+            var Result = GeneralSearchQuery.SearchCount(q);
+            return Json(new { data = Result });
         }
 
 

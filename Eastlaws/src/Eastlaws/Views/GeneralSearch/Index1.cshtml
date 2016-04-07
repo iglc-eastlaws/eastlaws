@@ -52,7 +52,9 @@
             </div>
         </div>
         <div class="result-search">
-            <p class="total-chart"> <i class="fa fa-line-chart "></i> وجد اجمالي [68] تشريع </p>
+            <p class="total-chart"> <i class="fa fa-line-chart "></i> 
+            <span id="resultcount"></span>
+             </p>
             <div id="searchResult" class="col-lg-9 col-md-8  col-sm-9 list-content">
                 
 
@@ -127,12 +129,12 @@
     </div>
 </div>
 <table>
-    @foreach (var item in Model)
-    {
+    @*@foreach (var item in Model)
+    {*@
         <tr>
          <td></td>
         </tr>
-    }
+    @*}*@
 </table>
 
 
@@ -140,11 +142,15 @@
     (function () {
         $('#btn_search').click(function () {
             $('#searchResult').html('Looooooding');
-            $.get('/GeneralSearch/SearchResult', { 'q': $('#txt_search').val() }, function (data) {
-             
+            var txtSearch = $.trim($('#txt_search').val());
+            if (txtSearch != '') {
+                $.get('/GeneralSearch/SearchResult', { 'q': txtSearch }, function (data) {
                     $('#searchResult').html(data)
-                
-            });
+                });
+                $.get('/GeneralSearch/SearchCount', { 'q': txtSearch }, function (data) {
+                    $('#resultcount').html(data.data)
+                });
+            }
         })
     })()
 </script>

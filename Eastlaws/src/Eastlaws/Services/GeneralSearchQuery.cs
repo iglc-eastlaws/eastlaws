@@ -10,21 +10,21 @@ namespace Eastlaws.Services
 {
     public class GeneralSearchQuery
     {
-        static public SqlConnection _db = new SqlConnection(@"Database=EastlawsGeneralSearch;Server=192.168.1.251;User ID=DevUser;Password=DevUser123456;Asynchronous Processing=true;");
 
         public static List<Data> Search(string q)
         {
-   
-            var orderBy = "ID";//"country desc"; 
-            string textQuery = TextHelpers.Build_and(q, Build_Option.and).ToString();
-            string searchRest = "";// " and progID = 1 ";
-            var PageFrom = 1;
-            var PageTo = 50;
-            return _db.Query<Data>(@"with tbl_search as 
+            using (SqlConnection _db = new DataHelpers2(DataBases.GeneralSearch).GetConnection())
+            {
+                var orderBy = "ID";//"country desc"; 
+                string textQuery = TextHelpers.Build_and(q, Build_Option.and).ToString();
+                string searchRest = "";// " and progID = 1 ";
+                var PageFrom = 1;
+                var PageTo = 50;
+                return _db.Query<Data>(@"with tbl_search as 
                                     (
 	                                    select ROW_NUMBER() over (Order by @orderBy) as RowNum,t1.ID
 	                                    from dbo.Data_1 as t1 where contains(t1.Text,@textQuery) " + searchRest + ""
-                                    + @"),
+                                        + @"),
                                     tbl_IDs as
                                     (
                                         select ID from tbl_search where RowNum between @PageFrom and @PageTo
@@ -37,7 +37,22 @@ namespace Eastlaws.Services
                                         where t1.ID in (select ID from tbl_IDs)
                                     )
                                     select serviceID,datatext,countryID,countryName from tbl_result", new { orderBy, textQuery, PageFrom, PageTo }).ToList();
+            }
         }
+
+
+        public static int SearchCount(string q)
+        {
+            using (SqlConnection _db = new DataHelpers2(DataBases.GeneralSearch).GetConnection())
+            {
+                int Result = 0;
+                string textQuery = TextHelpers.Build_and(q, Build_Option.and).ToString();
+                string searchRest = "";// " and progID = 1 ";
+                Result = _db.Query<int>(@"select COUNT(*)  from dbo.Data_1 as t1 where contains(t1.Text,@textQuery) " + searchRest + "", new { textQuery }).First();
+                return Result;
+            }
+        }
+
 
         public class Data
         {
