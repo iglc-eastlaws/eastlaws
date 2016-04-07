@@ -36,25 +36,26 @@ Create Table EtfSignatories
 Go 
 Create Table EtfClasses
 (
-	ID int Primary Key,
-	ParentID int,
+	ID int not null,
+	ParentID int not null,
 	Text nvarchar(max),
-	MyOrder int
+	MyOrder int,
+	primary key (ID, ParentID)
 )
 Go
 
 Insert Into EtfClasses (ID , ParentID,Text,MyOrder)
- Values (1000,0 , 'ÇáãäÙãÇÊ ÇáÏæáíÉ' , 0)
- ,(1001,0 , 'ÇáÊæŞíÚ' , 1)
- ,(1002,0 , 'ÇáäæÚ' , 2)
- ,(1003,0 , 'ÇáÊÚÇæä ÇáŞÖÇÆì ÇáÏæáì' , '3')
+ Values (1000,0 , N'ÇáãäÙãÇÊ ÇáÏæáíÉ' , 0)
+ ,(1001,0 , N'ÇáÊæŞíÚ' , 1)
+ ,(1002,0 , N'ÇáäæÚ' , 2)
+ ,(1003,0 , N'ÇáÊÚÇæä ÇáŞÖÇÆì ÇáÏæáì' , '3')
  
  GO
 
  
 Create Table EtfClassMaster
 (
-	ID int Primary Key,
+	ID int Primary Key IDENTITY(1,1),
 	ClassID int,
 	EtfID int
 )
@@ -65,4 +66,13 @@ Create Table EtfTash
 	ID int Primary Key,
 	EtfID int,
 	TashID int
+)
+
+
+
+Create Table EtfCountries
+(
+	ID int Primary Key ,
+	Name nvarchar(50),
+	MyOrder int
 )
