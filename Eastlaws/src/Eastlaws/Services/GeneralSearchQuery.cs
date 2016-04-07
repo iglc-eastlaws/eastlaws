@@ -24,7 +24,7 @@ namespace Eastlaws.Services
                                     (
 	                                    select ROW_NUMBER() over (Order by @orderBy) as RowNum,t1.ID
 	                                    from dbo.Data_1 as t1 where contains(t1.Text,@textQuery) " + searchRest + ""
-                                    +@"),
+                                    + @"),
                                     tbl_IDs as
                                     (
                                         select ID from tbl_search where RowNum between @PageFrom and @PageTo
@@ -36,7 +36,7 @@ namespace Eastlaws.Services
                                         CROSS APPLY fn_SearchResult(t1.ProgID, t1.recID) as t2
                                         where t1.ID in (select ID from tbl_IDs)
                                     )
-                                    select * from tbl_result", new { orderBy, textQuery, PageFrom, PageTo }).ToList();
+                                    select serviceID,datatext,countryID,countryName from tbl_result", new { orderBy, textQuery, PageFrom, PageTo }).ToList();
         }
 
         public class Data
