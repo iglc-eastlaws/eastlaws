@@ -31,7 +31,7 @@ namespace Eastlaws.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.Title = UIHelpers.GetPageTitle("أحكام المحاكم العربية العليا ");
+            ViewBag.Title = "أحكام المحاكم العربية العليا ";
             return View();
         }
 
@@ -41,10 +41,13 @@ namespace Eastlaws.Controllers
             FTSPredicate p = new FTSPredicate(Input, FTSSqlModes.AND);
             string FullQuery = AhkamQueryBuilder.GeneralSearch(p.BuildPredicate());
 
+            QueryCacher Cacher = new QueryCacher(1, FullQuery, "General", true);
+            int MyID = Cacher.ID;
+
+
+
+
             return null;
         }
-
-
-
     }
 }

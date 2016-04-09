@@ -9,7 +9,7 @@ namespace Eastlaws.Services
     {
         public static string GeneralSearch(string FTSPredicate)
         {
-            return "Select F.HokmID as ID , Sum(CT.[Rank]) as TextRank From  "
+            return "Select F.HokmID as ID , Sum(CT.[Rank]) as DefaultRank From  "
                 +"\n" + " ContainsTable(AhkamFakarat, *, " + FTSPredicate + ") CT "
                 + "\n" + " Join AhkamFakarat F on F.ID = CT.[Key] "
                 +"\n" + " Group By F.HokmID ";
