@@ -2,8 +2,7 @@
 using Eastlaws.ViewModels.Ahkam;
 using Eastlaws.Infrastructure;
 using Eastlaws.Services;
-
-
+using System.Data.SqlClient;
 
 namespace Eastlaws.Controllers
 {
@@ -37,6 +36,8 @@ namespace Eastlaws.Controllers
 
         public IActionResult Test()
         {
+  
+
             string Input = "القتل العمد مع سبق الإصرار والترصد";
             FTSPredicate p = new FTSPredicate(Input, FTSSqlModes.AND);
             string FullQuery = AhkamQueryBuilder.GeneralSearch(p.BuildPredicate());
