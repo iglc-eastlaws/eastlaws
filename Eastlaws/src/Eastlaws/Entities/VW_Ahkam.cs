@@ -26,6 +26,7 @@ namespace Eastlaws.Entities
             public DateTime? CaseDate { get; set; }
             public string MahkamaName { get; set; }
             public string CountryName { get; set; }
-            public string FullName { get; set; }    }
+            public string FullName { get; set; }
+    }
 }
 
