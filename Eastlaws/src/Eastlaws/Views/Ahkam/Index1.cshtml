@@ -34,6 +34,8 @@
                                             <label for="user_horizontal_sex_male checkbox-inline">
                                                 <input type="radio" class="radio_buttons " id="" name="" value="">
                                                 مطابق للجملة
+                                         
+                                          
                                             </label>
                                         </span>&nbsp;
                                         <label for="user_horizontal_sex_male checkbox-inline">
@@ -684,11 +686,12 @@
 
     (function () {
         var app = angular.module('ahkamApp', []);
-        app.controller('GeneralSearchCtrl', function ($scope, $http) {
+        app.controller('GeneralSearchCtrl', function ($scope, $http)
+        {
             $scope.search = function () {
                 $http.get('/GeneralSearch/SearchResult',
                     { params: { "q": $scope.txtsearch.trim() } }).then(function (d) {
-                        $('#searchResult').html(d.data);
+                         $('#searchResult').html(d.data);              
                     });
             };
         })

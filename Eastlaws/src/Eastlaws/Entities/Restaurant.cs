@@ -15,4 +15,5 @@ namespace Eastlaws.Entities
         public string Name { get; set; }
         public cuisineType cuisine { get; set; }
     }
+
 }

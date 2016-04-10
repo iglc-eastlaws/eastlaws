@@ -3,6 +3,9 @@ using Eastlaws.ViewModels.Ahkam;
 using Eastlaws.Infrastructure;
 using Eastlaws.Services;
 using System.Data.SqlClient;
+using System.Collections;
+using Eastlaws.Entities;
+using Dapper;
 
 namespace Eastlaws.Controllers
 {
@@ -53,7 +56,10 @@ namespace Eastlaws.Controllers
             int PageNo = 1, PageSize = 10;
 
             string PagedQuery = AhkamQueryBuilder.GetOuterQuery(CachedQuery, PageSize , PageNo);
-            
+
+            IEnumerable Ahkam = DataHelpers.GetConnection(DbConnections.Data).Query<VW_Ahkam>(PagedQuery);
+
+
 
 
             return null;

@@ -25,5 +25,6 @@ namespace Eastlaws.Entities
         {
             return _db.Query<Tash>("SELECT  [ID],[Tash_No] ,[Tash_Year],[Text] FROM [Tash_Master] where ID = @ID", new { ID }).SingleOrDefault();
         }
+
     }
 }
