@@ -112,7 +112,7 @@ Select  ItemParentID , MyRank , SortValue From (
 			Join ServicesText ST WITH (NOLOCK) on ST.ID = TT.[Key]
 			Join Ahkam A on A.ID = ST.ItemParentID 		
 			Where ST.ServiceID = 1 And ST.ServiceTypeID = 1 
-			Group By ST.ItemParentID 	, A.CaseNo	
+			Group By ST.ItemParentID, A.CaseNo	
 		) ResultsTableInner  
 ) ResultsTableOuter
 Where Serial > ((@PageNo - 1 ) * @PageSize ) And Serial <= (@PageNo * @PageSize)
@@ -146,10 +146,55 @@ on AhkamFakarat(FakraNo)
 
 
 
+Go 
+
+
+
+Declare @PageNo int = 1 , @PageSize int = 200
+Declare @ResultsPage Table(ItemID int Primary Key  ,  SortValue Sql_Variant )
+Insert Into @ResultsPage 
+Select  ItemID , DefaultRank as SortValue From (
+		Select Row_Number() Over (order By DefaultRank desc) as Serial , *  From 
+		(
+			Select QCR.ItemID , QCR.DefaultRank From EastlawsUsers..QueryCacheRecords QCR With (NoLock) Where QCR.MasterID = 2
+		) ResultsTableInner  
+) ResultsTableOuter
+Where Serial > ((@PageNo - 1 ) * @PageSize ) And Serial <= (@PageNo * @PageSize)
+
+Select A.* From @ResultsPage RP 
+join VW_Ahkam A WITH (NOLOCK)  On A.ID = RP.ItemID 
+Order By RP.SortValue Desc 
+
+
+sp_helptext VW_Ahkam
+
+
+CREATE Function dbo.GetHokmName(@CountryName nvarchar(max) ,   @Ma7kamName nvarchar(max) , @CaseNo int  , @CaseYear int , @CaseDate nvarchar(100) = null )    
+returns nvarchar(4000)      
+as     
+Begin     
+ if(@Ma7kamName = N'أحكام التحكيم التجاري الدولي' OR @Ma7kamName = N'محكمة إستئناف القاهرة' OR  @Ma7kamName = N'أحكام مركز القاهرة الإقليمي للتحكيم')  
+   return isnull (@CountryName + ' - ', '') +  @Ma7kamName +  (isnull (N' الحكم رقم '  + Cast(@CaseNo as varchar) , ' ') ) +  (isnull (N' لسنة '  + Cast(@CaseYear as varchar) + N' قضائية ' , ' ') )    
+   + isnull (N' بتاريخ ' +  @CaseDate + ' ',' ');   
+  
+  return isnull (@CountryName + ' - ', '') +  @Ma7kamName +  (isnull (N' الطعن رقم '  + Cast(@CaseNo as varchar) , ' ') ) +  (isnull (N' لسنة '  + Cast(@CaseYear as varchar) + N' قضائية ' , ' ') )       + isnull (N' بتاريخ ' +  @CaseDate + ' ',' ');    
+
+     
+
+End 
 
 
 
 
+
+
+
+Alter View VW_Ahkam  
+as 
+Select A.* , AM.Name as MahkamaName , C.Name as CountryName  , dbo.GetHokmName(C.Name , AM.Name , A.CaseNo , A.CaseYear  , A.CaseDate ) as FullName
+From Ahkam A With(NoLock)
+join AhkamMahakem AM With(NoLock) on A.MahkamaID = AM.ID
+Join Countries C With(NoLock) on C.ID = A.CountryID 
 
 
 -- [2016-04-03]

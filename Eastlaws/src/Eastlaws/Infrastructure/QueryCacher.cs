@@ -75,6 +75,13 @@ namespace Eastlaws.Infrastructure
             return Info;
         }
 
+        public string GetCachedQuery()
+        {
+            return "Select QCR.ItemID , QCR.DefaultRank From EastlawsUsers..QueryCacheRecords QCR With (NoLock) "
+                +"\n" + "Where QCR.MasterID = " + this.ID;
+        }
+
+
 
 
 
