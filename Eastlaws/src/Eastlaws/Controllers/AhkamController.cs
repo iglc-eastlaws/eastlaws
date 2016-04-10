@@ -34,6 +34,9 @@ namespace Eastlaws.Controllers
             return View();
         }
 
+
+
+
         public IActionResult Test()
         {
   
@@ -54,6 +57,26 @@ namespace Eastlaws.Controllers
 
 
             return null;
+        }
+
+
+
+        public IActionResult Index1()
+        {
+
+            return View();
+        }
+
+        public ViewResult SearchResult(string q = "")
+        {
+            if (q.Trim() == string.Empty) {
+                ViewBag.mCount = 0;
+                return View();
+            }
+
+            var m = GeneralSearchQuery.Search(q);
+            ViewBag.mCount = m.Count;
+            return View(m);
         }
     }
 }

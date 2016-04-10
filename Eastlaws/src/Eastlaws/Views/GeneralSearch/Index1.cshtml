@@ -141,16 +141,16 @@
 <script>
     (function () {
         $('#btn_search').click(function () {
-            $('#searchResult').html('Looooooding');
-            var txtSearch = $.trim($('#txt_search').val());
-            if (txtSearch != '') {
-                $.get('/GeneralSearch/SearchResult', { 'q': txtSearch }, function (data) {
-                    $('#searchResult').html(data)
-                });
-                $.get('/GeneralSearch/SearchCount', { 'q': txtSearch }, function (data) {
-                    $('#resultcount').html(data.data)
-                });
-            }
-        })
+                $('#searchResult').html('Looooooding');
+                var txtSearch = $.trim($('#txt_search').val());
+                if (txtSearch != '') {
+                    $.get('/GeneralSearch/SearchResult', { 'q': txtSearch }, function (data) {
+                        $('#searchResult').html(data);
+                    });
+                    $.get('/GeneralSearch/SearchCount', { 'q': txtSearch }, function (data) {
+                        $('#resultcount').html(data.data);
+                    });
+                }
+            })
     })()
 </script>
