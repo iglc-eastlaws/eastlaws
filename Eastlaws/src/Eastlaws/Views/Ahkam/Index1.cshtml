@@ -689,8 +689,9 @@
         app.controller('GeneralSearchCtrl', function ($scope, $http)
         {
             $scope.search = function () {
-                $http.get('/GeneralSearch/SearchResult',
+                $http.get('/Ahkam/SearchResult',
                     { params: { "q": $scope.txtsearch.trim() } }).then(function (d) {
+                        console.log(d.data);
                          $('#searchResult').html(d.data);              
                     });
             };

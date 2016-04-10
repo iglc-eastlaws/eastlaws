@@ -80,9 +80,22 @@ namespace Eastlaws.Controllers
                 return View();
             }
 
-            var m = GeneralSearchQuery.Search(q);
-            ViewBag.mCount = m.Count;
-            return View(m);
+            FTSPredicate p = new FTSPredicate(q.Trim(), FTSSqlModes.AND);
+            string FullQuery = AhkamQueryBuilder.GeneralSearch(p.BuildPredicate());
+            QueryCacher Cacher = new QueryCacher(1, FullQuery, "General", true);
+            string CachedQuery = Cacher.GetCachedQuery();
+            int PageNo = 1, PageSize = 10;
+            string PagedQuery = AhkamQueryBuilder.GetOuterQuery(CachedQuery, PageSize, PageNo);
+            var Ahkam = DataHelpers.GetConnection(DbConnections.Data).Query<VW_Ahkam>(PagedQuery).AsList();
+            ViewBag.mCount = Ahkam.Count;
+            return View(Ahkam);
+        }
+
+
+        public JsonResult SearchCount(string q = "")
+        {
+            var Result = 3000; //count of rows
+            return Json(new { data = Result });
         }
     }
 }
