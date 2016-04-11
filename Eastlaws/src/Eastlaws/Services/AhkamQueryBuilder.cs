@@ -14,14 +14,68 @@ namespace Eastlaws.Services
     {
         public static string GeneralSearch(string FTSPredicate)
         {
-            return "Select F.HokmID as ID , Sum(CT.[Rank]) as DefaultRank From  "
-                +"\n" + " ContainsTable(AhkamFakarat, *, " + FTSPredicate + ") CT "
-                + "\n" + " Join AhkamFakarat F on F.ID = CT.[Key] "
-                +"\n" + " Group By F.HokmID ";
+            return @"Select F.HokmID as ID , Sum(CT.[Rank]) as DefaultRank From  
+                   ContainsTable(AhkamFakarat, *, " + FTSPredicate + @") CT 
+                   Join AhkamFakarat F on F.ID = CT.[Key] 
+                   Group By F.HokmID ";
         }
-        public static string CustomSearch(string FTSPredicate)
-        {
-            return "";
+        public static string CustomSearch(FTSPredicate PredicateFakarat , string FakaratCondition , string CountryIDs , string Ma7akemIds , string CaseNo , string CaseYear , string PartNo 
+            , string PageNo , string OfficeYear , string IFAgree , string OfficeSuffix , string CaseDatefrom , string CaseDateTo )
+        {   
+
+            string[] Conditions = {
+                    new Range(CountryIDs, "A.CountryID").GetCondition()
+                    ,new Range(Ma7akemIds, "A.MahkamaID ").GetCondition()
+                    ,new Range(OfficeYear, "A.OfficeYear").GetCondition()
+                    ,new Range(CaseNo, "A.CaseNo").GetCondition()
+                    ,new Range(CaseYear, "A.CaseYear").GetCondition()
+                    ,new Range(PartNo, "A.PartNo").GetCondition()
+                    ,new Range(PageNo, "A.PageNo").GetCondition()
+                    ,new Range(IFAgree, "A.IfAgree").GetCondition()
+                    ,new Range(OfficeSuffix, "A.OfficeSuffix").GetCondition()
+            };
+
+            StringBuilder Builder = new StringBuilder();
+            Builder.Append(@"Select A.ID as ID  ,  0 as DefaultRank From Ahkam A Where (1 = 1)");
+            for (int i = 0;i < Conditions.Length; i++)
+            {
+                string CurrentCondition = Conditions[i];
+                if (!string.IsNullOrWhiteSpace(CurrentCondition))
+                {
+                    Builder.Append("\n" + " And " + CurrentCondition);
+                }
+            }
+            DateTime dtCaseDateFrom, dtCaseDateTo;
+            if (DateTime.TryParseExact(CaseDatefrom , DataHelpers.ClientDateFormats , null, System.Globalization.DateTimeStyles.AllowWhiteSpaces , out dtCaseDateFrom))
+            {
+                Builder.Append("\n And A.CaseDate >= " + "'" + dtCaseDateFrom.ToString("yyyy-MM-dd") + "'");
+            }
+            if (DateTime.TryParseExact(CaseDateTo, DataHelpers.ClientDateFormats, null, System.Globalization.DateTimeStyles.AllowWhiteSpaces, out dtCaseDateTo))
+            {
+                Builder.Append("\n And A.dtCaseDateTo >= " + "'" + dtCaseDateFrom.ToString("yyyy-MM-dd") + "'");
+            }
+
+
+            // Adding Text Search From Fakarat Table 
+            if(PredicateFakarat != null && PredicateFakarat.IsValid)
+            {
+                string FakaratAndClause = "";
+                if (!string.IsNullOrWhiteSpace(FakaratCondition))
+                {
+
+                }
+                Builder.AppendFormat(@"
+                                Intersect
+                                Select HokmID as ID , 0 as DefaultRank From AhkamFakarat
+                                Where Contains(* , {0}) {1}
+                                Group By HokmID " 
+                , PredicateFakarat.BuildPredicate() , FakaratAndClause);
+            }
+
+
+
+
+            return Builder.ToString();
         }
 
         private static string GetFakraQueryForAdvancedSearch(FTSPredicate Predicate, string FakraNumCondition)
@@ -35,9 +89,8 @@ namespace Eastlaws.Services
             return null;
         }
 
-        public static string AdvancedSearch(bool AllElementsCombined , FTSPredicate PredicateMabade2 , FTSPredicate PredicateWakae3 , FTSPredicate PredicateDestoreya 
-            , FTSPredicate PredicateHay2a , FTSPredicate PredicateMantoo2 , FTSPredicate PredicateHaytheyat
-            )
+        public static string AdvancedSearch(bool AllElementsCombined , FTSPredicate PredicateMabade2 , FTSPredicate PredicateWakae3
+            , FTSPredicate PredicateDestoreya , FTSPredicate PredicateHay2a , FTSPredicate PredicateMantoo2 , FTSPredicate PredicateHaytheyat)
         {
     
         
@@ -69,16 +122,13 @@ namespace Eastlaws.Services
             }
             else
             {
-                builder.Remove(builder.Length - Operator.Length, Operator.Length);
-                
+                builder.Remove(builder.Length - Operator.Length, Operator.Length);                
             }
-
             return builder.ToString();
         }
 
         public static string MadaSearch(int?  CountryID, string TashNo, string TashYear, string MadaNo , string TashTextFilter , bool SearchInTashTile = true , bool SearchInTashMawad = true)
         {
-
             return "";
         }
 
@@ -86,25 +136,19 @@ namespace Eastlaws.Services
         {
             StringBuilder builder = new StringBuilder();
             // Creating the temp table and adding the current Page Data
+            builder.AppendFormat(@"Declare @PageNo int ={0} , @PageSize int = {1} 
+                                   Declare @ResultsPage Table(ItemID int Primary Key  ,  SortValue Sql_Variant )
+                                   Insert Into @ResultsPage 
+                                   Select  ItemID , DefaultRank as SortValue From 
+                                   (
+                                       Select Row_Number() Over (order By DefaultRank desc) as Serial , *  From 
+                                       (
+                                            {2}
+                                       ) ResultsTableInner  
+                                   ) ResultsTableOuter 
+                                   Where Serial > ((@PageNo - 1) * @PageSize) And Serial <= (@PageNo * @PageSize)"
+        , PageNo  , PageSize , InnerQuery); 
 
-            builder.AppendFormat("Declare @PageNo int ={0} , @PageSize int = {1}"  , PageNo , PageSize);
-            builder.Append("\n");
-            builder.Append("Declare @ResultsPage Table(ItemID int Primary Key  ,  SortValue Sql_Variant )");
-            builder.Append("\n");
-            builder.Append("Insert Into @ResultsPage ");
-            builder.Append("\n");
-            builder.Append("Select  ItemID , DefaultRank as SortValue From (");
-            builder.Append("\n");
-            builder.Append("Select Row_Number() Over (order By DefaultRank desc) as Serial , *  From ");
-            builder.Append("\n");
-            builder.Append("(");
-            builder.Append("\n");
-            builder.Append(InnerQuery);
-            builder.Append(") ResultsTableInner  ");
-            builder.Append("\n");
-            builder.Append(") ResultsTableOuter ");
-            builder.Append("\n");
-            builder.Append("Where Serial > ((@PageNo - 1) * @PageSize) And Serial <= (@PageNo * @PageSize)");
 
             builder.Append("\n");
 
@@ -114,8 +158,7 @@ namespace Eastlaws.Services
                 + "Order By RP.SortValue Desc ");
 
 
-
-
+                        
             return builder.ToString();
         }
     }

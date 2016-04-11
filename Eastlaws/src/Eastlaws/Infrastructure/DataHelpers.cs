@@ -8,13 +8,14 @@ namespace Eastlaws.Infrastructure
     {
         Data = 0 , Users = 1 , GeneralSearch = 2
     }
-
-
-
-    // recomanded to use non static class in booling 
-    // https://msdn.microsoft.com/en-us/library/8xx3tyca(v=vs.110).aspx
     public class DataHelpers
     {
+        public static string[] ClientDateFormats =
+        {
+            "dd/MM/yyyy"
+            ,"dd-MM-yyyy"
+        };
+
         public static SqlConnection GetConnection(DbConnections data)
         {
             string DatabaseName = "";
@@ -29,13 +30,12 @@ namespace Eastlaws.Infrastructure
                 case DbConnections.GeneralSearch:
                     DatabaseName = "EastlawsGeneralSearch";
                     break;
-
             }
-
             string ConString = "Server=192.168.1.251;Database="+ DatabaseName + ";User ID=DevUser;Password=DevUser123456;";
             SqlConnection con = new SqlConnection(ConString);
             return con;
         }
+
     }
 
 

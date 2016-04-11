@@ -42,7 +42,18 @@ namespace Eastlaws.Controllers
 
         public IActionResult Test()
         {
-  
+
+
+            var x1 = new Range("1,2,3,4,5,6,7,8,9,0", "A.HokmNo").GetCondition();
+            var x2 = new Range("1,2,3,4,5,6,7,8,9,", "A.HokmNo").GetCondition();
+            var x3 = new Range("1,,,,", "A.HokmNo").GetCondition();
+            var x4 = new Range("1-5", "A.HokmNo").GetCondition();
+            var x5 = new Range("11-100", "A.HokmNo").GetCondition();
+            var x6 = new Range("11-", "A.HokmNo").GetCondition();
+
+
+
+
 
             string Input = "القتل العمد مع سبق الإصرار والترصد";
             Input = "سرقة بالإكراه ";

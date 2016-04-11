@@ -13,35 +13,34 @@ namespace Eastlaws.Infrastructure
 
     public class FTSPredicate
     {
-        private string m_Input = "";
+
 
         //Escaped : (' , * ,  ! , " , # , ; , " , . )
         private static Regex m_RgxSpecialChars = new Regex("['!\\*#;\\\"@]", RegexOptions.Compiled);
 
 
 
-        public FTSSqlModes SqlMode { get; set; }
-        public bool IsValid { get; private set; }
+        public FTSSqlModes SqlMode { get; set; } = FTSSqlModes.None;
+        public bool IsValid { get; private set; } = false;
         public string Output { get; private set; }
 
         public string Input
-        {
-            get { return m_Input; }
-        }
+        { get; }
+        
 
         public FTSPredicate(string Input)
         {
-            m_Input = Input;
-            this.SqlMode = FTSSqlModes.None;
+            this.Input = Input;
+ 
         }
         public FTSPredicate(string Input , FTSSqlModes Mode)
         {
-            m_Input = Input;
+            this.Input = Input;
             SqlMode = Mode;
         }
         public FTSPredicate(string Input , MatchType MatchingType)
         {
-            m_Input = Input;
+            this.Input = Input;
             SqlMode = GetSQLMode(MatchingType);
         }
 
@@ -72,7 +71,7 @@ namespace Eastlaws.Infrastructure
             else
             {
                 string Operator =  " " + Mode.ToString()  + " ";               
-                string[] Vals = m_Input.Split(new char[] { ' '}  , StringSplitOptions.RemoveEmptyEntries);
+                string[] Vals = Input.Split(new char[] { ' '}  , StringSplitOptions.RemoveEmptyEntries);
                 retValue = " '" + string.Join( Operator , Vals) + "' ";
             }          
             return retValue;
