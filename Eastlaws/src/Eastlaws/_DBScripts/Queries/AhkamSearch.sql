@@ -148,6 +148,9 @@ on AhkamFakarat(FakraNo)
 
 Go 
 
+Select Top 100 * From VW_Ahkam
+
+
 
 
 Declare @PageNo int = 1 , @PageSize int = 200
@@ -225,7 +228,7 @@ Group By A.HokmID
 
 Intersect  -- Union 
 
-Select HokmID as ID  , 0 as TextRank  From AhkamFakarat  A 
+Select HokmID as ID  , 0 as DefaultRank  From AhkamFakarat  A 
 Where FakraNo  =  0 And Contains(A.Text , 'برئاسة')
 Group By A.HokmID
 
@@ -248,7 +251,14 @@ Order By A.CaseDate Desc , TextRank Desc
 
 
 -- Custom Search Without Text 
-Select A.ID as ID  ,  0 as TextRank From
- Ahkam A 
+Select A.ID as ID  ,  0 as TextRank From Ahkam A 
 Where A.CaseNo Between 10 And 25
 Order By A.CaseDate Desc , TextRank Desc 
+
+
+Select A.ID as ID  ,  0 as DefaultRank From Ahkam A Where (1 = 1)
+And CountryID = 1 
+
+
+Select A.MahkamaID  , A.CountryID , A.CaseNo , A.CaseYear , A.OfficeYear , A.OfficeSuffix, A.PartNo  , A.PageNo , A.CaseDate  From Ahkam  A
+Where MahkamaID in ()
