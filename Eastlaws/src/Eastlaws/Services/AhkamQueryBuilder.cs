@@ -56,6 +56,23 @@ namespace Eastlaws.Services
             }
 
 
+            // Adding Text Search From Fakarat Table 
+            if(PredicateFakarat != null && PredicateFakarat.IsValid)
+            {
+                string FakaratAndClause = "";
+                if (!string.IsNullOrWhiteSpace(FakaratCondition))
+                {
+
+                }
+                Builder.AppendFormat(@"
+                                Intersect
+                                Select HokmID as ID , 0 as DefaultRank From AhkamFakarat
+                                Where Contains(* , {0}) {1}
+                                Group By HokmID " 
+                , PredicateFakarat.BuildPredicate() , FakaratAndClause);
+            }
+
+
 
 
             return Builder.ToString();
