@@ -86,6 +86,7 @@ namespace Eastlaws.Services
         {
             StringBuilder builder = new StringBuilder();
             // Creating the temp table and adding the current Page Data
+
             builder.AppendFormat("Declare @PageNo int ={0} , @PageSize int = {1}"  , PageNo , PageSize);
             builder.Append("\n");
             builder.Append("Declare @ResultsPage Table(ItemID int Primary Key  ,  SortValue Sql_Variant )");

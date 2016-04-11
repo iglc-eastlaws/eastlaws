@@ -88,6 +88,7 @@ namespace Eastlaws.Controllers
             string PagedQuery = AhkamQueryBuilder.GetOuterQuery(CachedQuery, PageSize, PageNo);
             var Ahkam = DataHelpers.GetConnection(DbConnections.Data).Query<VW_Ahkam>(PagedQuery).AsList();
             ViewBag.mCount = Ahkam.Count;
+
             return View(Ahkam);
         }
 
@@ -97,5 +98,6 @@ namespace Eastlaws.Controllers
             var Result = 3000; //count of rows
             return Json(new { data = Result });
         }
+
     }
 }
