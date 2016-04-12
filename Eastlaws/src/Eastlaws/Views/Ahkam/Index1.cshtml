@@ -53,9 +53,19 @@
                 <div class="paging-search text-center" ng-controller="pagesCtrl">
 
                     <h1 id="pagenumber"></h1>
-                    <c-pageing pages-count="46"  limit-no="10" current-page="mypage"  on-getpage="getmypage()"> </c-pageing>
+                    <c-pageing ng-show="pageCount > 1" 
+                               on-init="initPaging"
+                               pages-count="{{pageCount}}"
+                               limit-no="10"
+                               current-page="mypage"
+                               on-getpage="getmypage()">
 
+                    </c-pageing>
+
+                   
                 </div>
+              
+ 
 
             </div>
 
@@ -71,19 +81,24 @@
 
 <script>
 
+    // tomorrow Task
+    //convert rootscope to service
+
     (function () {
         var app = angular.module('ahkamApp', ['sharedModule']);
         app
-        .controller('ahkamCtrl', function () { })
-        .controller('GeneralSearchCtrl', function ($scope, $http, SearchData) {
+        .controller('ahkamCtrl', function ($scope, SearchData) {
+        })
+        .controller('GeneralSearchCtrl', function ($scope, $http, SearchData, $rootScope) {
             $scope.Inputs = {};
             $scope.Inputs.textType = 1; //default radio checked
 
             $scope.search = function () {
                 SearchData.GeneralSearchInputs = $scope.Inputs;
-                SearchData.pageNumber = 1;
+                $rootScope.currentPage = 1;
                 SearchData.searchType = 1; // GeneralSearch
                 SearchData.GetSearch();
+
             };
         })
         .controller('AdvancedSearchCtrl', function ($scope, SearchData) {
@@ -96,35 +111,40 @@
 
         })
         .controller('SpecialSearchCtrl', function () { })
-        .controller('pagesCtrl', function ($scope, SearchData) {
-            $scope.mypage = 1;
-            $scope.getmypage = function () {;
-                SearchData.pageNumber = $scope.mypage;
-                SearchData.GetSearch();
+        .controller('pagesCtrl', function ($scope, SearchData, $rootScope) {
+
+            $scope.getmypage = function () {
+                $rootScope.currentPage = $scope.mypage;
+                if ($rootScope.currentPage !== undefined) {
+                    SearchData.GetSearch();
+                }
             }
             $scope.getmypage();
         });
 
 
-        app
-        .factory('SearchData', function ($http) {
+        app.factory('SearchData', function ($http, $rootScope) {
             var data = {};
             data.SearchInputs = {};   //all search factories
             data.GeneralSearchInputs = {};
             data.AdvancedSearchInputs = {};
             data.searchType = 1;      //GeneralSearch 1   advancedserch 2  .... etc
-            data.pageNumber = 1;
 
             data.GetSearch = function () {
                 if (data.searchType === 1) // GeneralSearch
                 {
-                    console.log(data.GeneralSearchInputs);
                     let txtsearch = data.GeneralSearchInputs.text;
-                   // console.log(txtsearch + '   ' + data.searchType + '   ' + data.pageNumber);
+                    console.log(data.GeneralSearchInputs)
                     $http.get('/Ahkam/SearchResult',
                         { params: { "q": txtsearch } }).then(function (d) {
                             $('#searchResult').html(d.data);
+                            $('#pagenumber').html('current Page is : ' + $rootScope.currentPage);
+                            if ($rootScope.currentPage == 1)
+                            {
+                                InitPageingControl(28)
+                            }
                         });
+
                 }
                 else if (data.searchType === 2) // AdvancedSearch
                 {
@@ -137,6 +157,15 @@
                 }
             };
 
+
+
+            function InitPageingControl(pagecount)
+            {
+                if (pagecount > 1) {
+                    $rootScope.pageCount = pagecount;
+                    $rootScope.$broadcast('initPaging'); // re_init pageing controll
+                }
+            }
             return data;
         });
 
