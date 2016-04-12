@@ -1,7 +1,7 @@
 ﻿ 
 (function () { 
     var  sharedModule = angular.module('sharedModule', []);
-    sharedModule.directive('cPageing', function () {
+    sharedModule.directive('cPageing', function ($rootScope) {
         /* <c-pageing pages-count="250" limit-no="10" current-page="mypage" on-getpage="getmypage()">
           </c-pageing> */
  
@@ -15,13 +15,14 @@
                     '<li ng-class="{disabled : currentPage == pagesCount}"><a href="javascript:;" ng-click="getNextPage()">»</a></li>' +
                 '</ul>',
         replace: true,
+        transclude: 'element',
         scope: {
             onGetpage: '&',
             limitNo: '@',
             pagesCount: '@',
             currentPage: '='
         },
-        link: function (scope, elem) {
+        link: function (scope, elem, attr, ctrl, transclude) {
 
             scope.totalPagesCount = function () {
                 pagesArray = [];
@@ -64,6 +65,7 @@
             //        scope.currentPage = 1;
             //    }
             //}
+
             scope.getPrevPage = function () {
                 if (scope.currentPage > 1) {
                     scope.currentPage -= 1;
@@ -75,6 +77,15 @@
                     scope.currentPage += 1;
                 }
             }
+
+            //reset directive
+            $rootScope.$on(attr.onInit, function () {
+                scope.currentPage = 1;
+                transclude(function (clone) {
+                    elem.parent().append(clone);
+                });
+            });
+
         }
     };
 })

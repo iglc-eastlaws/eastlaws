@@ -53,9 +53,19 @@
                 <div class="paging-search text-center" ng-controller="pagesCtrl">
 
                     <h1 id="pagenumber"></h1>
-                    <c-pageing pages-count="46"  limit-no="10" current-page="mypage"  on-getpage="getmypage()"> </c-pageing>
+                    <c-pageing ng-show="pageCount > 1" 
+                               on-init="initPaging"
+                               pages-count="{{pageCount}}"
+                               limit-no="10"
+                               current-page="mypage"
+                               on-getpage="getmypage()">
 
+                    </c-pageing>
+
+                   
                 </div>
+              
+ 
 
             </div>
 
@@ -71,57 +81,91 @@
 
 <script>
 
+    // tomorrow Task
+    //convert rootscope to service
+
     (function () {
         var app = angular.module('ahkamApp', ['sharedModule']);
         app
-        .controller('ahkamCtrl', function () { })
-        .controller('GeneralSearchCtrl', function ($scope, $http, SearchResult) {
+        .controller('ahkamCtrl', function ($scope, SearchData) {
+        })
+        .controller('GeneralSearchCtrl', function ($scope, $http, SearchData, $rootScope) {
+            $scope.Inputs = {};
+            $scope.Inputs.textType = 1; //default radio checked
+
             $scope.search = function () {
-                //$http.get('/Ahkam/SearchResult',
-                //    { params: { "q": $scope.txtsearch.trim() } }).then(function (d) {
-                //        console.log(d.data);
-                //        $('#searchResult').html(d.data);
-                //    });
-                SearchResult.data.inputSearch.text = $scope.txtsearch;
-                SearchResult.simpleSearch(1);
-                SearchResult.searchType = 1; // set search type is simple
+                SearchData.GeneralSearchInputs = $scope.Inputs;
+                $rootScope.currentPage = 1;
+                SearchData.searchType = 1; // GeneralSearch
+                SearchData.GetSearch();
+
             };
         })
-        .controller('AdvancedSearchCtrl', function () { })
-        .controller('SpecialSearchCtrl', function () { })
-        .controller('pagesCtrl', function ($scope, SearchResult) {
-
-            $scope.mypage = 1;
-            $scope.getmypage = function () {
-                $('#pagenumber').html('current Page is : ' + $scope.mypage);
-                if (SearchResult.searchType == 1) {
-                    SearchResult.simpleSearch($scope.mypage);
-                }
+        .controller('AdvancedSearchCtrl', function ($scope, SearchData) {
+            $scope.search = function () {
+                SearchData.AdvancedSearchInputs.text = $scope.txtsearchMabdaa;
+                SearchData.pageNumber = 1;
+                SearchData.searchType = 2; // AdvancedSearch
+                SearchData.GetSearch();
             }
 
-            $scope.getmypage();
+        })
+        .controller('SpecialSearchCtrl', function () { })
+        .controller('pagesCtrl', function ($scope, SearchData, $rootScope) {
 
+            $scope.getmypage = function () {
+                $rootScope.currentPage = $scope.mypage;
+                if ($rootScope.currentPage !== undefined) {
+                    SearchData.GetSearch();
+                }
+            }
+            $scope.getmypage();
         });
 
 
-        app
-        .factory('SearchResult', function ($http) {
+        app.factory('SearchData', function ($http, $rootScope) {
             var data = {};
-           
-            data.searchType = 1; //1 simplesearch 2 advancedserch 3 .... etc
-            data.inputSearch = {};
-            data.inputSearch.text = '';
-            data.simpleSearch = function (page) {
-                console.log(data.inputSearch)
-                var txtsearch = 'القتل العمد'; // data.inputSearch.text;
-                $http.get('/Ahkam/SearchResult',
-                    { params: { "q": txtsearch } }).then(function (d) {
-                        //console.log(d.data);
-                        $('#searchResult').html(d.data);
-                    });
-              //  alert('get data of page ' + page + ' search ' + txtsearch);
+            data.SearchInputs = {};   //all search factories
+            data.GeneralSearchInputs = {};
+            data.AdvancedSearchInputs = {};
+            data.searchType = 1;      //GeneralSearch 1   advancedserch 2  .... etc
+
+            data.GetSearch = function () {
+                if (data.searchType === 1) // GeneralSearch
+                {
+                    let txtsearch = data.GeneralSearchInputs.text;
+                    console.log(data.GeneralSearchInputs)
+                    $http.get('/Ahkam/SearchResult',
+                        { params: { "q": txtsearch } }).then(function (d) {
+                            $('#searchResult').html(d.data);
+                            $('#pagenumber').html('current Page is : ' + $rootScope.currentPage);
+                            if ($rootScope.currentPage == 1)
+                            {
+                                InitPageingControl(28)
+                            }
+                        });
+
+                }
+                else if (data.searchType === 2) // AdvancedSearch
+                {
+                    let txtsearch = data.AdvancedSearchInputs.text;
+                   // console.log(txtsearch + ' >>  ' + data.searchType + '   ' + data.pageNumber);
+                    $http.get('/Ahkam/SearchResult',
+                        { params: { "q": txtsearch } }).then(function (d) {
+                            $('#searchResult').html(d.data);
+                        });
+                }
             };
 
+
+
+            function InitPageingControl(pagecount)
+            {
+                if (pagecount > 1) {
+                    $rootScope.pageCount = pagecount;
+                    $rootScope.$broadcast('initPaging'); // re_init pageing controll
+                }
+            }
             return data;
         });
 
