@@ -53,7 +53,7 @@ section{ margin:0 0 20px;}
 .search .btn-success, .news-butt, .butt-yellow{background-image:  linear-gradient(to bottom, #d9b163 0px, #f0c675 100%); border-color:#d9b672;color: #ffffff; font-family:"Droid Arabic Kufi";}
 .search .btn-success:hover, .search .btn-success:focus .news-butt:hover, .input-group-btn > .btn-hover{ background-color: #E2C894!important; color:#000;}
 .description{font-size:1.2em; color:#47423d; font-family:"Droid Arabic Kufi";}
-.new-eastlaws{ margin-top:0px;}
+.new-eastlaws{ margin-top:40px;}
 .new-eastlaws h1{ text-align:center; color:#daae4f; text-shadow:0 1px 0px rgba(0, 0, 0, 0.6); font-size:2em; margin-top:0px;}
 .new-eastlaws .description{ text-align:center;margin-top:20px; font-size:1em;}
 .new-eastlaws article{overflow:hidden; margin-bottom:20px; padding-bottom:20px;transition:400ms ease all; direction:rtl;}
@@ -210,7 +210,7 @@ font-family: Raleway;
 .links-footer li:hover a {width:95%;margin-left:1%;/*box-shadow: inset 300px 0 300px -300px rgba(218, 174, 79, 0.6);*/color:#D8AE4F;}
 
 .input-group .form-control:first-child, .input-group-addon:first-child, .input-group-btn:first-child > .btn, .input-group-btn:first-child > .dropdown-toggle, .input-group-btn:last-child > .btn:not(:last-child):not(.dropdown-toggle), .input-group .form-control:last-child, .input-group-addon:last-child, .input-group-btn:last-child > .btn, .input-group-btn:last-child > .dropdown-toggle, .input-group-btn:first-child > .btn:not(:first-child){ border-radius:0 0 0;}
-/*.slider{padding:0px;}
+.slider{padding:0px;}
 .list-menu{  border:1px solid #D9B672; padding:0px; background-color:#FFF;}
 .list-menu h2{ background-color:#4D4A4A; color:#FFF; font-size:1em; margin:0px; padding-right:15px; line-height:3em;}
 .list-menu ul{ list-style:none outside none; margin:10px 2px; padding:0px;}
@@ -220,7 +220,7 @@ font-family: Raleway;
 .list-menu .manzoma .manzoma-content h3{ padding:0 20px 5px 0; margin:5px;font-size:0.8em;}
 .list-menu .manzoma .manzoma-content h3 a{  color:#4D4A4A; text-decoration:none;}
 .list-menu .manzoma .manzoma-content h3 a span{ position:absolute; padding:2px 0 0; right:-15px; top:8px; color:#D9B672; text-align:center; width:32px; height:30px; background-color:#D9B672; color:#fff;}
-.list-menu .manzoma .manzoma-content h3 a:hover{ color:#D9B672;}*/
+.list-menu .manzoma .manzoma-content h3 a:hover{ color:#D9B672;}
 
 .mCS-dir-rtl > .mCSB_inside > .mCSB_container{ margin-left:10px;}
 .inside{ padding:0px;}
@@ -228,7 +228,7 @@ font-family: Raleway;
 /*Sidebar*/
 .sidebar{ position:relative;font-family: "Droid Arabic Kufi";}
 /*General Search*/
-nav.sidebar.navbar {border-radius: 0px;margin-top: 10px;}
+nav.sidebar.navbar {border-radius: 0px;}
 nav.sidebar, .main{-webkit-transition: margin 200ms ease-out; -moz-transition: margin 200ms ease-out; -o-transition: margin 200ms ease-out; transition: margin 200ms ease-out;}
 .main{padding: 10px 0 0 5px;}
 /* .....NavBar: Icon only with coloring/layout.....*/
