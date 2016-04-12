@@ -12,13 +12,18 @@ namespace Eastlaws.Services
 {
     public class AhkamQueryBuilder
     {
-        public static string GeneralSearch(string FTSPredicate)
+        public static string GeneralSearch(FTSPredicate Predicate)
         {
-            return @"Select F.HokmID as ID , Sum(CT.[Rank]) as DefaultRank From  
-                   ContainsTable(AhkamFakarat, *, " + FTSPredicate + @") CT 
+            if (Predicate.IsValid)
+            {
+                return @"Select F.HokmID as ID , Sum(CT.[Rank]) as DefaultRank From  
+                   ContainsTable(AhkamFakarat, *, " + Predicate.BuildPredicate() + @") CT 
                    Join AhkamFakarat F on F.ID = CT.[Key] 
                    Group By F.HokmID ";
+            }
+            return null;
         }
+
         public static string CustomSearch(FTSPredicate PredicateFakarat , string FakaratCondition , string CountryIDs , string Ma7akemIds , string CaseNo , string CaseYear , string PartNo 
             , string PageNo , string OfficeYear , string IFAgree , string OfficeSuffix , string CaseDatefrom , string CaseDateTo )
         {   
@@ -37,22 +42,28 @@ namespace Eastlaws.Services
 
             StringBuilder Builder = new StringBuilder();
             Builder.Append(@"Select A.ID as ID  ,  0 as DefaultRank From Ahkam A Where (1 = 1)");
+
+            int ConditionsCount = 0;
+
             for (int i = 0;i < Conditions.Length; i++)
             {
                 string CurrentCondition = Conditions[i];
                 if (!string.IsNullOrWhiteSpace(CurrentCondition))
                 {
                     Builder.Append("\n" + " And " + CurrentCondition);
+                    ConditionsCount++;
                 }
             }
             DateTime dtCaseDateFrom, dtCaseDateTo;
             if (DateTime.TryParseExact(CaseDatefrom , DataHelpers.ClientDateFormats , null, System.Globalization.DateTimeStyles.AllowWhiteSpaces , out dtCaseDateFrom))
             {
                 Builder.Append("\n And A.CaseDate >= " + "'" + dtCaseDateFrom.ToString("yyyy-MM-dd") + "'");
+                ConditionsCount++;
             }
             if (DateTime.TryParseExact(CaseDateTo, DataHelpers.ClientDateFormats, null, System.Globalization.DateTimeStyles.AllowWhiteSpaces, out dtCaseDateTo))
             {
                 Builder.Append("\n And A.dtCaseDateTo >= " + "'" + dtCaseDateFrom.ToString("yyyy-MM-dd") + "'");
+                ConditionsCount++;
             }
 
 
@@ -70,6 +81,7 @@ namespace Eastlaws.Services
                                 Where Contains(* , {0}) {1}
                                 Group By HokmID " 
                 , PredicateFakarat.BuildPredicate() , FakaratAndClause);
+                ConditionsCount++;
             }
 
 

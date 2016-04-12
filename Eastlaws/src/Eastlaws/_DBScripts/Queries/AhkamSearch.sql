@@ -293,3 +293,59 @@ select * from sys.dm_fts_parser('"قتل"',
 NULL,--No stop words
 0)--Accent Insensitive
 
+
+Go 
+
+
+
+Create function dbo.GetAhkamFakraTitle(@FakraNo int)
+returns nvarchar(100)
+as 
+Begin 
+	return Case
+				When @FakraNo = 0 then N'الهيئة'
+				When @FakraNo = -1 then N'الوقائع'
+				When @FakraNo = -2 then N'منطوق الحكم'
+				When @FakraNo = -3 then N'حيثيات الحكم'
+				When @FakraNo = -50 then N'الدستورية'
+			Else 
+				Cast(@FakraNo as nvarchar(100))
+			End
+End
+
+Go 
+
+Create Function dbo.GetAhkamFakraOrder(@FakraNo int )
+returns int 
+as 
+Begin 
+	return Case 				 
+				When @FakraNo   = -1  then 10001 
+				When @FakraNo   = -2  then 10002 
+				When @FakraNo   = -3  then 10003
+				When @FakraNo   = -50 then 10004
+
+	Else 
+		@FakraNo 
+	End
+End
+
+Go 
+
+
+
+Create View VW_AhkamFakarat 
+as 
+Select AF.* 
+, dbo.GetAhkamFakraTitle(AF.FakraNo) as Title 
+,dbo.GetAhkamFakraOrder(AF.FakraNo) as MyOrder 
+From AhkamFakarat AF
+
+
+
+Go 
+
+
+
+
+
