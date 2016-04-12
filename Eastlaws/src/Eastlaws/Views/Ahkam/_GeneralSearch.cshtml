@@ -2,38 +2,38 @@
     Layout = null;
 }
 <div class="col-lg-10 col-md-12">
-    <div class="search-form form-horizontal">
+    <form class="search-form form-horizontal" name="form" ng-submit="search()" novalidate>
         <div class="form-group radio_buttons optional">
             <label class="radio_buttons  col-sm-3 "> </label>
             <div class="col-sm-9">
                 <span class="">
                     <label for="user_horizontal_sex_male checkbox-inline">
-                        <input type="radio" class="radio_buttons " id="" name="" value="">
+                        <input ng-model="Inputs.textType" type="radio" class="radio_buttons " name="searchtype" value="1">
                         مطابق للجملة
-
-
                     </label>
                 </span>&nbsp;
                 <label for="user_horizontal_sex_male checkbox-inline">
-                    <input type="radio" class="radio_buttons " id="" name="" value="">
+                    <input type="radio" ng-model="Inputs.textType" class="radio_buttons" name="searchtype" value="2">
                     مطابق لجميع الكلمات
                 </label>
             </div>
         </div>
         <div class="form-group  ">
             <label for="horizontal_search" class="col-lg-3 col-sm-3 control-label bg-color title">
-                <!--<abbr title="required">*</abbr>-->
+                <abbr ng-show="form.$submitted && form.text.$error.required" title="required">*</abbr>
                 بحث عام :
             </label>
             <div class="col-sm-9 search">
                 <div class="input-group">
-                    <input ng-model="txtsearch" type="text" placeholder="إبحث في أكثر من 15,341 مليون معلومة قانونية" class="form-control">
+                    <input ng-model="Inputs.text" name="text" type="text" placeholder="" class="form-control" required />
                     <span class="input-group-btn">
-                        <button ng-click="search()" type="button" class="btn btn-success">إبحث</button>
+                        <button type="submit" class="btn btn-success"
+                                ng-disabled="form.text.$error.required">إبحث</button>
+                 
                     </span>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
 </div>
 <hr class="spacer" />

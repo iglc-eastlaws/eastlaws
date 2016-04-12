@@ -76,14 +76,25 @@
         app
         .controller('ahkamCtrl', function () { })
         .controller('GeneralSearchCtrl', function ($scope, $http, SearchData) {
+            $scope.Inputs = {};
+            $scope.Inputs.textType = 1; //default radio checked
+
             $scope.search = function () {
-                SearchData.SearchInputs.text = $scope.txtsearch;
+                SearchData.GeneralSearchInputs = $scope.Inputs;
                 SearchData.pageNumber = 1;
                 SearchData.searchType = 1; // GeneralSearch
                 SearchData.GetSearch();
             };
         })
-        .controller('AdvancedSearchCtrl', function () { })
+        .controller('AdvancedSearchCtrl', function ($scope, SearchData) {
+            $scope.search = function () {
+                SearchData.AdvancedSearchInputs.text = $scope.txtsearchMabdaa;
+                SearchData.pageNumber = 1;
+                SearchData.searchType = 2; // AdvancedSearch
+                SearchData.GetSearch();
+            }
+
+        })
         .controller('SpecialSearchCtrl', function () { })
         .controller('pagesCtrl', function ($scope, SearchData) {
             $scope.mypage = 1;
@@ -98,21 +109,32 @@
         app
         .factory('SearchData', function ($http) {
             var data = {};
-            data.SearchInputs = {}; //all search factories
-             
-            data.searchType = 1;   //GeneralSearch 1   advancedserch 2  .... etc
+            data.SearchInputs = {};   //all search factories
+            data.GeneralSearchInputs = {};
+            data.AdvancedSearchInputs = {};
+            data.searchType = 1;      //GeneralSearch 1   advancedserch 2  .... etc
             data.pageNumber = 1;
 
             data.GetSearch = function () {
-                if (data.searchType === 1) {
-                    let txtsearch = data.SearchInputs.text;
-                    console.log(data.searchType)
+                if (data.searchType === 1) // GeneralSearch
+                {
+                    console.log(data.GeneralSearchInputs);
+                    let txtsearch = data.GeneralSearchInputs.text;
+                   // console.log(txtsearch + '   ' + data.searchType + '   ' + data.pageNumber);
                     $http.get('/Ahkam/SearchResult',
                         { params: { "q": txtsearch } }).then(function (d) {
                             $('#searchResult').html(d.data);
                         });
                 }
-
+                else if (data.searchType === 2) // AdvancedSearch
+                {
+                    let txtsearch = data.AdvancedSearchInputs.text;
+                   // console.log(txtsearch + ' >>  ' + data.searchType + '   ' + data.pageNumber);
+                    $http.get('/Ahkam/SearchResult',
+                        { params: { "q": txtsearch } }).then(function (d) {
+                            $('#searchResult').html(d.data);
+                        });
+                }
             };
 
             return data;

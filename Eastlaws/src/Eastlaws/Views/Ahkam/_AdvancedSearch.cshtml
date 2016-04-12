@@ -32,11 +32,10 @@
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="#sentence">مطابق للجملة</a></li>
                             <li><a href="#alltext">مطابق جميع الكلمات</a></li>
-
                         </ul>
-                        <input type="hidden" class="input-group-select-val" name="contacts['type'][]" value="مطابق للجملة">
+                        <input type="hidden" class="input-group-select-val"  value="مطابق للجملة">
                     </div>
-                    <input type="text" name="contacts['value'][]" class="form-control">
+                    <input ng-model="txtsearchMabdaa" type="text"  class="form-control">
                 </div>
 
             </div>
@@ -149,7 +148,7 @@
         <div class="form-group   ">
             <label class="col-lg-3 col-md-3 col-sm-3 "> </label>
             <div class="col-sm-9">
-                <input type="submit" class="btn butt-yellow" name="commit" value="بـحـث">
+                <input ng-click="search()" type="submit" class="btn butt-yellow"  value="بـحـث">
             </div>
         </div>
     </div>
