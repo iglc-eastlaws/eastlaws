@@ -58,7 +58,7 @@ namespace Eastlaws.Controllers
             string Input = "القتل العمد مع سبق الإصرار والترصد";
             Input = "سرقة بالإكراه ";
             FTSPredicate p = new FTSPredicate(Input, FTSSqlModes.AND);
-            string FullQuery = AhkamQueryBuilder.GeneralSearch(p.BuildPredicate());
+            string FullQuery = AhkamQueryBuilder.GeneralSearch(p);
 
             QueryCacher Cacher = new QueryCacher(1, FullQuery, "General", true);
             string CachedQuery = Cacher.GetCachedQuery();
@@ -92,7 +92,7 @@ namespace Eastlaws.Controllers
             }
 
             FTSPredicate p = new FTSPredicate(q.Trim(), FTSSqlModes.AND);
-            string FullQuery = AhkamQueryBuilder.GeneralSearch(p.BuildPredicate());
+            string FullQuery = AhkamQueryBuilder.GeneralSearch(p);
             QueryCacher Cacher = new QueryCacher(1, FullQuery, "General", true);
             string CachedQuery = Cacher.GetCachedQuery();
             int PageNo = 1, PageSize = 10;
