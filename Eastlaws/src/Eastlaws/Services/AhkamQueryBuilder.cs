@@ -90,6 +90,8 @@ namespace Eastlaws.Services
             return Builder.ToString();
         }
 
+
+
         private static string GetFakraQueryForAdvancedSearch(FTSPredicate Predicate, string FakraNumCondition)
         {
             if (Predicate.IsValid)
@@ -144,11 +146,13 @@ namespace Eastlaws.Services
             return "";
         }
 
-        public static string GetOuterQuery(string InnerQuery , int PageSize  = 10, int PageNo = 1 )
+        public static string GetOuterQuery(string InnerQuery , int PageNo, int PageSize, AhkamSortColumns sortBy, SearchSortType sortDirections 
+            , string CustomFakaratQuery = null, bool IncludeDefaultFakaratQuery = false)
         {
             StringBuilder builder = new StringBuilder();
             // Creating the temp table and adding the current Page Data
-            builder.AppendFormat(@"Declare @PageNo int ={0} , @PageSize int = {1} 
+            builder.AppendFormat(@"Set NoCount on ;
+                                   Declare @PageNo int ={0} , @PageSize int = {1} 
                                    Declare @ResultsPage Table(ItemID int Primary Key  ,  SortValue Sql_Variant )
                                    Insert Into @ResultsPage 
                                    Select  ItemID , DefaultRank as SortValue From 
@@ -169,9 +173,19 @@ namespace Eastlaws.Services
                 + " join VW_Ahkam A WITH(NOLOCK)  On A.ID = RP.ItemID  "
                 + "Order By RP.SortValue Desc ");
 
-
-                        
+            if (IncludeDefaultFakaratQuery)
+            {
+                // Temp 
+                builder.Append(@"Select AF.* From VW_AhkamFakarat AF Join @ResultsPage RP  on AF.HokmID = RP.ItemID 
+                                 Where AF.FakraNo = 1 "
+                            );
+            }
+            else if (!string.IsNullOrEmpty(CustomFakaratQuery))
+            {
+                builder.Append(CustomFakaratQuery);
+            }           
             return builder.ToString();
         }
+
     }
 }
