@@ -58,6 +58,12 @@
 
             scope.getCurrentPage = function (p) {scope.currentPage = p;}
 
+            
+            //scope.getFirstPage = function () {
+            //    if (scope.currentPage > 1) {
+            //        scope.currentPage = 1;
+            //    }
+            //}
             scope.getPrevPage = function () {
                 if (scope.currentPage > 1) {
                     scope.currentPage -= 1;
