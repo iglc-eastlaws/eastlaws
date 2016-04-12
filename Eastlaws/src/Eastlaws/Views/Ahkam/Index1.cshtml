@@ -75,51 +75,44 @@
         var app = angular.module('ahkamApp', ['sharedModule']);
         app
         .controller('ahkamCtrl', function () { })
-        .controller('GeneralSearchCtrl', function ($scope, $http, SearchResult) {
+        .controller('GeneralSearchCtrl', function ($scope, $http, SearchData) {
             $scope.search = function () {
-                //$http.get('/Ahkam/SearchResult',
-                //    { params: { "q": $scope.txtsearch.trim() } }).then(function (d) {
-                //        console.log(d.data);
-                //        $('#searchResult').html(d.data);
-                //    });
-                SearchResult.data.inputSearch.text = $scope.txtsearch;
-                SearchResult.simpleSearch(1);
-                SearchResult.searchType = 1; // set search type is simple
+                SearchData.SearchInputs.text = $scope.txtsearch;
+                SearchData.pageNumber = 1;
+                SearchData.searchType = 1; // GeneralSearch
+                SearchData.GetSearch();
             };
         })
         .controller('AdvancedSearchCtrl', function () { })
         .controller('SpecialSearchCtrl', function () { })
-        .controller('pagesCtrl', function ($scope, SearchResult) {
-
+        .controller('pagesCtrl', function ($scope, SearchData) {
             $scope.mypage = 1;
-            $scope.getmypage = function () {
-                $('#pagenumber').html('current Page is : ' + $scope.mypage);
-                if (SearchResult.searchType == 1) {
-                    SearchResult.simpleSearch($scope.mypage);
-                }
+            $scope.getmypage = function () {;
+                SearchData.pageNumber = $scope.mypage;
+                SearchData.GetSearch();
             }
-
             $scope.getmypage();
-
         });
 
 
         app
-        .factory('SearchResult', function ($http) {
+        .factory('SearchData', function ($http) {
             var data = {};
-           
-            data.searchType = 1; //1 simplesearch 2 advancedserch 3 .... etc
-            data.inputSearch = {};
-            data.inputSearch.text = '';
-            data.simpleSearch = function (page) {
-                console.log(data.inputSearch)
-                var txtsearch = 'القتل العمد'; // data.inputSearch.text;
-                $http.get('/Ahkam/SearchResult',
-                    { params: { "q": txtsearch } }).then(function (d) {
-                        //console.log(d.data);
-                        $('#searchResult').html(d.data);
-                    });
-              //  alert('get data of page ' + page + ' search ' + txtsearch);
+            data.SearchInputs = {}; //all search factories
+             
+            data.searchType = 1;   //GeneralSearch 1   advancedserch 2  .... etc
+            data.pageNumber = 1;
+
+            data.GetSearch = function () {
+                if (data.searchType === 1) {
+                    let txtsearch = data.SearchInputs.text;
+                    console.log(data.searchType)
+                    $http.get('/Ahkam/SearchResult',
+                        { params: { "q": txtsearch } }).then(function (d) {
+                            $('#searchResult').html(d.data);
+                        });
+                }
+
             };
 
             return data;
