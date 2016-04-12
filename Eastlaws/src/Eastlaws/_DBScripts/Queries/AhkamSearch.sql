@@ -260,5 +260,36 @@ Select A.ID as ID  ,  0 as DefaultRank From Ahkam A Where (1 = 1)
 And CountryID = 1 
 
 
-Select A.MahkamaID  , A.CountryID , A.CaseNo , A.CaseYear , A.OfficeYear , A.OfficeSuffix, A.PartNo  , A.PageNo , A.CaseDate  From Ahkam  A
+Select A.MahkamaID  , A.CountryID , A.CaseNo , A.CaseYear , A.OfficeYear , A.OfficeSuffix, A.PartNo  , A.PageNo , A.CaseDate ,A.IfAgree  From Ahkam  A
 Where MahkamaID in ()
+
+Select HokmID as ID , 0 as DefaultRank From AhkamFakarat
+Where Contains(* , 'قتل')
+Group By HokmID
+
+
+SELECT display_term, source_term, occurrence FROM sys.dm_fts_parser(N'"محكمة"', 1025, 0, 0)
+SELECT display_term, source_term, occurrence FROM sys.dm_fts_parser(N'FORMSOF( FREETEXT, "قتل حسن" )',1025 ,0 , 0)
+
+
+
+
+Select * From fn_helpcollations()
+
+
+DECLARE @SearchWord varchar(max) = N'"قتل عمد مع سبق الإصرار والترصد"'
+
+SELECT * FROM sys.dm_fts_parser('FormsOf(FREETEXT, "قتل عمد مع سبق الإصرار والترصد")', 1025, default, 0) 
+where display_term in 
+( SELECT display_term FROM sys.dm_fts_parser('FORMSOF(INFLECTIONAL, "go to school")', 1033, null, 0) )
+
+Select * From sys.sysfulltextcatalogs
+
+
+
+
+select * from sys.dm_fts_parser('"قتل"',
+1025,--Slovenian lcid
+NULL,--No stop words
+0)--Accent Insensitive
+
