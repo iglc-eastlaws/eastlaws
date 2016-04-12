@@ -8,6 +8,7 @@
     return{
         restrict: 'E',
         template: '<ul class="pagination">' +
+                     '<li ng-class="{disabled : currentPage == 1}"><a href="javascript:;" ng-click="getFirstPage()">««</a></li>' +
                     '<li ng-class="{disabled : currentPage == 1}"><a href="javascript:;" ng-click="getPrevPage()">«</a></li>' +
                     '<li ng-repeat="p in totalPagesCount()  | limitTo:limitNo" ng-class="{active : currentPage == p}">' +
                         '<a href="javascript:;" ng-click="getCurrentPage(p)">{{ p }}</a>' +
@@ -58,6 +59,12 @@
 
             scope.getCurrentPage = function (p) {scope.currentPage = p;}
 
+            
+            scope.getFirstPage = function () {
+                if (scope.currentPage > 1) {
+                    scope.currentPage = 1;
+                }
+            }
             scope.getPrevPage = function () {
                 if (scope.currentPage > 1) {
                     scope.currentPage -= 1;
