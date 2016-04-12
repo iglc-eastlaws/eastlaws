@@ -427,10 +427,14 @@ p.total-chart {color:#666; font:bold 14px arial;}
 .filter-search .tabs-left > .nav-tabs > li > a:hover, .filter-search .tabs-left > .nav-tabs > li > a:focus {border-color: #eeeeee #675650 #eeeeee #eeeeee;}
 .filter-search .tabs-left > .nav-tabs .active > a, .filter-search.tabs-left > .nav-tabs .active > a:hover, .filter-search .tabs-left > .nav-tabs .active > a:focus {
   border-color: #675650 transparent #675650 #675650;*border-right-color: #ffffff; background-color:#675650;color:#daae4f; }
-.format-result{box-shadow:0 0 0.625em 0.08em rgba(0, 0, 0, 0.05); background-color:#FFF; padding:0px 5px; }
+.format-result{box-shadow:0 0 0.625em 0.08em rgba(0, 0, 0, 0.05); background-color:#FFF; padding:0px 0px; border:2px solid rgba(224, 184, 105, 0.80); font:0.85em 'Droid Arabic Kufi'; }
 .layout-view{padding:6px 0px;}
 .layout-view ul{ list-style:none outside none; padding:0px; margin:0px;}
-.layout-view ul li{ display:inline;}
+.layout-view ul li{ display:inline; line-height: 2em;padding: 0 4px;}
 .layout-view li a i{color:#C9C9C9;}
 .layout-view li.active a i{ color:#daae4f;}
+.format-result .navbar { padding:0px; margin:0px; min-height:unset; border:0 none; border-radius:0px;   }
+.format-result .navbar li a{ color:#675650; }
+.format-result .search-form{  margin:4px 0 0;}
+.format-result .navbar-brand{ padding:6px;}
 
