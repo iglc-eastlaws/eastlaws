@@ -49,8 +49,9 @@
                 <!-- Formating result -->
                 <div class="format-result">
 
-               @Html.Partial("_toolbar")
+                    @Html.Partial("_toolbar")
                 </div>
+
 
                 <div class="filter-element">@Html.Partial("_filterElement") </div>
                 <hr class="spacer" />
@@ -96,7 +97,7 @@
         app
         .controller('ahkamCtrl', function ($scope, SearchData) {
         })
-        .controller('GeneralSearchCtrl', function ($scope, $http, SearchData, $rootScope) {
+        .controller('GeneralSearchCtrl', function ($scope, SearchData, $rootScope) {
             $scope.Inputs = {};
             $scope.Inputs.textType = 1; //default radio checked
 
@@ -109,12 +110,21 @@
 
             };
         })
-        .controller('AdvancedSearchCtrl', function ($scope, SearchData) {
+        .controller('AdvancedSearchCtrl', function ($scope, SearchData, $rootScope) {
+            $scope.Inputs = {};
+            $scope.Inputs.ElementsTypeChoice = 1;
+           
+
             $scope.search = function () {
-                SearchData.AdvancedSearchInputs.text = $scope.txtsearchMabdaa;
-                SearchData.pageNumber = 1;
+                SearchData.AdvancedSearchInputs = $scope.Inputs;
+                $rootScope.currentPage = 1;
                 SearchData.searchType = 2; // AdvancedSearch
+                SearchData.CountSearchChange = 1;
+
                 SearchData.GetSearch();
+
+
+                //console.log($scope.waka23SearchType)
             }
 
         })
@@ -134,11 +144,12 @@
 
         app.factory('SearchData', function ($http, $rootScope) {
             var data = {};
-            data.SearchInputs = {};   //all search factories
-            data.GeneralSearchInputs = {};
-            data.AdvancedSearchInputs = {};
             data.searchType = 1;      //GeneralSearch 1   advancedserch 2  .... etc
             data.CountSearchChange = 0;     //1 CountSearch Change    0 CountSearch not Change
+           // data.SearchInputs = {};   //all search factories
+            data.GeneralSearchInputs = {};
+            data.AdvancedSearchInputs = {};
+
 
  
 
@@ -146,17 +157,10 @@
                 if (data.searchType === 1) // GeneralSearch
                 {
                     let txtsearch = data.GeneralSearchInputs.text;
-
-
                     $http.get('/Ahkam/SearchResult',
                         { params: { "q": txtsearch } }).then(function (d) {
                             $('#searchResult').html(d.data);
-                            $('#pagenumber').html(testData(
-                                data.searchType,
-                                data.CountSearchChange,
-                                $rootScope.currentPage,
-                                data.GeneralSearchInputs
-                                ));
+                            $('#pagenumber').html(testData( data.searchType, data.CountSearchChange,$rootScope.currentPage, data.GeneralSearchInputs));
                             if ($rootScope.currentPage == 1)
                             {
                                 InitPageingControl(28)
@@ -166,11 +170,23 @@
                 }
                 else if (data.searchType === 2) // AdvancedSearch
                 {
-                    let txtsearch = data.AdvancedSearchInputs.text;
-                    $http.get('/Ahkam/SearchResult',
-                        { params: { "q": txtsearch } }).then(function (d) {
-                            $('#searchResult').html(d.data);
-                        });
+                    let txtsearch = data.AdvancedSearchInputs.Mabdaa;
+                     
+                        $http.get('/Ahkam/SearchResult',
+                            { params: { "q": txtsearch } }).then(function (d) {
+                                $('#searchResult').html(d.data);
+
+                                $('#pagenumber').html(testData(data.searchType,
+                                                       data.CountSearchChange,
+                                                       $rootScope.currentPage,
+                                                       data.AdvancedSearchInputs));
+                                if ($rootScope.currentPage == 1) {
+                                    InitPageingControl(28)
+                                }
+
+                            });
+
+                       
                 }
             };
 
@@ -186,7 +202,7 @@
 
             function testData(typeSearch, CountSearchChange, pagenumber, object) {
                 var html = '';
-                var jsonObj = $.parseJSON(JSON.stringify(data.GeneralSearchInputs));
+                var jsonObj = $.parseJSON(JSON.stringify(object));
 
                 html += '<br/>';
                 html += 'search Type :>> ' + typeSearch;
