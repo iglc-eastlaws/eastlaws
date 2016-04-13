@@ -1,13 +1,14 @@
 ﻿@{
     Layout = null;
- 
+
+    var countrow = 0;
 }
 
 @if (ViewBag.mCount > 0)
 {
     @foreach (var item in Model)
     {
-
+        countrow +=1;
         <div class="result-block">
             <h4><i class="fa fa-bank fa-2x icon"></i></h4>
             <div class="row-search">
@@ -25,6 +26,10 @@
                 <hr class="spacer" />
             </div>
         </div>
+        if (countrow % 3 == 0)
+        {
+            <hr class="spacer" />
+        }
     }
 }
 else

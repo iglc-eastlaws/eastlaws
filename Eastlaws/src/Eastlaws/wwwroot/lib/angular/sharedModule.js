@@ -89,27 +89,30 @@
         }
     };
 })
-
-
-     .directive('cSearchtype', function ($compile) {
+    sharedModule.directive('cDropMatchSearch', function () {
 
            return {
                restrict: 'E',
                replace: true,
-               template: '<div class="input-group-btn input-group-select">'+
-                        '<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">'+
+               template: '<div class="multiple-form-group input-group">'+
+                           '<div class="input-group-btn input-group-select">'+
+                            '<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">'+
                             '<span class="concept">مطابق للجملة</span> <span class="caret"></span>'+
                         '</button>'+
                         '<ul class="dropdown-menu" role="menu">'+
                             '<li><a ng-click="changval(1)" href="javascript:;">مطابق للجملة</a></li>' +
                             '<li><a ng-click="changval(2)" href="javascript:;">مطابق جميع الكلمات</a></li>' +
                         '</ul>'+
+                    '</div>'+
+                    '<input ng-model="inputText" type="text" class="form-control">'+
                     '</div>'
                ,
                scope: {
-                   selectedValue: '='
+                   selectedValue: '=',
+                   inputText:'='
                },
                link: function (scope, elem) {
+                   scope.inputText = '';
                   scope.selectedValue = 1;
                    scope.changval = function (val) {
                        scope.selectedValue = val;
@@ -120,5 +123,33 @@
 
 
        })
+    sharedModule.directive('cRadioMatchSearch', function () {
 
+        return {
+            restrict: 'E',
+            replace: true,
+            template: '<div class="col-sm-9">'+
+                '<span class="">'+
+                  '<label for="searchtypeGomla">'+
+                        '<input id="searchtypeGomla" ng-model="Inputs.textType" type="radio" class="radio_buttons " name="searchtype" value="1"/></label>'+
+              '</span>&nbsp;'+
+              '<label for="searchtypeAnd">'+
+                  '<input id="searchtypeAnd" type="radio" ng-model="Inputs.textType" class="radio_buttons" name="searchtype" value="2" /></label>'+
+          '</div>'
+            ,
+            scope: {
+                selectedValue: '=',
+                inputText: '='
+            },
+            link: function (scope, elem) {
+                scope.selectedValue = 1;
+                scope.changval = function (val) {
+                    scope.selectedValue = val;
+                }
+            }
+
+        };
+
+
+    })
 })();
