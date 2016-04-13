@@ -46,10 +46,77 @@
             <p class="total-chart"> <i class="fa fa-line-chart "></i> وجد اجمالي [68] تشريع </p>
     
             <div class="col-lg-9 col-md-8  col-sm-8 list-content">
+                <!-- Formating result -->
+                <div class="format-result">
+
+                    <nav class="navbar ">
+
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+
+                        </div>
+                        <div class="collapse navbar-collapse" id="navbar">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false"><i class="glyphicon glyphicon-floppy-disk"></i> حفظ الصفحة <span class="badge">20</span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="#"><i class="glyphicon glyphicon-heart"></i> أضف للمفضلة </a></li>
+                                        <li><a href="#"><i class="glyphicon glyphicon-folder-close"></i> اضف للأرشيف </a></li>
+                                        <li><a href="#"><i class="fa fa-fw fa-user-plus"></i> مشاركة مع اصدقائي </a></li>
+
+                                    </ul>
+                                </li>
+
+                                <li class="active">
+                                    <a href="#">
+                                        <span class="sort">
+                                            <i class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></i>
+                                            @*<i class="glyphicon glyphicon-sort-by-attributes"></i>*@
+                                        </span> ترتيب النتائج
+                                    </a>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-font "></i> حجم الخط <span class="caret"></span> </a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="#">كبير</a></li>
+                                        <li><a href="#">متوسط</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">صغير</a></li>
+
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-repeat" aria-hidden="true"></i>
+                                        إعادة تحميل
+
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="layout-view pull-left ">
+                                <ul>
+                                    <li class="list pull-right "><label>طريقة العرض :</label></li>
+                                    <li class="list pull-right active"><a rel="nofollow" href="#auto"><i class="fa fa-align-justify fa-2x "></i></a>  </li>
+                                    <li class="grid pull-right"><a rel="nofollow" href="#lists"><i class="fa fa-th fa-2x"></i></a> </li>
+                                </ul>
+
+                            </div>
+                        </div>
+
+                    </nav>
+                    <hr class="spacer" />
+                </div>
+
                 <div class="filter-element">@Html.Partial("_filterElement") </div>
                 <hr class="spacer" />
 
                 <div id="searchResult"></div>
+                <hr class="spacer" />
                 <div class="paging-search text-center" ng-controller="pagesCtrl">
 
                     <h1 id="pagenumber"></h1>
@@ -69,7 +136,7 @@
 
             </div>
 
-            <div class="col-lg-3 col-md-4 col-sm-4 filter-search"> @Html.Partial("_filterSearch") </div>
+            <div class="col-lg-3 col-md-4 col-sm-4 filter-search"> @Html.Partial("TasfyaSearch") </div>
 
             <hr class="spacer" />
         </div>
@@ -83,7 +150,7 @@
 
     // tomorrow Task
     //convert rootscope to service
-
+    "use strict";
     (function () {
         var app = angular.module('ahkamApp', ['sharedModule']);
         app
@@ -97,6 +164,7 @@
                 SearchData.GeneralSearchInputs = $scope.Inputs;
                 $rootScope.currentPage = 1;
                 SearchData.searchType = 1; // GeneralSearch
+                SearchData.CountSearchChange = 1;
                 SearchData.GetSearch();
 
             };
@@ -116,6 +184,7 @@
             $scope.getmypage = function () {
                 $rootScope.currentPage = $scope.mypage;
                 if ($rootScope.currentPage !== undefined) {
+                    SearchData.CountSearchChange = 0;
                     SearchData.GetSearch();
                 }
             }
@@ -129,16 +198,25 @@
             data.GeneralSearchInputs = {};
             data.AdvancedSearchInputs = {};
             data.searchType = 1;      //GeneralSearch 1   advancedserch 2  .... etc
+            data.CountSearchChange = 0;     //1 CountSearch Change    0 CountSearch not Change
+
+ 
 
             data.GetSearch = function () {
                 if (data.searchType === 1) // GeneralSearch
                 {
                     let txtsearch = data.GeneralSearchInputs.text;
-                    console.log(data.GeneralSearchInputs)
+
+
                     $http.get('/Ahkam/SearchResult',
                         { params: { "q": txtsearch } }).then(function (d) {
                             $('#searchResult').html(d.data);
-                            $('#pagenumber').html('current Page is : ' + $rootScope.currentPage);
+                            $('#pagenumber').html(testData(
+                                data.searchType,
+                                data.CountSearchChange,
+                                $rootScope.currentPage,
+                                data.GeneralSearchInputs
+                                ));
                             if ($rootScope.currentPage == 1)
                             {
                                 InitPageingControl(28)
@@ -149,7 +227,6 @@
                 else if (data.searchType === 2) // AdvancedSearch
                 {
                     let txtsearch = data.AdvancedSearchInputs.text;
-                   // console.log(txtsearch + ' >>  ' + data.searchType + '   ' + data.pageNumber);
                     $http.get('/Ahkam/SearchResult',
                         { params: { "q": txtsearch } }).then(function (d) {
                             $('#searchResult').html(d.data);
@@ -165,6 +242,24 @@
                     $rootScope.pageCount = pagecount;
                     $rootScope.$broadcast('initPaging'); // re_init pageing controll
                 }
+            }
+
+            function testData(typeSearch, CountSearchChange, pagenumber, object) {
+                var html = '';
+                var jsonObj = $.parseJSON(JSON.stringify(data.GeneralSearchInputs));
+
+                html += '<br/>';
+                html += 'search Type :>> ' + typeSearch;
+                html += '<br/>';
+                html += 'is count result change :>> ' + CountSearchChange;
+                html += '<br/>';
+                html += 'Page Number :>> ' + pagenumber;
+                html += '<br/>';
+                $.each(jsonObj, function (k, v) {
+                    html += '' + k + ' : ' + v + ' ' + '</br>';
+                });
+
+                return html;
             }
             return data;
         });

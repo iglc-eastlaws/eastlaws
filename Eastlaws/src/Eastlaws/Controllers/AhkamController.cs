@@ -108,9 +108,12 @@ namespace Eastlaws.Controllers
 
         public JsonResult SearchCount(string q = "")
         {
+
             var Result = 3000; //count of rows
             return Json(new { data = Result });
         }
+
+       
 
     }
 }
