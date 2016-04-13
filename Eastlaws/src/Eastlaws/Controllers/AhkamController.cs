@@ -56,8 +56,8 @@ namespace Eastlaws.Controllers
         public IActionResult Test()
         {
 
-
-
+           
+           
 
             return null;
         }
@@ -72,7 +72,6 @@ namespace Eastlaws.Controllers
 
         public ViewResult SearchResult(string q = "")
         {
-
           
             AhkamPresentation Model = AhkamService.Search(new AhkamSearchOptions(), new FTSPredicate(q));
             if (Model.IsValid)

@@ -5,19 +5,12 @@
     <form class="search-form form-horizontal" name="form" ng-submit="search()" novalidate>
         <div class="form-group radio_buttons optional">
             <label class="radio_buttons  col-sm-3 "> </label>
-            <div class="col-sm-9">
-                <span class="">
-                    
-                  <label for="searchtypeGomla">
-                        <input id="searchtypeGomla" ng-model="Inputs.textType" type="radio" class="radio_buttons " name="searchtype" value="1"/>
-                        مطابق للجملة
-                    </label>
-                </span>&nbsp;
-                <label for="searchtypeAnd">
-                    <input id="searchtypeAnd" type="radio" ng-model="Inputs.textType" class="radio_buttons" name="searchtype" value="2" />
-                    مطابق لجميع الكلمات
-                </label>
-            </div>
+            <c-radio-match-search for-id="gerealsearch"
+                                  model-val="Inputs.textType" 
+                                  first-name="مطابق للجملة" 
+                                  sec-name="مطابق لجميع الكلمات" >
+
+            </c-radio-match-search>
         </div>
         <div class="form-group  ">
             <label for="horizontal_search" class="col-lg-3 col-sm-3 control-label bg-color title">
