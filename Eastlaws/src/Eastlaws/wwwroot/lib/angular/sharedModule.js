@@ -108,7 +108,7 @@
                     '</div>'
                ,
                scope: {
-                   selectedValue: '=',
+                   selectedValue: '=',//
                    inputText:'='
                },
                link: function (scope, elem) {
