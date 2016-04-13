@@ -5,6 +5,6 @@ namespace Eastlaws.ViewModels.Ahkam
 {
     public class GeneralSearchVM : SimpleInputSearch
     {
-        public IEnumerable<AhkamPresentation> SearchResault { get; set; }
+        //public IEnumerable<AhkamPresentation> SearchResault { get; set; }
     }
 }
