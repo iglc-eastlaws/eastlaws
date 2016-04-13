@@ -27,19 +27,21 @@
             </li>
 
             <li class="active">
-                <a href="#">
-                    <span class="sort">
-                        <i class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></i>
-                        @*<i class="glyphicon glyphicon-sort-by-attributes"></i>*@
-                    </span> ترتيب النتائج
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">  <i class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></i> ترتيب النتائج <span class="caret"></span> 
                 </a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#"><i class="fa fa-random"></i> أفتراضى</a></li>
+                    <li><a href="#"><i class="fa fa-qrcode"></i> رقم الحكم</a></li>
+                    <li><a href="#"><i class="fa fa-calendar" aria-hidden="true"></i> سنة الحكم</a></li>
+                    <li><a href="#"><i class="glyphicon glyphicon-time"></i> تاريخ الحكم</a></li>
+                </ul>
             </li>
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-font "></i> حجم الخط <span class="caret"></span> </a>
                 <ul class="dropdown-menu" role="menu">
                     <li><a href="#">كبير</a></li>
                     <li><a href="#">متوسط</a></li>
-                    <li class="divider"></li>
+                    @*<li class="divider"></li>*@
                     <li><a href="#">صغير</a></li>
 
                 </ul>
@@ -55,7 +57,7 @@
         <div class="layout-view pull-left ">
             <ul>
                 <li class="list pull-right "><label>طريقة العرض :</label></li>
-                <li class="list pull-right active"><a rel="nofollow" href="#auto"><i class="fa fa-align-justify fa-2x "></i></a>  </li>
+                <li class="list pull-right "><a rel="nofollow" href="#auto" class="active"><i class="fa fa-align-justify fa-2x "></i></a>  </li>
                 <li class="grid pull-right"><a rel="nofollow" href="#lists"><i class="fa fa-th fa-2x"></i></a> </li>
             </ul>
 
