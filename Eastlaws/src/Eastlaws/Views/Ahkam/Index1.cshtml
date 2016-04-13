@@ -69,7 +69,7 @@
 
             </div>
 
-            <div class="col-lg-3 col-md-4 col-sm-4 filter-search"> @Html.Partial("_filterSearch") </div>
+            <div class="col-lg-3 col-md-4 col-sm-4 filter-search"> @Html.Partial("TasfyaSearch") </div>
 
             <hr class="spacer" />
         </div>
@@ -83,7 +83,7 @@
 
     // tomorrow Task
     //convert rootscope to service
-
+    "use strict";
     (function () {
         var app = angular.module('ahkamApp', ['sharedModule']);
         app
@@ -133,8 +133,9 @@
             data.GetSearch = function () {
                 if (data.searchType === 1) // GeneralSearch
                 {
+                    
                     let txtsearch = data.GeneralSearchInputs.text;
-                    console.log(data.GeneralSearchInputs)
+                   // console.log(data.GeneralSearchInputs)
                     $http.get('/Ahkam/SearchResult',
                         { params: { "q": txtsearch } }).then(function (d) {
                             $('#searchResult').html(d.data);
@@ -148,6 +149,7 @@
                 }
                 else if (data.searchType === 2) // AdvancedSearch
                 {
+                    
                     let txtsearch = data.AdvancedSearchInputs.text;
                    // console.log(txtsearch + ' >>  ' + data.searchType + '   ' + data.pageNumber);
                     $http.get('/Ahkam/SearchResult',
