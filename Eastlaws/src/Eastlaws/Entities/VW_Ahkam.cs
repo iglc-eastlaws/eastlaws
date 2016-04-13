@@ -27,6 +27,8 @@ namespace Eastlaws.Entities
             public string MahkamaName { get; set; }
             public string CountryName { get; set; }
             public string FullName { get; set; }
+            public string CountryFlagPic { get; set; }
+        
     }
 }
 

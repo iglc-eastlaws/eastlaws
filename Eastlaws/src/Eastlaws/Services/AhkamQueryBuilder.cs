@@ -141,13 +141,12 @@ namespace Eastlaws.Services
             return builder.ToString();
         }
 
-        public static string MadaSearch(int?  CountryID, string TashNo, string TashYear, string MadaNo , string TashTextFilter , bool SearchInTashTile = true , bool SearchInTashMawad = true)
+        public static string MadaSearch(int?  CountryID, string TashNo, string TashYear, string MadaNo , FTSPredicate TashTextFilter , bool SearchInTashTile = true , bool SearchInTashMawad = true)
         {
             return "";
         }
 
-        public static string GetOuterQuery(string InnerQuery , int PageNo, int PageSize, AhkamSortColumns sortBy, SearchSortType sortDirections 
-            , string CustomFakaratQuery = null, bool IncludeDefaultFakaratQuery = false)
+        public static string GetOuterQuery(string InnerQuery , AhkamSearchOptions Options, string CustomFakaratQuery = null)
         {
             StringBuilder builder = new StringBuilder();
             // Creating the temp table and adding the current Page Data
@@ -163,7 +162,7 @@ namespace Eastlaws.Services
                                        ) ResultsTableInner  
                                    ) ResultsTableOuter 
                                    Where Serial > ((@PageNo - 1) * @PageSize) And Serial <= (@PageNo * @PageSize)"
-        , PageNo  , PageSize , InnerQuery); 
+        , Options.PageNo, Options.PageSize , InnerQuery); 
 
 
             builder.Append("\n");
@@ -171,20 +170,28 @@ namespace Eastlaws.Services
             // Ahkam Data  (Master Data )
             builder.Append("Select A.* From @ResultsPage RP  "
                 + " join VW_Ahkam A WITH(NOLOCK)  On A.ID = RP.ItemID  "
-                + "Order By RP.SortValue Desc ");
+                + " Order By RP.SortValue Desc ");
 
-            if (IncludeDefaultFakaratQuery)
+            if(Options.DisplayMode == AhkamDisplayMode.Divs)
             {
-                // Temp 
-                builder.Append(@"Select AF.* From VW_AhkamFakarat AF Join @ResultsPage RP  on AF.HokmID = RP.ItemID 
-                                 Where AF.FakraNo = 1 "
-                            );
+                if (!string.IsNullOrEmpty(CustomFakaratQuery))
+                {
+                    builder.Append(CustomFakaratQuery);
+                }
+                else
+                {
+                    // Temp 
+                    builder.Append(@"Select AF.* From VW_AhkamFakarat AF Join @ResultsPage RP  on AF.HokmID = RP.ItemID Where AF.FakraNo = 1 ");
+                }
             }
-            else if (!string.IsNullOrEmpty(CustomFakaratQuery))
-            {
-                builder.Append(CustomFakaratQuery);
-            }           
             return builder.ToString();
+        }
+
+
+        public static string GetSingleHokm(int ID )
+        {
+            return string.Format(@"Select A.* From VW_Ahkam Where A.ID = {0}
+                                    Select AF.* From VW_AhkamFakarat AF Where AF.HokmID = {0} Order By AF.MyOrder ", ID);
         }
 
     }
