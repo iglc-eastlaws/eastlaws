@@ -435,16 +435,21 @@ p.total-chart {color:#666; font:bold 14px arial;}
 .layout-view ul{ list-style:none outside none; padding:0px; margin:0px;}
 .layout-view ul li{ display:inline; line-height: 2em;padding: 0 4px;}
 .layout-view li a i{color:#C9C9C9;}
-.layout-view li.active a i{ color:#daae4f;}
+.layout-view li a.active i{ color:#daae4f;}
 .format-result .navbar-collapse.collapse{ padding:0px;}
 .format-result .navbar { padding:0px; margin:0px; min-height:unset; border:0 none; border-radius:0px;   }
-.format-result .navbar li a{ color:#675650; padding:10px 5px; }
-.format-result .navbar li a:hover, .format-result .navbar li:hover .open, .format-result .nav .open > a, .format-result .nav .open > a:hover, .format-result .nav .open > a:focus { background-color:#D9B672; color:#000; }
-.format-result .navbar li a:hover a{ color:#fff;}
-.format-result .navbar li a:hover, .format-result .navbar li a:hover i{ background-color:transparent; color:#675650;}
+ .format-result .navbar li {background: url('../images/spacer-toolbar.png') no-repeat left center; margin-left:2px; }
+ .format-result .navbar li:last-child,.format-result .navbar li .dropdown-menu li{ background:none; margin-left:0px;}
+.format-result .navbar li a{ color:#675650; padding:10px 5px; } 
+.format-result .navbar li:hover a{ color:#d9b163;}
+ .format-result .navbar li:hover .open, .format-result .nav .open > a, .format-result .nav .open > a:hover, .format-result .nav .open > a:focus { background-color:#D9B672; color:#000; }
+  .format-result .navbar li:hover .dropdown-menu li a{ color:#675650;}
+ .format-result .navbar li a:hover i{ background-color:transparent; color:#675650;}
+
 .format-result .navbar li .dropdown-menu li a{ padding:3px 20px;}
 .format-result .navbar li .dropdown-menu  a:hover, .format-result .navbar li .dropdown-menu a:focus{background-color:#D9B672; color:#000; background-image:none;}
 .format-result .navbar li .dropdown-menu  a:hover i{ color:#FFF;}
 .format-result .search-form{  margin:4px 0 0;}
 .format-result .navbar-brand{ padding:6px;}
+.format-result .navbar-toggle{ background-color:#d9b672; border-radius:0px;}
 
