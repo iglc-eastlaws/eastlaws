@@ -97,6 +97,7 @@
                 SearchData.GeneralSearchInputs = $scope.Inputs;
                 $rootScope.currentPage = 1;
                 SearchData.searchType = 1; // GeneralSearch
+                SearchData.CountSearchChange = 1;
                 SearchData.GetSearch();
 
             };
@@ -116,6 +117,7 @@
             $scope.getmypage = function () {
                 $rootScope.currentPage = $scope.mypage;
                 if ($rootScope.currentPage !== undefined) {
+                    SearchData.CountSearchChange = 0;
                     SearchData.GetSearch();
                 }
             }
@@ -129,16 +131,25 @@
             data.GeneralSearchInputs = {};
             data.AdvancedSearchInputs = {};
             data.searchType = 1;      //GeneralSearch 1   advancedserch 2  .... etc
+            data.CountSearchChange = 0;     //1 CountSearch Change    0 CountSearch not Change
+
+ 
 
             data.GetSearch = function () {
                 if (data.searchType === 1) // GeneralSearch
                 {
                     let txtsearch = data.GeneralSearchInputs.text;
-                    console.log(data.GeneralSearchInputs)
+
+
                     $http.get('/Ahkam/SearchResult',
                         { params: { "q": txtsearch } }).then(function (d) {
                             $('#searchResult').html(d.data);
-                            $('#pagenumber').html('current Page is : ' + $rootScope.currentPage);
+                            $('#pagenumber').html(testData(
+                                data.searchType,
+                                data.CountSearchChange,
+                                $rootScope.currentPage,
+                                data.GeneralSearchInputs
+                                ));
                             if ($rootScope.currentPage == 1)
                             {
                                 InitPageingControl(28)
@@ -149,7 +160,6 @@
                 else if (data.searchType === 2) // AdvancedSearch
                 {
                     let txtsearch = data.AdvancedSearchInputs.text;
-                   // console.log(txtsearch + ' >>  ' + data.searchType + '   ' + data.pageNumber);
                     $http.get('/Ahkam/SearchResult',
                         { params: { "q": txtsearch } }).then(function (d) {
                             $('#searchResult').html(d.data);
@@ -165,6 +175,24 @@
                     $rootScope.pageCount = pagecount;
                     $rootScope.$broadcast('initPaging'); // re_init pageing controll
                 }
+            }
+
+            function testData(typeSearch, CountSearchChange, pagenumber, object) {
+                var html = '';
+                var jsonObj = $.parseJSON(JSON.stringify(data.GeneralSearchInputs));
+
+                html += '<br/>';
+                html += 'search Type :>> ' + typeSearch;
+                html += '<br/>';
+                html += 'is count result change :>> ' + CountSearchChange;
+                html += '<br/>';
+                html += 'Page Number :>> ' + pagenumber;
+                html += '<br/>';
+                $.each(jsonObj, function (k, v) {
+                    html += '' + k + ' : ' + v + ' ' + '</br>';
+                });
+
+                return html;
             }
             return data;
         });
