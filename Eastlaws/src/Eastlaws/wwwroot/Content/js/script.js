@@ -58,7 +58,19 @@ $(document).ready(function () {
         });
     });
 
+    
+    $(".layout-view li").click(function () {
+        $(".layout-view li").removeClass("active");
+        $(this).addClass("active", function () {
+ 
+        });
+        if ($(this).hasClass("list")) {
+            $(".list-content .result-block").removeClass("col-md-4");
+        }else{
+ $(".list-content .result-block").addClass("col-md-4");
+    }
 
+    });
 
 
 

@@ -366,7 +366,9 @@ nav.sidebar:hover{margin-right: 0px;}
  .list-content{ padding-right:0px;}
 .result-search .col-sm-9:first-child, .resulte-search .col-sm-3:first-child{padding:0px;}
 .result-block h4 .icon{ background-color:#4d4a4a; padding:4px 6px;color:#fff;}
-.result-block{ box-shadow:0 0 0 0 rgba(0, 0, 0, 0.3) inset, 2px 0px 5px -3px rgba(0, 0, 0, 0.3); margin-bottom:10px;}
+.result-block{ /*box-shadow:0 0 0 0 rgba(0, 0, 0, 0.3) inset, 2px 0px 5px -3px rgba(0, 0, 0, 0.3);*/ margin-bottom:10px;}
+.list-content .col-md-4:nth-child(3n+1){ padding-right:0px; padding-left:0px;}
+.list-content .col-md-4:nth-child(3n+0){ padding-right:0px; padding-left:0px;}
 .result-block h4{margin:0 0 3px; font:bold 1em arial; color:#333; /*background-image:linear-gradient(to bottom, #d9b163 0px, #f0c675 100%);*/ background-color:#a3bdc9; border:1px solid #c5c5c5; display:none;}
 .row-search{ background: #fff none repeat scroll 0 0;
     border: 1px solid rgba(224, 184, 105, 0.57);
@@ -398,7 +400,7 @@ p.total-chart {color:#666; font:bold 14px arial;}
 .filter-section .list-group-item.active, .filter-section .list-group-item.active:focus, .filter-section .list-group-item.active:hover{ background-color:#1b9e74; background-image:none; margin-left:2px; border-bottom:1px solid #CCC;}
 .filter-element{ margin:10px 0 20px;}
 .filter-element ul{ list-style:none outside none; padding:0px; margin:0px;}
-.filter-element ul li{display:inline; margin-left:5px; margin-bottom:10px; }
+.filter-element ul li{float:right; margin-left:5px; margin-bottom:10px; }
 .filter-element ul li a{ background-color:#675650; font:0.8em "Droid Arabic Kufi"; color:#FFF;padding:3px 8px 3px 0; border-bottom:4px solid #1B9E74; box-shadow:0 2px 4px rgba(0, 0, 0, 0.2);  }
 .filter-element ul li a .number{ font-family:Arial; font-size:1.2em;}
 .filter-element ul li a:hover{ text-decoration:none; color:#daae4f;}
@@ -429,12 +431,20 @@ p.total-chart {color:#666; font:bold 14px arial;}
   border-color: #675650 transparent #675650 #675650;*border-right-color: #ffffff; background-color:#675650;color:#daae4f; }
 .format-result{box-shadow:0 0 0.625em 0.08em rgba(0, 0, 0, 0.05); background-color:#FFF; padding:0px 0px; border:2px solid rgba(224, 184, 105, 0.80); font:0.85em 'Droid Arabic Kufi'; }
 .layout-view{padding:6px 0px;}
+.layout-view .navbar-nav > li{ margin:0 0 0 4px;}
 .layout-view ul{ list-style:none outside none; padding:0px; margin:0px;}
 .layout-view ul li{ display:inline; line-height: 2em;padding: 0 4px;}
 .layout-view li a i{color:#C9C9C9;}
 .layout-view li.active a i{ color:#daae4f;}
+.format-result .navbar-collapse.collapse{ padding:0px;}
 .format-result .navbar { padding:0px; margin:0px; min-height:unset; border:0 none; border-radius:0px;   }
-.format-result .navbar li a{ color:#675650; }
+.format-result .navbar li a{ color:#675650; padding:10px 5px; }
+.format-result .navbar li a:hover, .format-result .navbar li:hover .open, .format-result .nav .open > a, .format-result .nav .open > a:hover, .format-result .nav .open > a:focus { background-color:#D9B672; color:#000; }
+.format-result .navbar li a:hover a{ color:#fff;}
+.format-result .navbar li a:hover, .format-result .navbar li a:hover i{ background-color:transparent; color:#675650;}
+.format-result .navbar li .dropdown-menu li a{ padding:3px 20px;}
+.format-result .navbar li .dropdown-menu  a:hover, .format-result .navbar li .dropdown-menu a:focus{background-color:#D9B672; color:#000; background-image:none;}
+.format-result .navbar li .dropdown-menu  a:hover i{ color:#FFF;}
 .format-result .search-form{  margin:4px 0 0;}
 .format-result .navbar-brand{ padding:6px;}
 
