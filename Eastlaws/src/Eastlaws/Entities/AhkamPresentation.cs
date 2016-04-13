@@ -13,6 +13,7 @@ namespace Eastlaws.Entities
         public IEnumerable<VW_AhkamFakarat> FakaratList { get; set; }
         public string QueryHash { get; private set; }
         private QueryInfo QueryInfo { get; set; }
+        public bool IsValid { get; set; } = true;
 
         public AhkamPresentation()
         {

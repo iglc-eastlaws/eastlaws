@@ -44,33 +44,6 @@ namespace Eastlaws.Controllers
         {
 
 
-            var x1 = new Range("1,2,3,4,5,6,7,8,9,0", "A.HokmNo").GetCondition();
-            var x2 = new Range("1,2,3,4,5,6,7,8,9,", "A.HokmNo").GetCondition();
-            var x3 = new Range("1,,,,", "A.HokmNo").GetCondition();
-            var x4 = new Range("1-5", "A.HokmNo").GetCondition();
-            var x5 = new Range("11-100", "A.HokmNo").GetCondition();
-            var x6 = new Range("11-", "A.HokmNo").GetCondition();
-
-
-
-
-
-            string Input = "القتل العمد مع سبق الإصرار والترصد";
-            Input = "سرقة بالإكراه ";
-            FTSPredicate p = new FTSPredicate(Input, FTSSqlModes.AND);
-            string FullQuery = AhkamQueryBuilder.GeneralSearch(p);
-
-            QueryCacher Cacher = new QueryCacher(1, FullQuery, "General", true);
-            string CachedQuery = Cacher.GetCachedQuery();
-
-
-            int PageNo = 1, PageSize = 10;
-
-            string PagedQuery = AhkamQueryBuilder.GetOuterQuery(CachedQuery, PageSize , PageNo);
-
-            IEnumerable Ahkam = DataHelpers.GetConnection(DbConnections.Data).Query<VW_Ahkam>(PagedQuery);
-
-
 
 
             return null;
@@ -86,11 +59,26 @@ namespace Eastlaws.Controllers
 
         public ViewResult SearchResult(string q = "")
         {
-            if (q.Trim() == string.Empty) {
+
+          
+            AhkamPresentation Model = AhkamService.Search(new AhkamSearchOptions(), new FTSPredicate(q));
+            if (Model.IsValid)
+            {
+                var Ahkam = Model.AhkamList;
+                ViewBag.mCount = Model.ResultsCount;
+                return View(Ahkam);
+            }
+            else
+            {
                 ViewBag.mCount = 0;
                 return View();
             }
 
+            /*
+                        if (q.Trim() == string.Empty) {
+                ViewBag.mCount = 0;
+                return View();
+                  }
             FTSPredicate p = new FTSPredicate(q.Trim(), FTSSqlModes.AND);
             string FullQuery = AhkamQueryBuilder.GeneralSearch(p);
             QueryCacher Cacher = new QueryCacher(1, FullQuery, "General", true);
@@ -99,8 +87,9 @@ namespace Eastlaws.Controllers
             string PagedQuery = AhkamQueryBuilder.GetOuterQuery(CachedQuery, PageSize, PageNo);
             var Ahkam = DataHelpers.GetConnection(DbConnections.Data).Query<VW_Ahkam>(PagedQuery).AsList();
             ViewBag.mCount = Ahkam.Count;
-
             return View(Ahkam);
+            */
+
         }
 
 
