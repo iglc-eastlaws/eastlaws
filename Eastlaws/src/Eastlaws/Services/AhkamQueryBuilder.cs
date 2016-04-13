@@ -190,7 +190,7 @@ namespace Eastlaws.Services
 
         public static string GetSingleHokm(int ID )
         {
-            return string.Format(@"Select A.* From VW_Ahkam Where A.ID = {0}
+            return string.Format(@"Select A.* From VW_Ahkam A Where A.ID = {0}
                                     Select AF.* From VW_AhkamFakarat AF Where AF.HokmID = {0} Order By AF.MyOrder ", ID);
         }
 

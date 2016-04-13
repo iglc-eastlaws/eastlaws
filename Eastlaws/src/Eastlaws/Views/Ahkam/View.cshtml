@@ -1,0 +1,37 @@
+﻿@model Eastlaws.Entities.AhkamPresentation
+
+@{ 
+    var Hokm = Model.AhkamList.ToArray()[0];
+}
+
+<div>
+    <h3>
+        @if (!string.IsNullOrEmpty(Hokm.CountryFlagPic))
+        {
+            <img src="~/Content/images/Flags/@Hokm.CountryFlagPic" /> 
+
+        }
+        @Hokm.FullName
+    </h3>
+</div>
+
+@foreach(var Fakra in Model.FakaratList)
+{
+    <div class="FakraTitle">
+        @Fakra.Title
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(Fakra.MogazText))
+    {
+        <div class="FakraMogaz">
+            @Fakra.MogazText
+        </div>
+    }
+
+    <div class="FakraText">
+        @Fakra.Text
+    </div>
+
+}
+
+
