@@ -11,6 +11,19 @@ namespace Eastlaws.Controllers
 {
     public class AhkamController : Controller
     {
+        public IActionResult View(int ID)
+        {
+            var Model = AhkamService.GetHokm(ID, null);
+            if (Model.IsValid)
+            {
+                return View(Model);
+            }
+            else
+            {
+                return null;
+            }
+     
+        }
 
         [HttpPost]
         public IActionResult GeneralSearch(GeneralSearchVM Model)
