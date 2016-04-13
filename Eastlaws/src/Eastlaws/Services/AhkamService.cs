@@ -78,19 +78,21 @@ namespace Eastlaws.Services
             return Search(InnerQuery, Options, null, AhkamSearchTypes.Mada);
         }
 
-        /*
+       
         public static AhkamPresentation GetHokm(int ID , FTSPredicate PredicateHighlight )
         {
+            AhkamPresentation P = new AhkamPresentation();
             string Query = AhkamQueryBuilder.GetSingleHokm(ID);
             SqlConnection con = DataHelpers.GetConnection(DbConnections.Data);
             var Grid = con.QueryMultiple(Query);
             P.AhkamList = Grid.Read<VW_Ahkam>();
-            if (Options.DisplayMode == AhkamDisplayMode.Divs)
+            P.FakaratList = Grid.Read<VW_AhkamFakarat>();
+            if(P.AhkamList.Count() == 0)
             {
-                P.FakaratList = Grid.Read<VW_AhkamFakarat>();
+                P.IsValid = false;
             }
             return P;
-        }*/
+        }
 
 
 

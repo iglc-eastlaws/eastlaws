@@ -11,6 +11,19 @@ namespace Eastlaws.Controllers
 {
     public class AhkamController : Controller
     {
+        public IActionResult View(int ID)
+        {
+            var Model = AhkamService.GetHokm(ID, null);
+            if (Model.IsValid)
+            {
+                return View(Model);
+            }
+            else
+            {
+                return null;
+            }
+     
+        }
 
         [HttpPost]
         public IActionResult GeneralSearch(GeneralSearchVM Model)
@@ -31,7 +44,7 @@ namespace Eastlaws.Controllers
             return null;
         }
 
-        public IActionResult Index()
+        public IActionResult Index_Old()
         {
             ViewBag.Title = "أحكام المحاكم العربية العليا ";
             return View();
@@ -51,7 +64,7 @@ namespace Eastlaws.Controllers
 
 
 
-        public IActionResult Index1()
+        public IActionResult Index()
         {
 
             return View();
