@@ -44,7 +44,7 @@ namespace Eastlaws.Controllers
             return null;
         }
 
-        public IActionResult Index()
+        public IActionResult Index_Old()
         {
             ViewBag.Title = "أحكام المحاكم العربية العليا ";
             return View();
@@ -64,7 +64,7 @@ namespace Eastlaws.Controllers
 
 
 
-        public IActionResult Index1()
+        public IActionResult Index()
         {
 
             return View();
