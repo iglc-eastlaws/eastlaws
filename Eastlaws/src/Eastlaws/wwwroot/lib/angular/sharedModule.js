@@ -108,7 +108,7 @@
                     '</div>'
                ,
                scope: {
-                   selectedValue: '=',//
+                   selectedValue: '=',
                    inputText:'='
                },
                link: function (scope, elem) {
@@ -130,21 +130,23 @@
             replace: true,
             template: '<div class="col-sm-9">'+
                 '<span class="">'+
-                  '<label for="searchtypeGomla">'+
-                        '<input id="searchtypeGomla" ng-model="Inputs.textType" type="radio" class="radio_buttons " name="searchtype" value="1"/></label>'+
+                  '<label for="{{forId}}1">' +
+                        '<input id="{{forId}}1" ng-model="modelVal" type="radio" class="radio_buttons " name="searchtype" value="1" ng-change="changval(1)" />{{firstName}}</label>' +
               '</span>&nbsp;'+
-              '<label for="searchtypeAnd">'+
-                  '<input id="searchtypeAnd" type="radio" ng-model="Inputs.textType" class="radio_buttons" name="searchtype" value="2" /></label>'+
+              '<label for="{{forId}}2">' +
+                  '<input id="{{forId}}2" type="radio" ng-model="modelVal" class="radio_buttons" name="searchtype" value="2" ng-change="changval(2)"/>{{secName}}</label>' +
           '</div>'
             ,
             scope: {
-                selectedValue: '=',
-                inputText: '='
+                modelVal: '=',
+                firstName:'@',
+                secName: '@',
+                forId:'@'
             },
             link: function (scope, elem) {
-                scope.selectedValue = 1;
+                scope.modelVal = 1;
                 scope.changval = function (val) {
-                    scope.selectedValue = val;
+                    scope.modelVal = val;
                 }
             }
 
