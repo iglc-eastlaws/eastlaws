@@ -53,7 +53,7 @@
                 </div>
 
 
-                <div class="filter-element">@Html.Partial("_filterElement") </div>
+                <div class="filter-element" ng-controller="filterElementCtrl">@Html.Partial("_filterElement") </div>
                 <hr class="spacer" />
 
                 <div id="searchResult"></div>
@@ -142,24 +142,38 @@
             }
             $scope.getmypage();
         })
-        .controller('tasfyaCtrl', function ($scope) {
-            $scope.list = [];
+        .controller('tasfyaCtrl', function ($scope,tasfiaData) {
+          //$scope.list = [];
+            $scope.list = tasfiaData.list;
             $scope.changeCheck = function (val, event) {
                 var itemid = event.target.id;
                 var itemname = event.target.attributes.dataname.value;
                 if (val === true)
                 {
-                    $scope.list.push({ itemid,itemname }));
+                    tasfiaData.PushList(itemid, itemname)
                 } 
                 else
-                {$scope.list.splice($scope.list.indexOf(itemname), 1);}
+                {
+                  tasfiaData.splice(itemname)
+                }
+
             }
 
-            $scope.delete = function (obj) {
-                $scope.list.splice($scope.list.indexOf(obj), 1);
-                $('#' + obj.itemid + '').prop('checked', false);
-            }
+            //$scope.delete = function (obj) {
+            //    tasfiaData.spliceObj(obj);
+            //    $('#' + obj.itemid + '').prop('checked', false);   //unnecessary , css just can do it
+            //}
         })
+       .controller('filterElementCtrl', function ($scope, tasfiaData) {
+
+           $scope.list = tasfiaData.list;
+           $scope.delete = function (obj) {
+               tasfiaData.spliceObj(obj);
+               $('#' + obj.itemid + '').prop('checked', false); //unnecessary , css just can do it
+
+           }
+       })
+        
 
         app.factory('SearchData', function ($http, $rootScope) {
             var data = {};
@@ -237,8 +251,24 @@
                 return html;
             }
             return data;
-        });
+        })
+         .factory('tasfiaData', function () {
+            var data = {};
+            data.list = [];
+            data.PushList = function (itemid, itemname) {
+                data.list.push({ itemid, itemname });
+            }
 
+           //dublicated function -- delete one after merge
+            data.splice = function (itemname) {
+                data.list.splice(data.list.indexOf(itemname), 1);
+            }
+            data.spliceObj = function (obj) {
+                data.list.splice(data.list.indexOf(obj), 1);
+            }
+        
+            return data;
+        });
     })();
 
 </script>
