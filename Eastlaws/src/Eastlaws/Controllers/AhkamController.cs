@@ -70,40 +70,56 @@ namespace Eastlaws.Controllers
             return View();
         }
 
-        public ViewResult SearchResult(string q = "")
+        //public ViewResult SearchResult(string q = "")
+        //{
+        //    AhkamPresentation Model = AhkamService.Search(new AhkamSearchOptions(), new FTSPredicate(q));
+        //    if (Model.IsValid)
+        //    {
+        //        return View(Model);
+        //    }
+        //    else
+        //    {
+        //        return null;
+        //    }
+        //}
+
+        public ViewResult SearchResult1(string searchtype,
+        int Countsearchchange,
+        int PageNo,
+        int Match,
+        string q)
         {
-          
-            AhkamPresentation Model = AhkamService.Search(new AhkamSearchOptions(), new FTSPredicate(q));
-            if (Model.IsValid)
+
+        //    string searchtype,
+        //int Countsearchchange,
+        //int PageNo,
+        //int Match,
+        //string q
+           // string searchtype = "1";
+            //int Countsearchchange = 1;
+            //int PageNo = 1;
+            //int Match = 1;
+            //string q = "القتل";
+            AhkamSearchOptions Options = new AhkamSearchOptions();
+            Options.PageNo = PageNo;
+
+            if (searchtype == "1")
             {
-               // var Ahkam = Model.AhkamList;
-                //ViewBag.mCount = Model.ResultsCount;
-                return View(Model);
+                AhkamPresentation Model = AhkamService.Search(Options, new FTSPredicate(q));
+                if (Model.IsValid)
+                {
+                    return View(Model);
+                }
+                else
+                {
+                    return View();
+                }
             }
             else
             {
-                ViewBag.mCount = 0;
                 return View();
             }
-
-            /*
-                        if (q.Trim() == string.Empty) {
-                ViewBag.mCount = 0;
-                return View();
-                  }
-            FTSPredicate p = new FTSPredicate(q.Trim(), FTSSqlModes.AND);
-            string FullQuery = AhkamQueryBuilder.GeneralSearch(p);
-            QueryCacher Cacher = new QueryCacher(1, FullQuery, "General", true);
-            string CachedQuery = Cacher.GetCachedQuery();
-            int PageNo = 1, PageSize = 10;
-            string PagedQuery = AhkamQueryBuilder.GetOuterQuery(CachedQuery, PageSize, PageNo);
-            var Ahkam = DataHelpers.GetConnection(DbConnections.Data).Query<VW_Ahkam>(PagedQuery).AsList();
-            ViewBag.mCount = Ahkam.Count;
-            return View(Ahkam);
-            */
-
         }
-
 
         public JsonResult SearchCount(string q = "")
         {
@@ -111,8 +127,6 @@ namespace Eastlaws.Controllers
             var Result = 3000; //count of rows
             return Json(new { data = Result });
         }
-
-       
 
     }
 }
