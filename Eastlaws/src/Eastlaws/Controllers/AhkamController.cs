@@ -76,9 +76,9 @@ namespace Eastlaws.Controllers
             AhkamPresentation Model = AhkamService.Search(new AhkamSearchOptions(), new FTSPredicate(q));
             if (Model.IsValid)
             {
-                var Ahkam = Model.AhkamList;
-                ViewBag.mCount = Model.ResultsCount;
-                return View(Ahkam);
+               // var Ahkam = Model.AhkamList;
+                //ViewBag.mCount = Model.ResultsCount;
+                return View(Model);
             }
             else
             {
