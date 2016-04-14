@@ -1,6 +1,16 @@
-﻿<div class="">
+﻿
+@using System.Text;
+@using Eastlaws.Entities;
 
+@*
+    -- important notice
+in future , after finished javascript  behavior ,
+this componant will be act  as (shared componant) not (re use componant)
+so we can shared it between (ahkam - tash - fatwa - etc )
+ 
+ *@
 
+<div class="">
     <h5><i class="fa fa-server"></i> تصفية النتائج </h5>
     <div class="form-group">
         <label class="col-lg-12 col-sm-12 control-label bg-color title" for="horizontal_search"> </label>
@@ -13,33 +23,89 @@
             </div>
         </div>
     </div>
-    <div id="" class="filter-section">
-        <h5>بالنوع التشريعى</h5>
-        <div class="well" style="max-height: 200px;overflow: auto;">
-            <ul class="list-group checked-list-box">
-                <li class="list-group-item" data-toggle="tooltip" title="Hooray!">جمهورية مصر العربية - قرار محافظ قنا (1)</li>
-                <li class="list-group-item" data-checked="true">جمهورية مصر العربية - قرار وزير الري (1)</li>
-                <li class="list-group-item">جمهورية مصر العربية - قرار وزير الأش... (1)</li>
-                <li class="list-group-item">جمهورية مصر العربية - قرار محافظ قنا (1)</li>
-                <li class="list-group-item">جمهورية مصر العربية - قرار وزير الري (1)</li>
-                <li class="list-group-item">جمهورية مصر العربية - قرار وزير الأش... (1)</li>
-                <li class="list-group-item">جمهورية مصر العربية - قرار وزير الأش... (1)</li>
-                <li class="list-group-item">جمهورية مصر العربية - قرار محافظ قنا (1)</li>
-                <li class="list-group-item">جمهورية مصر العربية - قرار وزير الري (1)</li>
-                <li class="list-group-item">جمهورية مصر العربية - قرار وزير الأش... (1)</li>
-            </ul>
-        </div>
-    </div>
-    <div id="" class="filter-section">
-        <h5>بيان وجود تطبيقات أحكامة</h5>
-        <div class="well" style="max-height: 200px;overflow: auto;">
-            <ul class="list-group checked-list-box">
-                <li class="list-group-item">ليس له تطبيقات أحكام (60)</li>
-                <li class="list-group-item">له تطبيقات أحكام (8)</li>
 
-            </ul>
-        </div>
-    </div>
+    @tasfyaMain();
+ </div>
 
 
-</div>
+    @functions{
+        public static HtmlString tasfyaMain()
+        {
+
+            var catgGroup = tasfia.GetTasfia().GroupBy(n => new { n.category, n.categoryName }).ToList();
+
+            StringBuilder Result = new StringBuilder();
+            for (int i = 0; i < catgGroup.Count(); i++)
+            {
+                var catg = tasfia.GetTasfia().Where(n => n.category == catgGroup[i].Key.category);
+                Result.AppendFormat(@"<div class='filter-section'>
+                                        <h5>{0}</h5>
+                                     <div class='well' style='max-height:200px;overflow: auto;'>
+                                            <ul class='list-group checked-list-box'>{1}</ul>
+                                    </div>
+                                </div>", catgGroup[i].Key.categoryName, tasfyaSub(catgGroup[i].Key.category));
+            }
+            return new HtmlString(Result.ToString());
+        }
+
+        static HtmlString tasfyaSub(int catgID)
+        {
+            StringBuilder Result = new StringBuilder();
+            var catg = tasfia.GetTasfia().Where(n => n.category == catgID);
+            foreach (var item in catg)
+            {
+                Result.AppendFormat(@"<li class='list-group-item'> {0}</li>", item.Name);
+            }
+
+            return new HtmlString(Result.ToString());
+        }
+
+    }
+
+
+    @*<div class="">
+
+
+            <h5><i class="fa fa-server"></i> تصفية النتائج </h5>
+            <div class="form-group">
+                <label class="col-lg-12 col-sm-12 control-label bg-color title" for="horizontal_search"> </label>
+                <div class="col-sm-12 search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="بحث فى عوامل التصفية">
+                        <span class="input-group-btn">
+                            <button class="btn btn-success" type="button">إبحث</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div id="" class="filter-section">
+                <h5>بالنوع التشريعى</h5>
+                <div class="well" style="max-height: 200px;overflow: auto;">
+                    <ul class="list-group checked-list-box">
+
+                        <li class="list-group-item" data-toggle="tooltip" title="Hooray!">جمهورية مصر العربية - قرار محافظ قنا (1)</li>
+                        <li class="list-group-item" data-checked="true">جمهورية مصر العربية - قرار وزير الري (1)</li>
+                        <li class="list-group-item">جمهورية مصر العربية - قرار وزير الأش... (1)</li>
+                        <li class="list-group-item">جمهورية مصر العربية - قرار محافظ قنا (1)</li>
+                        <li class="list-group-item">جمهورية مصر العربية - قرار وزير الري (1)</li>
+                        <li class="list-group-item">جمهورية مصر العربية - قرار وزير الأش... (1)</li>
+                        <li class="list-group-item">جمهورية مصر العربية - قرار وزير الأش... (1)</li>
+                        <li class="list-group-item">جمهورية مصر العربية - قرار محافظ قنا (1)</li>
+                        <li class="list-group-item">جمهورية مصر العربية - قرار وزير الري (1)</li>
+                        <li class="list-group-item">جمهورية مصر العربية - قرار وزير الأش... (1)</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="" class="filter-section">
+                <h5>بيان وجود تطبيقات أحكامة</h5>
+                <div class="well" style="max-height: 200px;overflow: auto;">
+                    <ul class="list-group checked-list-box">
+                        <li class="list-group-item">ليس له تطبيقات أحكام (60)</li>
+                        <li class="list-group-item">له تطبيقات أحكام (8)</li>
+
+                    </ul>
+                </div>
+            </div>
+
+
+        </div>*@
