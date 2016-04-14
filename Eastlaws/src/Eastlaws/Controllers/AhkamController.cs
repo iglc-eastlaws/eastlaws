@@ -72,17 +72,20 @@ namespace Eastlaws.Controllers
 
         public ViewResult SearchResult(string q = "")
         {
+
+          
             AhkamPresentation Model = AhkamService.Search(new AhkamSearchOptions(), new FTSPredicate(q));
             if (Model.IsValid)
             {
-                return View(Model);
+                var Ahkam = Model.AhkamList;
+                ViewBag.mCount = Model.ResultsCount;
+                return View(Ahkam);
             }
             else
             {
-                return null;
+                ViewBag.mCount = 0;
+                return View();
             }
-
-          
 
             /*
                         if (q.Trim() == string.Empty) {
