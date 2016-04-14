@@ -18,7 +18,7 @@ namespace Eastlaws.Entities
             /*
              ---------------- can be better
              catgoryname       return with seprate list object 
-                               this object is contain  <catgID , catgName>  
+                               this object is contain distinct <catgID , catgName>  
              to prevent redundancy of catgName 
 
             */
@@ -29,16 +29,16 @@ namespace Eastlaws.Entities
                 new tasfia{ category =1,categoryName = "catg Name 1",ID = 3,Name ="catg 1 name 3",Count=25},
                 new tasfia{ category =1,categoryName = "catg Name 1",ID = 4,Name ="catg 1 name 4",Count=7},
                 new tasfia{ category =1,categoryName = "catg Name 1",ID = 5,Name ="catg 1 name 5",Count=6},
-                new tasfia{ category =2,categoryName = "catg Name 2",ID = 1,Name ="catg 2 name 1",Count=45},
-                new tasfia{ category =2,categoryName = "catg Name 2",ID = 2,Name ="catg 2 name 2",Count=300},
-                new tasfia{ category =2,categoryName = "catg Name 2",ID = 3,Name ="catg 2 name 3",Count=40},
-                new tasfia{ category =2,categoryName = "catg Name 2",ID = 4,Name ="catg 2 name 4",Count=15},
-                new tasfia{ category =2,categoryName = "catg Name 2",ID = 5,Name ="catg 2 name 5",Count=18},
-                new tasfia{ category =3,categoryName = "catg Name 3",ID = 1,Name ="catg 3 name 1",Count=23},
-                new tasfia{ category =3,categoryName = "catg Name 3",ID = 2,Name ="catg 3 name 2",Count=50},
-                new tasfia{ category =3,categoryName = "catg Name 3",ID = 3,Name ="catg 3 name 3",Count=1},
-                new tasfia{ category =3,categoryName = "catg Name 3",ID = 4,Name ="catg 3 name 4",Count=155},
-                new tasfia{ category =3,categoryName = "catg Name 3",ID = 5,Name ="catg 3 name 5",Count=7},
+                new tasfia{ category =2,categoryName = "catg Name 2",ID = 6,Name ="catg 2 name 1",Count=45},
+                new tasfia{ category =2,categoryName = "catg Name 2",ID = 7,Name ="catg 2 name 2",Count=300},
+                new tasfia{ category =2,categoryName = "catg Name 2",ID = 8,Name ="catg 2 name 3",Count=40},
+                new tasfia{ category =2,categoryName = "catg Name 2",ID = 9,Name ="catg 2 name 4",Count=15},
+                new tasfia{ category =2,categoryName = "catg Name 2",ID = 10,Name ="catg 2 name 5",Count=18},
+                new tasfia{ category =3,categoryName = "catg Name 3",ID = 11,Name ="catg 3 name 1",Count=23},
+                new tasfia{ category =3,categoryName = "catg Name 3",ID = 12,Name ="catg 3 name 2",Count=50},
+                new tasfia{ category =3,categoryName = "catg Name 3",ID = 13,Name ="catg 3 name 3",Count=1},
+                new tasfia{ category =3,categoryName = "catg Name 3",ID = 14,Name ="catg 3 name 4",Count=155},
+                new tasfia{ category =3,categoryName = "catg Name 3",ID = 15,Name ="catg 3 name 5",Count=7},
             };
 
             return ts;

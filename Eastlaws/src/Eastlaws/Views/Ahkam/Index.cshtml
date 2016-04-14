@@ -77,7 +77,9 @@
 
             </div>
 
-            <div class="col-lg-3 col-md-4 col-sm-4 filter-search"> @Html.Partial("TasfyaSearch")</div>
+            <div class="col-lg-3 col-md-4 col-sm-4 filter-search" ng-controller="tasfyaCtrl"> 
+              @Html.Partial("TasfyaSearch")
+            </div>
 
             <hr class="spacer" />
         </div>
@@ -139,8 +141,25 @@
                 }
             }
             $scope.getmypage();
-        });
+        })
+        .controller('tasfyaCtrl', function ($scope) {
+            $scope.list = [];
+            $scope.changeCheck = function (val, event) {
+                var itemid = event.target.id;
+                var itemname = event.target.attributes.dataname.value;
+                if (val === true)
+                {
+                    $scope.list.push({ itemid,itemname }));
+                } 
+                else
+                {$scope.list.splice($scope.list.indexOf(itemname), 1);}
+            }
 
+            $scope.delete = function (obj) {
+                $scope.list.splice($scope.list.indexOf(obj), 1);
+                $('#' + obj.itemid + '').prop('checked', false);
+            }
+        })
 
         app.factory('SearchData', function ($http, $rootScope) {
             var data = {};
