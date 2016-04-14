@@ -59,16 +59,14 @@ $(document).ready(function () {
     });
 
     
-    $(".layout-view li").click(function () {
-        $(".layout-view li").removeClass("active");
-        $(this).addClass("active", function () {
- 
-        });
-        if ($(this).hasClass("list")) {
+    $(".layout-view li a").click(function () {
+        $(".layout-view li a").removeClass("active");
+        $(this).addClass("active");
+        if ($(this).parent().hasClass("list")) {
             $(".list-content .result-block").removeClass("col-md-4");
         }else{
- $(".list-content .result-block").addClass("col-md-4");
-    }
+         $(".list-content .result-block").addClass("col-md-4");
+        }
 
     });
 

@@ -20,9 +20,6 @@ namespace Eastlaws.Entities
             public int? ImagesCount { get; set; }
             public int? TashCount { get; set; }
             public int? TashMawadCount { get; set; }
-            public int? CaseDateDay { get; set; }
-            public int? CaseDateMonth { get; set; }
-            public int? CaseDateYear { get; set; }
             public DateTime? CaseDate { get; set; }
             public string MahkamaName { get; set; }
             public string CountryName { get; set; }
