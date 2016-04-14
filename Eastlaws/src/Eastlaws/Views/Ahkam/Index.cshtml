@@ -198,18 +198,10 @@
                     let txtsearch = data.GeneralSearchInputs.text;
                     $http.get('/Ahkam/SearchResult',
                         {
-                            //params: {
-                            //    "searchtype": 1
-                            //}
-
                             params: {
-                                "searchtype": 1, "Countsearchchange": 1,
-                                "PageNo": 1, "Match": 1, "q": 'قتل'
+                                "searchtype": data.searchType, "Countsearchchange": data.CountSearchChange,
+                                "PageNo": $rootScope.currentPage, "Match": 1, "q": txtsearch
                             }
-                            //params: {
-                            //    "searchtype": data.searchType, "Countsearchchange": data.CountSearchChange,
-                            //    "PageNo": $rootScope.currentPag, "Match": 1, "q": txtsearch
-                            //}
                         }).then(function (d) {
                             $('#searchResult').html(d.data);
                            // $('#pagenumber').html(testData( data.searchType, data.CountSearchChange,$rootScope.currentPage, data.GeneralSearchInputs));

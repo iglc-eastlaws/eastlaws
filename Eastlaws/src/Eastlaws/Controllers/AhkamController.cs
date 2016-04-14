@@ -83,25 +83,15 @@ namespace Eastlaws.Controllers
         //    }
         //}
 
-        public ViewResult SearchResult1(string searchtype,
-        int Countsearchchange,
-        int PageNo,
-        int Match,
-        string q)
-        {
+        public ViewResult SearchResult(string searchtype,int Countsearchchange,int PageNo,int Match,string q)
+        { 
 
-        //    string searchtype,
-        //int Countsearchchange,
-        //int PageNo,
-        //int Match,
-        //string q
-           // string searchtype = "1";
-            //int Countsearchchange = 1;
-            //int PageNo = 1;
-            //int Match = 1;
-            //string q = "القتل";
             AhkamSearchOptions Options = new AhkamSearchOptions();
             Options.PageNo = PageNo;
+            //Options.PageSize = 10;
+            //Options.SortBy = AhkamSortColumns.Default; ;
+            //Options.SortDirections = SearchSortType.DESC;
+            //Options.DisplayMode = AhkamDisplayMode.Divs;
 
             if (searchtype == "1")
             {
