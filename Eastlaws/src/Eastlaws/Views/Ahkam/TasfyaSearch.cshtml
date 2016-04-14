@@ -3,10 +3,10 @@
 @using Eastlaws.Entities;
 
 @*
-        -- important notice
+    --******* important notice  ********/
     in future , after finished some javascript behavior and improve isolated scope,
     this componant will be act  as (shared componant) not (re use componant)
-    so we can shared it between (ahkam - tash - fatwa - etc )
+    so we can shared it between (ahkam - tash - fatwa - ...... etc )
 
 *@
 
@@ -35,7 +35,7 @@
 
             var catgGroup = tasfia.GetTasfia().GroupBy(n => new { n.category, n.categoryName }).ToList();
 
-            StringBuilder Result = new StringBuilder();
+            var Result = new StringBuilder();
             for (int i = 0; i < catgGroup.Count(); i++)
             {
                 var catg = tasfia.GetTasfia().Where(n => n.category == catgGroup[i].Key.category);
@@ -51,7 +51,7 @@
 
         static HtmlString tasfyaSub(int catgID)
         {
-            StringBuilder Result = new StringBuilder();
+            var Result = new StringBuilder();
             var catg = tasfia.GetTasfia().Where(n => n.category == catgID);
             foreach (var item in catg)
             {
