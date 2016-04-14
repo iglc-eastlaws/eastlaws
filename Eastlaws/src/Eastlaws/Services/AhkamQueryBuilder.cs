@@ -90,7 +90,10 @@ namespace Eastlaws.Services
             return Builder.ToString();
         }
 
-
+        public static string LatestAhkam(int daysCount)
+        {
+            return "";
+        }
 
         private static string GetFakraQueryForAdvancedSearch(FTSPredicate Predicate, string FakraNumCondition)
         {

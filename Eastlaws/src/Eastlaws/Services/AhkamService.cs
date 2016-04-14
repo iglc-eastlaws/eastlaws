@@ -78,6 +78,12 @@ namespace Eastlaws.Services
             return Search(InnerQuery, Options, null, AhkamSearchTypes.Mada);
         }
 
+
+        public static AhkamPresentation GetLatest(AhkamSearchOptions Options , int DaysCount = 3)
+        {
+            string InnerQuery = AhkamQueryBuilder.LatestAhkam(DaysCount);
+            return Search(InnerQuery, Options, null, AhkamSearchTypes.Custom);
+        }
        
         public static AhkamPresentation GetHokm(int ID , FTSPredicate PredicateHighlight )
         {
