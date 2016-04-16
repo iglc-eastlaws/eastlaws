@@ -154,4 +154,27 @@
 
 
     })
+    sharedModule.directive('cDateDiv', function ($compile, $apply) {
+        return {
+            restrict: 'A',
+            replace: true,
+            scope: {
+                elmshow: '='
+             },
+            link: function (scope, elem, attr) {
+                scope.elmshow = false;
+                $compile(angular.element('<div ng-show="elmshow"><h3>Hello</h3></div>').insertAfter(elem))(scope);
+
+                //scope.$apply($compile(angular.element('<div ng-show="elmshow"><h3>Hello</h3></div>').insertAfter(elem))(scope));
+                elem.bind('focus', function () {
+                    scope.elmshow = true; 
+                });
+                elem.bind('blur', function () {
+                    scope.elmshow = false; 
+                });
+               
+            }
+        }
+
+    })
 })();
