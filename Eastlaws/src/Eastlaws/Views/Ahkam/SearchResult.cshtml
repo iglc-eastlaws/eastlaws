@@ -1,30 +1,29 @@
-﻿@{
+﻿@model Eastlaws.Entities.AhkamPresentation
+@{
     Layout = null;
 
     var countrow = 0;
 }
 
-
-@model Eastlaws.Entities.AhkamPresentation
-
     @foreach (var item in Model.AhkamList)
     {
-        var Fakra = Model.FakaratList.ToArray()[countrow];
+
+        var Fakra = Model.FakaratList.Where(p => p.HokmID == @item.ID).ToArray()[0];
+        
         countrow +=1;
         <div class="result-block">
 
             <h4><i class="fa fa-bank fa-2x icon"></i></h4>
             <div class="row-search">
-                @item.ID
+              
                 <h3><img src="~/Content/images/Flags/Small/@item.CountryFlagPic" width="16" height="11" alt="" />@item.FullName</h3>
                 <p>
-                    <a href="#">@Fakra.HokmID @Fakra.Text</a>
-                
+                    <a target="_blank" href="view?ID=@item.ID">@Fakra.Text.Substring(0,(Fakra.Text.Length>200)?200: Fakra.Text.Length)...</a>
                 </p>
                     <div class="nav-control">
                     <ul>
                         <li><a href="#"><i class="fa fa-desktop"></i> قراءة النص</a></li>
-                        <li><a href="#"><i class="fa fa-camera"></i> صورة التشريع</a></li>
+                        <li><a href="#"><i class="fa fa-camera"></i> صورة الحكم</a></li>
                         <li><a href="#"><i class="fa fa-print"></i> طباعة </a></li>
                     </ul>
                 </div>
