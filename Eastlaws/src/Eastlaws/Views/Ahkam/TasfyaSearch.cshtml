@@ -1,10 +1,6 @@
 ﻿
 @using System.Text;
 @using Eastlaws.Entities;
-@{
-    var allTasfia = tasfia.GetTasfia();
-    var catgGroup = allTasfia.GroupBy(n => new { n.category, n.categoryName }).ToList();
-}
 
 @*
     --******* important notice  ********/
@@ -28,28 +24,35 @@
             </div>
         </div>
     </div>
-    @for (int i = 0; i < catgGroup.Count(); i++)
-    {
-        var catg = allTasfia.Where(n => n.category == catgGroup[i].Key.category);
-       <div class='filter-section'>
-            <h5>@catgGroup[i].Key.categoryName</h5>
-            <div class='well' style='max-height:200px;overflow: auto;'>
-                <ul class='list-group'>
-                 @tasfyaSub(allTasfia,catgGroup[i].Key.category)
-                </ul>
-            </div>
-        </div>
-    }
 
+    @tasfyaMain();
  </div>
 
 
     @functions{
-        public static HtmlString tasfyaSub(IEnumerable<tasfia> alltafia,int catgID)
+        public static HtmlString tasfyaMain()
         {
-           
+
+            var catgGroup = tasfia.GetTasfia().GroupBy(n => new { n.category, n.categoryName }).ToList();
+
             var Result = new StringBuilder();
-            var catg = alltafia.Where(n => n.category == catgID);
+            for (int i = 0; i < catgGroup.Count(); i++)
+            {
+                var catg = tasfia.GetTasfia().Where(n => n.category == catgGroup[i].Key.category);
+                Result.AppendFormat(@"<div class='filter-section'>
+                                        <h5>{0}</h5>
+                                     <div class='well' style='max-height:200px;overflow: auto;'>
+                                            <ul class='list-group'>{1}</ul>
+                                    </div>
+                                </div>", catgGroup[i].Key.categoryName, tasfyaSub(catgGroup[i].Key.category));
+            }
+            return new HtmlString(Result.ToString());
+        }
+
+        static HtmlString tasfyaSub(int catgID)
+        {
+            var Result = new StringBuilder();
+            var catg = tasfia.GetTasfia().Where(n => n.category == catgID);
             foreach (var item in catg)
             {
                 Result.AppendFormat(@"<li for='id{1}' class='list-group-item'> 
@@ -58,7 +61,7 @@
                                                 ng-model='val{1}'
                                                 dataname='{0}'
                                                 datacount='{2}'/> 
-                                       {0}</li>", item.Name,item.ID,item.Count);
+                                       {0} </li>", item.Name,item.ID,item.Count);
 
             }
 
@@ -69,48 +72,48 @@
 
 
     @*<div class="">
+    /*<span class='state-icon glyphicon glyphicon-unchecked'></span> */
 
-
-            <h5><i class="fa fa-server"></i> تصفية النتائج </h5>
-            <div class="form-group">
-                <label class="col-lg-12 col-sm-12 control-label bg-color title" for="horizontal_search"> </label>
-                <div class="col-sm-12 search">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="بحث فى عوامل التصفية">
-                        <span class="input-group-btn">
-                            <button class="btn btn-success" type="button">إبحث</button>
-                        </span>
+                <h5><i class="fa fa-server"></i> تصفية النتائج </h5>
+                <div class="form-group">
+                    <label class="col-lg-12 col-sm-12 control-label bg-color title" for="horizontal_search"> </label>
+                    <div class="col-sm-12 search">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="بحث فى عوامل التصفية">
+                            <span class="input-group-btn">
+                                <button class="btn btn-success" type="button">إبحث</button>
+                            </span>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div id="" class="filter-section">
-                <h5>بالنوع التشريعى</h5>
-                <div class="well" style="max-height: 200px;overflow: auto;">
-                    <ul class="list-group checked-list-box">
+                <div id="" class="filter-section">
+                    <h5>بالنوع التشريعى</h5>
+                    <div class="well" style="max-height: 200px;overflow: auto;">
+                        <ul class="list-group checked-list-box">
 
-                        <li class="list-group-item" data-toggle="tooltip" title="Hooray!">جمهورية مصر العربية - قرار محافظ قنا (1)</li>
-                        <li class="list-group-item" data-checked="true">جمهورية مصر العربية - قرار وزير الري (1)</li>
-                        <li class="list-group-item">جمهورية مصر العربية - قرار وزير الأش... (1)</li>
-                        <li class="list-group-item">جمهورية مصر العربية - قرار محافظ قنا (1)</li>
-                        <li class="list-group-item">جمهورية مصر العربية - قرار وزير الري (1)</li>
-                        <li class="list-group-item">جمهورية مصر العربية - قرار وزير الأش... (1)</li>
-                        <li class="list-group-item">جمهورية مصر العربية - قرار وزير الأش... (1)</li>
-                        <li class="list-group-item">جمهورية مصر العربية - قرار محافظ قنا (1)</li>
-                        <li class="list-group-item">جمهورية مصر العربية - قرار وزير الري (1)</li>
-                        <li class="list-group-item">جمهورية مصر العربية - قرار وزير الأش... (1)</li>
-                    </ul>
+                            <li class="list-group-item" data-toggle="tooltip" title="Hooray!">جمهورية مصر العربية - قرار محافظ قنا (1)</li>
+                            <li class="list-group-item" data-checked="true">جمهورية مصر العربية - قرار وزير الري (1)</li>
+                            <li class="list-group-item">جمهورية مصر العربية - قرار وزير الأش... (1)</li>
+                            <li class="list-group-item">جمهورية مصر العربية - قرار محافظ قنا (1)</li>
+                            <li class="list-group-item">جمهورية مصر العربية - قرار وزير الري (1)</li>
+                            <li class="list-group-item">جمهورية مصر العربية - قرار وزير الأش... (1)</li>
+                            <li class="list-group-item">جمهورية مصر العربية - قرار وزير الأش... (1)</li>
+                            <li class="list-group-item">جمهورية مصر العربية - قرار محافظ قنا (1)</li>
+                            <li class="list-group-item">جمهورية مصر العربية - قرار وزير الري (1)</li>
+                            <li class="list-group-item">جمهورية مصر العربية - قرار وزير الأش... (1)</li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-            <div id="" class="filter-section">
-                <h5>بيان وجود تطبيقات أحكامة</h5>
-                <div class="well" style="max-height: 200px;overflow: auto;">
-                    <ul class="list-group checked-list-box">
-                        <li class="list-group-item">ليس له تطبيقات أحكام (60)</li>
-                        <li class="list-group-item">له تطبيقات أحكام (8)</li>
+                <div id="" class="filter-section">
+                    <h5>بيان وجود تطبيقات أحكامة</h5>
+                    <div class="well" style="max-height: 200px;overflow: auto;">
+                        <ul class="list-group checked-list-box">
+                            <li class="list-group-item">ليس له تطبيقات أحكام (60)</li>
+                            <li class="list-group-item">له تطبيقات أحكام (8)</li>
 
-                    </ul>
+                        </ul>
+                    </div>
                 </div>
-            </div>
 
 
-        </div>*@
+            </div>*@
