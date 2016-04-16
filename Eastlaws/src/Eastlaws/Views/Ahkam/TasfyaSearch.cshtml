@@ -1,7 +1,10 @@
 ﻿
 @using System.Text;
 @using Eastlaws.Entities;
-
+@{
+    var allTasfia = tasfia.GetTasfia();
+    var catgGroup = allTasfia.GroupBy(n => new { n.category, n.categoryName }).ToList();
+}
 @*
     --******* important notice  ********/
     in future , after finished some javascript behavior and improve isolated scope,
@@ -26,55 +29,37 @@
             </div>
         </div>
     </div>
-    <input id="option" type="checkbox" name="field" value="option">
-    <label for="option"><span><span></span></span>Value</label>
-    @tasfyaMain();
+ 
+    @for (int i = 0; i < catgGroup.Count(); i++)
+    {
+        var catg = allTasfia.Where(n => n.category == catgGroup[i].Key.category);
+        <div class='filter-section'>
+            <h5>@catgGroup[i].Key.categoryName</h5>
+            <div class='well' style='max-height:200px;overflow: auto;'>
+                <ul class='list-group'>
+                    @tasfyaSub(allTasfia, catgGroup[i].Key.category)
+                </ul>
+            </div>
+        </div>
+    }
  </div>
 
 
     @functions{
-        public static HtmlString tasfyaMain()
+        public static HtmlString tasfyaSub(IEnumerable<tasfia> alltafia, int catgID)
         {
 
-            var catgGroup = tasfia.GetTasfia().GroupBy(n => new { n.category, n.categoryName }).ToList();
-
             var Result = new StringBuilder();
-            for (int i = 0; i < catgGroup.Count(); i++)
-            {
-                var catg = tasfia.GetTasfia().Where(n => n.category == catgGroup[i].Key.category);
-                Result.AppendFormat(@"<div class='filter-section'>
-                                        <h5>{0}</h5>
-                                     <div class='well' style='max-height:200px;overflow: auto;'>
-                                            <ul class='list-group'>{1}</ul>
-                                    </div>
-                                </div>", catgGroup[i].Key.categoryName, tasfyaSub(catgGroup[i].Key.category));
-            }
-            return new HtmlString(Result.ToString());
-        }
-
-        static HtmlString tasfyaSub(int catgID)
-        {
-            var Result = new StringBuilder();
-            var catg = tasfia.GetTasfia().Where(n => n.category == catgID);
+            var catg = alltafia.Where(n => n.category == catgID);
             foreach (var item in catg)
             {
                 Result.AppendFormat(@"<li for='id{1}' class='list-group-item'> 
-
-                                        <input id='id{1}' type='checkbox'
-                                                ng-click='changeCheck(val{1},$event)'
+                                        <input id='id{1}' type='checkbox' 
+                                                ng-click='changeCheck(val{1},$event)' 
                                                 ng-model='val{1}'
                                                 dataname='{0}'
-                                                datacount='{2}'/>
-                                     {0} </li>", item.Name, item.ID, item.Count);
-                //    Result.AppendFormat(@"<li for='id{1}' class='list-group-item'> 
-                //<span  id='{1}' class='state-icon glyphicon glyphicon-unchecked spanChk'></span>
-                // <span class='state-icon glyphicon glyphicon-check'></span>
-                //                            <input id='id{1}' type='checkbox'
-                //                                    ng-click='changeCheck(val{1},$event)'
-                //                                    ng-model='val{1}'
-                //                                    dataname='{0}'
-                //                                    datacount='{2}'/> 
-                //                           {0}  </li>", item.Name,item.ID,item.Count);
+                                                datacount='{2}'/> 
+                                       {0}</li>", item.Name, item.ID, item.Count);
 
             }
 
