@@ -1,6 +1,10 @@
 ﻿
 @using System.Text;
 @using Eastlaws.Entities;
+@{
+    var allTasfia = tasfia.GetTasfia();
+    var catgGroup = allTasfia.GroupBy(n => new { n.category, n.categoryName }).ToList();
+}
 
 @*
     --******* important notice  ********/
@@ -24,35 +28,28 @@
             </div>
         </div>
     </div>
+    @for (int i = 0; i < catgGroup.Count(); i++)
+    {
+        var catg = allTasfia.Where(n => n.category == catgGroup[i].Key.category);
+       <div class='filter-section'>
+            <h5>@catgGroup[i].Key.categoryName</h5>
+            <div class='well' style='max-height:200px;overflow: auto;'>
+                <ul class='list-group'>
+                 @tasfyaSub(allTasfia,catgGroup[i].Key.category)
+                </ul>
+            </div>
+        </div>
+    }
 
-    @tasfyaMain();
  </div>
 
 
     @functions{
-        public static HtmlString tasfyaMain()
+        public static HtmlString tasfyaSub(IEnumerable<tasfia> alltafia,int catgID)
         {
-
-            var catgGroup = tasfia.GetTasfia().GroupBy(n => new { n.category, n.categoryName }).ToList();
-
+           
             var Result = new StringBuilder();
-            for (int i = 0; i < catgGroup.Count(); i++)
-            {
-                var catg = tasfia.GetTasfia().Where(n => n.category == catgGroup[i].Key.category);
-                Result.AppendFormat(@"<div class='filter-section'>
-                                        <h5>{0}</h5>
-                                     <div class='well' style='max-height:200px;overflow: auto;'>
-                                            <ul class='list-group'>{1}</ul>
-                                    </div>
-                                </div>", catgGroup[i].Key.categoryName, tasfyaSub(catgGroup[i].Key.category));
-            }
-            return new HtmlString(Result.ToString());
-        }
-
-        static HtmlString tasfyaSub(int catgID)
-        {
-            var Result = new StringBuilder();
-            var catg = tasfia.GetTasfia().Where(n => n.category == catgID);
+            var catg = alltafia.Where(n => n.category == catgID);
             foreach (var item in catg)
             {
                 Result.AppendFormat(@"<li for='id{1}' class='list-group-item'> 
@@ -62,7 +59,7 @@
                                                 dataname='{0}'
                                                 datacount='{2}'/> 
                                        {0}</li>", item.Name,item.ID,item.Count);
-              
+
             }
 
             return new HtmlString(Result.ToString());
