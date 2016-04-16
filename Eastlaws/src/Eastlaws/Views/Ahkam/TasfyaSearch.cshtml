@@ -11,6 +11,8 @@
 *@
 
 
+
+
 <div class="">
     <h5><i class="fa fa-server"></i> تصفية النتائج </h5>
     <div class="form-group">
@@ -24,7 +26,8 @@
             </div>
         </div>
     </div>
-
+    <input id="option" type="checkbox" name="field" value="option">
+    <label for="option"><span><span></span></span>Value</label>
     @tasfyaMain();
  </div>
 
@@ -56,13 +59,22 @@
             foreach (var item in catg)
             {
                 Result.AppendFormat(@"<li for='id{1}' class='list-group-item'> 
-            <span class='state-icon glyphicon glyphicon-unchecked'></span><span class='state-icon glyphicon glyphicon-check'></span>
+
                                         <input id='id{1}' type='checkbox'
                                                 ng-click='changeCheck(val{1},$event)'
                                                 ng-model='val{1}'
                                                 dataname='{0}'
                                                 datacount='{2}'/>
-                                       {0}  </li>", item.Name,item.ID,item.Count);
+                                     {0} </li>", item.Name, item.ID, item.Count);
+                //    Result.AppendFormat(@"<li for='id{1}' class='list-group-item'> 
+                //<span  id='{1}' class='state-icon glyphicon glyphicon-unchecked spanChk'></span>
+                // <span class='state-icon glyphicon glyphicon-check'></span>
+                //                            <input id='id{1}' type='checkbox'
+                //                                    ng-click='changeCheck(val{1},$event)'
+                //                                    ng-model='val{1}'
+                //                                    dataname='{0}'
+                //                                    datacount='{2}'/> 
+                //                           {0}  </li>", item.Name,item.ID,item.Count);
 
             }
 
