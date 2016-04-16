@@ -1,39 +1,61 @@
-﻿
+﻿@{
+    Layout = "~/Views/Shared/_LayoutInner.cshtml";
+    // ViewBag.Title = "أحكام المحاكم العربية العليا ";
+}
 @model Eastlaws.Entities.AhkamPresentation
 
-@{ 
+@{
     var Hokm = Model.AhkamList.ToArray()[0];
 }
+<div class="title-module">
+    @*<h1><span class="main-title">منظومة أحكام المحاكم العربية</span></h1>*@
 
-<div>
-    <h3>
-        
-        @if (!string.IsNullOrEmpty(Hokm.CountryFlagPic))
-        {
-            <img src="~/Content/images/Flags/Small/@Hokm.CountryFlagPic" /> 
-
-        }
-        @Hokm.FullName
-    </h3>
 </div>
+<hr class="spacer" />
+@Html.Partial("_ManzomatLinks");
 
-@foreach(var Fakra in Model.FakaratList)
-{
-    <div class="FakraTitle">
-        @Fakra.Title
-    </div>
+<div class="main inner">
 
-    @if (!string.IsNullOrWhiteSpace(Fakra.MogazText))
-    {
-        <div class="FakraMogaz">
-            @Fakra.MogazText
+
+    <div class="col-lg-9 col-md-8  col-sm-8 result-search">
+        <div class="format-result">
+
+            @Html.Partial("_toolbar")
         </div>
-    }
+        <div class="view-law">
 
-    <div class="FakraText">
-        @Fakra.Text
+            <h3>
+
+                @if (!string.IsNullOrEmpty(Hokm.CountryFlagPic))
+            {
+                    <img src="~/Content/images/Flags/Small/@Hokm.CountryFlagPic" />
+
+                }
+                @Hokm.FullName
+            </h3>
+
+
+            @foreach (var Fakra in Model.FakaratList)
+            {
+                <h4 class="FakraTitle">
+                    @Fakra.Title
+                </h4>
+
+                    @if (!string.IsNullOrWhiteSpace(Fakra.MogazText))
+                    {
+                        <p class="FakraMogaz">
+                            @Fakra.MogazText
+                        </p>
+                    }
+
+                    <p class="FakraText">
+                        @Fakra.Text
+                    </p>
+
+            }
+        </div>
+
+        <div class="col-lg-3 col-md-4 col-sm-4 filter-search"></div>
     </div>
 
-}
-
-
+</div>
