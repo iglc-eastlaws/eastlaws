@@ -18,7 +18,7 @@
               
                 <h3><img src="~/Content/images/Flags/Small/@item.CountryFlagPic" width="16" height="11" alt="" />@item.FullName</h3>
                 <p>
-                    <a target="_blank" href="view?ID=@item.ID">@Fakra.Text.Substring(0,200)...</a>
+                    <a target="_blank" href="view?ID=@item.ID">@Fakra.Text.Substring(0,(Fakra.Text.Length>200)?200: Fakra.Text.Length)...</a>
                 </p>
                     <div class="nav-control">
                     <ul>
