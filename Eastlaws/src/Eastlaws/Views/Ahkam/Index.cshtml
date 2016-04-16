@@ -153,10 +153,15 @@
                 var itemcount = event.target.attributes.datacount.value;
                 if (val === true)
                 {
-                    tasfiaData.PushList(itemid, itemname, itemcount)
+                    tasfiaData.PushList(itemid, itemname, itemcount);
+                    $('#' + itemid).parent().addClass('active');
+                  
+
                 } 
                 else
                 {
+                    $('#' + itemid).parent().removeClass('active');
+                  
                   tasfiaData.splice(itemname)
                 }
 
