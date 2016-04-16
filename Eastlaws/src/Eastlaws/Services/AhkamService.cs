@@ -28,6 +28,7 @@ namespace Eastlaws.Services
         ASC = 0 , DESC = 1
     }
     public enum AhkamSearchTypes
+
     {
         General , Custom , Advanced , Mada 
     }

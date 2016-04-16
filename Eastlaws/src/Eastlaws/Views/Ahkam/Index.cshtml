@@ -43,7 +43,7 @@
           </div>
         </div>
         <div class="result-search">
-            <p class="total-chart"> <i class="fa fa-line-chart "></i> وجد اجمالي [68] تشريع </p>
+            <p class="total-chart"> <i class="fa fa-line-chart "></i> وجد اجمالي [68] حكم </p>
     
             <div class="col-lg-9 col-md-8  col-sm-8 list-content">
                 <!-- Formating result -->
@@ -200,7 +200,7 @@
                         {
                             params: {
                                 "searchtype": data.searchType, "Countsearchchange": data.CountSearchChange,
-                                "PageNo": $rootScope.currentPage, "Match": 1, "q": txtsearch
+                                "PageNo": $rootScope.currentPage, "Match": data.GeneralSearchInputs.textType, "q": txtsearch
                             }
                         }).then(function (d) {
                             $('#searchResult').html(d.data);

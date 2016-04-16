@@ -70,34 +70,18 @@ namespace Eastlaws.Controllers
             return View();
         }
 
-        //public ViewResult SearchResult(string q = "")
-        //{
-        //    AhkamPresentation Model = AhkamService.Search(new AhkamSearchOptions(), new FTSPredicate(q));
-        //    if (Model.IsValid)
-        //    {
-        //        return View(Model);
-        //    }
-        //    else
-        //    {
-        //        return null;
-        //    }
-        //}
 
         public ViewResult SearchResult(string searchtype,int Countsearchchange,int PageNo,int Match,string q)
         { 
-
             AhkamSearchOptions Options = new AhkamSearchOptions();
             Options.PageNo = PageNo;
-            //Options.PageSize = 10;
-            //Options.SortBy = AhkamSortColumns.Default; ;
-            //Options.SortDirections = SearchSortType.DESC;
-            //Options.DisplayMode = AhkamDisplayMode.Divs;
-
+           
             if (searchtype == "1")
             {
-                AhkamPresentation Model = AhkamService.Search(Options, new FTSPredicate(q));
+                AhkamPresentation Model = AhkamService.Search(Options, new FTSPredicate(q,Match));
                 if (Model.IsValid)
                 {
+                    ViewBag.aa = Match;
                     return View(Model);
                 }
                 else
