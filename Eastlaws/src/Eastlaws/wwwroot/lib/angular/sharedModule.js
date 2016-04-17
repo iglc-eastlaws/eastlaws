@@ -157,10 +157,7 @@
 
 
     })
-
-
-
-    sharedModule.directive('cDatePicker', function ($compile) {
+    sharedModule.directive('cDatePicker', function () {
         return {
             restrict: "E",
             scope: {
@@ -170,7 +167,7 @@
             template: '<div></br>' +
                 '<select  ng-options="t.val for t in years" ng-model="modelyear" ng-change="updateDate()"></select>' +
                 '</br>'+
-                '<select ng-options="t.val for t in months" ng-model="modelmonth"></select>'+
+                '<select ng-options="t.val for t in months" ng-model="modelmonth" ng-change="updateDate()"></select>' +
                 '</br>'+
                 '</br><input type="button" value="ok" ng-click="clickDate()" />'+
                 '</div>'
@@ -182,10 +179,7 @@
 
 
                 $scope.updateDate = function () {
-                    if ($scope.modelyear !== undefined)
-                    { $scope.date = $scope.modelyear.key }
-
-                    if ($scope.modelmonth !== undefined) {
+                    if (($scope.modelmonth !== undefined) && ($scope.modelyear !== undefined)){
                         $scope.date = $scope.modelyear.key + '-' + $scope.modelmonth.key;
                     }
                  }

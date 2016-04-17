@@ -114,20 +114,9 @@
 
             };
 
-            $scope.date1 = false;
-            $scope.change = function () {
-               // console.log($scope.yearval);
-               // $scope.Inputs.textdate = $scope.yearval.key //+ '/' + $scope.monthval.key;
-                console.log($scope.date);
-                $scope.textdate = $scope.date;
-               // alert($scope.date);
-            }
-            //$scope.valYear = 2000;
-            //$scope.valMonth = 20;
-            //console.log($scope.valYear)
-           // $scope.Inputs.textdate = $scope.valYear.val + '/' + $scope.valMonth.val;
 
-         
+
+
         })
         .controller('AdvancedSearchCtrl', function ($scope, SearchData, $rootScope) {
             $scope.Inputs = {};
@@ -147,7 +136,15 @@
             }
 
         })
-        .controller('SpecialSearchCtrl', function () { })
+        .controller('SpecialSearchCtrl', function ($scope) {
+
+            $scope.date1 = false;
+            $scope.change = function () {
+                console.log($scope.date);
+                $scope.textdate = $scope.date;
+            }
+           // $scope.change();
+         })
         .controller('pagesCtrl', function ($scope, SearchData, $rootScope) {
 
             $scope.getmypage = function () {
