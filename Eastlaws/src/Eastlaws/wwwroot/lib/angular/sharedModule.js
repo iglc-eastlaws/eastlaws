@@ -57,7 +57,10 @@
 
             elem.on('click', function () {scope.onGetpage(); });
 
-            scope.getCurrentPage = function (p) {scope.currentPage = p;}
+            scope.getCurrentPage = function (p) {
+                console.log(scope.currentPage + ' ' + scope.pagesCount);
+                scope.currentPage = p;
+            }
 
             
             //scope.getFirstPage = function () {

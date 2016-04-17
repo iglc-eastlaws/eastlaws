@@ -62,20 +62,17 @@ namespace Eastlaws.Controllers
             return null;
         }
 
-
-
         public IActionResult Index()
         {
 
             return View();
         }
-
-        public ViewResult SearchResult(string searchtype,int Countsearchchange,int PageNo,int Match,string q)
+        public ViewResult SearchResult(int searchtype,int Countsearchchange,int PageNo,int Match,string q)
         { 
             AhkamSearchOptions Options = new AhkamSearchOptions();
             Options.PageNo = PageNo;
            
-            if (searchtype == "1")
+            if (searchtype ==1)
             {
                 AhkamPresentation Model = AhkamService.Search(Options, new FTSPredicate(q,Match));
                 if (Model.IsValid)

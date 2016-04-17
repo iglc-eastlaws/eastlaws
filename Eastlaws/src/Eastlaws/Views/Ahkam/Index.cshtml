@@ -251,8 +251,9 @@
                                
                                 if ($rootScope.currentPage == 1 )
                                 {
-
-                                    var countpage = (TotalCount > 10) ? TotalCount / 10 : 1
+                                    var countpage=1;
+                                    if (TotalCount > 10)
+                                        countpage = Math.ceil(TotalCount / 10);
                                     $rootScope.pageCount = countpage;
                                     InitPageingControl(countpage);
                                  }
