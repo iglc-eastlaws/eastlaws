@@ -154,27 +154,67 @@
 
 
     })
-    sharedModule.directive('cDateDiv', function ($compile, $apply) {
+    sharedModule.directive('cDateDiv', function ($compile) {
         return {
             restrict: 'A',
             replace: true,
             scope: {
-                elmshow: '='
+                elmshow: '@'
              },
             link: function (scope, elem, attr) {
                 scope.elmshow = false;
-                $compile(angular.element('<div ng-show="elmshow"><h3>Hello</h3></div>').insertAfter(elem))(scope);
+                elem.css("border", "1px solid #cccccc");
+                //$compile(angular.element('<div ng-show="elmshow"><h3>Hello</h3></div>').insertAfter(elem))(scope);
 
-                //scope.$apply($compile(angular.element('<div ng-show="elmshow"><h3>Hello</h3></div>').insertAfter(elem))(scope));
-                elem.bind('focus', function () {
-                    scope.elmshow = true; 
-                });
-                elem.bind('blur', function () {
-                    scope.elmshow = false; 
-                });
+                ////scope.$apply($compile(angular.element('<div ng-show="elmshow"><h3>Hello</h3></div>').insertAfter(elem))(scope));
+                //elem.bind('focus', function () {
+                //    scope.elmshow = true; 
+                //});
+                //elem.bind('blur', function () {
+                //    scope.elmshow = false; 
+                //});
                
             }
         }
 
     })
+
+
+    sharedModule.directive('test', function ($compile) {
+        return {
+            restrict: 'A',
+            replace: true,
+            scope: {
+                elmshow: '@'
+            },
+            link: function (scope, elem, attr) {
+
+                var years = [];
+                for (var i = 1980; i <= 2016; i++) {
+                    years.push(i);
+                    console.log(i);
+                }
+
+                var htmlyears = '<select><option ng-repeat="n in years track by index">{{$index}}</option></select>';
+                scope.elmshow = false;
+                scope.name = "ahmed"
+                elem.css("border", "1px solid #cccccc");
+                //angular.element('<h4>after {{name}} </h4>').insertAfter(elem);
+                $compile(angular.element('<h4>after{{name}}</h4>'+htmlyears+'').insertAfter(elem))(scope);
+
+                //$compile(angular.element('<div ng-show="elmshow"><h3>Hello</h3></div>').insertAfter(elem))(scope);
+
+                ////scope.$apply($compile(angular.element('<div ng-show="elmshow"><h3>Hello</h3></div>').insertAfter(elem))(scope));
+                //elem.bind('focus', function () {
+                //    scope.elmshow = true; 
+                //});
+                //elem.bind('blur', function () {
+                //    scope.elmshow = false; 
+                //});
+
+            }
+        }
+
+    })
+
 })();
