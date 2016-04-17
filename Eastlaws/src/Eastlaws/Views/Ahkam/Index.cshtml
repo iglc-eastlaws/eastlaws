@@ -104,6 +104,7 @@
             $scope.Inputs = {};
             $scope.Inputs.textType = 1; //default radio checked
 
+
             $scope.search = function () {
                 SearchData.GeneralSearchInputs = $scope.Inputs;
                 $rootScope.currentPage = 1;
@@ -112,6 +113,10 @@
                 SearchData.GetSearch();
 
             };
+
+
+
+
         })
         .controller('AdvancedSearchCtrl', function ($scope, SearchData, $rootScope) {
             $scope.Inputs = {};
@@ -131,7 +136,15 @@
             }
 
         })
-        .controller('SpecialSearchCtrl', function () { })
+        .controller('SpecialSearchCtrl', function ($scope) {
+
+            $scope.date1 = false;
+            $scope.change = function () {
+                console.log($scope.date);
+                $scope.textdate = $scope.date;
+            }
+           // $scope.change();
+         })
         .controller('pagesCtrl', function ($scope, SearchData, $rootScope) {
 
             $scope.getmypage = function () {
@@ -235,8 +248,9 @@
                                
                                 if ($rootScope.currentPage == 1 )
                                 {
-
-                                    var countpage = (TotalCount > 10) ? TotalCount / 10 : 1
+                                    var countpage=1;
+                                    if (TotalCount > 10)
+                                        countpage = Math.ceil(TotalCount / 10);
                                     $rootScope.pageCount = countpage;
                                     InitPageingControl(countpage);
                                  }

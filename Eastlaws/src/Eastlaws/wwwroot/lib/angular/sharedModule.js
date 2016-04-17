@@ -57,7 +57,10 @@
 
             elem.on('click', function () {scope.onGetpage(); });
 
-            scope.getCurrentPage = function (p) {scope.currentPage = p;}
+            scope.getCurrentPage = function (p) {
+                console.log(scope.currentPage + ' ' + scope.pagesCount);
+                scope.currentPage = p;
+            }
 
             
             //scope.getFirstPage = function () {
@@ -154,4 +157,49 @@
 
 
     })
+    sharedModule.directive('cDatePicker', function () {
+        return {
+            restrict: "E",
+            scope: {
+                onChooseDate: '&',
+                date:'='
+            },
+            template: '<div></br>' +
+                '<select  ng-options="t.val for t in years" ng-model="modelyear" ng-change="updateDate()"></select>' +
+                '</br>'+
+                '<select ng-options="t.val for t in months" ng-model="modelmonth" ng-change="updateDate()"></select>' +
+                '</br>'+
+                '</br><input type="button" value="ok" ng-click="clickDate()" />'+
+                '</div>'
+                ,
+            replace: false,
+            controller: function ($scope) {
+                $scope.years = objectArray(1880, 2016);
+                $scope.months = objectArray(1, 12);
+
+
+                $scope.updateDate = function () {
+                    if (($scope.modelmonth !== undefined) && ($scope.modelyear !== undefined)){
+                        $scope.date = $scope.modelyear.key + '-' + $scope.modelmonth.key;
+                    }
+                 }
+
+                $scope.clickDate = function () {
+                     $scope.onChooseDate();
+                }
+
+            }
+
+        };
+    });
+
+
+
+    var objectArray = function (start,end) {
+        var arr = [];
+        for (var i = start; i <= end; i++) {
+            arr.push({ 'key': i, 'val': i });
+        }
+        return arr;
+    }
 })();
