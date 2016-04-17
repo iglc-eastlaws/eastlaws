@@ -203,6 +203,7 @@
                                 "PageNo": $rootScope.currentPage, "Match": data.GeneralSearchInputs.textType, "q": txtsearch
                             }
                         }).then(function (d) {
+                            alert($("#resultCount").val())
                             $('#searchResult').html(d.data);
                            // $('#pagenumber').html(testData( data.searchType, data.CountSearchChange,$rootScope.currentPage, data.GeneralSearchInputs));
                             if ($rootScope.currentPage == 1)
