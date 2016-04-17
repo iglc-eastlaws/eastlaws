@@ -43,7 +43,7 @@
           </div>
         </div>
         <div class="result-search">
-            <p class="total-chart"> <i class="fa fa-line-chart "></i> وجد اجمالي [68] حكم </p>
+            <p class="total-chart" id="TotalCount"> </p>
     
             <div class="col-lg-9 col-md-8  col-sm-8 list-content">
                 <!-- Formating result -->
@@ -213,6 +213,8 @@
             data.GetSearch = function () {
                 if (data.searchType === 1) // GeneralSearch
                 {
+                   
+                   // alert(data.CountSearchChange)
                     let txtsearch = data.GeneralSearchInputs.text;
                     $http.get('/Ahkam/SearchResult',
                         {
@@ -222,10 +224,22 @@
                             }
                         }).then(function (d) {
                             $('#searchResult').html(d.data);
-                           // $('#pagenumber').html(testData( data.searchType, data.CountSearchChange,$rootScope.currentPage, data.GeneralSearchInputs));
-                            if ($rootScope.currentPage == 1)
+                            if(data.CountSearchChange == 1)
                             {
-                                InitPageingControl(28)
+                                $rootScope.pageCount = 0;
+                                var TotalCount = $("#resultCount").val();
+                                $('#TotalCount').html('');
+                                if (TotalCount > 0  )
+                                    $('#TotalCount').html(" <i class='fa fa-line-chart '></i> وجد اجمالي [" + TotalCount + "] حكم")
+                                // $('#pagenumber').html(testData( data.searchType, data.CountSearchChange,$rootScope.currentPage, data.GeneralSearchInputs));
+                               
+                                if ($rootScope.currentPage == 1 )
+                                {
+
+                                    var countpage = (TotalCount > 10) ? TotalCount / 10 : 1
+                                    $rootScope.pageCount = countpage;
+                                    InitPageingControl(countpage);
+                                 }
                             }
                         });
 

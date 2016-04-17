@@ -70,7 +70,6 @@ namespace Eastlaws.Controllers
             return View();
         }
 
-
         public ViewResult SearchResult(string searchtype,int Countsearchchange,int PageNo,int Match,string q)
         { 
             AhkamSearchOptions Options = new AhkamSearchOptions();
