@@ -154,67 +154,55 @@
 
 
     })
-    sharedModule.directive('cDateDiv', function ($compile) {
+
+
+
+    sharedModule.directive('cDatePicker', function ($compile) {
         return {
-            restrict: 'A',
-            replace: true,
+            restrict: "E",
             scope: {
-                elmshow: '@'
-             },
-            link: function (scope, elem, attr) {
-                scope.elmshow = false;
-                elem.css("border", "1px solid #cccccc");
-                //$compile(angular.element('<div ng-show="elmshow"><h3>Hello</h3></div>').insertAfter(elem))(scope);
-
-                ////scope.$apply($compile(angular.element('<div ng-show="elmshow"><h3>Hello</h3></div>').insertAfter(elem))(scope));
-                //elem.bind('focus', function () {
-                //    scope.elmshow = true; 
-                //});
-                //elem.bind('blur', function () {
-                //    scope.elmshow = false; 
-                //});
-               
-            }
-        }
-
-    })
-
-
-    sharedModule.directive('test', function ($compile) {
-        return {
-            restrict: 'A',
-            replace: true,
-            scope: {
-                elmshow: '@'
+                onChooseDate: '&',
+                date:'='
             },
-            link: function (scope, elem, attr) {
+            template: '<div></br>' +
+                '<select  ng-options="t.val for t in years" ng-model="modelyear" ng-change="updateDate()"></select>' +
+                '</br>'+
+                '<select ng-options="t.val for t in months" ng-model="modelmonth"></select>'+
+                '</br>'+
+                '</br><input type="button" value="ok" ng-click="clickDate()" />'+
+                '</div>'
+                ,
+            replace: false,
+            controller: function ($scope) {
+                $scope.years = objectArray(1880, 2016);
+                $scope.months = objectArray(1, 12);
 
-                var years = [];
-                for (var i = 1980; i <= 2016; i++) {
-                    years.push(i);
-                    console.log(i);
+
+                $scope.updateDate = function () {
+                    if ($scope.modelyear !== undefined)
+                    { $scope.date = $scope.modelyear.key }
+
+                    if ($scope.modelmonth !== undefined) {
+                        $scope.date = $scope.modelyear.key + '-' + $scope.modelmonth.key;
+                    }
+                 }
+
+                $scope.clickDate = function () {
+                     $scope.onChooseDate();
                 }
 
-                var htmlyears = '<select><option ng-repeat="n in years track by index">{{$index}}</option></select>';
-                scope.elmshow = false;
-                scope.name = "ahmed"
-                elem.css("border", "1px solid #cccccc");
-                //angular.element('<h4>after {{name}} </h4>').insertAfter(elem);
-                $compile(angular.element('<h4>after{{name}}</h4>'+htmlyears+'').insertAfter(elem))(scope);
-
-                //$compile(angular.element('<div ng-show="elmshow"><h3>Hello</h3></div>').insertAfter(elem))(scope);
-
-                ////scope.$apply($compile(angular.element('<div ng-show="elmshow"><h3>Hello</h3></div>').insertAfter(elem))(scope));
-                //elem.bind('focus', function () {
-                //    scope.elmshow = true; 
-                //});
-                //elem.bind('blur', function () {
-                //    scope.elmshow = false; 
-                //});
-
             }
+
+        };
+    });
+
+
+
+    var objectArray = function (start,end) {
+        var arr = [];
+        for (var i = start; i <= end; i++) {
+            arr.push({ 'key': i, 'val': i });
         }
-
-    })
-
+        return arr;
+    }
 })();

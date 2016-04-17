@@ -31,12 +31,15 @@
 
             @*--------------------*@
             <div>
-                <h4 style="width:50px;" test >hii</h4>
+
+                <input type="text" ng-model="textdate"
+                        ng-mousedown="date1 = true;" ng-mouseleave="data1=false;" />
+
+                <c-date-picker on-choose-date="change()" date="date"></c-date-picker>
+
             </div>
 
-            @*<div>
-                <input c-date-div elmshow="true" />
-            </div>*@
+
 
             @*--------------*@
 

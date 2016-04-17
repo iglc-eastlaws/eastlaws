@@ -104,6 +104,7 @@
             $scope.Inputs = {};
             $scope.Inputs.textType = 1; //default radio checked
 
+
             $scope.search = function () {
                 SearchData.GeneralSearchInputs = $scope.Inputs;
                 $rootScope.currentPage = 1;
@@ -112,6 +113,21 @@
                 SearchData.GetSearch();
 
             };
+
+            $scope.date1 = false;
+            $scope.change = function () {
+               // console.log($scope.yearval);
+               // $scope.Inputs.textdate = $scope.yearval.key //+ '/' + $scope.monthval.key;
+                console.log($scope.date);
+                $scope.textdate = $scope.date;
+               // alert($scope.date);
+            }
+            //$scope.valYear = 2000;
+            //$scope.valMonth = 20;
+            //console.log($scope.valYear)
+           // $scope.Inputs.textdate = $scope.valYear.val + '/' + $scope.valMonth.val;
+
+         
         })
         .controller('AdvancedSearchCtrl', function ($scope, SearchData, $rootScope) {
             $scope.Inputs = {};
