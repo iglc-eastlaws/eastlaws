@@ -1,11 +1,11 @@
 ﻿@{
     Layout = "~/Views/Shared/_LayoutInner.cshtml";
     ViewBag.Title = "أحكام المحاكم العربية العليا ";
- }
+}
 
 <div class="title-module">
     <h1><span class="main-title">منظومة أحكام المحاكم العربية</span></h1>
-   
+
 </div>
 <hr class="spacer" />
 @Html.Partial("_ManzomatLinks")
@@ -16,255 +16,259 @@
         <div class="card">
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab"> بحث عام</a></li>
+                <li role="presentation"><a href="#allSearch" aria-controls="allSearch" role="tab" data-toggle="tab">بحث عام 1</a></li>
                 <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">بحث متقدم</a></li>
                 <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">بحث متخصص</a></li>
                 <li role="presentation"><a href="#mada" aria-controls="mada" role="tab" data-toggle="tab">بحث بتطبيقات المادة</a></li>
             </ul>
 
+
+
+
             <!-- Tab panes -->
-       <div class="tab-content">
+            <div class="tab-content">
 
-             <div role="tabpanel" class="tab-pane active" id="home">
-                   <div class="search-form form-horizontal" ng-controller="GeneralSearchCtrl"> @Html.Partial("_GeneralSearch")</div>
-             </div>
-              
-             <div role="tabpanel" class="tab-pane" id="profile">
-                   <div class="search-form form-horizontal" ng-controller="AdvancedSearchCtrl"> @Html.Partial("_AdvancedSearch")</div>
-             </div>
-
-             <div role="tabpanel" class="tab-pane" id="messages" >
-                   <div class="search-form form-horizontal" ng-controller="SpecialSearchCtrl"> @Html.Partial("_SpecialSearch")</div>
-              </div>
-
-             <div role="tabpanel" class="tab-pane" id="mada">
-                 <div class="search-form form-horizontal">@Html.Partial("_tadbekMadaSearch")</div>
-              </div>
-
-          </div>
-        </div>
-        <div class="result-search">
-            <p class="total-chart" id="TotalCount"> </p>
-    
-            <div class="col-lg-9 col-md-8  col-sm-8 list-content">
-                <!-- Formating result -->
-                <div class="format-result">
-
-                    @Html.Partial("_toolbar")
+                <div role="tabpanel" class="tab-pane active" id="home">
+                    <div class="search-form form-horizontal" ng-controller="GeneralSearchCtrl"> @Html.Partial("_GeneralSearch")</div>
                 </div>
 
+                <div role="tabpanel" class="tab-pane" id="allSearch">
+                    <div class="search-form form-horizontal" ng-
+                         controller="SpecialSearchCtrl">@Html.Partial("_GeneralSearch2")</div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="profile">
+                        <div class="search-form form-horizontal" ng-controller="AdvancedSearchCtrl"> @Html.Partial("_AdvancedSearch")</div>
+                    </div>
 
-                <div class="filter-element" ng-controller="filterElementCtrl">@Html.Partial("_filterElement") </div>
-                <hr class="spacer" />
+                    <div role="tabpanel" class="tab-pane" id="messages">
+                        <div class="search-form form-horizontal" ng-controller="SpecialSearchCtrl"> @Html.Partial("_SpecialSearch")</div>
+                    </div>
 
-                <div id="searchResult"></div>
-                <hr class="spacer" />
-                <div class="paging-search text-center" ng-controller="pagesCtrl">
+                    <div role="tabpanel" class="tab-pane" id="mada">
+                        <div class="search-form form-horizontal">@Html.Partial("_tadbekMadaSearch")</div>
+                    </div>
 
-                    <h1 id="pagenumber"></h1>
-                    <c-pageing ng-show="pageCount > 1" 
-                               on-init="initPaging"
-                               pages-count="{{pageCount}}"
-                               limit-no="10"
-                               current-page="mypage"
-                               on-getpage="getmypage()">
-
-                    </c-pageing>
-
-                   
                 </div>
-              
- 
-
             </div>
+            <div class="result-search">
+                <p class="total-chart" id="TotalCount"> </p>
 
-            <div class="col-lg-3 col-md-4 col-sm-4 filter-search" ng-controller="tasfyaCtrl"> 
-              @Html.Partial("TasfyaSearch")
+                <div class="col-lg-9 col-md-8  col-sm-8 list-content">
+                    <!-- Formating result -->
+                    <div class="format-result">
+
+                        @Html.Partial("_toolbar")
+                    </div>
+
+
+                    <div class="filter-element" ng-controller="filterElementCtrl">@Html.Partial("_filterElement") </div>
+                    <hr class="spacer" />
+
+                    <div id="searchResult"></div>
+                    <hr class="spacer" />
+                    <div class="paging-search text-center" ng-controller="pagesCtrl">
+
+                        <h1 id="pagenumber"></h1>
+                        <c-pageing ng-show="pageCount > 1"
+                                   on-init="initPaging"
+                                   pages-count="{{pageCount}}"
+                                   limit-no="10"
+                                   current-page="mypage"
+                                   on-getpage="getmypage()">
+
+                        </c-pageing>
+
+
+                    </div>
+
+
+
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-4 filter-search" ng-controller="tasfyaCtrl">
+                    @Html.Partial("TasfyaSearch")
+                </div>
+
+                <hr class="spacer" />
             </div>
-
             <hr class="spacer" />
         </div>
-        <hr class="spacer" />
     </div>
-</div>
 
 
 
-<script>
+    <script>
 
-    // tomorrow Task
-    //convert rootscope to service
-    "use strict";
-    (function () {
-        
-        var app = angular.module('ahkamApp', ['sharedModule']);
-        app
-        .controller('ahkamCtrl', function ($scope, SearchData) {
-        })
-        .controller('GeneralSearchCtrl', function ($scope, SearchData, $rootScope) {
-            $scope.Inputs = {};
-            $scope.Inputs.textType = 1; //default radio checked
+        // tomorrow Task
+        //convert rootscope to service
+        "use strict";
+        (function () {
 
-
-            $scope.search = function () {
-                SearchData.GeneralSearchInputs = $scope.Inputs;
-                $rootScope.currentPage = 1;
-                SearchData.searchType = 1; // GeneralSearch
-                SearchData.CountSearchChange = 1;
-                SearchData.GetSearch();
-
-            };
+            var app = angular.module('ahkamApp', ['sharedModule']);
+            app
+            .controller('ahkamCtrl', function ($scope, SearchData) {
+            })
+            .controller('GeneralSearchCtrl', function ($scope, SearchData, $rootScope) {
+                $scope.Inputs = {};
+                $scope.Inputs.textType = 1; //default radio checked
 
 
+                $scope.search = function () {
+                    SearchData.GeneralSearchInputs = $scope.Inputs;
+                    $rootScope.currentPage = 1;
+                    SearchData.searchType = 1; // GeneralSearch
+                    SearchData.CountSearchChange = 1;
+                    SearchData.GetSearch();
+
+                };
 
 
-        })
-        .controller('AdvancedSearchCtrl', function ($scope, SearchData, $rootScope) {
-            $scope.Inputs = {};
-            $scope.Inputs.ElementsTypeChoice = 1;
-           
-
-            $scope.search = function () {
-                SearchData.AdvancedSearchInputs = $scope.Inputs;
-                $rootScope.currentPage = 1;
-                SearchData.searchType = 2; // AdvancedSearch
-                SearchData.CountSearchChange = 1;
-
-                SearchData.GetSearch();
 
 
-                //console.log($scope.waka23SearchType)
-            }
+            })
+            .controller('AdvancedSearchCtrl', function ($scope, SearchData, $rootScope) {
+                $scope.Inputs = {};
+                $scope.Inputs.ElementsTypeChoice = 1;
 
-        })
-        .controller('SpecialSearchCtrl', function ($scope) {
 
-            $scope.date1 = false;
-            $scope.change = function () {
-                console.log($scope.date);
-                $scope.textdate = $scope.date;
-            }
-           // $scope.change();
-         })
-        .controller('pagesCtrl', function ($scope, SearchData, $rootScope) {
+                $scope.search = function () {
+                    SearchData.AdvancedSearchInputs = $scope.Inputs;
+                    $rootScope.currentPage = 1;
+                    SearchData.searchType = 2; // AdvancedSearch
+                    SearchData.CountSearchChange = 1;
 
-            $scope.getmypage = function () {
-                $rootScope.currentPage = $scope.mypage;
-                if ($rootScope.currentPage !== undefined) {
-                    SearchData.CountSearchChange = 0;
+                    SearchData.GetSearch();
+
+
+                    //console.log($scope.waka23SearchType)
+                }
+
+            })
+            .controller('SpecialSearchCtrl', function ($scope) {
+
+                $scope.date1 = false;
+                $scope.change = function () {
+                    console.log($scope.date);
+                    $scope.textdate = $scope.date;
+                }
+                // $scope.change();
+            })
+            .controller('pagesCtrl', function ($scope, SearchData, $rootScope) {
+
+                $scope.getmypage = function () {
+                    $rootScope.currentPage = $scope.mypage;
+                    if ($rootScope.currentPage !== undefined) {
+                        SearchData.CountSearchChange = 0;
+                        SearchData.GetSearch();
+                    }
+                }
+                $scope.getmypage();
+            })
+            .controller('tasfyaCtrl', function ($scope, tasfiaData, SearchData, $rootScope) {
+                //$('.spanChk').on('click', function () {
+                //    var obj = this;
+                //    $('#val' + obj.id).trigger('click');
+                //    alert(obj.id);
+                //})
+
+                //angular.element('#val3').triggerHandler('click');
+
+                $scope.clickTest = function (val) {
+
+                    console.log(val);
+                }
+                //$scope.list = [];
+                $scope.list = tasfiaData.list;
+                $scope.changeCheck = function (val, event) {
+
+                    //can be better and send as one object
+                    var itemid = event.target.id;
+                    var itemname = event.target.attributes.dataname.value;
+                    var itemcount = event.target.attributes.datacount.value;
+                    if (val === true) {
+                        tasfiaData.PushList(itemid, itemname, itemcount);
+                        $('#' + itemid).parent().addClass('active');
+
+
+                    }
+                    else {
+                        $('#' + itemid).parent().removeClass('active');
+
+                        tasfiaData.splice(itemname)
+                    }
+
+                    //Search
+                    $rootScope.currentPage = 1;
+                    SearchData.CountSearchChange = 1;
                     SearchData.GetSearch();
                 }
-            }
-            $scope.getmypage();
-        })
-        .controller('tasfyaCtrl', function ($scope, tasfiaData, SearchData, $rootScope) {
-            //$('.spanChk').on('click', function () {
-            //    var obj = this;
-            //    $('#val' + obj.id).trigger('click');
-            //    alert(obj.id);
-            //})
+            })
+            .controller('filterElementCtrl', function ($scope, tasfiaData, SearchData, $rootScope) {
 
-            //angular.element('#val3').triggerHandler('click');
+                $scope.list = tasfiaData.list;
+                $scope.delete = function (obj) {
+                    tasfiaData.spliceObj(obj);
+                    $('#' + obj.itemid + '').prop('checked', false);
 
-            $scope.clickTest = function (val) {
-
-                console.log(val);
-            }
-          //$scope.list = [];
-            $scope.list = tasfiaData.list;
-            $scope.changeCheck = function (val, event) {
-
-            //can be better and send as one object
-                var itemid = event.target.id;
-                var itemname = event.target.attributes.dataname.value;
-                var itemcount = event.target.attributes.datacount.value;
-                if (val === true)
-                {
-                    tasfiaData.PushList(itemid, itemname, itemcount);
-                    $('#' + itemid).parent().addClass('active');
-                  
-
-                } 
-                else
-                {
-                    $('#' + itemid).parent().removeClass('active');
-                  
-                  tasfiaData.splice(itemname)
+                    //Search
+                    $rootScope.currentPage = 1;
+                    SearchData.CountSearchChange = 1;
+                    SearchData.GetSearch();
                 }
-
-                //Search
-                $rootScope.currentPage = 1;
-                SearchData.CountSearchChange = 1;
-                SearchData.GetSearch();
-            }
-        })
-        .controller('filterElementCtrl', function ($scope, tasfiaData, SearchData, $rootScope) {
-
-           $scope.list = tasfiaData.list;
-           $scope.delete = function (obj) {
-               tasfiaData.spliceObj(obj);
-               $('#' + obj.itemid + '').prop('checked', false); 
-
-               //Search
-               $rootScope.currentPage = 1;
-               SearchData.CountSearchChange = 1;
-               SearchData.GetSearch();
-           }
-       })
-        
-
-        app.factory('SearchData', function ($http, $rootScope) {
-            var data = {};
-            data.searchType = 1;      //GeneralSearch 1   advancedserch 2  .... etc
-            data.CountSearchChange = 0;     //1 CountSearch Change    0 CountSearch not Change
-           // data.SearchInputs = {};   //all search factories
-            data.GeneralSearchInputs = {};
-            data.AdvancedSearchInputs = {};
+            })
 
 
- 
+            app.factory('SearchData', function ($http, $rootScope) {
+                var data = {};
+                data.searchType = 1;      //GeneralSearch 1   advancedserch 2  .... etc
+                data.CountSearchChange = 0;     //1 CountSearch Change    0 CountSearch not Change
+                // data.SearchInputs = {};   //all search factories
+                data.GeneralSearchInputs = {};
+                data.AdvancedSearchInputs = {};
 
-            data.GetSearch = function () {
-                if (data.searchType === 1) // GeneralSearch
-                {
-                   
-                   // alert(data.CountSearchChange)
-                    let txtsearch = data.GeneralSearchInputs.text;
-                 //   alert(data.GeneralSearchInputs.textType)
-                    $http.get('/Ahkam/SearchResult',
-                        {
-                            params: {
-                                "searchtype": data.searchType, "Countsearchchange": data.CountSearchChange,
-                                "PageNo": $rootScope.currentPage, "Match": data.GeneralSearchInputs.textType, "q": txtsearch
-                            }
-                        }).then(function (d) {
-                            $('#searchResult').html(d.data);
-                            if(data.CountSearchChange == 1)
+
+
+
+                data.GetSearch = function () {
+                    if (data.searchType === 1) // GeneralSearch
+                    {
+
+                        // alert(data.CountSearchChange)
+                        let txtsearch = data.GeneralSearchInputs.text;
+                        //   alert(data.GeneralSearchInputs.textType)
+                        $http.get('/Ahkam/SearchResult',
                             {
-                                $rootScope.pageCount = 0;
-                                var TotalCount = $("#resultCount").val();
-                                $('#TotalCount').html('');
-                                if (TotalCount > 0) {
-                                    $('#TotalCount').html(" <i class='fa fa-line-chart '></i> وجد اجمالي [" + TotalCount + "] حكم")
-                                    // $('#pagenumber').html(testData( data.searchType, data.CountSearchChange,$rootScope.currentPage, data.GeneralSearchInputs));
+                                params: {
+                                    "searchtype": data.searchType, "Countsearchchange": data.CountSearchChange,
+                                    "PageNo": $rootScope.currentPage, "Match": data.GeneralSearchInputs.textType, "q": txtsearch
                                 }
-                               
-                                if ($rootScope.currentPage == 1 )
-                                {
-                                    var countpage=1;
-                                    if (TotalCount > 10) {
-                                        countpage = Math.ceil(TotalCount / 10);
+                            }).then(function (d) {
+                                $('#searchResult').html(d.data);
+                                if (data.CountSearchChange == 1) {
+                                    $rootScope.pageCount = 0;
+                                    var TotalCount = $("#resultCount").val();
+                                    $('#TotalCount').html('');
+                                    if (TotalCount > 0) {
+                                        $('#TotalCount').html(" <i class='fa fa-line-chart '></i> وجد اجمالي [" + TotalCount + "] حكم")
+                                        // $('#pagenumber').html(testData( data.searchType, data.CountSearchChange,$rootScope.currentPage, data.GeneralSearchInputs));
                                     }
-                                    $rootScope.pageCount = countpage;
-                                    InitPageingControl(countpage);
-                                 }
-                            }
-                        });
 
-                }
-                else if (data.searchType === 2) // AdvancedSearch
-                {
-                    let txtsearch = data.AdvancedSearchInputs.Mabdaa;
-                     
+                                    if ($rootScope.currentPage == 1) {
+                                        var countpage = 1;
+                                        if (TotalCount > 10) {
+                                            countpage = Math.ceil(TotalCount / 10);
+                                        }
+                                        $rootScope.pageCount = countpage;
+                                        InitPageingControl(countpage);
+                                    }
+                                }
+                            });
+
+                    }
+                    else if (data.searchType === 2) // AdvancedSearch
+                    {
+                        let txtsearch = data.AdvancedSearchInputs.Mabdaa;
+
                         $http.get('/Ahkam/SearchResult',
                             { params: { "q": txtsearch } }).then(function (d) {
                                 $('#searchResult').html(d.data);
@@ -278,56 +282,55 @@
                                 }
 
                             });
-                       
+
+                    }
+                };
+
+
+                function InitPageingControl(pagecount) {
+                    if (pagecount > 1) {
+                        $rootScope.pageCount = pagecount;
+                        $rootScope.$broadcast('initPaging'); // re_init pageing controll
+                    }
                 }
-            };
 
+                function testData(typeSearch, CountSearchChange, pagenumber, object) {
+                    var html = '';
+                    var jsonObj = $.parseJSON(JSON.stringify(object));
 
-            function InitPageingControl(pagecount)
-            {
-                if (pagecount > 1) {
-                    $rootScope.pageCount = pagecount;
-                    $rootScope.$broadcast('initPaging'); // re_init pageing controll
+                    html += '<br/>';
+                    html += 'search Type :>> ' + typeSearch;
+                    html += '<br/>';
+                    html += 'is count result change :>> ' + CountSearchChange;
+                    html += '<br/>';
+                    html += 'Page Number :>> ' + pagenumber;
+                    html += '<br/>';
+                    $.each(jsonObj, function (k, v) {
+                        html += '' + k + ' : ' + v + ' ' + '</br>';
+                    });
+
+                    return html;
                 }
-            }
+                return data;
+            })
+             .factory('tasfiaData', function () {
+                 var data = {};
+                 data.list = [];
+                 //can be better and send as one object
+                 data.PushList = function (itemid, itemname, itemcount) {
+                     data.list.push({ itemid, itemname, itemcount });
+                 }
 
-            function testData(typeSearch, CountSearchChange, pagenumber, object) {
-                var html = '';
-                var jsonObj = $.parseJSON(JSON.stringify(object));
+                 //dublicated function -- delete one after merge
+                 data.splice = function (itemname) {
+                     data.list.splice(data.list.indexOf(itemname), 1);
+                 }
+                 data.spliceObj = function (obj) {
+                     data.list.splice(data.list.indexOf(obj), 1);
+                 }
 
-                html += '<br/>';
-                html += 'search Type :>> ' + typeSearch;
-                html += '<br/>';
-                html += 'is count result change :>> ' + CountSearchChange;
-                html += '<br/>';
-                html += 'Page Number :>> ' + pagenumber;
-                html += '<br/>';
-                $.each(jsonObj, function (k, v) {
-                    html += '' + k + ' : ' + v + ' ' + '</br>';
-                });
+                 return data;
+             });
+        })();
 
-                return html;
-            }
-            return data;
-        })
-         .factory('tasfiaData', function () {
-            var data = {};
-            data.list = [];
-            //can be better and send as one object
-            data.PushList = function (itemid, itemname, itemcount) {
-                data.list.push({ itemid, itemname, itemcount });
-            }
-
-           //dublicated function -- delete one after merge
-            data.splice = function (itemname) {
-                data.list.splice(data.list.indexOf(itemname), 1);
-            }
-            data.spliceObj = function (obj) {
-                data.list.splice(data.list.indexOf(obj), 1);
-            }
-        
-            return data;
-        });
-    })();
-
-</script>
+    </script>
