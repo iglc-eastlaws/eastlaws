@@ -71,10 +71,11 @@ namespace Eastlaws.Controllers
         { 
             AhkamSearchOptions Options = new AhkamSearchOptions();
             Options.PageNo = PageNo;
+            //Options.SortBy
            
             if (searchtype ==1)
             {
-                AhkamPresentation Model = AhkamService.Search(Options, new FTSPredicate(q,Match));
+                AhkamPresentation Model = AhkamService.Search(Options, new FTSPredicate(q, (FTSSqlModes)Match));
                 if (Model.IsValid)
                 {
                     ViewBag.aa = Match;
