@@ -11,73 +11,27 @@ namespace Eastlaws.Controllers
 {
     public class AhkamController : Controller
     {
-        public IActionResult View(int ID)
-        {
-            var Model = AhkamService.GetHokm(ID, null);
-            if (Model.IsValid)
-            {
-                return View(Model);
-            }
-            else
-            {
-                return null;
-            }
-     
-        }
-
-        [HttpPost]
-        public IActionResult GeneralSearch(GeneralSearchVM Model)
-        {
-
-            return null;
-        }
-
-        [HttpPost]
-        public IActionResult CustomSearch(CustomSearchVM Model)
-        {
-            return null;
-        }
-
-        [HttpPost]
-        public IActionResult AdvancedSearch(AdvancedTextSearchVM Model)
-        {
-            return null;
-        }
-
-        public IActionResult Index_Old()
-        {
-            ViewBag.Title = "أحكام المحاكم العربية العليا ";
-            return View();
-        }
 
 
-
-
-        public IActionResult Test()
-        {
-
-           
-           
-
-            return null;
-        }
 
         public IActionResult Index()
         {
 
             return View();
         }
-        public ViewResult SearchResult(int searchtype,int Countsearchchange,int PageNo,int Match,string q)
-        { 
+
+        public IActionResult SearchResult(int searchtype, int Countsearchchange, int PageNo, int Match, string q)
+        {
             AhkamSearchOptions Options = new AhkamSearchOptions();
             Options.PageNo = PageNo;
-           
-            if (searchtype ==1)
+            //Options.SortBy
+
+            if (searchtype == 1)
             {
-                AhkamPresentation Model = AhkamService.Search(Options, new FTSPredicate(q,Match));
+                AhkamPresentation Model = AhkamService.Search(Options, new FTSPredicate(q, (FTSSqlModes)Match));
                 if (Model.IsValid)
                 {
-                    ViewBag.aa = Match;
+                    //ViewBag.aa = Match;
                     return View(Model);
                 }
                 else
@@ -91,12 +45,65 @@ namespace Eastlaws.Controllers
             }
         }
 
-        public JsonResult SearchCount(string q = "")
+        public IActionResult View(int ID)
         {
-
-            var Result = 3000; //count of rows
-            return Json(new { data = Result });
+            var Model = AhkamService.GetHokm(ID, null);
+            if (Model.IsValid)
+            {
+                return View(Model);
+            }
+            else
+            {
+                return View();
+            }
+     
         }
+
+        //[HttpPost]
+        //public IActionResult GeneralSearch(GeneralSearchVM Model)
+        //{
+
+        //    return null;
+        //}
+
+        //[HttpPost]
+        //public IActionResult CustomSearch(CustomSearchVM Model)
+        //{
+        //    return null;
+        //}
+
+        //[HttpPost]
+        //public IActionResult AdvancedSearch(AdvancedTextSearchVM Model)
+        //{
+        //    return null;
+        //}
+
+        //public IActionResult Index_Old()
+        //{
+        //    ViewBag.Title = "أحكام المحاكم العربية العليا ";
+        //    return View();
+        //}
+
+
+
+
+        //public IActionResult Test()
+        //{
+
+           
+           
+
+        //    return null;
+        //}
+
+
+
+        //public JsonResult SearchCount(string q = "")
+        //{
+
+        //    var Result = 3000; //count of rows
+        //    return Json(new { data = Result });
+        //}
 
     }
 }

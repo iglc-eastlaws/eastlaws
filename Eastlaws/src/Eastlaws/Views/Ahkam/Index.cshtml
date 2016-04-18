@@ -1,11 +1,11 @@
 ﻿@{
     Layout = "~/Views/Shared/_LayoutInner.cshtml";
     ViewBag.Title = "أحكام المحاكم العربية العليا ";
-}
+ }
 
 <div class="title-module">
     <h1><span class="main-title">منظومة أحكام المحاكم العربية</span></h1>
-
+   
 </div>
 <hr class="spacer" />
 @Html.Partial("_ManzomatLinks")
@@ -16,41 +16,35 @@
         <div class="card">
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab"> بحث عام</a></li>
-                <li role="presentation"><a href="#allSearch" aria-controls="allSearch" role="tab" data-toggle="tab">بحث عام 1</a></li>
                 <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">بحث متقدم</a></li>
                 <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">بحث متخصص</a></li>
                 <li role="presentation"><a href="#mada" aria-controls="mada" role="tab" data-toggle="tab">بحث بتطبيقات المادة</a></li>
             </ul>
 
             <!-- Tab panes -->
-            <div class="tab-content">
+       <div class="tab-content">
 
-                <div role="tabpanel" class="tab-pane active" id="home">
-                    <div class="search-form form-horizontal" ng-controller="GeneralSearchCtrl"> @Html.Partial("_GeneralSearch")</div>
-                </div>
+             <div role="tabpanel" class="tab-pane active" id="home">
+                   <div class="search-form form-horizontal" ng-controller="GeneralSearchCtrl"> @Html.Partial("_GeneralSearch")</div>
+             </div>
+              
+             <div role="tabpanel" class="tab-pane" id="profile">
+                   <div class="search-form form-horizontal" ng-controller="AdvancedSearchCtrl"> @Html.Partial("_AdvancedSearch")</div>
+             </div>
 
-                <div role="tabpanel" class="tab-pane" id="allSearch">
-                    <div class="search-form form-horizontal" ng-controller="SpecialSearchCtrl"> @Html.Partial("_GeneralSearch2")</div>
-                </div>
+             <div role="tabpanel" class="tab-pane" id="messages" >
+                   <div class="search-form form-horizontal" ng-controller="SpecialSearchCtrl"> @Html.Partial("_SpecialSearch")</div>
+              </div>
 
-                <div role="tabpanel" class="tab-pane" id="profile">
-                    <div class="search-form form-horizontal" ng-controller="AdvancedSearchCtrl"> @Html.Partial("_AdvancedSearch")</div>
-                </div>
+             <div role="tabpanel" class="tab-pane" id="mada">
+                 <div class="search-form form-horizontal">@Html.Partial("_tadbekMadaSearch")</div>
+              </div>
 
-
-                <div role="tabpanel" class="tab-pane" id="messages">
-                    <div class="search-form form-horizontal" ng-controller="SpecialSearchCtrl"> @Html.Partial("_SpecialSearch")</div>
-                </div>
-
-                <div role="tabpanel" class="tab-pane" id="mada">
-                    <div class="search-form form-horizontal">@Html.Partial("_tadbekMadaSearch")</div>
-                </div>
-
-            </div>
+          </div>
         </div>
         <div class="result-search">
             <p class="total-chart" id="TotalCount"> </p>
-
+    
             <div class="col-lg-9 col-md-8  col-sm-8 list-content">
                 <!-- Formating result -->
                 <div class="format-result">
@@ -67,7 +61,7 @@
                 <div class="paging-search text-center" ng-controller="pagesCtrl">
 
                     <h1 id="pagenumber"></h1>
-                    <c-pageing ng-show="pageCount > 1"
+                    <c-pageing ng-show="pageCount > 1" 
                                on-init="initPaging"
                                pages-count="{{pageCount}}"
                                limit-no="10"
@@ -76,15 +70,15 @@
 
                     </c-pageing>
 
-
+                   
                 </div>
-
-
+              
+ 
 
             </div>
 
-            <div class="col-lg-3 col-md-4 col-sm-4 filter-search" ng-controller="tasfyaCtrl">
-                @Html.Partial("TasfyaSearch")
+            <div class="col-lg-3 col-md-4 col-sm-4 filter-search" ng-controller="tasfyaCtrl"> 
+              @Html.Partial("TasfyaSearch")
             </div>
 
             <hr class="spacer" />
@@ -101,7 +95,7 @@
     //convert rootscope to service
     "use strict";
     (function () {
-
+        
         var app = angular.module('ahkamApp', ['sharedModule']);
         app
         .controller('ahkamCtrl', function ($scope, SearchData) {
@@ -127,7 +121,7 @@
         .controller('AdvancedSearchCtrl', function ($scope, SearchData, $rootScope) {
             $scope.Inputs = {};
             $scope.Inputs.ElementsTypeChoice = 1;
-
+           
 
             $scope.search = function () {
                 SearchData.AdvancedSearchInputs = $scope.Inputs;
@@ -149,8 +143,8 @@
                 console.log($scope.date);
                 $scope.textdate = $scope.date;
             }
-            // $scope.change();
-        })
+           // $scope.change();
+         })
         .controller('pagesCtrl', function ($scope, SearchData, $rootScope) {
 
             $scope.getmypage = function () {
@@ -175,24 +169,26 @@
 
                 console.log(val);
             }
-            //$scope.list = [];
+          //$scope.list = [];
             $scope.list = tasfiaData.list;
             $scope.changeCheck = function (val, event) {
 
-                //can be better and send as one object
+            //can be better and send as one object
                 var itemid = event.target.id;
                 var itemname = event.target.attributes.dataname.value;
                 var itemcount = event.target.attributes.datacount.value;
-                if (val === true) {
+                if (val === true)
+                {
                     tasfiaData.PushList(itemid, itemname, itemcount);
                     $('#' + itemid).parent().addClass('active');
+                  
 
-
-                }
-                else {
+                } 
+                else
+                {
                     $('#' + itemid).parent().removeClass('active');
-
-                    tasfiaData.splice(itemname)
+                  
+                  tasfiaData.splice(itemname)
                 }
 
                 //Search
@@ -201,12 +197,12 @@
                 SearchData.GetSearch();
             }
         })
-       .controller('filterElementCtrl', function ($scope, tasfiaData, SearchData, $rootScope) {
+        .controller('filterElementCtrl', function ($scope, tasfiaData, SearchData, $rootScope) {
 
            $scope.list = tasfiaData.list;
            $scope.delete = function (obj) {
                tasfiaData.spliceObj(obj);
-               $('#' + obj.itemid + '').prop('checked', false);
+               $('#' + obj.itemid + '').prop('checked', false); 
 
                //Search
                $rootScope.currentPage = 1;
@@ -214,25 +210,26 @@
                SearchData.GetSearch();
            }
        })
-
+        
 
         app.factory('SearchData', function ($http, $rootScope) {
             var data = {};
             data.searchType = 1;      //GeneralSearch 1   advancedserch 2  .... etc
             data.CountSearchChange = 0;     //1 CountSearch Change    0 CountSearch not Change
-            // data.SearchInputs = {};   //all search factories
+           // data.SearchInputs = {};   //all search factories
             data.GeneralSearchInputs = {};
             data.AdvancedSearchInputs = {};
 
 
-
+ 
 
             data.GetSearch = function () {
                 if (data.searchType === 1) // GeneralSearch
                 {
-
-                    // alert(data.CountSearchChange)
+                   
+                   // alert(data.CountSearchChange)
                     let txtsearch = data.GeneralSearchInputs.text;
+                 //   alert(data.GeneralSearchInputs.textType)
                     $http.get('/Ahkam/SearchResult',
                         {
                             params: {
@@ -241,21 +238,25 @@
                             }
                         }).then(function (d) {
                             $('#searchResult').html(d.data);
-                            if (data.CountSearchChange == 1) {
+                            if(data.CountSearchChange == 1)
+                            {
                                 $rootScope.pageCount = 0;
                                 var TotalCount = $("#resultCount").val();
                                 $('#TotalCount').html('');
-                                if (TotalCount > 0)
+                                if (TotalCount > 0) {
                                     $('#TotalCount').html(" <i class='fa fa-line-chart '></i> وجد اجمالي [" + TotalCount + "] حكم")
-                                // $('#pagenumber').html(testData( data.searchType, data.CountSearchChange,$rootScope.currentPage, data.GeneralSearchInputs));
-
-                                if ($rootScope.currentPage == 1) {
-                                    var countpage = 1;
-                                    if (TotalCount > 10)
+                                    // $('#pagenumber').html(testData( data.searchType, data.CountSearchChange,$rootScope.currentPage, data.GeneralSearchInputs));
+                                }
+                               
+                                if ($rootScope.currentPage == 1 )
+                                {
+                                    var countpage=1;
+                                    if (TotalCount > 10) {
                                         countpage = Math.ceil(TotalCount / 10);
+                                    }
                                     $rootScope.pageCount = countpage;
                                     InitPageingControl(countpage);
-                                }
+                                 }
                             }
                         });
 
@@ -263,26 +264,27 @@
                 else if (data.searchType === 2) // AdvancedSearch
                 {
                     let txtsearch = data.AdvancedSearchInputs.Mabdaa;
+                     
+                        $http.get('/Ahkam/SearchResult',
+                            { params: { "q": txtsearch } }).then(function (d) {
+                                $('#searchResult').html(d.data);
 
-                    $http.get('/Ahkam/SearchResult',
-                        { params: { "q": txtsearch } }).then(function (d) {
-                            $('#searchResult').html(d.data);
+                                $('#pagenumber').html(testData(data.searchType,
+                                                       data.CountSearchChange,
+                                                       $rootScope.currentPage,
+                                                       data.AdvancedSearchInputs));
+                                if ($rootScope.currentPage == 1) {
+                                    InitPageingControl(28)
+                                }
 
-                            $('#pagenumber').html(testData(data.searchType,
-                                                   data.CountSearchChange,
-                                                   $rootScope.currentPage,
-                                                   data.AdvancedSearchInputs));
-                            if ($rootScope.currentPage == 1) {
-                                InitPageingControl(28)
-                            }
-
-                        });
-
+                            });
+                       
                 }
             };
 
 
-            function InitPageingControl(pagecount) {
+            function InitPageingControl(pagecount)
+            {
                 if (pagecount > 1) {
                     $rootScope.pageCount = pagecount;
                     $rootScope.$broadcast('initPaging'); // re_init pageing controll
@@ -309,23 +311,23 @@
             return data;
         })
          .factory('tasfiaData', function () {
-             var data = {};
-             data.list = [];
-             //can be better and send as one object
-             data.PushList = function (itemid, itemname, itemcount) {
-                 data.list.push({ itemid, itemname, itemcount });
-             }
+            var data = {};
+            data.list = [];
+            //can be better and send as one object
+            data.PushList = function (itemid, itemname, itemcount) {
+                data.list.push({ itemid, itemname, itemcount });
+            }
 
-             //dublicated function -- delete one after merge
-             data.splice = function (itemname) {
-                 data.list.splice(data.list.indexOf(itemname), 1);
-             }
-             data.spliceObj = function (obj) {
-                 data.list.splice(data.list.indexOf(obj), 1);
-             }
-
-             return data;
-         });
+           //dublicated function -- delete one after merge
+            data.splice = function (itemname) {
+                data.list.splice(data.list.indexOf(itemname), 1);
+            }
+            data.spliceObj = function (obj) {
+                data.list.splice(data.list.indexOf(obj), 1);
+            }
+        
+            return data;
+        });
     })();
 
 </script>

@@ -134,20 +134,22 @@
             template: '<div class="col-sm-9">'+
                 '<span class="">'+
                   '<label for="{{forId}}1">' +
-                        '<input id="{{forId}}1" ng-model="modelVal" type="radio" class="radio_buttons " name="searchtype" value="1" ng-change="changval(1)" />{{firstName}}</label>' +
+                        '<input id="{{forId}}1" ng-model="modelVal" type="radio" class="radio_buttons " name="searchtype" value="{{firstval}}" ng-change="changval({{firstval}})" />{{firstName}}</label>' +
               '</span>&nbsp;'+
               '<label for="{{forId}}2">' +
-                  '<input id="{{forId}}2" type="radio" ng-model="modelVal" class="radio_buttons" name="searchtype" value="2" ng-change="changval(2)"/>{{secName}}</label>' +
+                  '<input id="{{forId}}2" type="radio" ng-model="modelVal" class="radio_buttons" name="searchtype" value="{{secondval}}" ng-change="changval({{secondval}})"/>{{secName}}</label>' +
           '</div>'
             ,
             scope: {
                 modelVal: '=',
                 firstName:'@',
                 secName: '@',
-                forId:'@'
+                forId: '@',
+                firstval: '@val1',
+                secondval: '@val2'
             },
             link: function (scope, elem) {
-                scope.modelVal = 1;
+                scope.modelVal = scope.firstval;
                 scope.changval = function (val) {
                     scope.modelVal = val;
                 }
@@ -202,4 +204,10 @@
         }
         return arr;
     }
+
+
+
+        
+
+
 })();

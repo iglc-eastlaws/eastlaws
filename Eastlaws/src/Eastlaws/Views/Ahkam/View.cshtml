@@ -1,7 +1,7 @@
 ﻿@{
     Layout = "~/Views/Shared/_LayoutInner.cshtml";
     // ViewBag.Title = "أحكام المحاكم العربية العليا ";
-    var Hokm = Model.AhkamList.ToArray()[0];
+    //var Hokm = Model.AhkamList.ToArray()[0];
 }
 @model Eastlaws.Entities.AhkamPresentation
 
@@ -110,13 +110,16 @@
             @Html.Partial("_toolbar")
         </div>
 
+        @if (Model != null)
+        {
+            var Hokm = Model.AhkamList.ToArray()[0];
 
-        <div class="view-law">
+             <div class="view-law">
 
             <h1>
 
                 @if (!string.IsNullOrEmpty(Hokm.CountryFlagPic))
-            {
+                {
                     <img src="~/Content/images/Flags/Small/@Hokm.CountryFlagPic" />
 
                 }
@@ -154,6 +157,7 @@
 
             }
         </div>
+        }
     </div>
     <div class="col-lg-3 col-md-4 col-sm-4 filter-search">
         <div class="filter-section">
