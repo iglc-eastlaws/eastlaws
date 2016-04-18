@@ -25,42 +25,42 @@ namespace Eastlaws.Controllers
      
         }
 
-        [HttpPost]
-        public IActionResult GeneralSearch(GeneralSearchVM Model)
-        {
+        //[HttpPost]
+        //public IActionResult GeneralSearch(GeneralSearchVM Model)
+        //{
 
-            return null;
-        }
+        //    return null;
+        //}
 
-        [HttpPost]
-        public IActionResult CustomSearch(CustomSearchVM Model)
-        {
-            return null;
-        }
+        //[HttpPost]
+        //public IActionResult CustomSearch(CustomSearchVM Model)
+        //{
+        //    return null;
+        //}
 
-        [HttpPost]
-        public IActionResult AdvancedSearch(AdvancedTextSearchVM Model)
-        {
-            return null;
-        }
+        //[HttpPost]
+        //public IActionResult AdvancedSearch(AdvancedTextSearchVM Model)
+        //{
+        //    return null;
+        //}
 
-        public IActionResult Index_Old()
-        {
-            ViewBag.Title = "أحكام المحاكم العربية العليا ";
-            return View();
-        }
-
-
+        //public IActionResult Index_Old()
+        //{
+        //    ViewBag.Title = "أحكام المحاكم العربية العليا ";
+        //    return View();
+        //}
 
 
-        public IActionResult Test()
-        {
+
+
+        //public IActionResult Test()
+        //{
 
            
            
 
-            return null;
-        }
+        //    return null;
+        //}
 
         public IActionResult Index()
         {
@@ -77,7 +77,7 @@ namespace Eastlaws.Controllers
                 AhkamPresentation Model = AhkamService.Search(Options, new FTSPredicate(q,Match));
                 if (Model.IsValid)
                 {
-                    ViewBag.aa = Match;
+                    //ViewBag.aa = Match;
                     return View(Model);
                 }
                 else
@@ -91,12 +91,12 @@ namespace Eastlaws.Controllers
             }
         }
 
-        public JsonResult SearchCount(string q = "")
-        {
+        //public JsonResult SearchCount(string q = "")
+        //{
 
-            var Result = 3000; //count of rows
-            return Json(new { data = Result });
-        }
+        //    var Result = 3000; //count of rows
+        //    return Json(new { data = Result });
+        //}
 
     }
 }

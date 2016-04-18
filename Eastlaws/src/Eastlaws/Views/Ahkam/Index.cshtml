@@ -197,7 +197,7 @@
                 SearchData.GetSearch();
             }
         })
-       .controller('filterElementCtrl', function ($scope, tasfiaData, SearchData, $rootScope) {
+        .controller('filterElementCtrl', function ($scope, tasfiaData, SearchData, $rootScope) {
 
            $scope.list = tasfiaData.list;
            $scope.delete = function (obj) {
@@ -242,15 +242,17 @@
                                 $rootScope.pageCount = 0;
                                 var TotalCount = $("#resultCount").val();
                                 $('#TotalCount').html('');
-                                if (TotalCount > 0  )
+                                if (TotalCount > 0) {
                                     $('#TotalCount').html(" <i class='fa fa-line-chart '></i> وجد اجمالي [" + TotalCount + "] حكم")
-                                // $('#pagenumber').html(testData( data.searchType, data.CountSearchChange,$rootScope.currentPage, data.GeneralSearchInputs));
+                                    // $('#pagenumber').html(testData( data.searchType, data.CountSearchChange,$rootScope.currentPage, data.GeneralSearchInputs));
+                                }
                                
                                 if ($rootScope.currentPage == 1 )
                                 {
                                     var countpage=1;
-                                    if (TotalCount > 10)
+                                    if (TotalCount > 10) {
                                         countpage = Math.ceil(TotalCount / 10);
+                                    }
                                     $rootScope.pageCount = countpage;
                                     InitPageingControl(countpage);
                                  }
