@@ -124,9 +124,19 @@
 
             @foreach (var Fakra in Model.FakaratList)
             {
+                @if (@Fakra.FakraNo <= 1)
+                {
                 <h4 class="fakr-title">
                     @Fakra.Title
                 </h4>
+                }
+              
+                @if (@Fakra.FakraNo >= 1)
+                {
+                <h4 class="fakr-title">
+                    @Fakra.FakraNo
+                </h4>
+                }
 
                 @if (!string.IsNullOrWhiteSpace(Fakra.MogazText))
                 {
