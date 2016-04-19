@@ -173,7 +173,7 @@
                 '</br>' +
                 '<span>الشهر</span><select ng-options="t.val for t in months track by t.key" ng-model="modelmonth"  ng-change="updateDate(2)"></select>' +
                 '</br>' +
-                '<span>السنة</span><select  ng-options="t.val for t in years track by t.key" ng-model="modelyear" ng-change="updateDate(3)"></select>' +
+                '<span>السنة</span><select  ng-options="t.val for t in ::years track by t.key" ng-model="modelyear" ng-change="updateDate(3)"></select>' +
                 '</br>' +
                 '<input type="button" value="ok" ng-click="clickDate($event)" />' +
                  '<input type="button" value="remove" ng-click="removeDate($event)" />' +
@@ -182,7 +182,7 @@
                 ,
             replace: true,
             controller: function ($scope) {
-       
+       /*
               $scope.enddays = 30;
               $scope.fillArray = function (start, end,order) {
                   var arr = [];
@@ -281,7 +281,7 @@
 
                 //$scope.totalyear = fillArray(1881, 2016, 1);
                 //console.log($scope.totalyear)
-                
+                */
             },
             link: function (scope,elm) {
 
@@ -303,25 +303,25 @@
                     $('.c-date-picker').hide();
                     $(ev.target).parent().find('.c-date-picker').show();
                 }
-               /*
+            
             //---------------------
-               
+              
                 scope.enddays = 30;
-                //scope.fillArray = function (start, end, order) {
-                //    var arr = [];
-                //    if (order === 1) {
-                //        for (var i = end; i >= start; i--) {
-                //            arr.push({ 'key': i, 'val': i });
-                //        }
-                //    } else {
-                //        for (var i = start; i <= end; i++) {
-                //            arr.push({ 'key': i, 'val': i });
-                //        }
-                //    }
+                scope.fillArray = function (start, end, order) {
+                    var arr = [];
+                    if (order === 1) {
+                        for (var i = end; i >= start; i--) {
+                            arr.push({ 'key': i, 'val': i });
+                        }
+                    } else {
+                        for (var i = start; i <= end; i++) {
+                            arr.push({ 'key': i, 'val': i });
+                        }
+                    }
 
-                //    return arr;
-                //}
-               // scope.fillArray(1881, 2016, 1);
+                    return arr;
+                }
+         //  scope.fillArray(1881, 2016, 1);
 
 
 
@@ -393,20 +393,20 @@
 
                     //console.log(scope.allYears)
 
-                   // var d = new Date();
-                    //scope.years = scope.fillArray(1881, 2016, 1);
-                    //scope.years = scope.allYears;
-                    //scope.months = scope.fillArray(1, 12);
+                    var d = new Date();
+                    scope.years = scope.fillArray(1881, 2016, 1);
+                  //  scope.years = scope.allYears;
+                    scope.months = scope.fillArray(1, 12);
                    
-                    //scope.modelyear = { key: d.getFullYear(), val: d.getFullYear() };
-                    //scope.modelmonth = { key: d.getMonth() + 1, val: d.getMonth() + 1 };
-                    //scope.days = scope.fillArray(1, scope.enddays);
-                    //scope.modelday = { key: d.getDate(), val: d.getDate() };
-                    //scope.selectedDay = d.getDate();
+                    scope.modelyear = { key: d.getFullYear(), val: d.getFullYear() };
+                    scope.modelmonth = { key: d.getMonth() + 1, val: d.getMonth() + 1 };
+                    scope.days = scope.fillArray(1, scope.enddays);
+                    scope.modelday = { key: d.getDate(), val: d.getDate() };
+                    scope.selectedDay = d.getDate();
 
-                }*/
+                }
                 
-
+               
                 /******************/
             }
 
