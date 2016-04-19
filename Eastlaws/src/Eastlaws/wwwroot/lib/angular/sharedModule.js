@@ -132,7 +132,7 @@
             restrict: 'E',
             replace: true,
             template: '<div class="col-sm-9">'+
-                '<span class="">'+
+                '<span class="">'+  
                   '<label for="{{forId}}1">' +
                         '<input id="{{forId}}1" ng-model="modelVal" type="radio" class="radio_buttons " name="searchtype" value="{{firstval}}" ng-change="changval({{firstval}})" />{{firstName}}</label>' +
               '</span>&nbsp;'+
