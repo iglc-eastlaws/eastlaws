@@ -61,10 +61,21 @@
                     </div>
 
 
-                    <div class="filter-element" ng-controller="filterElementCtrl">@Html.Partial("_filterElement") </div>
+                    <div class="filter-element" ng-controller="filterElementCtrl">@Html.Partial("_filterElement") 
+                        @*<div class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-font "></i> حجم الخط  </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#" ng-click="size(20)">كبير</a></li>
+                                <li><a href="#"  ng-click="size(15)">متوسط</a></li>
+                                <li><a href="#"  ng-click="size(10)">صغير</a></li>
+
+                            </ul>
+                        </div>*@
+
+                    </div>
                     <hr class="spacer" />
 
-                    <div id="searchResult"></div>
+                    <div id="searchResult" ng-controller="searchResultCtrl" ></div>
                     <hr class="spacer" />
                     <div class="paging-search text-center" ng-controller="pagesCtrl">
 
@@ -104,10 +115,9 @@
         "use strict";
         (function () {
 
-            var app = angular.module('ahkamApp', ['sharedModule']);
+            var app = angular.module('ahkamApp', ['ngSanitize','sharedModule']);
             app
-            .controller('ahkamCtrl', function ($scope, SearchData) {
-            })
+            .controller('ahkamCtrl', function ($scope, SearchData) {})
             .controller('GeneralSearchCtrl', function ($scope, SearchData, $rootScope) {
                 $scope.Inputs = {};
                 $scope.Inputs.textType = 1; //default radio checked
@@ -203,7 +213,7 @@
                     SearchData.GetSearch();
                 }
             })
-            .controller('filterElementCtrl', function ($scope, tasfiaData, SearchData, $rootScope) {
+            .controller('filterElementCtrl', function ($scope, tasfiaData, SearchData, $rootScope, $compile) {
 
                 $scope.list = tasfiaData.list;
                 $scope.delete = function (obj) {
@@ -215,19 +225,30 @@
                     SearchData.CountSearchChange = 1;
                     SearchData.GetSearch();
                 }
+
+                $scope.size = function (val) {
+                    $scope.fontsize = val;
+                  //  $rootScope.fontsize = val;
+                   // $compile($('#searchResult'))($scope);
+                  //  alert($rootScope.fontsize)
+                }
             })
+            .controller('searchResultCtrl', function ($scope, $rootScope, $compile, SearchData) {
+                $rootScope.fontsize = 15;
+                //$scope.fontsize = SearchData.fontsize;
+                $rootScope.$on('changeResult', function () {
+                   $compile($('#searchResult'))($scope);
+                });
+         })
 
-
-            app.factory('SearchData', function ($http, $rootScope) {
+            app.factory('SearchData', function ($http, $rootScope, $compile) {
                 var data = {};
                 data.searchType = 1;      //GeneralSearch 1   advancedserch 2  .... etc
                 data.CountSearchChange = 0;     //1 CountSearch Change    0 CountSearch not Change
                 // data.SearchInputs = {};   //all search factories
                 data.GeneralSearchInputs = {};
                 data.AdvancedSearchInputs = {};
-
-
-
+               // data.fontsize = 10;
 
                 data.GetSearch = function () {
                     if (data.searchType === 1) // GeneralSearch
@@ -243,13 +264,17 @@
                                     "PageNo": $rootScope.currentPage, "Match": data.GeneralSearchInputs.textType, "q": txtsearch
                                 }
                             }).then(function (d) {
+                                
                                 $('#searchResult').html(d.data);
+                                 $rootScope.$broadcast('changeResult', true);
+
                                 if (data.CountSearchChange == 1) {
                                     $rootScope.pageCount = 0;
                                     var TotalCount = $("#resultCount").val();
-                                    $('#TotalCount').html('');
+                                 $('#TotalCount').html('');
+                         
                                     if (TotalCount > 0) {
-                                        $('#TotalCount').html(" <i class='fa fa-line-chart '></i> وجد اجمالي [" + TotalCount + "] حكم")
+                                       $('#TotalCount').html(" <i class='fa fa-line-chart '></i> وجد اجمالي [" + TotalCount + "] حكم")
                                         // $('#pagenumber').html(testData( data.searchType, data.CountSearchChange,$rootScope.currentPage, data.GeneralSearchInputs));
                                     }
 
@@ -271,7 +296,7 @@
 
                         $http.get('/Ahkam/SearchResult',
                             { params: { "q": txtsearch } }).then(function (d) {
-                                $('#searchResult').html(d.data);
+                               $('#searchResult').html(d.data);
 
                                 $('#pagenumber').html(testData(data.searchType,
                                                        data.CountSearchChange,

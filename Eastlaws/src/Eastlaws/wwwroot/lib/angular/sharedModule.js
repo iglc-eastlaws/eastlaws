@@ -195,6 +195,19 @@
         };
     });
 
+    sharedModule.directive('cFontScale', function () {
+        return {
+            link: function (scope, elm, attr) {
+
+                var size = attr['cFontScale'];
+                scope.$watch(attr['cFontScale'], function (val) {
+                    elm.css('font-size', val + 'px');
+                })
+             
+            }
+        }
+
+    });
 
 
     var objectArray = function (start,end) {
