@@ -159,7 +159,7 @@
 
 
     })
-    sharedModule.directive('cDatePicker', function () {
+    sharedModule.directive('cDatePicker', function ($compile) {
         return {
             restrict: "E",
             scope: {
@@ -182,7 +182,7 @@
                 ,
             replace: true,
             controller: function ($scope) {
-
+       
               $scope.enddays = 30;
               $scope.fillArray = function (start, end,order) {
                   var arr = [];
@@ -199,7 +199,7 @@
                     return arr;
               }
 
-              $scope.years = $scope.fillArray(1881, 2016,1);
+              $scope.years = totalyear;//$scope.fillArray(1881, 2016,1);
               $scope.months = $scope.fillArray(1, 12);
             
 
@@ -262,10 +262,31 @@
                 $scope.days = $scope.fillArray(1, $scope.enddays);
                 $scope.modelday = { key: d.getDate(), val: d.getDate() };
                 $scope.selectedDay = d.getDate();
+
+                //scope.fillArray = function (start, end, order) {
+                //    var arr = [];
+                //    if (order === 1) {
+                //        for (var i = end; i >= start; i--) {
+                //            arr.push({ 'key': i, 'val': i });
+                //        }
+                //    } else {
+                //        for (var i = start; i <= end; i++) {
+                //            arr.push({ 'key': i, 'val': i });
+                //        }
+                //    }
+
+                //    return arr;
+                //}
+
+
+                //$scope.totalyear = fillArray(1881, 2016, 1);
+                //console.log($scope.totalyear)
                 
             },
-            link: function (scope) {
+            link: function (scope,elm) {
 
+               
+                
                 scope.closeDate = function (ev) {
                     scope.datetemp = scope.date;
                     $(ev.target).closest('.c-date-picker').hide();
@@ -277,13 +298,116 @@
                     $(ev.target).closest('.c-date-picker').hide();
                 }
 
+
                 scope.clicktext = function (ev) {
                     $('.c-date-picker').hide();
                     $(ev.target).parent().find('.c-date-picker').show();
-
-     
-              
                 }
+               /*
+            //---------------------
+               
+                scope.enddays = 30;
+                //scope.fillArray = function (start, end, order) {
+                //    var arr = [];
+                //    if (order === 1) {
+                //        for (var i = end; i >= start; i--) {
+                //            arr.push({ 'key': i, 'val': i });
+                //        }
+                //    } else {
+                //        for (var i = start; i <= end; i++) {
+                //            arr.push({ 'key': i, 'val': i });
+                //        }
+                //    }
+
+                //    return arr;
+                //}
+               // scope.fillArray(1881, 2016, 1);
+
+
+
+                scope.setDate = function () {
+                    if ((scope.modelyear !== (undefined || null)) && (scope.modelmonth !== (undefined || null)) && (scope.modelday !== (undefined || null))) {
+                        scope.datetemp =
+                            ((scope.modelday.key < 10) ? '0' + scope.modelday.key : scope.modelday.key) + '-' +
+                            ((scope.modelmonth.key < 10) ? '0' + scope.modelmonth.key : scope.modelmonth.key) + '-' +
+                             scope.modelyear.key;
+                    }
+                }
+
+                scope.removeDate = function () {
+                    scope.date = '';
+                }
+
+                scope.updateDate = function (t) {
+                    if (t !== 1) {
+                        if ((scope.modelyear !== undefined) && (scope.modelmonth !== undefined)) {
+
+                            switch (scope.modelmonth.key) {
+                                case 2: {
+                                    scope.enddays = (scope.modelyear.key % 4 == 0) ? 29 : 28;
+                                    break;
+                                }
+                                case 1: case 3: case 5: case 7: case 8: case 10: case 12: {
+                                    scope.enddays = 31;
+                                    break;
+                                }
+                                default: {
+                                    scope.enddays = 30;
+                                    break;
+                                }
+                            }
+
+                            scope.days = fillArray(1, scope.enddays);
+                            if (scope.selectedDay > 0) {
+                                var mykey = $.grep(scope.days, function (e) { return e.key == scope.selectedDay; });
+                                if (mykey.length > 0) {
+                                    scope.modelday = { key: scope.selectedDay, val: scope.selectedDay };;
+                                } else {
+                                    scope.modelday = { key: 1, val: 1 };
+                                }
+                            } else {
+                                scope.modelday = { key: 1, val: 1 };
+                            }
+                        }
+                    } else {
+                        if (scope.modelday !== (undefined || null)) {
+                            scope.selectedDay = scope.modelday.key;
+                        }
+                    }
+
+                }
+
+                scope.clicktext = function (ev) {
+                    $('.c-date-picker').hide();
+                    $(ev.target).parent().find('.c-date-picker').show(function () {
+                        //var d = new Date();
+                        //scope.years = totalyear;//fillArray(1881, 2016, 1);
+                        //scope.months = fillArray(1, 12);
+                        //scope.modelyear = { key: d.getFullYear(), val: d.getFullYear() };
+                        //scope.modelmonth = { key: d.getMonth() + 1, val: d.getMonth() + 1 };
+                        //scope.days = fillArray(1, scope.enddays);
+                        //scope.modelday = { key: d.getDate(), val: d.getDate() };
+                        //scope.selectedDay = d.getDate();
+                        //$compile(elm)(scope)
+                    });
+
+                    //console.log(scope.allYears)
+
+                   // var d = new Date();
+                    //scope.years = scope.fillArray(1881, 2016, 1);
+                    //scope.years = scope.allYears;
+                    //scope.months = scope.fillArray(1, 12);
+                   
+                    //scope.modelyear = { key: d.getFullYear(), val: d.getFullYear() };
+                    //scope.modelmonth = { key: d.getMonth() + 1, val: d.getMonth() + 1 };
+                    //scope.days = scope.fillArray(1, scope.enddays);
+                    //scope.modelday = { key: d.getDate(), val: d.getDate() };
+                    //scope.selectedDay = d.getDate();
+
+                }*/
+                
+
+                /******************/
             }
 
         };
@@ -323,10 +447,24 @@
     //    }
     //    return arr;
     //}
+ 
+    var fillArray = function (start, end, order) {
+        var arr = [];
+        if (order === 1) {
+            for (var i = end; i >= start; i--) {
+                arr.push({ 'key': i, 'val': i });
+            }
+        } else {
+            for (var i = start; i <= end; i++) {
+                arr.push({ 'key': i, 'val': i });
+            }
+        }
 
+        return arr;
+    }
 
-
-        
+    var totalyear = fillArray(1881, 2016, 1);
+    //console.log(totalyear)
 
 
 })();

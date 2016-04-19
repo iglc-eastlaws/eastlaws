@@ -2,6 +2,7 @@
 @using System.Text;
 @using Eastlaws.Entities;
 @{
+    Layout = null;
     var allTasfia = tasfia.GetTasfia();
     var catgGroup = allTasfia.GroupBy(n => new { n.category, n.categoryName }).ToList();
     var countCroup = catgGroup.Count();

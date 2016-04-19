@@ -98,8 +98,8 @@
 
                 <div class="col-lg-3 col-md-4 col-sm-4 filter-search" ng-controller="tasfyaCtrl">
 
-          
-                    @Html.Partial("TasfyaSearch")
+                      <div id="TasfyaSearch"></div>
+                    @*@Html.Partial("TasfyaSearch")*@
                 </div>
 
                 <hr class="spacer" />
@@ -120,7 +120,7 @@
             var app = angular.module('ahkamApp', ['ngSanitize','sharedModule']);
             app
             .controller('ahkamCtrl', function ($scope, SearchData) {})
-            .controller('GeneralSearchCtrl', function ($scope, SearchData, $rootScope) {
+            .controller('GeneralSearchCtrl', function ($scope, SearchData, $rootScope, $compile) {
                 $scope.Inputs = {};
                 $scope.Inputs.textType = 1; //default radio checked
 
@@ -131,7 +131,7 @@
                     SearchData.searchType = 1; // GeneralSearch
                     SearchData.CountSearchChange = 1;
                     SearchData.GetSearch();
-
+                 
                 };
 
 
@@ -171,8 +171,16 @@
                 $scope.getmypage();
             })
             .controller('tasfyaCtrl', function ($scope, tasfiaData, SearchData, $rootScope, $compile) {
+            
+     
+               
 
+                $rootScope.$on('tasfyaResult', function () {
+                    $compile($('#TasfyaSearch'))($scope);
+
+                });
                 $scope.list = tasfiaData.list;
+           
                 $scope.changeCheck = function (val, event) {
 
                     //can be better and send as one object
@@ -217,9 +225,12 @@
             .controller('searchResultCtrl', function ($scope, $rootScope, $compile, SearchData) {
              $rootScope.fontsize = 15;
                 //$scope.fontsize = SearchData.fontsize;
-                $rootScope.$on('changeResult', function () {
-                   $compile($('#searchResult'))($scope);
-                });
+                //$rootScope.$on('changeResult', function () {
+                //    $compile($('#searchResult'))($scope);
+                  
+                //});
+
+               
          })
 
             app.factory('SearchData', function ($http, $rootScope, $compile) {
@@ -234,7 +245,7 @@
                 data.GetSearch = function () {
                     if (data.searchType === 1) // GeneralSearch
                     {
-                        console.log('00000')
+                        //console.log('00000')
                         // alert(data.CountSearchChange)
                         let txtsearch = data.GeneralSearchInputs.text;
                         //   alert(data.GeneralSearchInputs.textType)
@@ -267,6 +278,13 @@
                                             $rootScope.pageCount = countpage;
                                             InitPageingControl(countpage);
                                         }
+
+                                        //tasfia
+                                        $http.get('/Ahkam/TasfyaSearch', {}).then(function (d) {
+                                          // console.log('-------------------');
+                                            $('#TasfyaSearch').html(d.data);
+                                            $rootScope.$broadcast("tasfyaResult", true);
+                                        })
                                     }
                                 } 
 
