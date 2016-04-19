@@ -175,9 +175,12 @@
      
                
 
-                $rootScope.$on('tasfyaResult', function () {
+                var cleantasfia = $rootScope.$on('tasfyaResult', function () {
                     $compile($('#TasfyaSearch'))($scope);
 
+                });
+                $scope.$on('$destroy', function () {
+                    cleantasfia();
                 });
                 $scope.list = tasfiaData.list;
            
