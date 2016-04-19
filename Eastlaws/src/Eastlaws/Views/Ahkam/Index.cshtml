@@ -97,6 +97,8 @@
                 </div>
 
                 <div class="col-lg-3 col-md-4 col-sm-4 filter-search" ng-controller="tasfyaCtrl">
+
+          
                     @Html.Partial("TasfyaSearch")
                 </div>
 
@@ -155,13 +157,7 @@
 
             })
             .controller('SpecialSearchCtrl', function ($scope) {
-
-                $scope.date1 = false;
-                $scope.change = function () {
-                    console.log($scope.date);
-                    $scope.textdate = $scope.date;
-                }
-                // $scope.change();
+  
             })
             .controller('pagesCtrl', function ($scope, SearchData, $rootScope) {
 
@@ -174,20 +170,8 @@
                 }
                 $scope.getmypage();
             })
-            .controller('tasfyaCtrl', function ($scope, tasfiaData, SearchData, $rootScope) {
-                //$('.spanChk').on('click', function () {
-                //    var obj = this;
-                //    $('#val' + obj.id).trigger('click');
-                //    alert(obj.id);
-                //})
+            .controller('tasfyaCtrl', function ($scope, tasfiaData, SearchData, $rootScope, $compile) {
 
-                //angular.element('#val3').triggerHandler('click');
-
-                $scope.clickTest = function (val) {
-
-                    console.log(val);
-                }
-                //$scope.list = [];
                 $scope.list = tasfiaData.list;
                 $scope.changeCheck = function (val, event) {
 
@@ -196,21 +180,18 @@
                     var itemname = event.target.attributes.dataname.value;
                     var itemcount = event.target.attributes.datacount.value;
                     if (val === true) {
-                        tasfiaData.PushList(itemid, itemname, itemcount);
+                      tasfiaData.PushList(itemid, itemname, itemcount);
                         $('#' + itemid).parent().addClass('active');
-
-
                     }
                     else {
                         $('#' + itemid).parent().removeClass('active');
-
                         tasfiaData.splice(itemname)
                     }
 
-                    //Search
+                    ////Search
                     $rootScope.currentPage = 1;
                     SearchData.CountSearchChange = 1;
-                    SearchData.GetSearch();
+                   SearchData.GetSearch();
                 }
             })
             .controller('filterElementCtrl', function ($scope, tasfiaData, SearchData, $rootScope, $compile) {
@@ -226,15 +207,15 @@
                     SearchData.GetSearch();
                 }
 
-                $scope.size = function (val) {
-                    $scope.fontsize = val;
-                  //  $rootScope.fontsize = val;
-                   // $compile($('#searchResult'))($scope);
-                  //  alert($rootScope.fontsize)
-                }
+                //$scope.size = function (val) {
+                //    $scope.fontsize = val;
+                //  //  $rootScope.fontsize = val;
+                //   // $compile($('#searchResult'))($scope);
+                //  //  alert($rootScope.fontsize)
+                //}
             })
             .controller('searchResultCtrl', function ($scope, $rootScope, $compile, SearchData) {
-                $rootScope.fontsize = 15;
+             $rootScope.fontsize = 15;
                 //$scope.fontsize = SearchData.fontsize;
                 $rootScope.$on('changeResult', function () {
                    $compile($('#searchResult'))($scope);
@@ -253,7 +234,7 @@
                 data.GetSearch = function () {
                     if (data.searchType === 1) // GeneralSearch
                     {
-
+                        console.log('00000')
                         // alert(data.CountSearchChange)
                         let txtsearch = data.GeneralSearchInputs.text;
                         //   alert(data.GeneralSearchInputs.textType)
@@ -265,28 +246,31 @@
                                 }
                             }).then(function (d) {
                                 
-                                $('#searchResult').html(d.data);
-                                 $rootScope.$broadcast('changeResult', true);
+                                var searchresult = $('#searchResult');
+                                searchresult.html(d.data);
 
-                                if (data.CountSearchChange == 1) {
-                                    $rootScope.pageCount = 0;
-                                    var TotalCount = $("#resultCount").val();
-                                 $('#TotalCount').html('');
-                         
-                                    if (TotalCount > 0) {
-                                       $('#TotalCount').html(" <i class='fa fa-line-chart '></i> وجد اجمالي [" + TotalCount + "] حكم")
-                                        // $('#pagenumber').html(testData( data.searchType, data.CountSearchChange,$rootScope.currentPage, data.GeneralSearchInputs));
-                                    }
+                                if (searchresult.find('#resultCount').length) {
+                                    if (data.CountSearchChange == 1) {
+                                        $rootScope.pageCount = 0;
+                                        var TotalCount = $("#resultCount").val();
+                                        $('#TotalCount').html('');
 
-                                    if ($rootScope.currentPage == 1) {
-                                        var countpage = 1;
-                                        if (TotalCount > 10) {
-                                            countpage = Math.ceil(TotalCount / 10);
+                                        if (TotalCount > 0) {
+                                            $('#TotalCount').html(" <i class='fa fa-line-chart '></i> وجد اجمالي [" + TotalCount + "] حكم")
                                         }
-                                        $rootScope.pageCount = countpage;
-                                        InitPageingControl(countpage);
+
+                                        if ($rootScope.currentPage == 1) {
+                                            var countpage = 1;
+                                            if (TotalCount > 10) {
+                                                countpage = Math.ceil(TotalCount / 10);
+                                            }
+                                            $rootScope.pageCount = countpage;
+                                            InitPageingControl(countpage);
+                                        }
                                     }
-                                }
+                                } 
+
+
                             });
 
                     }
