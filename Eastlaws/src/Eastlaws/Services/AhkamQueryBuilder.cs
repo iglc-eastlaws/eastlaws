@@ -75,6 +75,20 @@ namespace Eastlaws.Services
             };
 
 
+            bool AllElementsCombined = true;
+            StringBuilder BuilderText = new StringBuilder();
+            string Operator = AllElementsCombined ? " Intersect " : " Union ";
+            for (int i = 0; i < Queries.Length; i++)
+            {
+                if (!string.IsNullOrEmpty(Queries[i]))
+                {
+                    ConditionsCount++;
+                    BuilderText.Append(Queries[i]);
+                    BuilderText.Append("\n");
+                    BuilderText.Append(Operator);
+                }
+            }
+
 
             /*
             // Adding Text Search From Fakarat Table 
