@@ -58,6 +58,11 @@ namespace Eastlaws.Controllers
             }
      
         }
+        public IActionResult TasfyaSearch()
+        {
+            return View();
+        }
+        
 
         //[HttpPost]
         //public IActionResult GeneralSearch(GeneralSearchVM Model)
@@ -90,8 +95,8 @@ namespace Eastlaws.Controllers
         //public IActionResult Test()
         //{
 
-           
-           
+
+
 
         //    return null;
         //}

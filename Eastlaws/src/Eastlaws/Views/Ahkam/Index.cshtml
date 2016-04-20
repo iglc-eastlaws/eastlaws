@@ -97,7 +97,9 @@
                 </div>
 
                 <div class="col-lg-3 col-md-4 col-sm-4 filter-search" ng-controller="tasfyaCtrl">
-                    @Html.Partial("TasfyaSearch")
+
+                      <div id="TasfyaSearch"></div>
+                    @*@Html.Partial("TasfyaSearch")*@
                 </div>
 
                 <hr class="spacer" />
@@ -118,7 +120,7 @@
             var app = angular.module('ahkamApp', ['ngSanitize','sharedModule']);
             app
             .controller('ahkamCtrl', function ($scope, SearchData) {})
-            .controller('GeneralSearchCtrl', function ($scope, SearchData, $rootScope) {
+            .controller('GeneralSearchCtrl', function ($scope, SearchData, $rootScope, $compile) {
                 $scope.Inputs = {};
                 $scope.Inputs.textType = 1; //default radio checked
 
@@ -129,7 +131,7 @@
                     SearchData.searchType = 1; // GeneralSearch
                     SearchData.CountSearchChange = 1;
                     SearchData.GetSearch();
-
+                 
                 };
 
 
@@ -155,13 +157,7 @@
 
             })
             .controller('SpecialSearchCtrl', function ($scope) {
-
-                $scope.date1 = false;
-                $scope.change = function () {
-                    console.log($scope.date);
-                    $scope.textdate = $scope.date;
-                }
-                // $scope.change();
+  
             })
             .controller('pagesCtrl', function ($scope, SearchData, $rootScope) {
 
@@ -174,21 +170,20 @@
                 }
                 $scope.getmypage();
             })
-            .controller('tasfyaCtrl', function ($scope, tasfiaData, SearchData, $rootScope) {
-                //$('.spanChk').on('click', function () {
-                //    var obj = this;
-                //    $('#val' + obj.id).trigger('click');
-                //    alert(obj.id);
-                //})
+            .controller('tasfyaCtrl', function ($scope, tasfiaData, SearchData, $rootScope, $compile) {
+            
+     
+               
 
-                //angular.element('#val3').triggerHandler('click');
+                var cleantasfia = $rootScope.$on('tasfyaResult', function () {
+                    $compile($('#TasfyaSearch'))($scope);
 
-                $scope.clickTest = function (val) {
-
-                    console.log(val);
-                }
-                //$scope.list = [];
+                });
+                $scope.$on('$destroy', function () {
+                    cleantasfia();
+                });
                 $scope.list = tasfiaData.list;
+           
                 $scope.changeCheck = function (val, event) {
 
                     //can be better and send as one object
@@ -196,21 +191,18 @@
                     var itemname = event.target.attributes.dataname.value;
                     var itemcount = event.target.attributes.datacount.value;
                     if (val === true) {
-                        tasfiaData.PushList(itemid, itemname, itemcount);
+                      tasfiaData.PushList(itemid, itemname, itemcount);
                         $('#' + itemid).parent().addClass('active');
-
-
                     }
                     else {
                         $('#' + itemid).parent().removeClass('active');
-
                         tasfiaData.splice(itemname)
                     }
 
-                    //Search
+                    ////Search
                     $rootScope.currentPage = 1;
                     SearchData.CountSearchChange = 1;
-                    SearchData.GetSearch();
+                   SearchData.GetSearch();
                 }
             })
             .controller('filterElementCtrl', function ($scope, tasfiaData, SearchData, $rootScope, $compile) {
@@ -226,19 +218,22 @@
                     SearchData.GetSearch();
                 }
 
-                $scope.size = function (val) {
-                    $scope.fontsize = val;
-                  //  $rootScope.fontsize = val;
-                   // $compile($('#searchResult'))($scope);
-                  //  alert($rootScope.fontsize)
-                }
+                //$scope.size = function (val) {
+                //    $scope.fontsize = val;
+                //  //  $rootScope.fontsize = val;
+                //   // $compile($('#searchResult'))($scope);
+                //  //  alert($rootScope.fontsize)
+                //}
             })
             .controller('searchResultCtrl', function ($scope, $rootScope, $compile, SearchData) {
-                $rootScope.fontsize = 15;
+             $rootScope.fontsize = 15;
                 //$scope.fontsize = SearchData.fontsize;
-                $rootScope.$on('changeResult', function () {
-                   $compile($('#searchResult'))($scope);
-                });
+                //$rootScope.$on('changeResult', function () {
+                //    $compile($('#searchResult'))($scope);
+                  
+                //});
+
+               
          })
 
             app.factory('SearchData', function ($http, $rootScope, $compile) {
@@ -253,7 +248,7 @@
                 data.GetSearch = function () {
                     if (data.searchType === 1) // GeneralSearch
                     {
-
+                        //console.log('00000')
                         // alert(data.CountSearchChange)
                         let txtsearch = data.GeneralSearchInputs.text;
                         //   alert(data.GeneralSearchInputs.textType)
@@ -265,28 +260,38 @@
                                 }
                             }).then(function (d) {
                                 
-                                $('#searchResult').html(d.data);
-                                 $rootScope.$broadcast('changeResult', true);
+                                var searchresult = $('#searchResult');
+                                searchresult.html(d.data);
 
-                                if (data.CountSearchChange == 1) {
-                                    $rootScope.pageCount = 0;
-                                    var TotalCount = $("#resultCount").val();
-                                 $('#TotalCount').html('');
-                         
-                                    if (TotalCount > 0) {
-                                       $('#TotalCount').html(" <i class='fa fa-line-chart '></i> وجد اجمالي [" + TotalCount + "] حكم")
-                                        // $('#pagenumber').html(testData( data.searchType, data.CountSearchChange,$rootScope.currentPage, data.GeneralSearchInputs));
-                                    }
+                                if (searchresult.find('#resultCount').length) {
+                                    if (data.CountSearchChange == 1) {
+                                        $rootScope.pageCount = 0;
+                                        var TotalCount = $("#resultCount").val();
+                                        $('#TotalCount').html('');
 
-                                    if ($rootScope.currentPage == 1) {
-                                        var countpage = 1;
-                                        if (TotalCount > 10) {
-                                            countpage = Math.ceil(TotalCount / 10);
+                                        if (TotalCount > 0) {
+                                            $('#TotalCount').html(" <i class='fa fa-line-chart '></i> وجد اجمالي [" + TotalCount + "] حكم")
                                         }
-                                        $rootScope.pageCount = countpage;
-                                        InitPageingControl(countpage);
+
+                                        if ($rootScope.currentPage == 1) {
+                                            var countpage = 1;
+                                            if (TotalCount > 10) {
+                                                countpage = Math.ceil(TotalCount / 10);
+                                            }
+                                            $rootScope.pageCount = countpage;
+                                            InitPageingControl(countpage);
+                                        }
+
+                                        //tasfia
+                                        $http.get('/Ahkam/TasfyaSearch', {}).then(function (d) {
+                                          // console.log('-------------------');
+                                            $('#TasfyaSearch').html(d.data);
+                                            $rootScope.$broadcast("tasfyaResult", true);
+                                        })
                                     }
-                                }
+                                } 
+
+
                             });
 
                     }
