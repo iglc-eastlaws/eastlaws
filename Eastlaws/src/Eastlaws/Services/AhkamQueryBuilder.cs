@@ -24,28 +24,25 @@ namespace Eastlaws.Services
             return null;
         }
 
-        public static string CustomSearch(FTSPredicate PredicateFakarat , string FakaratCondition , string CountryIDs , string Ma7akemIds , string CaseNo , string CaseYear , string PartNo 
-            , string PageNo , string OfficeYear , string IFAgree , string OfficeSuffix , string CaseDatefrom , string CaseDateTo )
-        {   
-
+        public static string AdvancedCustomSearch(AhkamAdvancedSearch srchObj)
+        {
             string[] Conditions = {
-                    new Range(CountryIDs, "A.CountryID").GetCondition()
-                    ,new Range(Ma7akemIds, "A.MahkamaID ").GetCondition()
-                    ,new Range(OfficeYear, "A.OfficeYear").GetCondition()
-                    ,new Range(CaseNo, "A.CaseNo").GetCondition()
-                    ,new Range(CaseYear, "A.CaseYear").GetCondition()
-                    ,new Range(PartNo, "A.PartNo").GetCondition()
-                    ,new Range(PageNo, "A.PageNo").GetCondition()
-                    ,new Range(IFAgree, "A.IfAgree").GetCondition()
-                    ,new Range(OfficeSuffix, "A.OfficeSuffix").GetCondition()
+                    new Range(srchObj.CountryIDs, "A.CountryID").GetCondition()
+                    ,new Range(srchObj.Ma7akemIds, "A.MahkamaID ").GetCondition()
+                    ,new Range(srchObj.OfficeYear, "A.OfficeYear").GetCondition()
+                    ,new Range(srchObj.CaseNo, "A.CaseNo").GetCondition()
+                    ,new Range(srchObj.CaseYear, "A.CaseYear").GetCondition()
+                    ,new Range(srchObj.PartNo, "A.PartNo").GetCondition()
+                    ,new Range(srchObj.PageNo, "A.PageNo").GetCondition()
+                    ,new Range(srchObj.IFAgree, "A.IfAgree").GetCondition()
+                    ,new Range(srchObj.OfficeSuffix, "A.OfficeSuffix").GetCondition()
             };
 
             StringBuilder Builder = new StringBuilder();
             Builder.Append(@"Select A.ID as ID  ,  0 as DefaultRank From Ahkam A Where (1 = 1)");
 
             int ConditionsCount = 0;
-
-            for (int i = 0;i < Conditions.Length; i++)
+            for (int i = 0; i < Conditions.Length; i++)
             {
                 string CurrentCondition = Conditions[i];
                 if (!string.IsNullOrWhiteSpace(CurrentCondition))
@@ -55,20 +52,33 @@ namespace Eastlaws.Services
                 }
             }
             DateTime dtCaseDateFrom, dtCaseDateTo;
-            if (DateTime.TryParseExact(CaseDatefrom , DataHelpers.ClientDateFormats , null, System.Globalization.DateTimeStyles.AllowWhiteSpaces , out dtCaseDateFrom))
+            if (DateTime.TryParseExact(srchObj.CaseDatefrom, DataHelpers.ClientDateFormats, null, System.Globalization.DateTimeStyles.AllowWhiteSpaces, out dtCaseDateFrom))
             {
                 Builder.Append("\n And A.CaseDate >= " + "'" + dtCaseDateFrom.ToString("yyyy-MM-dd") + "'");
                 ConditionsCount++;
             }
-            if (DateTime.TryParseExact(CaseDateTo, DataHelpers.ClientDateFormats, null, System.Globalization.DateTimeStyles.AllowWhiteSpaces, out dtCaseDateTo))
+            if (DateTime.TryParseExact(srchObj.CaseDateTo, DataHelpers.ClientDateFormats, null, System.Globalization.DateTimeStyles.AllowWhiteSpaces, out dtCaseDateTo))
             {
                 Builder.Append("\n And A.dtCaseDateTo >= " + "'" + dtCaseDateFrom.ToString("yyyy-MM-dd") + "'");
                 ConditionsCount++;
             }
 
+     
 
+            string[] Queries = {
+                      GetFakraQueryForAdvancedSearch(srchObj.PredicateMabade2, "FakraNo  >=  1")
+                    , GetFakraQueryForAdvancedSearch(srchObj.PredicateWakae3, "FakraNo  =  -1")
+                    , GetFakraQueryForAdvancedSearch(srchObj.PredicateDestoreya, "FakraNo  = -50 ")
+                    , GetFakraQueryForAdvancedSearch(srchObj.PredicateHay2a, "FakraNo  = 0")
+                    , GetFakraQueryForAdvancedSearch(srchObj.PredicateMantoo2, "FakraNo  = -2")
+                    , GetFakraQueryForAdvancedSearch(srchObj.PredicateHaytheyat, "FakraNo = -3")
+            };
+
+
+
+            /*
             // Adding Text Search From Fakarat Table 
-            if(PredicateFakarat != null && PredicateFakarat.IsValid)
+            if (PredicateFakarat != null && PredicateFakarat.IsValid)
             {
                 string FakaratAndClause = "";
                 if (!string.IsNullOrWhiteSpace(FakaratCondition))
@@ -79,16 +89,14 @@ namespace Eastlaws.Services
                                 Intersect
                                 Select HokmID as ID , 0 as DefaultRank From AhkamFakarat
                                 Where Contains(* , {0}) {1}
-                                Group By HokmID " 
-                , PredicateFakarat.BuildPredicate() , FakaratAndClause);
+                                Group By HokmID "
+                , PredicateFakarat.BuildPredicate(), FakaratAndClause);
                 ConditionsCount++;
             }
-
-
-
-
-            return Builder.ToString();
+            */
+            return Builder.ToString();     
         }
+
 
         public static string LatestAhkam(int daysCount)
         {

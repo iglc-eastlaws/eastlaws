@@ -51,26 +51,18 @@ namespace Eastlaws.Services
             return Search(InnerQuery, Options, null, AhkamSearchTypes.General);
         }
 
-        // Advanced Search 
-        public static AhkamPresentation Search(AhkamSearchOptions Options , bool AllElementsCombined, FTSPredicate PredicateMabade2, FTSPredicate PredicateWakae3
-            , FTSPredicate PredicateDestoreya, FTSPredicate PredicateHay2a, FTSPredicate PredicateMantoo2, FTSPredicate PredicateHaytheyat)
+        /// <summary>
+        /// Adcanced + Custom Search 
+        /// </summary>
+        /// <param name="Options">Search Options </param>
+        /// <param name="SrchObj">Search Parameters (Filters ) </param>
+        /// <returns></returns>
+        public static AhkamPresentation Search(AhkamSearchOptions Options  , AhkamAdvancedSearch SrchObj)
         {
-
-            string InnerQuery = AhkamQueryBuilder.AdvancedSearch(AllElementsCombined, PredicateMabade2, PredicateWakae3
-            , PredicateDestoreya, PredicateHay2a, PredicateMantoo2, PredicateHaytheyat);
-
+            string InnerQuery = AhkamQueryBuilder.AdvancedCustomSearch(SrchObj);
             return Search(InnerQuery, Options, null, AhkamSearchTypes.Advanced);
         }
 
-        //Custom Search 
-        public static AhkamPresentation Search(AhkamSearchOptions Options , FTSPredicate PredicateFakarat, string FakaratCondition, string CountryIDs, string Ma7akemIds, string CaseNo, string CaseYear, string PartNo
-            , string PageNo, string OfficeYear, string IFAgree, string OfficeSuffix, string CaseDatefrom, string CaseDateTo)
-        {
-            string InnerQuery = AhkamQueryBuilder.CustomSearch(PredicateFakarat, FakaratCondition, CountryIDs, Ma7akemIds, CaseNo, CaseYear, PartNo
-           , PageNo, OfficeYear, IFAgree, OfficeSuffix, CaseDatefrom, CaseDateTo);
-
-            return Search(InnerQuery, Options, null, AhkamSearchTypes.Custom);
-        }
 
         // Mada Search
         public static AhkamPresentation Search(AhkamSearchOptions Options , int? CountryID, string TashNo, string TashYear, string MadaNo, FTSPredicate TashTextPredicate, bool SearchInTashTile = true, bool SearchInTashMawad = true)
