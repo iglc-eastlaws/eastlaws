@@ -66,13 +66,15 @@ namespace Eastlaws.Controllers
 
         public IActionResult TestBesada()
         {
-            AhkamAdvancedSearch Obj = new AhkamAdvancedSearch();
-            Obj.CountryIDs = "1";
-           // Obj.PredicateAny = new FTSPredicate("القتل العمد مع سبق الإصرار ", FTSSqlModes.AND);
-            Obj.PredicateHay2a = new FTSPredicate("برئاسة", FTSSqlModes.None);
-            Obj.PredicateDestoreya = new FTSPredicate("نقض الحكم");
+            var Countries = AhkamService.GetCountries();
 
-            AhkamService.Search(new AhkamSearchOptions(), Obj);
+            var EgyptMa7akem = AhkamService.GetMahakem(1);
+
+
+            AhkamAdvancedSearch Obj = new AhkamAdvancedSearch();
+            Obj.PredicateAny = new FTSPredicate("القتل العمد مع سبق الإصرار ", FTSSqlModes.AND);    
+            AhkamSearchOptions Options = new AhkamSearchOptions { SortBy = AhkamSortColumns.CaseNo, SortDirection = SearchSortType.DESC };
+            var x = AhkamService.Search(Options, Obj);
 
             return null;
         }

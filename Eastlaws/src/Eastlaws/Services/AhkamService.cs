@@ -38,7 +38,7 @@ namespace Eastlaws.Services
         public int PageNo { get; set; } = 1;
         public int PageSize { get; set; } = 10;
         public AhkamSortColumns SortBy { get; set; } = AhkamSortColumns.Default;
-        public SearchSortType SortDirections { get; set; } = SearchSortType.DESC;
+        public SearchSortType SortDirection { get; set; } = SearchSortType.DESC;
         public AhkamDisplayMode DisplayMode { get; set; } = AhkamDisplayMode.Divs;
     }
 
@@ -79,7 +79,7 @@ namespace Eastlaws.Services
         }
 
 
-        public static AhkamPresentation GetLatest(AhkamSearchOptions Options , int DaysCount = 3)
+        public static AhkamPresentation GetLatest(AhkamSearchOptions Options , int DaysCount = 10)
         {
             string InnerQuery = AhkamQueryBuilder.LatestAhkam(DaysCount);
             return Search(InnerQuery, Options, null, AhkamSearchTypes.Custom);
@@ -116,7 +116,7 @@ namespace Eastlaws.Services
             string CachedQuery = Cacher.GetCachedQuery();
             P.ResultsCount = Cacher.ResultsCount;
 
-            string OuterQuery = AhkamQueryBuilder.GetOuterQuery(CachedQuery, Options, CustomFakaratQuery);
+            string OuterQuery = AhkamQueryBuilder.GetOuterQuery(Cacher, Options, CustomFakaratQuery);
             SqlConnection con = DataHelpers.GetConnection(DbConnections.Data);
             var Grid = con.QueryMultiple(OuterQuery);
             P.AhkamList = Grid.Read<VW_Ahkam>();
@@ -129,7 +129,24 @@ namespace Eastlaws.Services
         }
 
 
-        
+        public static IEnumerable<Country> GetCountries()
+        {
+            SqlConnection con = DataHelpers.GetConnection(DbConnections.Data);
+            var Data = con.Query<Country>("GetServiceCountries", new { ServiceID = 1 }, null, true, null, System.Data.CommandType.StoredProcedure);
+            return Data;
+        }
+        public static IEnumerable<AhkamMahakem> GetMahakem(int CountryID)
+        {
+            SqlConnection con = DataHelpers.GetConnection(DbConnections.Data);
+            var Data = con.Query<AhkamMahakem>("GetMahakem", new { CountryID = CountryID }, null, true, null, System.Data.CommandType.StoredProcedure);
+            return Data;
+        }
+
+
+
+
+
+
 
     }
 }

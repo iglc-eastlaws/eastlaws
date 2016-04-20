@@ -79,9 +79,11 @@ namespace Eastlaws.Infrastructure
             return Info;
         }
 
-        public string GetCachedQuery()
+        public string GetCachedQuery(string JoinQuery = "" , string SortCol = " QCR.DefaultRank ")
         {
-            return "Select QCR.ItemID , QCR.DefaultRank From EastlawsUsers..QueryCacheRecords QCR With (NoLock) "
+            return @"Select QCR.ItemID , " + SortCol + " as MyRank From EastlawsUsers..QueryCacheRecords QCR "
+                 + "With (NoLock) "
+                + JoinQuery
                 +"\n" + "Where QCR.MasterID = " + this.ID;
         }
 

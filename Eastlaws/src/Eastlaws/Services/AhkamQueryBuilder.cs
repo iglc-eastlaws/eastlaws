@@ -151,9 +151,10 @@ namespace Eastlaws.Services
         }
 
 
-        public static string LatestAhkam(int daysCount)
+        public static string LatestAhkam(int daysCount = 5)
         {
-            return "";
+            return "Select A.ID , 0 as DefaultRank From Ahkam A Where A.DateAdded >= DateAdd(Day , -" + daysCount + " ,  (Select Max(DateAdded) From Ahkam ))";
+    
         }
 
         private static string GetFakraQueryForAdvancedSearch(FTSPredicate Predicate, string FakraNumCondition)
@@ -173,31 +174,37 @@ namespace Eastlaws.Services
             return "";
         }
 
-        public static string GetOuterQuery(string InnerQuery , AhkamSearchOptions Options, string CustomFakaratQuery = null)
+
+
+        public static string GetOuterQuery(QueryCacher Cacher, AhkamSearchOptions Options, string CustomFakaratQuery = null)
         {
             StringBuilder builder = new StringBuilder();
+          
+
+            QuerySortInfo Info = GetSortQuery(Options);
+            string InnerQuery = Cacher.GetCachedQuery(Info.SortQuery , Info.ColumnName);
             // Creating the temp table and adding the current Page Data
             builder.AppendFormat(@"Set NoCount on ;
                                    Declare @PageNo int ={0} , @PageSize int = {1} 
                                    Declare @ResultsPage Table(ItemID int Primary Key  ,  SortValue Sql_Variant )
                                    Insert Into @ResultsPage 
-                                   Select  ItemID , DefaultRank as SortValue From 
+                                   Select  ItemID , MyRank as SortValue From 
                                    (
-                                       Select Row_Number() Over (order By DefaultRank desc) as Serial , *  From 
+                                       Select Row_Number() Over (Order By MyRank " + Info.Direction  + @") as Serial , *  From 
                                        (
-                                            {2}
+                                            {2} 
                                        ) ResultsTableInner  
                                    ) ResultsTableOuter 
                                    Where Serial > ((@PageNo - 1) * @PageSize) And Serial <= (@PageNo * @PageSize)"
-        , Options.PageNo, Options.PageSize , InnerQuery); 
+        , Options.PageNo, Options.PageSize , InnerQuery ); 
 
 
             builder.Append("\n");
 
             // Ahkam Data  (Master Data )
-            builder.Append("Select A.* From @ResultsPage RP  "
-                + " join VW_Ahkam A WITH(NOLOCK)  On A.ID = RP.ItemID  "
-                + " Order By RP.SortValue Desc ");
+            builder.Append(@"Select A.* From @ResultsPage RP  
+                join VW_Ahkam A WITH(NOLOCK)  On A.ID = RP.ItemID  
+                Order By RP.SortValue  " + Info.Direction );
 
             if(Options.DisplayMode == AhkamDisplayMode.Divs)
             {
@@ -219,6 +226,51 @@ namespace Eastlaws.Services
         {
             return string.Format(@"Select A.* From VW_Ahkam A Where A.ID = {0}
                                     Select AF.* From VW_AhkamFakarat AF Where AF.HokmID = {0} Order By AF.MyOrder ", ID);
+        }
+
+        public static QuerySortInfo GetSortQuery(AhkamSearchOptions Options)
+        {
+            QuerySortInfo Info = new QuerySortInfo();
+            Info.Direction = Options.SortDirection == SearchSortType.ASC ? " ASC " : " DESC ";
+            Info.SortQuery = "Join Ahkam AMS on AMS.ID = QCR.ItemID ";
+            switch (Options.SortBy)
+            {
+                case AhkamSortColumns.CaseNo:
+                    {
+                        Info.ColumnName = "AMS.CaseNo";                     
+                        break;
+                    }
+                case AhkamSortColumns.CaseDate:
+                    {
+                        Info.ColumnName = "AMS.CaseDate";
+                        break;
+                    }
+                case AhkamSortColumns.CaseYear:
+                    {
+                        Info.ColumnName = "AMS.CaseYear";
+                        break;
+                    }
+                case AhkamSortColumns.TashCount:
+                    {
+                        Info.ColumnName = "AMS.TashCount";
+                        break;
+                    }
+                default:
+                    {
+                        Info.ColumnName = "QCR.DefaultRank";
+                        Info.SortQuery = "";
+                        break;
+                    }
+            }
+
+            return Info;
+        }
+
+        public class QuerySortInfo
+        {
+           public string ColumnName { get; set; }
+           public string SortQuery { get; set; }
+           public string Direction { get; set; } 
         }
 
     }
