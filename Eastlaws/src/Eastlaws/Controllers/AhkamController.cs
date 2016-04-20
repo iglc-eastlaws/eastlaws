@@ -62,53 +62,21 @@ namespace Eastlaws.Controllers
         {
             return View();
         }
+
+
+        public IActionResult TestBesada()
+        {
+            AhkamAdvancedSearch Obj = new AhkamAdvancedSearch();
+            Obj.CountryIDs = "1";
+           // Obj.PredicateAny = new FTSPredicate("القتل العمد مع سبق الإصرار ", FTSSqlModes.AND);
+            Obj.PredicateHay2a = new FTSPredicate("برئاسة", FTSSqlModes.None);
+            Obj.PredicateDestoreya = new FTSPredicate("نقض الحكم");
+
+            AhkamService.Search(new AhkamSearchOptions(), Obj);
+
+            return null;
+        }
         
-
-        //[HttpPost]
-        //public IActionResult GeneralSearch(GeneralSearchVM Model)
-        //{
-
-        //    return null;
-        //}
-
-        //[HttpPost]
-        //public IActionResult CustomSearch(CustomSearchVM Model)
-        //{
-        //    return null;
-        //}
-
-        //[HttpPost]
-        //public IActionResult AdvancedSearch(AdvancedTextSearchVM Model)
-        //{
-        //    return null;
-        //}
-
-        //public IActionResult Index_Old()
-        //{
-        //    ViewBag.Title = "أحكام المحاكم العربية العليا ";
-        //    return View();
-        //}
-
-
-
-
-        //public IActionResult Test()
-        //{
-
-
-
-
-        //    return null;
-        //}
-
-
-
-        //public JsonResult SearchCount(string q = "")
-        //{
-
-        //    var Result = 3000; //count of rows
-        //    return Json(new { data = Result });
-        //}
 
     }
 }

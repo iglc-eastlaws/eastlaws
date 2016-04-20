@@ -8,14 +8,14 @@ namespace Eastlaws.Services
 {
     public class AhkamAdvancedSearch
     {
-        public FTSPredicate PredicateAny { get; set; }
+        public FTSPredicate PredicateAny { get; set; } = new FTSPredicate("");
 
-        public FTSPredicate PredicateMabade2  { get; set; }
-        public FTSPredicate PredicateWakae3  { get; set; }
-        public FTSPredicate PredicateDestoreya { get; set; }
-        public FTSPredicate PredicateHay2a  { get; set; }
-        public FTSPredicate PredicateMantoo2 { get; set; }
-        public FTSPredicate PredicateHaytheyat { get; set; }
+        public FTSPredicate PredicateMabade2 { get; set; } = new FTSPredicate("");
+        public FTSPredicate PredicateWakae3  { get; set; } = new FTSPredicate("");
+        public FTSPredicate PredicateDestoreya { get; set; } = new FTSPredicate("");
+        public FTSPredicate PredicateHay2a  { get; set; } = new FTSPredicate("");
+        public FTSPredicate PredicateMantoo2 { get; set; } = new FTSPredicate("");
+        public FTSPredicate PredicateHaytheyat { get; set; } = new FTSPredicate("");
 
 
         public string CountryIDs{get;set;}

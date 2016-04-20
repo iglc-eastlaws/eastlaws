@@ -11,9 +11,22 @@ namespace Eastlaws.Entities
         public int ResultsCount { get; set; }
         public IEnumerable<VW_Ahkam> AhkamList { get; set; }
         public IEnumerable<VW_AhkamFakarat> FakaratList { get; set; }
-        public string QueryHash { get; private set; }
-        private QueryInfo QueryInfo { get; set; }
         public bool IsValid { get; set; } = true;
+        public QueryInfo QueryInfo { get; set; }
+        public string QueryHash
+        {
+            get
+            {
+                return this.QueryInfo.Hash;
+            }
+        }
+        public int QueryID
+        {
+            get
+            {
+                return this.QueryInfo.ID;
+            }
+        }        
 
         public AhkamPresentation()
         {

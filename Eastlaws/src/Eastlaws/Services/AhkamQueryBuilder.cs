@@ -24,8 +24,10 @@ namespace Eastlaws.Services
             return null;
         }
 
-        public static string AdvancedCustomSearch(AhkamAdvancedSearch srchObj)
+        public static string AdvancedCustomSearch(AhkamAdvancedSearch srchObj , out string FakartQuery)
         {
+            FakartQuery = null;
+
             string[] Conditions = {
                     new Range(srchObj.CountryIDs, "A.CountryID").GetCondition()
                     ,new Range(srchObj.Ma7akemIds, "A.MahkamaID ").GetCondition()
@@ -75,40 +77,77 @@ namespace Eastlaws.Services
             };
 
 
-            bool AllElementsCombined = true;
+
+
+            // Fakarat Text Search 
+            bool AllElementsCombined = true;    // Hardcoded for the moment 
             StringBuilder BuilderText = new StringBuilder();
             string Operator = AllElementsCombined ? " Intersect " : " Union ";
+            int TextQueriesCount = 0;
             for (int i = 0; i < Queries.Length; i++)
             {
                 if (!string.IsNullOrEmpty(Queries[i]))
-                {
-                    ConditionsCount++;
+                {                   
+                    TextQueriesCount++;
+                    BuilderText.Append("\n");
                     BuilderText.Append(Queries[i]);
                     BuilderText.Append("\n");
                     BuilderText.Append(Operator);
                 }
             }
-
-
-            /*
-            // Adding Text Search From Fakarat Table 
-            if (PredicateFakarat != null && PredicateFakarat.IsValid)
+            if(TextQueriesCount > 0)
             {
-                string FakaratAndClause = "";
-                if (!string.IsNullOrWhiteSpace(FakaratCondition))
-                {
-
-                }
-                Builder.AppendFormat(@"
-                                Intersect
-                                Select HokmID as ID , 0 as DefaultRank From AhkamFakarat
-                                Where Contains(* , {0}) {1}
-                                Group By HokmID "
-                , PredicateFakarat.BuildPredicate(), FakaratAndClause);
-                ConditionsCount++;
+                BuilderText.Remove(BuilderText.Length - Operator.Length, Operator.Length);
             }
-            */
-            return Builder.ToString();     
+
+
+            string GeneralSearchQuery = GeneralSearch(srchObj.PredicateAny);
+            string TextQuery = BuilderText.ToString();
+            string AhkamMasterQuery = Builder.ToString();
+
+            Dictionary<string, string> FinalQueries = new Dictionary<string, string>();
+
+            if (!string.IsNullOrEmpty(GeneralSearchQuery))
+                FinalQueries.Add("GSQ", GeneralSearchQuery);
+
+            if (!string.IsNullOrEmpty(TextQuery))
+                FinalQueries.Add("FTQ", TextQuery);
+
+            if (!string.IsNullOrEmpty(AhkamMasterQuery))
+                FinalQueries.Add("AMQ", AhkamMasterQuery);
+
+
+
+            StringBuilder builderRetVal = new StringBuilder();
+            
+            builderRetVal.Append("Select * From ");
+            string LastQueryKey = "";
+            int FinalQueriesIterator = 0;
+            foreach (var item in FinalQueries)
+            {
+
+                if(LastQueryKey == "")
+                {
+                    // Select * From (xx)  => Select GSQ.ID , GSQ.DefaultRank          :( 
+                    builderRetVal.Replace("*", item.Key + ".ID" + " , " + item.Key + ".DefaultRank");
+                }
+
+                if(LastQueryKey != "")
+                {
+                    builderRetVal.Append(" Join ");
+                }
+
+                builderRetVal.Append("\n ( " + item.Value + " ) " + item.Key);
+
+                if(LastQueryKey != "")
+                {
+                    builderRetVal.AppendFormat(" On {0}.ID = {1}.ID " , LastQueryKey, item.Key );
+                }
+                LastQueryKey = item.Key;
+                
+            }
+     
+            return builderRetVal.ToString();            
         }
 
 
@@ -128,43 +167,6 @@ namespace Eastlaws.Services
             return null;
         }
 
-        public static string AdvancedSearch(bool AllElementsCombined , FTSPredicate PredicateMabade2 , FTSPredicate PredicateWakae3
-            , FTSPredicate PredicateDestoreya , FTSPredicate PredicateHay2a , FTSPredicate PredicateMantoo2 , FTSPredicate PredicateHaytheyat)
-        {
-    
-        
-
-            string strMabade2Query = GetFakraQueryForAdvancedSearch(PredicateMabade2, "FakraNo  >=  1");
-            string strWakae3Query = GetFakraQueryForAdvancedSearch(PredicateMabade2, "FakraNo  =  -1");
-            string strDestoreyaQuery = GetFakraQueryForAdvancedSearch(PredicateMabade2, "FakraNo  = -50 ");
-            string strHay2aQuery = GetFakraQueryForAdvancedSearch(PredicateMabade2, "FakraNo  = 0");
-            string strMantoo2Query = GetFakraQueryForAdvancedSearch(PredicateMabade2, "FakraNo  = -2");
-            string strHaytheyatQuery = GetFakraQueryForAdvancedSearch(PredicateMabade2, "FakraNo = -3");
-
-            string[] Queries = { strMabade2Query, strWakae3Query, strDestoreyaQuery, strHay2aQuery, strMantoo2Query, strHaytheyatQuery };
-            int IncludedCount = 0;
-            StringBuilder builder = new StringBuilder();
-            string Operator = AllElementsCombined ? " Intersect " : " Union ";
-            for (int i = 0; i < Queries.Length; i++)
-            {
-                if(!string.IsNullOrEmpty(Queries[i]))
-                {
-                    IncludedCount++;
-                    builder.Append(Queries[i]);
-                    builder.Append("\n");
-                    builder.Append(Operator);
-                }
-            }
-            if(IncludedCount == 0)
-            {
-                return null;
-            }
-            else
-            {
-                builder.Remove(builder.Length - Operator.Length, Operator.Length);                
-            }
-            return builder.ToString();
-        }
 
         public static string MadaSearch(int?  CountryID, string TashNo, string TashYear, string MadaNo , FTSPredicate TashTextFilter , bool SearchInTashTile = true , bool SearchInTashMawad = true)
         {
