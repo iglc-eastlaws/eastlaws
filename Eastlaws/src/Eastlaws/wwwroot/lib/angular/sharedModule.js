@@ -132,7 +132,7 @@
             restrict: 'E',
             replace: true,
             template: '<div class="col-sm-9">'+
-                '<span class="">'+  
+                '<span class="">'+
                   '<label for="{{forId}}1">' +
                         '<input id="{{forId}}1" ng-model="modelVal" type="radio" class="radio_buttons " name="searchtype" value="{{firstval}}" ng-change="changval({{firstval}})" />{{firstName}}</label>' +
               '</span>&nbsp;'+
@@ -194,20 +194,26 @@
 
         };
     });
-
-    sharedModule.directive('cFontScale', function () {
+    sharedModule.directive('cDropSortOptions', function () {
         return {
-            link: function (scope, elm, attr) {
+            restrict: 'E',
+            replace: false,
+            template: '<li><a ng-click="sortby(0)" href="javascript:;"><i class="fa fa-random"></i> افتراضي</a></li>' +
+                     '<li><a ng-click="sortby(1)" href="javascript:;"><i class="fa fa-qrcode"></i> رقم الحكم</a></li>' +
+                     '<li><a ng-click="sortby(2)" href="javascript:;"><i class="fa fa-calendar" aria-hidden="true"></i>  السنة القضائية</a></li>' +
+                     '<li><a ng-click="sortby(3)" href="javascript:;"><i class="glyphicon glyphicon-time"></i> تاريخ الحكم</a></li>',
 
-                var size = attr['cFontScale'];
-                scope.$watch(attr['cFontScale'], function (val) {
-                    elm.css('font-size', val + 'px');
-                })
-             
+            scope: {
+                selectedSort: '@',
+            },
+            link: function (scope,elem) {
+                scope.selectedSort = 0;
+                scope.sortby = function (val) {
+                    scope.selectedSort = val;
+                }
             }
-        }
-
-    });
+        };
+    })
 
 
     var objectArray = function (start,end) {

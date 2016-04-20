@@ -55,7 +55,7 @@
 
                 <div class="col-lg-9 col-md-8  col-sm-8 list-content">
                     <!-- Formating result -->
-                    <div class="format-result">
+                    <div class="format-result" ng-controller="SortCtrl">
 
                         @Html.Partial("_toolbar")
                     </div>
@@ -131,9 +131,6 @@
                     SearchData.GetSearch();
 
                 };
-
-
-
 
             })
             .controller('AdvancedSearchCtrl', function ($scope, SearchData, $rootScope) {
@@ -240,7 +237,14 @@
                    $compile($('#searchResult'))($scope);
                 });
          })
+            .controller('SortCtrl', function ($scope) {
 
+                $scope.sortby = function () {
+                    alert('ff')
+                    console.log($scope.selectedSort);
+                }
+                // $scope.change();
+            })
             app.factory('SearchData', function ($http, $rootScope, $compile) {
                 var data = {};
                 data.searchType = 1;      //GeneralSearch 1   advancedserch 2  .... etc
@@ -355,7 +359,8 @@
                  }
 
                  return data;
-             });
+             })
+            ;
         })();
-
+      
     </script>
