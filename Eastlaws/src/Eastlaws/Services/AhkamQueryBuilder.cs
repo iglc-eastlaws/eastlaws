@@ -122,7 +122,7 @@ namespace Eastlaws.Services
             
             builderRetVal.Append("Select * From ");
             string LastQueryKey = "";
-            int FinalQueriesIterator = 0;
+           // int FinalQueriesIterator = 0;
             foreach (var item in FinalQueries)
             {
 
