@@ -3,6 +3,18 @@
 }
 <div class="col-lg-10 col-md-12">
     <form class="search-form form-horizontal" ng-submit="search()">
+
+
+        <div class="form-group  ">
+            <label class="col-lg-3 col-sm-3 control-label bg-color title">
+                كافه النصوص :
+            </label>
+            <div class="col-sm-9 search">
+                <c-drop-match-search selected-value="Inputs.MabdaaSearchType" input-text="Inputs.Mabdaa"></c-drop-match-search>
+            </div>
+        </div>
+
+
         <!-- Country-->
         <div class="form-group   ">
             <label for="horizontal_search" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title"> اختار الدولة :</label>
@@ -33,13 +45,13 @@
             </div>
 
         </div>
-        <div class="form-group">
+        @*<div class="form-group">
             <label class="col-lg-3 col-sm-3 control-label bg-color title">الدستورية :  </label>
             <div class="col-sm-9 search">
                 <c-drop-match-search selected-value="Inputs.dostoriaSearchType" input-text="Inputs.dostoria"></c-drop-match-search>
             </div>
 
-        </div>
+        </div>*@
         <div class="form-group">
             <label class="col-lg-3 col-sm-3 control-label bg-color title">أعضاء الهيئة : </label>
             <div class="col-sm-9 search">
@@ -47,13 +59,13 @@
             </div>
 
         </div>
-        <div class="form-group">
+        @*<div class="form-group">
             <label class="col-lg-3 col-sm-3 control-label bg-color title">منطوق الحكم : </label>
             <div class="col-sm-9 search">
                 <c-drop-match-search selected-value="Inputs.mantoaaSearchType" input-text="Inputs.mantoaa"></c-drop-match-search>
             </div>
 
-        </div>
+        </div>*@
         <div class="form-group">
             <label class="col-lg-3 col-sm-3 control-label bg-color title">حيثيات الحكم :  </label>
             <div class="col-sm-9 search">
