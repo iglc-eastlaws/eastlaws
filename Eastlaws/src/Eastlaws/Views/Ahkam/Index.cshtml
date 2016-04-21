@@ -340,7 +340,7 @@
                     if (data.searchType === 0) // AssymbleSearch
                     {
                     
-                        $.post('/Ahkam/SearchResultAssembly', {"AssembleSearchInputs":data.AssembleSearchInputs, "PageNo": 5, "Sort": 0 }, function (d) {
+                        $.post('/Ahkam/SearchResultAssembly', { "AssembleSearchInputs": data.AssembleSearchInputs, "PageNo": $rootScope.currentPage, "Sort": 0 }, function (d) {
                             searchOptionAfterAjax(d);
                         })
                         //$http.post('/Ahkam/SearchResultAssembly', {

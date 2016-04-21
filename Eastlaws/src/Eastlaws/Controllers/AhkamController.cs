@@ -56,8 +56,8 @@ namespace Eastlaws.Controllers
             Obj.CaseDateTo = AssembleSearchInputs.dateGalsaTo;
             Obj.CaseYear = AssembleSearchInputs.caseYear;
             Obj.CaseNo = AssembleSearchInputs.caseNo;
-            Obj.CountryIDs = AssembleSearchInputs.country;
-            Obj.IFAgree = AssembleSearchInputs.MahkamaReplay;
+            Obj.CountryIDs = AssembleSearchInputs.country=="0"?"":AssembleSearchInputs.country;
+            Obj.IFAgree = AssembleSearchInputs.MahkamaReplay == "0" ? "":AssembleSearchInputs.MahkamaReplay;
             Obj.Ma7akemIds = AssembleSearchInputs.mahakem;
             Obj.OfficeSuffix = AssembleSearchInputs.omarGroup;
             Obj.OfficeYear = AssembleSearchInputs.officeYear;
