@@ -215,7 +215,7 @@ namespace Eastlaws.Services
                 else
                 {
                     // Temp 
-                    builder.Append(@"Select AF.* From VW_AhkamFakarat AF Join @ResultsPage RP  on AF.HokmID = RP.ItemID Where AF.FakraNo = 1 ");
+                    builder.Append(@"Select AF.* From VW_AhkamFakarat AF Join @ResultsPage RP  on AF.HokmID = RP.ItemID Where AF.IsDefault = 1 ");
                 }
             }
             return builder.ToString();
