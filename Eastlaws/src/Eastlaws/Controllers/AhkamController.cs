@@ -45,9 +45,9 @@ namespace Eastlaws.Controllers
             }
         }
 
-        public IActionResult Latest(int Days = 10)
+        public IActionResult Latest(int Days = 10,int PageNo = 1)
         {
-            AhkamSearchOptions Options = new AhkamSearchOptions { PageNo = 1 , SortBy = AhkamSortColumns.DateAdded , SortDirection = SearchSortType.DESC };
+            AhkamSearchOptions Options = new AhkamSearchOptions { PageNo = PageNo, SortBy = AhkamSortColumns.DateAdded , SortDirection = SearchSortType.DESC };
             AhkamPresentation Model = AhkamService.GetLatest(Options, Days);
             return View("SearchResult", Model);
         }
