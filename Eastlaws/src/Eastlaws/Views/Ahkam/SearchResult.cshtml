@@ -4,17 +4,19 @@
 
     var countrow = 0;
 }
-    @if (Model != null)
-    {
-        <input type="hidden" value="@Model.ResultsCount" id="resultCount"/>
+
+
+ @if (Model != null)
+   {
+    
+    <input type="hidden" value="@Model.ResultsCount" id="resultCount"/>
     @foreach (var item in Model.AhkamList)
     {
         var Fakra = Model.FakaratList.Where(p => p.HokmID == @item.ID).ToArray();
         var FakraText = "...";
         if (Fakra.Length >0)
         {
-            var FakraArray = Fakra[0];
-            FakraText = @FakraArray.Text.Substring(0, (FakraArray.Text.Length > 200) ? 200 : FakraArray.Text.Length);
+            FakraText = Fakra[0].Text.Substring(0, (Fakra[0].Text.Length > 200) ? 200 : Fakra[0].Text.Length);
         }
         countrow += 1;
         <div class="result-block">
@@ -45,8 +47,8 @@
         @if (countrow == 0)
         {
             <h3>لا يوجد نتائج</h3>
-            }
-        }
+         }
+   }
         else if (Model == null)
         {
         <h3>لا يوجد نتائج</h3>
