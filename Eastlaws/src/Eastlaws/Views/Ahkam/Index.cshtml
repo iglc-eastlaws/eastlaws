@@ -324,6 +324,8 @@
              .controller('SortCtrl', function ($scope, SearchData, $rootScope) {
              })
             app.factory('SearchData', function ($http, $rootScope, $compile) {
+               // $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
+
                 var data = {};
                 data.searchType = 1;      //GeneralSearch 1   advancedserch 2  .... etc
                 data.CountSearchChange = 0;     //1 CountSearch Change    0 CountSearch not Change
@@ -337,11 +339,15 @@
                 data.GetSearch = function () {
                     if (data.searchType === 0) // AssymbleSearch
                     {
-                        $http.post('/Ahkam/SearchResultAssembly', {
-                            params: { "PageNo": 5, "Sort": 0 }
-                        }).then(function (d) {
+                    
+                        $.post('/Ahkam/SearchResultAssembly', {"AssembleSearchInputs":data.AssembleSearchInputs, "PageNo": 5, "Sort": 0 }, function (d) {
                             searchOptionAfterAjax(d);
-                        });
+                        })
+                        //$http.post('/Ahkam/SearchResultAssembly', {
+                        //    params: { "PageNo": 5, "Sort": 0 }
+                        //}).then(function (d) {
+                        //    searchOptionAfterAjax(d);
+                        //});
                         console.log('text : ' + data.AssembleSearchInputs.Alltext);
                         console.log('Count Change : ' + data.CountSearchChange);
                         console.log(data.AssembleSearchInputs);

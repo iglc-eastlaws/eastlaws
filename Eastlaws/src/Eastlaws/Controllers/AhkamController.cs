@@ -42,9 +42,9 @@ namespace Eastlaws.Controllers
             }
         }
         [HttpPost]
-        public IActionResult SearchResultAssembly( int PageNo,int Sort)
+        public IActionResult SearchResultAssembly(AssemblySearch AssembleSearchInputs,int PageNo,int Sort)
         {
-            AssemblySearch AssembleSearchInputs = new AssemblySearch();
+            //AssemblySearch AssembleSearchInputs = new AssemblySearch();
             AhkamSearchOptions Options = new AhkamSearchOptions { SortBy = (AhkamSortColumns)Sort, PageNo = PageNo };
             AhkamAdvancedSearch Obj = new AhkamAdvancedSearch();
             Obj.PredicateAny = new FTSPredicate(string.IsNullOrEmpty(AssembleSearchInputs.Alltext) ?"": AssembleSearchInputs.Alltext, (FTSSqlModes)AssembleSearchInputs.alltextSearchType);
