@@ -307,7 +307,7 @@
                 ////get template dynamic for wooow performance
                 elm.html(getTemplate());
                 $compile(elm.contents())(scope);
-
+ 
                 scope.closeDate = function (ev) {
                     scope.datetemp = scope.date;
                     $(ev.target).closest('.c-date-picker').hide();

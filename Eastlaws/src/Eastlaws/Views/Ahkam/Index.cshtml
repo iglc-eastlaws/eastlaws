@@ -15,10 +15,11 @@
         <!-- Nav tabs -->
         <div class="card">
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab"> بحث عام</a></li>
-                <li role="presentation"><a href="#allSearch" aria-controls="allSearch" role="tab" data-toggle="tab">بحث عام 1</a></li>
+                <li role="presentation"  class="active"><a href="#assembleSearch" aria-controls="assembleSearch" role="tab" data-toggle="tab">بحث</a></li>
+                <li role="presentation"><a href="#home" aria-controls="home" role="tab" data-toggle="tab"> بحث عام</a></li>
                 <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">بحث متقدم</a></li>
                 <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">بحث متخصص</a></li>
+                <li role="presentation"><a href="#allSearch" aria-controls="home" role="tab" data-toggle="tab"> بحث عام 2</a></li>
                 <li role="presentation"><a href="#mada" aria-controls="mada" role="tab" data-toggle="tab">بحث بتطبيقات المادة</a></li>
             </ul>
 
@@ -28,14 +29,14 @@
             <!-- Tab panes -->
             <div class="tab-content">
 
-                <div role="tabpanel" class="tab-pane active" id="home">
+                <div role="tabpanel" class="tab-pane active" id="assembleSearch">
+                    <div class="search-form form-horizontal" ng-controller="assembleSearchCtrl">@Html.Partial("_AssembleSearch")</div>
+                </div>
+
+                <div role="tabpanel" class="tab-pane " id="home">
                     <div class="search-form form-horizontal" ng-controller="GeneralSearchCtrl"> @Html.Partial("_GeneralSearch")</div>
                 </div>
 
-                <div role="tabpanel" class="tab-pane" id="allSearch">
-                    <div class="search-form form-horizontal" ng-
-                         controller="SpecialSearchCtrl">@Html.Partial("_GeneralSearch2")</div>
-                    </div>
                     <div role="tabpanel" class="tab-pane" id="profile">
                         <div class="search-form form-horizontal" ng-controller="AdvancedSearchCtrl"> @Html.Partial("_AdvancedSearch")</div>
                     </div>
@@ -43,6 +44,10 @@
                     <div role="tabpanel" class="tab-pane" id="messages">
                         <div class="search-form form-horizontal" ng-controller="SpecialSearchCtrl"> @Html.Partial("_SpecialSearch")</div>
                     </div>
+
+                <div role="tabpanel" class="tab-pane " id="allSearch">
+                    <div class="search-form form-horizontal" ng-controller="GeneralSearchCtrl"> @Html.Partial("_GeneralSearch2")</div>
+                </div>
 
                     <div role="tabpanel" class="tab-pane" id="mada">
                         <div class="search-form form-horizontal">@Html.Partial("_tadbekMadaSearch")</div>
@@ -119,7 +124,21 @@
 
             var app = angular.module('ahkamApp', ['ngSanitize','sharedModule']);
             app
-            .controller('ahkamCtrl', function ($scope, SearchData) {})
+            .controller('ahkamCtrl', function ($scope, SearchData) { })
+             .controller('assembleSearchCtrl', function ($scope, SearchData, $rootScope) {
+                 $scope.Inputs = {};
+                 $scope.Inputs.textType = 1; //default radio checked
+
+
+                 $scope.search = function () {
+                     SearchData.GeneralSearchInputs = $scope.Inputs;
+                     $rootScope.currentPage = 1;
+                     SearchData.searchType = 1; // GeneralSearch
+                     SearchData.CountSearchChange = 1;
+                     SearchData.GetSearch();
+
+                 };
+              })
             .controller('GeneralSearchCtrl', function ($scope, SearchData, $rootScope, $compile) {
                 $scope.Inputs = {};
                 $scope.Inputs.textType = 1; //default radio checked
@@ -243,20 +262,17 @@
                 // data.SearchInputs = {};   //all search factories
                 data.GeneralSearchInputs = {};
                 data.AdvancedSearchInputs = {};
-               // data.fontsize = 10;
 
                 data.GetSearch = function () {
                     if (data.searchType === 1) // GeneralSearch
                     {
-                        //console.log('00000')
-                        // alert(data.CountSearchChange)
-                        let txtsearch = data.GeneralSearchInputs.text;
-                        //   alert(data.GeneralSearchInputs.textType)
+                        console.log(data.GeneralSearchInputs);
+                       // let txtsearch = data.GeneralSearchInputs.text;
                         $http.get('/Ahkam/SearchResult',
                             {
                                 params: {
                                     "searchtype": data.searchType, "Countsearchchange": data.CountSearchChange,
-                                    "PageNo": $rootScope.currentPage, "Match": data.GeneralSearchInputs.textType, "q": txtsearch
+                                    "PageNo": $rootScope.currentPage, "Match": data.GeneralSearchInputs.textType, "q": data.GeneralSearchInputs.text
                                 }
                             }).then(function (d) {
                                 
