@@ -80,7 +80,9 @@
                     </div>
                     <hr class="spacer" />
 
-                    <div id="searchResult" ng-controller="searchResultCtrl" ></div>
+                    <div id="searchResult" ng-controller="searchResultCtrl" >
+                        
+                    </div>
                     <hr class="spacer" />
                     <div class="paging-search text-center" ng-controller="pagesCtrl">
 
@@ -324,6 +326,8 @@
              .controller('SortCtrl', function ($scope, SearchData, $rootScope) {
              })
             app.factory('SearchData', function ($http, $rootScope, $compile) {
+               // $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
+
                 var data = {};
                 data.searchType = 1;      //GeneralSearch 1   advancedserch 2  .... etc
                 data.CountSearchChange = 0;     //1 CountSearch Change    0 CountSearch not Change
@@ -337,19 +341,24 @@
                 data.GetSearch = function () {
                     if (data.searchType === 0) // AssymbleSearch
                     {
-                        //$http.get('/Ahkam/SearchResultAssembly', {
-                        //    params: { "Search": data.AssembleSearchInputs, "PageNo": $rootScope.currentPage ,"Sort":0}
+                    
+                        $.post('/Ahkam/SearchResultAssembly', { "AssembleSearchInputs": data.AssembleSearchInputs, "PageNo": $rootScope.currentPage, "Sort": 0 }, function (d) {
+                            //console.log(d);
+                            searchOptionAfterAjax(d);
+                        })
+                        //$http.post('/Ahkam/SearchResultAssembly', {
+                        //    params: { "PageNo": 5, "Sort": 0 }
                         //}).then(function (d) {
                         //    searchOptionAfterAjax(d);
                         //});
-                        console.log('searchType : '+data.searchType);
-                        console.log('Count Change : ' + data.CountSearchChange);
-                        console.log(data.AssembleSearchInputs);
-                        console.log('current Page : ' + $rootScope.currentPage);
+                        //console.log('text : ' + data.AssembleSearchInputs.Alltext);
+                        //console.log('Count Change : ' + data.CountSearchChange);
+                        //console.log(data.AssembleSearchInputs);
+                        //console.log('current Page : ' + $rootScope.currentPage);
                     }
                     else if (data.searchType === -2) // loadPage
                     {
-                        
+                       
                         $http.get('/Ahkam/Latest', {
                             params: { "Days": 10,  "PageNo": $rootScope.currentPage }
                         }).then(function (d) {
@@ -393,9 +402,10 @@
                 };
 
                 function searchOptionAfterAjax(d) {
+                 //   $('#searchResult').html('00000000000000000')
                     var searchresult = $('#searchResult');
-                    searchresult.html(d.data);
-                    //console.log(d.data)
+                    searchresult.html(d);
+               //    console.log(d)
                     if (searchresult.find('#resultCount').length) {
                         if (data.CountSearchChange == 1) {
                             $rootScope.pageCount = 0;
