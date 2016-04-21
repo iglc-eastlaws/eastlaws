@@ -153,9 +153,7 @@
                      $scope.updatecountry();
                  });
 
-                 $scope.changeCheck = function (id, event) {
-                     //if()
-                     //$scope.Inputs.mahakem.push(id);
+                 $scope.MahakemCheck = function (id, event) {
                      if (event.target.checked) {
                          $scope.choiceMahakem.push(id);
                      } else {
@@ -163,7 +161,6 @@
                      }
 
                      $scope.Inputs.mahakem = $scope.choiceMahakem.join(',');
-                    // console.log($scope.choiceMahakem)
                  }
               
 

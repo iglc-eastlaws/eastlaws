@@ -35,7 +35,7 @@
             <label class="col-sm-3 control-label bg-color title"></label>
             <div class="col-sm-9 search checkbox">
                 <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12" ng-repeat="n in Mahakem">
-                    <label><input type="checkbox" ng-click='changeCheck(n.ID,$event)' />{{n.Name}} </label>
+                    <label><input type="checkbox" ng-click='MahakemCheck(n.ID,$event)' />{{n.Name}} </label>
                 </div>
             </div>
 
@@ -106,6 +106,58 @@
                 </div>
             </div>
         </div>
+
+
+        <hr class="spacer" />
+        <div class="form-group   ">
+            <label for="horizontal_search" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title">  السنة القضائية : </label>
+            <div class="col-md-4 col-sm-4 search">
+                <div class="input-group ">
+                    <input type="text" ng-model="Inputs.caseYear" class="form-control">
+                </div>
+
+            </div>
+            <div class="col-md-5 col-sm-5">
+                <label for="horizontal_search" class="col-lg-5 col-md-5 col-sm-6 control-label bg-color title"> رقم الصفحة : </label>
+                <div class="col-md-7 col-sm-6" style="padding-left:0px; padding-right:0px;">
+                    <input type="text" ng-model="Inputs.pageNo" class="string search  form-control">
+                </div>
+            </div>
+        </div>
+        <hr class="spacer" />
+
+        <div class="form-group   ">
+            <label for="horizontal_search" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title">  سنة المكتب فنى : </label>
+            <div class="col-md-4 col-sm-4 search">
+                <div class="input-group">
+                    <input type="text" class="form-control" ng-model="Inputs.officeYear">
+                </div>
+            </div>
+            <div class="col-md-5 col-sm-5">
+                <label for="horizontal_search" class="col-lg-5 col-md-5 col-sm-6 control-label bg-color title"> رقم الجزء :</label>
+                <div class="col-md-7 col-sm-6" style="padding-left:0px; padding-right:0px;">
+                    <input type="text" ng-model="Inputs.partNo" class="string search  form-control">
+                </div>
+            </div>
+        </div>
+
+        @*<div class="form-group   ">
+            <label for="horizontal_search" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title"> بيان قبول الطعن  :</label>
+            <div class="col-md-4 col-sm-4 search">
+                <select tabindex="3" class="string search  form-control" >
+                    <option selected="selected" value="">الكل</option>
+                    <option value="732398">مرفوض</option>
+                    <option value="732399">مقبول</option>
+                </select>
+
+            </div>
+            <div class="col-md-5 col-sm-5">
+                <label for="horizontal_search" class="col-lg-5 col-md-5 col-sm-6 control-label bg-color title">  مجموعة عمر : </label>
+                <div class="col-md-7 col-sm-6" style="padding-left:0px; padding-right:0px;padding-top:7px;">
+                    <input type="checkbox" id="" value="" checked="">
+                </div>
+            </div>
+        </div>*@
 
 
 
