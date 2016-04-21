@@ -27,6 +27,20 @@
         </div>
         <!--End Country-->
 
+        <!-- Multi Checkbox-->
+        <div ng-show="Mahakem.length>0" class="form-group multi-check">
+            <label class="col-sm-3 control-label bg-color title">اختيار المحكمة</label>
+            <div class="col-sm-9 "></div>
+            <hr class="spacer" />
+            <label class="col-sm-3 control-label bg-color title"></label>
+            <div class="col-sm-9 search checkbox">
+                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12" ng-repeat="n in Mahakem">
+                    <label><input type="checkbox" ng-click='changeCheck(n.ID,$event)' />{{n.Name}} </label>
+                </div>
+            </div>
+
+        </div>
+        <!--End  Multi Checkbox-->
 
 
 
@@ -73,20 +87,25 @@
             </div>
 
         </div>
-     <!-- Multi Checkbox-->
-        <div class="form-group multi-check">
-            <label class="col-sm-3 control-label bg-color title">اختيار المحكمة</label>
-            <div class="col-sm-9 "></div>
-            <hr class="spacer" />
-            <label class="col-sm-3 control-label bg-color title"></label>
-            <div class="col-sm-9 search checkbox">
-                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12" ng-repeat="n in Mahakem">
-                    <label><input type="checkbox"  ng-click='changeCheck(n.ID,$event)'/>{{n.Name}} </label>
+
+        <div class="form-group   ">
+            <label for="horizontal_search" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title">تاريخ الجلسة من :</label>
+            <div class="col-md-4 col-sm-4 search">
+                <div class="input-group " data-provide="datepicker">
+                    <c-date-picker date="Inputs.dateGalsaFrom"></c-date-picker>
+                    @*<input type="text" class="form-control">
+                    <div class="input-group-addon"> <span class="glyphicon glyphicon-th"></span> </div>*@
                 </div>
             </div>
-
+            <div class="col-md-5 col-sm-5">
+                <label for="horizontal_search" class="col-lg-5 col-md-5 col-sm-6 control-label bg-color title"> إلى: </label>
+                <div class="col-md-7 col-sm-6" style="padding-left:0px; padding-right:0px;">
+                    <div class="input-group " data-provide="datepicker">
+                        <c-date-picker date="Inputs.dateGalsaTo"></c-date-picker>
+                    </div>
+                </div>
+            </div>
         </div>
-       <!--End  Multi Checkbox-->
 
 
 
