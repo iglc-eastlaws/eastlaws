@@ -142,6 +142,15 @@ namespace Eastlaws.Services
             return Data;
         }
 
+        public static IEnumerable<FehresItem> GetMahkamaReplies()
+        {
+            List<FehresItem> Items = new List<FehresItem>();
+            Items.Add(new FehresItem {ID = 732398, Name = "مرفوض" });
+            Items.Add(new FehresItem {ID = 732399 , Name = "مقبول" });
+
+            return Items;
+        }
+
 
 
 
