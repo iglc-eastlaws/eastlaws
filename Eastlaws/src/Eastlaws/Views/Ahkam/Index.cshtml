@@ -125,7 +125,21 @@
             var app = angular.module('ahkamApp', ['ngSanitize','sharedModule']);
             app
             .controller('ahkamCtrl', function ($scope, SearchData) { })
-             .controller('assembleSearchCtrl', function ($scope, SearchData, $rootScope) {
+             .controller('assembleSearchCtrl', function ($scope, SearchData, $rootScope, $http) {
+
+                 $scope.countries = [];
+                 $scope.updatecountry = function () {
+                     console.log($scope.country);
+                 }
+
+                 $http.get('/Ahkam/GetCountries', {}).then(function (d) {
+                     $scope.countries = d.data;
+                     $scope.country = { ID: 1 };
+                     $scope.updatecountry();
+                 });
+          
+
+
                  $scope.Inputs = {};
                  $scope.Inputs.textType = 1; //default radio checked
 
