@@ -131,15 +131,19 @@
                  $scope.Mahakem = [];
                  $scope.updatecountry = function () {
                      console.log($scope.country);
-                     $http.get('/Ahkam/GetMahakem?countryID=' + $scope.country.ID + '', {}).then(function (d) {
-                         $scope.Mahakem = d.data;
-                         console.log($scope.Mahakem);
-                     });
+                     if ($scope.country.ID > 0) {
+                         $http.get('/Ahkam/GetMahakem?countryID=' + $scope.country.ID + '', {}).then(function (d) {
+                             $scope.Mahakem = d.data;
+
+                             console.log($scope.Mahakem);
+                         });
+                     }
                  }
 
                  $http.get('/Ahkam/GetCountries', {}).then(function (d) {
                      $scope.countries = d.data;
-                     $scope.country = { ID: 1 };
+                     $scope.countries.unshift({ ID: 0, Name: 'جميع الدول' });
+                     $scope.country = { ID: 0 };
                      $scope.updatecountry();
                  });
           

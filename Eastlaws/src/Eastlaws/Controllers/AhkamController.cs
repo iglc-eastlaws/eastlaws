@@ -72,6 +72,7 @@ namespace Eastlaws.Controllers
         public JsonResult GetMahakem(int countryID)
         {
             var Mahakem = AhkamService.GetMahakem(countryID);
+           
             return new JsonResult(Mahakem);
         }
 
