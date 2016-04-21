@@ -17,7 +17,7 @@ namespace Eastlaws.Services
     }
     public enum AhkamSortColumns
     {
-        Default = 0 ,CaseNo = 1 , CaseYear = 2 , CaseDate = 3 , TashCount = 4 
+        Default = 0 ,CaseNo = 1 , CaseYear = 2 , CaseDate = 3 , TashCount = 4 , DateAdded = 5 
     }
     public enum AhkamDisplayMode
     {
