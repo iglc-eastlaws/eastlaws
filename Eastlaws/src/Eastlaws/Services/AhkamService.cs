@@ -145,8 +145,56 @@ namespace Eastlaws.Services
         public static IEnumerable<FehresItem> GetMahkamaReplies()
         {
             List<FehresItem> Items = new List<FehresItem>();
-            Items.Add(new FehresItem {ID = 732398, Name = "مرفوض" });
-            Items.Add(new FehresItem {ID = 732399 , Name = "مقبول" });
+            Items.Add(new FehresItem { ID = 732403, Name = "غير محدد" });
+            Items.Add(new FehresItem { ID = 732398, Name = "رفض الطعن" });
+            Items.Add(new FehresItem { ID = 732399, Name = "قبول الطعن" });
+            Items.Add(new FehresItem { ID = 732401, Name = "عدم قبول الطعن" });
+            Items.Add(new FehresItem { ID = 732405, Name = "عدم جواز الطعن" });
+            Items.Add(new FehresItem { ID = 732400, Name = "عدم إختصاص" });
+            Items.Add(new FehresItem { ID = 732404, Name = "إنتهاء الخصومة" });
+            Items.Add(new FehresItem { ID = 732402, Name = "إثبات ترك الخصومة" });
+            Items.Add(new FehresItem { ID = 732418, Name = "إنقطاع سير الخصومة" });
+            Items.Add(new FehresItem { ID = 801052, Name = "إنقضاء الدعوى الجنائية" });
+            Items.Add(new FehresItem { ID = 801560, Name = "بطلان الطعن" });
+            Items.Add(new FehresItem { ID = 801703, Name = "انقضاء الخصومة في الطعن" });
+            Items.Add(new FehresItem { ID = 802378, Name = "سقوط الطعن" });
+            Items.Add(new FehresItem { ID = 805255, Name = "عدم قبول الطلب" });
+            Items.Add(new FehresItem { ID = 805256, Name = "قبول الطلب" });
+            Items.Add(new FehresItem { ID = 805260, Name = "مُرجح" });
+            Items.Add(new FehresItem { ID = 806259, Name = "إقرار الطلب" });
+            Items.Add(new FehresItem { ID = 819456, Name = "عدم القبول شكلاً" });
+            Items.Add(new FehresItem { ID = 819457, Name = "عدم القبول موضوعاً" });
+            Items.Add(new FehresItem { ID = 819749, Name = "النقض والإحالة للدعوى الجنائية" });
+            Items.Add(new FehresItem { ID = 819750, Name = "النقض والتصحيح  للدعوى الجنائية" });
+            Items.Add(new FehresItem { ID = 819752, Name = "اعتبار الطعن المقدم من النيابة طلباً" });
+            Items.Add(new FehresItem { ID = 819753, Name = "النقض والإحالة للدعوى المدنية" });
+            Items.Add(new FehresItem { ID = 825308, Name = "النقض والتصحيح للدعوى المدنية" });
+            Items.Add(new FehresItem { ID = 819755, Name = "إنقضاء الدعوى المدنية" });
+            Items.Add(new FehresItem { ID = 819756, Name = "إثبات ترك الدعوى المدنية" });
+            Items.Add(new FehresItem { ID = 825305, Name = "تصحيح الحكم" });
+            Items.Add(new FehresItem { ID = 825311, Name = "النقض للدعويين والتصحيح" });
+            Items.Add(new FehresItem { ID = 825312, Name = "النقض للدعويين والإحالة" });
+            Items.Add(new FehresItem { ID = 831289, Name = "النقض وتحديد جلسة موضوعية" });
+            Items.Add(new FehresItem { ID = 831290, Name = "نقض الحكم وعدم إختصاص المحاكم المصرية" });
+            Items.Add(new FehresItem { ID = 831291, Name = "إعادة المحاكمة" });
+            Items.Add(new FehresItem { ID = 831292, Name = "نقض الأمر والإحالة" });
+            Items.Add(new FehresItem { ID = 831293, Name = "إقرار الحكم بالإعدام" });
+            Items.Add(new FehresItem { ID = 831294, Name = "نقض الحكم وتعيين المحكمة المختصة" });
+            Items.Add(new FehresItem { ID = 831295, Name = "نقض الحكم والإحالة" });
+            Items.Add(new FehresItem { ID = 831296, Name = "نقض الحكم والتصدي للموضوع" });
+            Items.Add(new FehresItem { ID = 831297, Name = "نقض الحكم دون الإحالة أو التصدي" });
+            Items.Add(new FehresItem { ID = 831298, Name = "سقوط الحق في الطعن" });
+            Items.Add(new FehresItem { ID = 831299, Name = "سقوط الخصومة" });
+            Items.Add(new FehresItem { ID = 831457, Name = "إلغاء القرار المطعون فيه" });
+            Items.Add(new FehresItem { ID = 831458, Name = "تعديل القرار المطعون فيه" });
+            Items.Add(new FehresItem { ID = 833722, Name = "إلغاء الحكم المطعون فيه" });
+            Items.Add(new FehresItem { ID = 833723, Name = "تعديل الحكم المطعون فيه" });
+            Items.Add(new FehresItem { ID = 835016, Name = "بطلان الحكم المطعون فيه" });
+            Items.Add(new FehresItem { ID = 835017, Name = "وقف تنفيذ القرار المطعون فيه" });
+            Items.Add(new FehresItem { ID = 835018, Name = "وقف الفصل في الطعن" });
+            Items.Add(new FehresItem { ID = 844649, Name = "رفض الطلب" });
+            Items.Add(new FehresItem { ID = 874454, Name = "عدم جواز الطلب" });
+            Items.Add(new FehresItem { ID = 898247, Name = "إعادة الدعوى للمرافعة" });
 
             return Items;
         }
