@@ -126,12 +126,17 @@
             app
             .controller('ahkamCtrl', function ($scope, SearchData) { })
              .controller('assembleSearchCtrl', function ($scope, SearchData, $rootScope, $http) {
+                 $scope.Inputs = {};
+                 $scope.choiceMahakem = [];
 
                  $scope.countries = [];
                  $scope.Mahakem = [];
+
                  $scope.updatecountry = function () {
                      console.log($scope.country);
                      $scope.Mahakem = [];
+                     $scope.choiceMahakem = [];
+                     $scope.Inputs.country = $scope.country.ID;
                      if ($scope.country.ID > 0) {
                          $http.get('/Ahkam/GetMahakem?countryID=' + $scope.country.ID + '', {}).then(function (d) {
                              $scope.Mahakem = d.data;
@@ -147,11 +152,23 @@
                      $scope.country = { ID: 0 };
                      $scope.updatecountry();
                  });
-          
+
+                 $scope.changeCheck = function (id, event) {
+                     //if()
+                     //$scope.Inputs.mahakem.push(id);
+                     if (event.target.checked) {
+                         $scope.choiceMahakem.push(id);
+                     } else {
+                         $scope.choiceMahakem.splice($scope.choiceMahakem.indexOf(id), 1);
+                     }
+
+                     $scope.Inputs.mahakem = $scope.choiceMahakem.join(',');
+                    // console.log($scope.choiceMahakem)
+                 }
               
 
-                 $scope.Inputs = {};
-                 $scope.Inputs.textType = 1; //default radio checked
+                
+               //  $scope.Inputs.textType = 1; //default radio checked
 
 
                  $scope.search = function () {
