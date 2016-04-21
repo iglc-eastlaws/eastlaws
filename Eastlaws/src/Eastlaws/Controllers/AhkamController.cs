@@ -63,6 +63,12 @@ namespace Eastlaws.Controllers
             return View();
         }
 
+        public JsonResult GetCountries()
+        {
+            var Countries = AhkamService.GetCountries();
+            return new JsonResult(Countries);
+        }
+
 
         public IActionResult TestBesada()
         {
@@ -81,4 +87,6 @@ namespace Eastlaws.Controllers
         
 
     }
+
+  
 }
