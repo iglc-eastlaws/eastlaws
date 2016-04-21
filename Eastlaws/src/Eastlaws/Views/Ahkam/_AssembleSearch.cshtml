@@ -3,6 +3,44 @@
 }
 <div class="col-lg-10 col-md-12">
     <form class="search-form form-horizontal" ng-submit="search()">
+        <!-- Country-->
+        <div class="form-group   ">
+            <label for="horizontal_search" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title"> اختار الدولة :</label>
+            <div class="col-md-4 col-sm-4 search">
+                <select tabindex="3" class="string search  form-control" id="ddlCountries" name="d">
+                    <option selected="selected" value="1">جمهورية مصر العربية</option>
+                    <option value="2">المملكة الأردنية الهاشمية</option>
+                    <option value="3">الجمهورية اليمنية</option>
+                    <option value="4">دولة الإمارات العربية المتحدة</option>
+                    <option value="20">إمارة أبوظبي</option>
+                    <option value="21">إمارة رأس الخيمة</option>
+                    <option value="619">إمارة عجمان</option>
+                    <option value="620">إمارة الشارقة</option>
+                    <option value="1005">إمارة الفجيرة</option>
+                    <option value="8">حكومة دبي</option>
+                    <option value="5">دولة الكويت</option>
+                    <option value="6">مملكة البحرين</option>
+                    <option value="7">دولة قطر</option>
+                    <option value="9">المملكة العربية السعودية</option>
+                    <option value="10">سلطنة عمان</option>
+                    <option value="11">دولة ليبيا</option>
+                    <option value="12">الجمهورية التونسية</option>
+                    <option value="13">المملكة المغربية</option>
+                    <option value="14">جمهورية السودان</option>
+                    <option value="15">الجمهورية العربية السورية</option>
+                    <option value="16">جمهورية العراق</option>
+                    <option value="17">دولة فلسطين</option>
+                    <option value="18">الجمهورية الجزائرية</option>
+                    <option value="19">الجمهورية اللبنانية</option>
+                    <option value="1007">إمارة أم القيوين</option>
+                </select>
+            </div>
+    
+        </div>
+        <!--End Country-->
+
+
+
 
         <div class="form-group  ">
             <label class="col-lg-3 col-sm-3 control-label bg-color title">
@@ -47,9 +85,30 @@
             </div>
 
         </div>
+     <!-- Multi Checkbox-->
+        <div class="form-group multi-check">
+            <label class="col-sm-3 control-label bg-color title">اختيار المحكمة</label>
+            <div class="col-sm-9 "></div>
+            <hr class="spacer" />
+            <label class="col-sm-3 control-label bg-color title"></label>
+            <div class="col-sm-9 search checkbox">
+                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                    <label><input type="checkbox" />المحاكم الإقتصادية </label>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 ">
+                    <label><input type="checkbox" />المحاكم الإقتصادية </label>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                    <label><input type="checkbox" />المحاكم الإقتصادية </label>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 ">
+                    <label><input type="checkbox" />المحاكم الإقتصادية </label>
+                </div>
 
+            </div>
 
-
+        </div>
+       <!--End  Multi Checkbox-->
 
 
 
