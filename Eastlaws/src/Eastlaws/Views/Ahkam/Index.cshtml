@@ -131,6 +131,7 @@
                  $scope.Mahakem = [];
                  $scope.updatecountry = function () {
                      console.log($scope.country);
+                     $scope.Mahakem = [];
                      if ($scope.country.ID > 0) {
                          $http.get('/Ahkam/GetMahakem?countryID=' + $scope.country.ID + '', {}).then(function (d) {
                              $scope.Mahakem = d.data;
