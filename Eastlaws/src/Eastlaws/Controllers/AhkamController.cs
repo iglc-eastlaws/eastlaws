@@ -58,6 +58,7 @@ namespace Eastlaws.Controllers
             }
      
         }
+
         public IActionResult TasfyaSearch()
         {
             return View();
@@ -68,7 +69,6 @@ namespace Eastlaws.Controllers
             var Countries = AhkamService.GetCountries();
             return new JsonResult(Countries);
         }
-
 
         public IActionResult TestBesada()
         {
