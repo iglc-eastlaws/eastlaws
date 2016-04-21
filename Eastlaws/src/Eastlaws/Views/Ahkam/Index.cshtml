@@ -337,6 +337,11 @@
                 data.GetSearch = function () {
                     if (data.searchType === 0) // AssymbleSearch
                     {
+                        //$http.get('/Ahkam/SearchResultAssembly', {
+                        //    params: { "Search": data.AssembleSearchInputs, "PageNo": $rootScope.currentPage ,"Sort":0}
+                        //}).then(function (d) {
+                        //    searchOptionAfterAjax(d);
+                        //});
                         console.log('searchType : '+data.searchType);
                         console.log('Count Change : ' + data.CountSearchChange);
                         console.log(data.AssembleSearchInputs);

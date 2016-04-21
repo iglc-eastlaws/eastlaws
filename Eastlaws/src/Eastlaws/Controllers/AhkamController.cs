@@ -11,9 +11,6 @@ namespace Eastlaws.Controllers
 {
     public class AhkamController : Controller
     {
-
-
-
         public IActionResult Index()
         {
 
@@ -45,9 +42,43 @@ namespace Eastlaws.Controllers
             }
         }
 
-        public IActionResult Latest(int Days = 10,int PageNo = 1)
+        public IActionResult SearchResultAssembly(AssemblySearch Search,int PageNo,int Sort)
         {
-            AhkamSearchOptions Options = new AhkamSearchOptions { PageNo = PageNo, SortBy = AhkamSortColumns.DateAdded , SortDirection = SearchSortType.DESC };
+            AhkamSearchOptions Options = new AhkamSearchOptions { SortBy = (AhkamSortColumns)Sort, PageNo = PageNo };
+            AhkamAdvancedSearch Obj = new AhkamAdvancedSearch();
+            Obj.PredicateAny = new FTSPredicate(Search.Alltext, (FTSSqlModes)Search.alltextSearchType);
+            Obj.PredicateHay2a= new FTSPredicate(Search.hay2a, (FTSSqlModes)Search.hay2aSearchType);
+            Obj.PredicateHaytheyat=new FTSPredicate(Search.hyseyt, (FTSSqlModes)Search.hyseytSearchType);
+            Obj.PredicateMabade2 = new FTSPredicate(Search.Mabdaa, (FTSSqlModes)Search.MabdaaSearchType);
+            Obj.PredicateWakae3 = new FTSPredicate(Search.waka23, (FTSSqlModes)Search.waka23SearchType);
+            Obj.CaseDatefrom = Search.dateGalsaFrom;
+            Obj.CaseDateTo = Search.dateGalsaTo;
+            Obj.CaseYear = Search.caseYear;
+            Obj.CaseNo = Search.caseNo;
+            Obj.CountryIDs = Search.country;
+            Obj.IFAgree = Search.MahkamaReplay;
+            Obj.Ma7akemIds = Search.mahakem;
+            Obj.OfficeSuffix = Search.omarGroup;
+            Obj.OfficeYear = Search.officeYear;
+            Obj.PageNo = Search.pageNo;
+            Obj.PartNo = Search.partNo;
+
+
+            AhkamPresentation Model = AhkamService.Search(Options, Obj);
+                if (Model.IsValid)
+                {
+                    return View(Model);
+                }
+                else
+                {
+                    return View();
+                }
+           
+        }
+
+        public IActionResult Latest(int Days = 10)
+        {
+            AhkamSearchOptions Options = new AhkamSearchOptions { PageNo = 1 , SortBy = AhkamSortColumns.DateAdded , SortDirection = SearchSortType.DESC };
             AhkamPresentation Model = AhkamService.GetLatest(Options, Days);
             return View("SearchResult", Model);
         }
@@ -65,6 +96,7 @@ namespace Eastlaws.Controllers
             }
      
         }
+
         public IActionResult TasfyaSearch()
         {
             return View();
@@ -87,8 +119,6 @@ namespace Eastlaws.Controllers
             var MahkamaReplies = AhkamService.GetMahkamaReplies();
             return new JsonResult(MahkamaReplies);
         }
-
-
 
         public IActionResult TestBesada()
         {
