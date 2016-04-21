@@ -58,7 +58,6 @@ namespace Eastlaws.Controllers
             }
      
         }
-
         public IActionResult TasfyaSearch()
         {
             return View();
@@ -69,6 +68,15 @@ namespace Eastlaws.Controllers
             var Countries = AhkamService.GetCountries();
             return new JsonResult(Countries);
         }
+
+        public JsonResult GetMahakem(int countryID)
+        {
+            var Mahakem = AhkamService.GetMahakem(countryID);
+           
+            return new JsonResult(Mahakem);
+        }
+
+
 
         public IActionResult TestBesada()
         {
@@ -82,7 +90,7 @@ namespace Eastlaws.Controllers
             AhkamSearchOptions Options = new AhkamSearchOptions { SortBy = AhkamSortColumns.CaseNo, SortDirection = SearchSortType.DESC };
             var x = AhkamService.Search(Options, Obj);
 
-            return null;
+            return View();
         }
         
 
