@@ -362,7 +362,8 @@
                         $http.get('/Ahkam/Latest', {
                             params: { "Days": 10,  "PageNo": $rootScope.currentPage }
                         }).then(function (d) {
-                            searchOptionAfterAjax(d);
+                      
+                            searchOptionAfterAjax(d.data);
                         });
                     }
                     else if (data.searchType === 1) // GeneralSearch
@@ -405,7 +406,7 @@
                  //   $('#searchResult').html('00000000000000000')
                     var searchresult = $('#searchResult');
                     searchresult.html(d);
-               //    console.log(d)
+                //   console.log(d)
                     if (searchresult.find('#resultCount').length) {
                         if (data.CountSearchChange == 1) {
                             $rootScope.pageCount = 0;
