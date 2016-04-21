@@ -80,7 +80,9 @@
                     </div>
                     <hr class="spacer" />
 
-                    <div id="searchResult" ng-controller="searchResultCtrl" ></div>
+                    <div id="searchResult" ng-controller="searchResultCtrl" >
+                        
+                    </div>
                     <hr class="spacer" />
                     <div class="paging-search text-center" ng-controller="pagesCtrl">
 
@@ -341,6 +343,7 @@
                     {
                     
                         $.post('/Ahkam/SearchResultAssembly', { "AssembleSearchInputs": data.AssembleSearchInputs, "PageNo": $rootScope.currentPage, "Sort": 0 }, function (d) {
+                            //console.log(d);
                             searchOptionAfterAjax(d);
                         })
                         //$http.post('/Ahkam/SearchResultAssembly', {
@@ -348,10 +351,10 @@
                         //}).then(function (d) {
                         //    searchOptionAfterAjax(d);
                         //});
-                        console.log('text : ' + data.AssembleSearchInputs.Alltext);
-                        console.log('Count Change : ' + data.CountSearchChange);
-                        console.log(data.AssembleSearchInputs);
-                        console.log('current Page : ' + $rootScope.currentPage);
+                        //console.log('text : ' + data.AssembleSearchInputs.Alltext);
+                        //console.log('Count Change : ' + data.CountSearchChange);
+                        //console.log(data.AssembleSearchInputs);
+                        //console.log('current Page : ' + $rootScope.currentPage);
                     }
                     else if (data.searchType === -2) // loadPage
                     {
@@ -399,9 +402,10 @@
                 };
 
                 function searchOptionAfterAjax(d) {
+                 //   $('#searchResult').html('00000000000000000')
                     var searchresult = $('#searchResult');
-                    searchresult.html(d.data);
-                    //console.log(d.data)
+                    searchresult.html(d);
+               //    console.log(d)
                     if (searchresult.find('#resultCount').length) {
                         if (data.CountSearchChange == 1) {
                             $rootScope.pageCount = 0;
