@@ -255,6 +255,11 @@ namespace Eastlaws.Services
                         Info.ColumnName = "AMS.TashCount";
                         break;
                     }
+                case AhkamSortColumns.DateAdded:
+                    {
+                        Info.ColumnName = "AMS.DateAdded";
+                        break;
+                    }
                 default:
                     {
                         Info.ColumnName = "QCR.DefaultRank";
