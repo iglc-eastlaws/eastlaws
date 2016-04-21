@@ -45,6 +45,13 @@ namespace Eastlaws.Controllers
             }
         }
 
+        public IActionResult Latest(int Days = 10,int PageNo = 1)
+        {
+            AhkamSearchOptions Options = new AhkamSearchOptions { PageNo = PageNo, SortBy = AhkamSortColumns.DateAdded , SortDirection = SearchSortType.DESC };
+            AhkamPresentation Model = AhkamService.GetLatest(Options, Days);
+            return View("SearchResult", Model);
+        }
+
         public IActionResult View(int ID)
         {
             var Model = AhkamService.GetHokm(ID, null);
@@ -73,6 +80,12 @@ namespace Eastlaws.Controllers
         {
             var Mahakem = AhkamService.GetMahakem(countryID);
             return new JsonResult(Mahakem);
+        }
+
+        public JsonResult GetMahkamaReplies()
+        {
+            var MahkamaReplies = AhkamService.GetMahkamaReplies();
+            return new JsonResult(MahkamaReplies);
         }
 
 
