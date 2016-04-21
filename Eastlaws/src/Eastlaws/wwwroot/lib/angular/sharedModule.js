@@ -102,8 +102,8 @@
                          '<span class="concept">مطابق للجملة</span> <span class="caret"></span>' +
                      '</button>' +
                      '<ul class="dropdown-menu" role="menu">' +
-                         '<li><a ng-click="changval(1)" href="javascript:;">مطابق للجملة</a></li>' +
-                         '<li><a ng-click="changval(2)" href="javascript:;">مطابق جميع الكلمات</a></li>' +
+                         '<li><a ng-click="changval(0)" href="javascript:;">مطابق للجملة</a></li>' +
+                         '<li><a ng-click="changval(1)" href="javascript:;">مطابق جميع الكلمات</a></li>' +
                      '</ul>' +
                  '</div>' +
                  '<input ng-model="inputText" type="text" class="form-control">' +
