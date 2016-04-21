@@ -355,7 +355,7 @@
                     }
                     else if (data.searchType === -2) // loadPage
                     {
-                        
+                       
                         $http.get('/Ahkam/Latest', {
                             params: { "Days": 10,  "PageNo": $rootScope.currentPage }
                         }).then(function (d) {
