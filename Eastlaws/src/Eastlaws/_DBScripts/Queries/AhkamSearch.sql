@@ -308,6 +308,7 @@ Begin
 				When @FakraNo = -2 then N'منطوق الحكم'
 				When @FakraNo = -3 then N'حيثيات الحكم'
 				When @FakraNo = -50 then N'الدستورية'
+				When @FakraNo = 1 then N'المبادئ'
 			Else 
 				Cast(@FakraNo as nvarchar(100))
 			End
