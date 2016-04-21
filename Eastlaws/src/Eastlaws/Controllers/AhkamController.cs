@@ -119,23 +119,6 @@ namespace Eastlaws.Controllers
             var MahkamaReplies = AhkamService.GetMahkamaReplies();
             return new JsonResult(MahkamaReplies);
         }
-
-        public IActionResult TestBesada()
-        {
-            var Countries = AhkamService.GetCountries();
-
-            var EgyptMa7akem = AhkamService.GetMahakem(1);
-
-
-            AhkamAdvancedSearch Obj = new AhkamAdvancedSearch();
-            Obj.PredicateAny = new FTSPredicate("القتل العمد مع سبق الإصرار ", FTSSqlModes.AND);    
-            AhkamSearchOptions Options = new AhkamSearchOptions { SortBy = AhkamSortColumns.CaseNo, SortDirection = SearchSortType.DESC };
-            var x = AhkamService.Search(Options, Obj);
-
-            return View();
-        }
-        
-
     }
 
   

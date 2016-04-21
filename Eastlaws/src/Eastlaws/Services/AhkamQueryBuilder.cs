@@ -61,7 +61,7 @@ namespace Eastlaws.Services
             }
             if (DateTime.TryParseExact(srchObj.CaseDateTo, DataHelpers.ClientDateFormats, null, System.Globalization.DateTimeStyles.AllowWhiteSpaces, out dtCaseDateTo))
             {
-                Builder.Append("\n And A.dtCaseDateTo >= " + "'" + dtCaseDateFrom.ToString("yyyy-MM-dd") + "'");
+                Builder.Append("\n And A.CaseDateTo >= " + "'" + dtCaseDateFrom.ToString("yyyy-MM-dd") + "'");
                 ConditionsCount++;
             }
 
