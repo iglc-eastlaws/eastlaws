@@ -131,10 +131,11 @@
 
 
                  $scope.search = function () {
-                     SearchData.GeneralSearchInputs = $scope.Inputs;
+                     SearchData.AssembleSearchInputs = $scope.Inputs;
                      $rootScope.currentPage = 1;
-                     SearchData.searchType = 1; // GeneralSearch
+                     SearchData.searchType = 0; // assemble Search
                      SearchData.CountSearchChange = 1;
+
                      SearchData.GetSearch();
 
                  };
@@ -259,12 +260,21 @@
                 var data = {};
                 data.searchType = 1;      //GeneralSearch 1   advancedserch 2  .... etc
                 data.CountSearchChange = 0;     //1 CountSearch Change    0 CountSearch not Change
-                // data.SearchInputs = {};   //all search factories
+
+
+                data.AssembleSearchInputs = {};
                 data.GeneralSearchInputs = {};
                 data.AdvancedSearchInputs = {};
 
                 data.GetSearch = function () {
-                    if (data.searchType === 1) // GeneralSearch
+                    if (data.searchType === 0) // AssymbleSearch
+                    {
+                        console.log('searchType : '+data.searchType);
+                        console.log('Count Change : ' + data.CountSearchChange);
+                        console.log(data.AssembleSearchInputs);
+                        console.log('current Page : ' + $rootScope.currentPage);
+                    }
+                    else if (data.searchType === 1) // GeneralSearch
                     {
                         console.log(data.GeneralSearchInputs);
                        // let txtsearch = data.GeneralSearchInputs.text;
