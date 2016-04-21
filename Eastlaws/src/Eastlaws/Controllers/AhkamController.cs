@@ -41,34 +41,35 @@ namespace Eastlaws.Controllers
                 return View();
             }
         }
-
-        public IActionResult SearchResultAssembly(AssemblySearch Search,int PageNo,int Sort)
+        [HttpPost]
+        public IActionResult SearchResultAssembly( int PageNo,int Sort)
         {
+            AssemblySearch AssembleSearchInputs = new AssemblySearch();
             AhkamSearchOptions Options = new AhkamSearchOptions { SortBy = (AhkamSortColumns)Sort, PageNo = PageNo };
             AhkamAdvancedSearch Obj = new AhkamAdvancedSearch();
-            Obj.PredicateAny = new FTSPredicate(Search.Alltext, (FTSSqlModes)Search.alltextSearchType);
-            Obj.PredicateHay2a= new FTSPredicate(Search.hay2a, (FTSSqlModes)Search.hay2aSearchType);
-            Obj.PredicateHaytheyat=new FTSPredicate(Search.hyseyt, (FTSSqlModes)Search.hyseytSearchType);
-            Obj.PredicateMabade2 = new FTSPredicate(Search.Mabdaa, (FTSSqlModes)Search.MabdaaSearchType);
-            Obj.PredicateWakae3 = new FTSPredicate(Search.waka23, (FTSSqlModes)Search.waka23SearchType);
-            Obj.CaseDatefrom = Search.dateGalsaFrom;
-            Obj.CaseDateTo = Search.dateGalsaTo;
-            Obj.CaseYear = Search.caseYear;
-            Obj.CaseNo = Search.caseNo;
-            Obj.CountryIDs = Search.country;
-            Obj.IFAgree = Search.MahkamaReplay;
-            Obj.Ma7akemIds = Search.mahakem;
-            Obj.OfficeSuffix = Search.omarGroup;
-            Obj.OfficeYear = Search.officeYear;
-            Obj.PageNo = Search.pageNo;
-            Obj.PartNo = Search.partNo;
+            Obj.PredicateAny = new FTSPredicate(string.IsNullOrEmpty(AssembleSearchInputs.Alltext) ?"": AssembleSearchInputs.Alltext, (FTSSqlModes)AssembleSearchInputs.alltextSearchType);
+            Obj.PredicateHay2a= new FTSPredicate(string.IsNullOrEmpty(AssembleSearchInputs.hay2a) ? "" : AssembleSearchInputs.hay2a, (FTSSqlModes)AssembleSearchInputs.hay2aSearchType);
+            Obj.PredicateHaytheyat=new FTSPredicate(string.IsNullOrEmpty(AssembleSearchInputs.hyseyt) ? "" : AssembleSearchInputs.hyseyt, (FTSSqlModes)AssembleSearchInputs.hyseytSearchType);
+            Obj.PredicateMabade2 = new FTSPredicate(string.IsNullOrEmpty(AssembleSearchInputs.Mabdaa) ? "" : AssembleSearchInputs.Mabdaa, (FTSSqlModes)AssembleSearchInputs.MabdaaSearchType);
+            Obj.PredicateWakae3 = new FTSPredicate(string.IsNullOrEmpty(AssembleSearchInputs.waka23) ? "" : AssembleSearchInputs.waka23, (FTSSqlModes)AssembleSearchInputs.waka23SearchType);
+            Obj.CaseDatefrom = AssembleSearchInputs.dateGalsaFrom;
+            Obj.CaseDateTo = AssembleSearchInputs.dateGalsaTo;
+            Obj.CaseYear = AssembleSearchInputs.caseYear;
+            Obj.CaseNo = AssembleSearchInputs.caseNo;
+            Obj.CountryIDs = AssembleSearchInputs.country;
+            Obj.IFAgree = AssembleSearchInputs.MahkamaReplay;
+            Obj.Ma7akemIds = AssembleSearchInputs.mahakem;
+            Obj.OfficeSuffix = AssembleSearchInputs.omarGroup;
+            Obj.OfficeYear = AssembleSearchInputs.officeYear;
+            Obj.PageNo = AssembleSearchInputs.pageNo;
+            Obj.PartNo = AssembleSearchInputs.partNo;
 
 
             AhkamPresentation Model = AhkamService.Search(Options, Obj);
                 if (Model.IsValid)
                 {
-                    return View(Model);
-                }
+                    return View("SearchResult", Model);
+            }
                 else
                 {
                     return View();
