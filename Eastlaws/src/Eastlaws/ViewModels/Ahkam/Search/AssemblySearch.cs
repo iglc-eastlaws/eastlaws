@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Eastlaws.ViewModels.Ahkam.Search
+namespace Eastlaws.ViewModels.Ahkam
 {
     public class AssemblySearch
     {
@@ -19,11 +19,14 @@ namespace Eastlaws.ViewModels.Ahkam.Search
         public string hyseyt { get; set; }
         public string dateGalsaFrom { get; set; }
         public string dateGalsaTo { get; set; }
-        public int? caseYear { get; set; }
-        public int? pageNo { get; set; }
-        public int? officeYear { get; set; }
-        public int? partNo { get; set; }
-        public int? country { get; set; }
+        public string caseYear { get; set; }
+        public string caseNo { get; set; }
+        public string pageNo { get; set; }
+        public string officeYear { get; set; }
+        public string partNo { get; set; }
+        public string country { get; set; }
         public string mahakem { get; set; }
+        public string MahkamaReplay { get; set; }
+        public string omarGroup { get; set; }
     }
 }
