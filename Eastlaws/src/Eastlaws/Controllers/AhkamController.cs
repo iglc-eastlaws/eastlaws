@@ -20,11 +20,11 @@ namespace Eastlaws.Controllers
             return View();
         }
 
-        public IActionResult SearchResult(int searchtype, int Countsearchchange, int PageNo, int Match, string q)
+        public IActionResult SearchResult(int searchtype, int Countsearchchange, int PageNo, int Match,int Sort, string q)
         {
             AhkamSearchOptions Options = new AhkamSearchOptions();
             Options.PageNo = PageNo;
-            //Options.SortBy
+            Options.SortBy = (AhkamSortColumns)Sort;
 
             if (searchtype == 1)
             {
@@ -58,6 +58,11 @@ namespace Eastlaws.Controllers
             }
      
         }
+        public IActionResult TasfyaSearch()
+        {
+            return View();
+        }
+        
 
         //[HttpPost]
         //public IActionResult GeneralSearch(GeneralSearchVM Model)
@@ -90,8 +95,8 @@ namespace Eastlaws.Controllers
         //public IActionResult Test()
         //{
 
-           
-           
+
+
 
         //    return null;
         //}

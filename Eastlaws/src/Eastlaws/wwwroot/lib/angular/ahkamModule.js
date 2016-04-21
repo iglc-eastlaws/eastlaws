@@ -1,17 +1,17 @@
 ﻿(function () {
-    var ahkamModule = angular.module('myApp', []);
+    var ahkamModule = angular.module('ahkamModule', []);
 
     ahkamModule.directive('cDropSortOptions', function () {
         return {
             restrict: 'E',
-            replace: true,
+            replace: false,
             template:'<li><a ng-click="sortby(0)" href="javascript:;"><i class="fa fa-random"></i> افتراضي</a></li>'+
                      '<li><a ng-click="sortby(1)" href="javascript:;"><i class="fa fa-qrcode"></i> رقم الحكم</a></li>'+
                      '<li><a ng-click="sortby(2)" href="javascript:;"><i class="fa fa-calendar" aria-hidden="true"></i>  السنة القضائية</a></li>'+
                      '<li><a ng-click="sortby(3)" href="javascript:;"><i class="glyphicon glyphicon-time"></i> تاريخ الحكم</a></li>',
 
             scope: {
-                selectedValue: '=',
+                selectedValue: '@',
             },
             link: function (scope, elem) {
                 scope.selectedValue = 1;
