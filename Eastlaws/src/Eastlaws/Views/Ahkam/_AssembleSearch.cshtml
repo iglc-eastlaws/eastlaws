@@ -141,23 +141,20 @@
             </div>
         </div>
 
-        @*<div class="form-group   ">
+    <div class="form-group   ">
             <label for="horizontal_search" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title"> بيان قبول الطعن  :</label>
             <div class="col-md-4 col-sm-4 search">
-                <select tabindex="3" class="string search  form-control" >
-                    <option selected="selected" value="">الكل</option>
-                    <option value="732398">مرفوض</option>
-                    <option value="732399">مقبول</option>
-                </select>
+                <select  tabindex="3" class="string search  form-control"
+                        ng-options="t.Name for t in MahkamaReplies track by t.ID" ng-model="MahkamaReplay" ng-change="updateMahkamaReplies()"></select>
 
             </div>
             <div class="col-md-5 col-sm-5">
                 <label for="horizontal_search" class="col-lg-5 col-md-5 col-sm-6 control-label bg-color title">  مجموعة عمر : </label>
                 <div class="col-md-7 col-sm-6" style="padding-left:0px; padding-right:0px;padding-top:7px;">
-                    <input type="checkbox" id="" value="" checked="">
+                    <input type="checkbox" ng-model="omarGroup" ng-click="omarGroupChecked($event)">
                 </div>
             </div>
-        </div>*@
+        </div> 
 
 
 

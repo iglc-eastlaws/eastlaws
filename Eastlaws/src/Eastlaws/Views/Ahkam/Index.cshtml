@@ -131,17 +131,16 @@
 
                  $scope.countries = [];
                  $scope.Mahakem = [];
+                 $scope.MahkamaReplies = [];
+          
 
                  $scope.updatecountry = function () {
-                     console.log($scope.country);
                      $scope.Mahakem = [];
                      $scope.choiceMahakem = [];
                      $scope.Inputs.country = $scope.country.ID;
                      if ($scope.country.ID > 0) {
                          $http.get('/Ahkam/GetMahakem?countryID=' + $scope.country.ID + '', {}).then(function (d) {
                              $scope.Mahakem = d.data;
-
-                             console.log($scope.Mahakem);
                          });
                      }
                  }
@@ -153,6 +152,18 @@
                      $scope.updatecountry();
                  });
 
+                 $scope.updateMahkamaReplies = function () {
+                     $scope.Inputs.MahkamaReplay = $scope.MahkamaReplay.ID;
+                 }
+
+                 $http.get('/Ahkam/GetMahkamaReplies', {}).then(function (d) {
+                     $scope.MahkamaReplies= d.data;
+                     $scope.MahkamaReplies.unshift({ ID: 0, Name: 'الكل' });
+                     $scope.MahkamaReplay = { ID: 0 };
+                     $scope.updateMahkamaReplies();
+                 });
+
+
                  $scope.MahakemCheck = function (id, event) {
                      if (event.target.checked) {
                          $scope.choiceMahakem.push(id);
@@ -163,7 +174,13 @@
                      $scope.Inputs.mahakem = $scope.choiceMahakem.join(',');
                  }
               
-
+                 $scope.omarGroupChecked = function (event) {
+                     if (event.target.checked) {
+                         $scope.Inputs.omarGroup = 'ع';
+                     } else {
+                         $scope.Inputs.omarGroup = '';
+                     }
+                 }
                 
                //  $scope.Inputs.textType = 1; //default radio checked
 
