@@ -1,16 +1,16 @@
 ﻿@{
     Layout = null;
 }
-<div class="col-lg-10 col-md-12">
+<div class="col-lg-12 col-md-12">
     <form class="search-form form-horizontal" name="form" ng-submit="search()" novalidate>
 
 
         <div class="form-group   ">
-            <label for="horizontal_search" class=" col-lg-3 col-sm-3 control-label bg-color title">
+            <label for="horizontal_search" class="col-lg-2 col-sm-3 control-label bg-color title">
                 <!--<abbr title="required">*</abbr>-->
-                بحث فى نص الحكم :
+                بحث فى كافه النصوص :
             </label>
-            <div class="col-sm-9 search">
+            <div class="col-sm-12 search">
                 <div class="multiple-form-group input-group">
                     <div class="input-group-btn input-group-select">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -28,9 +28,9 @@
 
         </div>
         <hr class="spacer" />
-
+        <br/>
         <div class="form-group   ">
-            <label for="horizontal_search" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title"> اختار الدولة :</label>
+            <label for="horizontal_search" class="col-lg-2 col-sm-3 control-label bg-color title"> اختار الدولة :</label>
             <div class="col-md-4 col-sm-4 search">
                 <select tabindex="3" class="string search  form-control" id="ddlCountries" name="d">
                     <option selected="selected" value="1">جمهورية مصر العربية</option>
@@ -60,24 +60,53 @@
                     <option value="1007">إمارة أم القيوين</option>
                 </select>
             </div>
-            <div class="col-md-5 col-sm-12">
-
-                <label for="horizontal_search" class="col-lg-5 col-md-5 col-sm-3 control-label bg-color title">اختيار المحكمة :</label>
-                <div class="col-md-7 col-sm-9" style="padding-left:0px; padding-right:0px;">
-                    <select tabindex="3" class="string search  form-control" id="ddlCountries" name="d">
-                        <option selected="selected" value="1"> المحكمة الإتحادية العليا - الأحكام الجزائية</option>
-                    </select>
-                </div>
-            </div>
+    
         </div>
 
+     
+        <!-- Multi Checkbox-->
+        <div class="form-group multi-check">
+            <label class="col-lg-2 col-sm-3 control-label bg-color title">اختيار المحكمة</label>
+            <div class="col-sm-9 "></div>
+            <hr class="spacer" />
+            <label class="col-lg-2 col-sm-3 control-label bg-color title"></label>
+            <div class="col-sm-9  checkbox">
+                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                    <label><input type="checkbox" />المحاكم الإقتصادية </label>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 ">
+                    <label><input type="checkbox" />المحاكم الإقتصادية </label>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                    <label><input type="checkbox" />المحاكم الإقتصادية </label>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 ">
+                    <label><input type="checkbox" />المحاكم الإقتصادية </label>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                    <label><input type="checkbox" />المحاكم الإقتصادية </label>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 ">
+                    <label><input type="checkbox" />المحاكم الإقتصادية </label>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                    <label><input type="checkbox" />المحاكم الإقتصادية </label>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 ">
+                    <label><input type="checkbox" />المحاكم الإقتصادية </label>
+                </div>
+                <hr class="spacer" />
+            </div>
+
+        </div>
         <hr class="spacer" />
+
         <div class="form-group  ">
-            <label class="col-sm-3 control-label bg-color title">
+            <label class="col-lg-2 col-md-3 col-sm-3 control-label bg-color title">
                 <!--<abbr title="required">*</abbr>-->
                 المبدأ :
             </label>
-            <div class=" col-sm-9 search">
+            <div class="col-lg-4 col-md-9 col-sm-9 search">
                 <div class="multiple-form-group input-group">
                     <div class="input-group-btn input-group-select">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -93,10 +122,9 @@
                 </div>
             </div>
 
-        </div>
-        <div class="form-group ">
-            <label class="col-sm-3 control-label bg-color title">الوقائع : </label>
-            <div class="col-sm-9 search">
+       
+            <label class="col-lg-2 col-md-3 col-sm-3 control-label bg-color title">الوقائع : </label>
+            <div class="col-lg-4 col-md-9 col-sm-9 search">
                 <div class="multiple-form-group input-group">
                     <div class="input-group-btn input-group-select">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -114,8 +142,8 @@
         </div>
         <hr class="spacer" />
         <div class="form-group">
-            <label class="col-lg-3 col-sm-3 control-label bg-color title">أعضاء الهيئة : </label>
-            <div class="col-sm-9 search">
+            <label class="col-lg-2 col-sm-3 control-label bg-color title">أعضاء الهيئة : </label>
+            <div class="col-lg-4 col-md-9 search">
                 <div class="multiple-form-group input-group">
                     <div class="input-group-btn input-group-select">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -131,11 +159,9 @@
                 </div>
             </div>
 
-        </div>
-        <hr class="spacer" />
-        <div class="form-group">
-            <label class="col-lg-3 col-sm-3 control-label bg-color title">حيثيات الحكم :  </label>
-            <div class="col-sm-9 search">
+       
+            <label class="col-lg-2 col-sm-3 control-label bg-color title">حيثيات الحكم :  </label>
+            <div class="col-lg-4 col-md-9 search">
                 <div class="multiple-form-group input-group">
                     <div class="input-group-btn input-group-select">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -153,59 +179,52 @@
         </div>
         <hr class="spacer" />
         <div class="form-group   ">
-            <label for="horizontal_search" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title">  السنة القضائية : </label>
-            <div class="col-md-4 col-sm-4 search">
+            <label for="horizontal_search" class="col-lg-2 col-sm-3 control-label bg-color title">   رقم الطعن : </label>
+            <div class="col-lg-2 col-md-2 col-sm-2 search">
+            <input type="text" class="string search  form-control" id="" name="horizontal[search]" placeholder=""> 
+           </div>
+          
+                <label class="col-lg-2 col-sm-3 control-label bg-color title" for="horizontal_search">السنة القضائية :  </label>
+            <div class="col-lg-2 col-md-2 col-sm-2 search">
+                <input type="text" class="string search  form-control" id="horizontal_search" name="horizontal[search]" placeholder="">
+            </div>
+            
+         
+                <label class="col-lg-2 col-sm-3 control-label bg-color title" for="horizontal_search">سنة المكتب فنى :  </label>
+            <div class="col-lg-2 col-md-2 col-sm-2 search">
+                <input type="text" class="string search  form-control" id="horizontal_search" name="horizontal[search]" placeholder="">
 
-                <div class="input-group " data-provide="datepicker">
-                    <input type="text" class="form-control">
-                    <div class="input-group-addon"> <span class="glyphicon glyphicon-th"></span> </div>
-                </div>
+            </div>
 
-            </div>
-            <div class="col-md-5 col-sm-5">
-                <label for="horizontal_search" class="col-lg-5 col-md-5 col-sm-6 control-label bg-color title"> رقم الصفحة : </label>
-                <div class="col-md-7 col-sm-6" style="padding-left:0px; padding-right:0px;">
-                    <input type="text" placeholder="" name="horizontal[search]" id="horizontal_search" class="string search  form-control">
-                </div>
-            </div>
-        </div>
-        <hr class="spacer" />
-        <div class="form-group   ">
-            <label for="horizontal_search" class=" col-lg-3 col-md-3 col-sm-3 control-label bg-color title">  سنة المكتب فنى : </label>
-            <div class="col-md-4 col-sm-4 search">
-                <div class="input-group " data-provide="datepicker">
-                    <input type="text" class="form-control">
-                    <div class="input-group-addon"> <span class="glyphicon glyphicon-th"></span> </div>
-                </div>
-            </div>
-            <div class="col-md-5 col-sm-5">
-                <label for="horizontal_search" class="col-lg-5 col-md-5 col-sm-6 control-label bg-color title"> رقم الجزء :</label>
-                <div class="col-md-7 col-sm-6" style="padding-left:0px; padding-right:0px;">
-                    <input type="text" placeholder="" name="horizontal[search]" id="horizontal_search" class="string search  form-control">
-                </div>
-            </div>
-        </div>
-        <div class="form-group   ">
-            <label for="horizontal_search" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title"> بيان قبول الطعن  :</label>
-            <div class="col-md-4 col-sm-4 search">
+           
+       
+            <label for="horizontal_search" class="col-lg-2 col-md-2 col-sm-3 control-label bg-color title"> بيان قبول الطعن  :</label>
+            <div class="col-lg-2 col-md-2 col-sm-2 search">
                 <select tabindex="3" class="string search  form-control" id="" name="">
                     <option selected="selected" value="">الكل</option>
                     <option value="732398">مرفوض</option>
                     <option value="732399">مقبول</option>
                 </select>
-
             </div>
-            <div class="col-md-5 col-sm-5">
-                <label for="horizontal_search" class="col-lg-5 col-md-5 col-sm-6 control-label bg-color title">  مجموعة عمر : </label>
-                <div class="col-md-7 col-sm-6" style=" padding-left:0px; padding-right:0px;padding-top:7px;">
-                    <input type="checkbox" id="" value="" checked="">
-                </div>
+            
+                <label for="horizontal_search" class="col-lg-2 col-md-2 col-sm-3 control-label bg-color title"> رقم الجزء :</label>
+            <div class="col-lg-2 col-md-2 col-sm-2 search">
+                <input type="text" placeholder="" name="horizontal[search]" id="horizontal_search" class="string search  form-control">
             </div>
+           
+      
+       
+                <label for="horizontal_search" class="col-lg-2 col-md-2 col-sm-3 control-label bg-color title"> رقم الصفحة : </label>
+            <div class="col-lg-2 col-md-2 col-sm-2 search">
+                <input type="text" placeholder="" name="horizontal[search]" id="horizontal_search" class="string search  form-control">
+            </div>
+        
+          
         </div>
 
         <hr class="spacer" />
         <div class="form-group   ">
-            <label for="horizontal_search" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title">تاريخ الجلسة من :</label>
+            <label for="horizontal_search" class="col-lg-2 col-sm-3 control-label bg-color title">تاريخ الجلسة من :</label>
             <div class="col-md-4 col-sm-4 search">
                 <div class="input-group " data-provide="datepicker">
                     <input type="text" class="form-control">
@@ -223,7 +242,13 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-3 control-label bg-color title">إعادة بحث سابق</label>
+            <label for="horizontal_search" class="col-sm-3 control-label bg-color title">  مجموعة عمر : </label>
+            <div class="col-sm-9" style=" padding-left:0px; padding-right:0px;padding-top:7px;">
+                <input type="checkbox" id="" value="" checked="">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-2 col-sm-3 control-label bg-color title">إعادة بحث سابق</label>
             <div class="col-sm-9 search">
                 <select name="" class="string search  form-control">
                     <option value="#" selected>جمهورية مصر العربية جمهورية مصر العربية - قرار وزير الأشغال رقم 11111 لسنة</option>
@@ -231,32 +256,10 @@
 
             </div>
         </div>
-        <!-- Multi Checkbox-->
-        <div class="form-group multi-check">
-            <label class="col-sm-3 control-label bg-color title">اختيار المحكمة</label>
-            <div class="col-sm-9 "></div>
-            <hr class="spacer" />
-            <label class="col-sm-3 control-label bg-color title"></label>
-            <div class="col-sm-9 search checkbox">
-                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                    <label><input type="checkbox" />المحاكم الإقتصادية </label>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 ">
-                    <label><input type="checkbox" />المحاكم الإقتصادية </label>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                    <label><input type="checkbox" />المحاكم الإقتصادية </label>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 ">
-                    <label><input type="checkbox" />المحاكم الإقتصادية </label>
-                </div>
-
-            </div>
-
-        </div>
+  
 
         <div class="form-group   ">
-            <label class="col-lg-3 col-md-3 col-sm-3 "> </label>
+            <label class="col-lg-2 col-sm-3 "> </label>
             <div class="col-sm-9">
                 <input type="submit" value=" بـحـث" name="commit" class="btn butt-yellow">
             </div>
