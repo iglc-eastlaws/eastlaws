@@ -24,28 +24,27 @@ namespace Eastlaws.Services
             return null;
         }
 
-        public static string CustomSearch(FTSPredicate PredicateFakarat , string FakaratCondition , string CountryIDs , string Ma7akemIds , string CaseNo , string CaseYear , string PartNo 
-            , string PageNo , string OfficeYear , string IFAgree , string OfficeSuffix , string CaseDatefrom , string CaseDateTo )
-        {   
+        public static string AdvancedCustomSearch(AhkamAdvancedSearch srchObj , out string FakartQuery)
+        {
+            FakartQuery = null;
 
             string[] Conditions = {
-                    new Range(CountryIDs, "A.CountryID").GetCondition()
-                    ,new Range(Ma7akemIds, "A.MahkamaID ").GetCondition()
-                    ,new Range(OfficeYear, "A.OfficeYear").GetCondition()
-                    ,new Range(CaseNo, "A.CaseNo").GetCondition()
-                    ,new Range(CaseYear, "A.CaseYear").GetCondition()
-                    ,new Range(PartNo, "A.PartNo").GetCondition()
-                    ,new Range(PageNo, "A.PageNo").GetCondition()
-                    ,new Range(IFAgree, "A.IfAgree").GetCondition()
-                    ,new Range(OfficeSuffix, "A.OfficeSuffix").GetCondition()
+                    new Range(srchObj.CountryIDs, "A.CountryID").GetCondition()
+                    ,new Range(srchObj.Ma7akemIds, "A.MahkamaID ").GetCondition()
+                    ,new Range(srchObj.OfficeYear, "A.OfficeYear").GetCondition()
+                    ,new Range(srchObj.CaseNo, "A.CaseNo").GetCondition()
+                    ,new Range(srchObj.CaseYear, "A.CaseYear").GetCondition()
+                    ,new Range(srchObj.PartNo, "A.PartNo").GetCondition()
+                    ,new Range(srchObj.PageNo, "A.PageNo").GetCondition()
+                    ,new Range(srchObj.IFAgree, "A.IfAgree").GetCondition()
+                    ,new Range(srchObj.OfficeSuffix, "A.OfficeSuffix").GetCondition()
             };
 
             StringBuilder Builder = new StringBuilder();
             Builder.Append(@"Select A.ID as ID  ,  0 as DefaultRank From Ahkam A Where (1 = 1)");
 
             int ConditionsCount = 0;
-
-            for (int i = 0;i < Conditions.Length; i++)
+            for (int i = 0; i < Conditions.Length; i++)
             {
                 string CurrentCondition = Conditions[i];
                 if (!string.IsNullOrWhiteSpace(CurrentCondition))
@@ -55,44 +54,107 @@ namespace Eastlaws.Services
                 }
             }
             DateTime dtCaseDateFrom, dtCaseDateTo;
-            if (DateTime.TryParseExact(CaseDatefrom , DataHelpers.ClientDateFormats , null, System.Globalization.DateTimeStyles.AllowWhiteSpaces , out dtCaseDateFrom))
+            if (DateTime.TryParseExact(srchObj.CaseDatefrom, DataHelpers.ClientDateFormats, null, System.Globalization.DateTimeStyles.AllowWhiteSpaces, out dtCaseDateFrom))
             {
                 Builder.Append("\n And A.CaseDate >= " + "'" + dtCaseDateFrom.ToString("yyyy-MM-dd") + "'");
                 ConditionsCount++;
             }
-            if (DateTime.TryParseExact(CaseDateTo, DataHelpers.ClientDateFormats, null, System.Globalization.DateTimeStyles.AllowWhiteSpaces, out dtCaseDateTo))
+            if (DateTime.TryParseExact(srchObj.CaseDateTo, DataHelpers.ClientDateFormats, null, System.Globalization.DateTimeStyles.AllowWhiteSpaces, out dtCaseDateTo))
             {
                 Builder.Append("\n And A.dtCaseDateTo >= " + "'" + dtCaseDateFrom.ToString("yyyy-MM-dd") + "'");
                 ConditionsCount++;
             }
 
+     
 
-            // Adding Text Search From Fakarat Table 
-            if(PredicateFakarat != null && PredicateFakarat.IsValid)
+            string[] Queries = {
+                      GetFakraQueryForAdvancedSearch(srchObj.PredicateMabade2, "FakraNo  >=  1")
+                    , GetFakraQueryForAdvancedSearch(srchObj.PredicateWakae3, "FakraNo  =  -1")
+                    , GetFakraQueryForAdvancedSearch(srchObj.PredicateDestoreya, "FakraNo  = -50 ")
+                    , GetFakraQueryForAdvancedSearch(srchObj.PredicateHay2a, "FakraNo  = 0")
+                    , GetFakraQueryForAdvancedSearch(srchObj.PredicateMantoo2, "FakraNo  = -2")
+                    , GetFakraQueryForAdvancedSearch(srchObj.PredicateHaytheyat, "FakraNo = -3")
+            };
+
+
+
+
+            // Fakarat Text Search 
+            bool AllElementsCombined = true;    // Hardcoded for the moment 
+            StringBuilder BuilderText = new StringBuilder();
+            string Operator = AllElementsCombined ? " Intersect " : " Union ";
+            int TextQueriesCount = 0;
+            for (int i = 0; i < Queries.Length; i++)
             {
-                string FakaratAndClause = "";
-                if (!string.IsNullOrWhiteSpace(FakaratCondition))
-                {
-
+                if (!string.IsNullOrEmpty(Queries[i]))
+                {                   
+                    TextQueriesCount++;
+                    BuilderText.Append("\n");
+                    BuilderText.Append(Queries[i]);
+                    BuilderText.Append("\n");
+                    BuilderText.Append(Operator);
                 }
-                Builder.AppendFormat(@"
-                                Intersect
-                                Select HokmID as ID , 0 as DefaultRank From AhkamFakarat
-                                Where Contains(* , {0}) {1}
-                                Group By HokmID " 
-                , PredicateFakarat.BuildPredicate() , FakaratAndClause);
-                ConditionsCount++;
+            }
+            if(TextQueriesCount > 0)
+            {
+                BuilderText.Remove(BuilderText.Length - Operator.Length, Operator.Length);
             }
 
 
+            string GeneralSearchQuery = GeneralSearch(srchObj.PredicateAny);
+            string TextQuery = BuilderText.ToString();
+            string AhkamMasterQuery = Builder.ToString();
+
+            Dictionary<string, string> FinalQueries = new Dictionary<string, string>();
+
+            if (!string.IsNullOrEmpty(GeneralSearchQuery))
+                FinalQueries.Add("GSQ", GeneralSearchQuery);
+
+            if (!string.IsNullOrEmpty(TextQuery))
+                FinalQueries.Add("FTQ", TextQuery);
+
+            if (!string.IsNullOrEmpty(AhkamMasterQuery))
+                FinalQueries.Add("AMQ", AhkamMasterQuery);
 
 
-            return Builder.ToString();
+
+            StringBuilder builderRetVal = new StringBuilder();
+            
+            builderRetVal.Append("Select * From ");
+            string LastQueryKey = "";
+           // int FinalQueriesIterator = 0;
+            foreach (var item in FinalQueries)
+            {
+
+                if(LastQueryKey == "")
+                {
+                    // Select * From (xx)  => Select GSQ.ID , GSQ.DefaultRank          :( 
+                    builderRetVal.Replace("*", item.Key + ".ID" + " , " + item.Key + ".DefaultRank");
+                }
+
+                if(LastQueryKey != "")
+                {
+                    builderRetVal.Append(" Join ");
+                }
+
+                builderRetVal.Append("\n ( " + item.Value + " ) " + item.Key);
+
+                if(LastQueryKey != "")
+                {
+                    builderRetVal.AppendFormat(" On {0}.ID = {1}.ID " , LastQueryKey, item.Key );
+                }
+                LastQueryKey = item.Key;
+                
+            }
+     
+            return builderRetVal.ToString();            
         }
 
-        public static string LatestAhkam(int daysCount)
+
+        public static string LatestAhkam(int daysCount = 5)
         {
-            return "";
+            return "Select A.ID , 0 as DefaultRank From Ahkam A Where A.DateAdded >= DateAdd(Day , -" + daysCount + " ,  (Select Max(DateAdded) From Ahkam ))";
+    
         }
 
         private static string GetFakraQueryForAdvancedSearch(FTSPredicate Predicate, string FakraNumCondition)
@@ -106,74 +168,43 @@ namespace Eastlaws.Services
             return null;
         }
 
-        public static string AdvancedSearch(bool AllElementsCombined , FTSPredicate PredicateMabade2 , FTSPredicate PredicateWakae3
-            , FTSPredicate PredicateDestoreya , FTSPredicate PredicateHay2a , FTSPredicate PredicateMantoo2 , FTSPredicate PredicateHaytheyat)
-        {
-    
-        
-
-            string strMabade2Query = GetFakraQueryForAdvancedSearch(PredicateMabade2, "FakraNo  >=  1");
-            string strWakae3Query = GetFakraQueryForAdvancedSearch(PredicateMabade2, "FakraNo  =  -1");
-            string strDestoreyaQuery = GetFakraQueryForAdvancedSearch(PredicateMabade2, "FakraNo  = -50 ");
-            string strHay2aQuery = GetFakraQueryForAdvancedSearch(PredicateMabade2, "FakraNo  = 0");
-            string strMantoo2Query = GetFakraQueryForAdvancedSearch(PredicateMabade2, "FakraNo  = -2");
-            string strHaytheyatQuery = GetFakraQueryForAdvancedSearch(PredicateMabade2, "FakraNo = -3");
-
-            string[] Queries = { strMabade2Query, strWakae3Query, strDestoreyaQuery, strHay2aQuery, strMantoo2Query, strHaytheyatQuery };
-            int IncludedCount = 0;
-            StringBuilder builder = new StringBuilder();
-            string Operator = AllElementsCombined ? " Intersect " : " Union ";
-            for (int i = 0; i < Queries.Length; i++)
-            {
-                if(!string.IsNullOrEmpty(Queries[i]))
-                {
-                    IncludedCount++;
-                    builder.Append(Queries[i]);
-                    builder.Append("\n");
-                    builder.Append(Operator);
-                }
-            }
-            if(IncludedCount == 0)
-            {
-                return null;
-            }
-            else
-            {
-                builder.Remove(builder.Length - Operator.Length, Operator.Length);                
-            }
-            return builder.ToString();
-        }
 
         public static string MadaSearch(int?  CountryID, string TashNo, string TashYear, string MadaNo , FTSPredicate TashTextFilter , bool SearchInTashTile = true , bool SearchInTashMawad = true)
         {
             return "";
         }
 
-        public static string GetOuterQuery(string InnerQuery , AhkamSearchOptions Options, string CustomFakaratQuery = null)
+
+
+        public static string GetOuterQuery(QueryCacher Cacher, AhkamSearchOptions Options, string CustomFakaratQuery = null)
         {
             StringBuilder builder = new StringBuilder();
+          
+
+            QuerySortInfo Info = GetSortQuery(Options);
+            string InnerQuery = Cacher.GetCachedQuery(Info.SortQuery , Info.ColumnName);
             // Creating the temp table and adding the current Page Data
             builder.AppendFormat(@"Set NoCount on ;
                                    Declare @PageNo int ={0} , @PageSize int = {1} 
                                    Declare @ResultsPage Table(ItemID int Primary Key  ,  SortValue Sql_Variant )
                                    Insert Into @ResultsPage 
-                                   Select  ItemID , DefaultRank as SortValue From 
+                                   Select  ItemID , MyRank as SortValue From 
                                    (
-                                       Select Row_Number() Over (order By DefaultRank desc) as Serial , *  From 
+                                       Select Row_Number() Over (Order By MyRank " + Info.Direction  + @") as Serial , *  From 
                                        (
-                                            {2}
+                                            {2} 
                                        ) ResultsTableInner  
                                    ) ResultsTableOuter 
                                    Where Serial > ((@PageNo - 1) * @PageSize) And Serial <= (@PageNo * @PageSize)"
-        , Options.PageNo, Options.PageSize , InnerQuery); 
+        , Options.PageNo, Options.PageSize , InnerQuery ); 
 
 
             builder.Append("\n");
 
             // Ahkam Data  (Master Data )
-            builder.Append("Select A.* From @ResultsPage RP  "
-                + " join VW_Ahkam A WITH(NOLOCK)  On A.ID = RP.ItemID  "
-                + " Order By RP.SortValue Desc ");
+            builder.Append(@"Select A.* From @ResultsPage RP  
+                join VW_Ahkam A WITH(NOLOCK)  On A.ID = RP.ItemID  
+                Order By RP.SortValue  " + Info.Direction );
 
             if(Options.DisplayMode == AhkamDisplayMode.Divs)
             {
@@ -195,6 +226,51 @@ namespace Eastlaws.Services
         {
             return string.Format(@"Select A.* From VW_Ahkam A Where A.ID = {0}
                                     Select AF.* From VW_AhkamFakarat AF Where AF.HokmID = {0} Order By AF.MyOrder ", ID);
+        }
+
+        public static QuerySortInfo GetSortQuery(AhkamSearchOptions Options)
+        {
+            QuerySortInfo Info = new QuerySortInfo();
+            Info.Direction = Options.SortDirection == SearchSortType.ASC ? " ASC " : " DESC ";
+            Info.SortQuery = "Join Ahkam AMS on AMS.ID = QCR.ItemID ";
+            switch (Options.SortBy)
+            {
+                case AhkamSortColumns.CaseNo:
+                    {
+                        Info.ColumnName = "AMS.CaseNo";                     
+                        break;
+                    }
+                case AhkamSortColumns.CaseDate:
+                    {
+                        Info.ColumnName = "AMS.CaseDate";
+                        break;
+                    }
+                case AhkamSortColumns.CaseYear:
+                    {
+                        Info.ColumnName = "AMS.CaseYear";
+                        break;
+                    }
+                case AhkamSortColumns.TashCount:
+                    {
+                        Info.ColumnName = "AMS.TashCount";
+                        break;
+                    }
+                default:
+                    {
+                        Info.ColumnName = "QCR.DefaultRank";
+                        Info.SortQuery = "";
+                        break;
+                    }
+            }
+
+            return Info;
+        }
+
+        public class QuerySortInfo
+        {
+           public string ColumnName { get; set; }
+           public string SortQuery { get; set; }
+           public string Direction { get; set; } 
         }
 
     }

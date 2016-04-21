@@ -38,7 +38,7 @@ namespace Eastlaws.Services
         public int PageNo { get; set; } = 1;
         public int PageSize { get; set; } = 10;
         public AhkamSortColumns SortBy { get; set; } = AhkamSortColumns.Default;
-        public SearchSortType SortDirections { get; set; } = SearchSortType.DESC;
+        public SearchSortType SortDirection { get; set; } = SearchSortType.DESC;
         public AhkamDisplayMode DisplayMode { get; set; } = AhkamDisplayMode.Divs;
     }
 
@@ -51,26 +51,25 @@ namespace Eastlaws.Services
             return Search(InnerQuery, Options, null, AhkamSearchTypes.General);
         }
 
-        // Advanced Search 
-        public static AhkamPresentation Search(AhkamSearchOptions Options , bool AllElementsCombined, FTSPredicate PredicateMabade2, FTSPredicate PredicateWakae3
-            , FTSPredicate PredicateDestoreya, FTSPredicate PredicateHay2a, FTSPredicate PredicateMantoo2, FTSPredicate PredicateHaytheyat)
+        /// <summary>
+        /// Adcanced + Custom Search Combined Together
+        /// </summary>
+        /// <param name="Options">Search Options </param>
+        /// <param name="SrchObj">Search Parameters (Filters ) </param>
+        /// <returns></returns>
+        public static AhkamPresentation Search(AhkamSearchOptions Options  , AhkamAdvancedSearch SrchObj)
         {
-
-            string InnerQuery = AhkamQueryBuilder.AdvancedSearch(AllElementsCombined, PredicateMabade2, PredicateWakae3
-            , PredicateDestoreya, PredicateHay2a, PredicateMantoo2, PredicateHaytheyat);
-
-            return Search(InnerQuery, Options, null, AhkamSearchTypes.Advanced);
+            string FakaratQueryCustom;
+            string InnerQuery = AhkamQueryBuilder.AdvancedCustomSearch(SrchObj , out FakaratQueryCustom);
+            return Search(InnerQuery, Options, FakaratQueryCustom, AhkamSearchTypes.Advanced);
         }
 
-        //Custom Search 
-        public static AhkamPresentation Search(AhkamSearchOptions Options , FTSPredicate PredicateFakarat, string FakaratCondition, string CountryIDs, string Ma7akemIds, string CaseNo, string CaseYear, string PartNo
-            , string PageNo, string OfficeYear, string IFAgree, string OfficeSuffix, string CaseDatefrom, string CaseDateTo)
-        {
-            string InnerQuery = AhkamQueryBuilder.CustomSearch(PredicateFakarat, FakaratCondition, CountryIDs, Ma7akemIds, CaseNo, CaseYear, PartNo
-           , PageNo, OfficeYear, IFAgree, OfficeSuffix, CaseDatefrom, CaseDateTo);
 
-            return Search(InnerQuery, Options, null, AhkamSearchTypes.Custom);
+        public static AhkamPresentation Search(AhkamSearchOptions Options , int CachedQueryID)
+        {
+            throw new NotImplementedException();
         }
+
 
         // Mada Search
         public static AhkamPresentation Search(AhkamSearchOptions Options , int? CountryID, string TashNo, string TashYear, string MadaNo, FTSPredicate TashTextPredicate, bool SearchInTashTile = true, bool SearchInTashMawad = true)
@@ -80,7 +79,7 @@ namespace Eastlaws.Services
         }
 
 
-        public static AhkamPresentation GetLatest(AhkamSearchOptions Options , int DaysCount = 3)
+        public static AhkamPresentation GetLatest(AhkamSearchOptions Options , int DaysCount = 10)
         {
             string InnerQuery = AhkamQueryBuilder.LatestAhkam(DaysCount);
             return Search(InnerQuery, Options, null, AhkamSearchTypes.Custom);
@@ -112,10 +111,12 @@ namespace Eastlaws.Services
                 P.IsValid = false;
                 return P;
             }
+
             QueryCacher Cacher = new QueryCacher((int)LegalServices.Ahkam, InnerQuery, SearchType.ToString(), NewSearch: true);
             string CachedQuery = Cacher.GetCachedQuery();
             P.ResultsCount = Cacher.ResultsCount;
-            string OuterQuery = AhkamQueryBuilder.GetOuterQuery(CachedQuery, Options, CustomFakaratQuery);
+
+            string OuterQuery = AhkamQueryBuilder.GetOuterQuery(Cacher, Options, CustomFakaratQuery);
             SqlConnection con = DataHelpers.GetConnection(DbConnections.Data);
             var Grid = con.QueryMultiple(OuterQuery);
             P.AhkamList = Grid.Read<VW_Ahkam>();
@@ -123,8 +124,29 @@ namespace Eastlaws.Services
             {
                 P.FakaratList = Grid.Read<VW_AhkamFakarat>();
             }
+            P.QueryInfo = Cacher.Info;
             return P;
         }
+
+
+        public static IEnumerable<Country> GetCountries()
+        {
+            SqlConnection con = DataHelpers.GetConnection(DbConnections.Data);
+            var Data = con.Query<Country>("GetServiceCountries", new { ServiceID = 1 }, null, true, null, System.Data.CommandType.StoredProcedure);
+            return Data;
+        }
+        public static IEnumerable<AhkamMahakem> GetMahakem(int CountryID)
+        {
+            SqlConnection con = DataHelpers.GetConnection(DbConnections.Data);
+            var Data = con.Query<AhkamMahakem>("GetMahakem", new { CountryID = CountryID }, null, true, null, System.Data.CommandType.StoredProcedure);
+            return Data;
+        }
+
+
+
+
+
+
 
     }
 }

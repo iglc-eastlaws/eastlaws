@@ -17,8 +17,16 @@ namespace Eastlaws.Infrastructure
 
         public Range(string Input , string ColumnName)
         {
-            this.Input = Input.Trim();
-            this.ColumnName = ColumnName;
+            if (string.IsNullOrWhiteSpace(Input))
+            {
+                this.Input = null;
+            }
+            else
+            {
+                this.Input = Input.Trim();
+                this.ColumnName = ColumnName;
+            }
+
         }
 
         public string GetCondition()
