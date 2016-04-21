@@ -82,7 +82,7 @@ namespace Eastlaws.Services
         public static AhkamPresentation GetLatest(AhkamSearchOptions Options , int DaysCount = 10)
         {
             string InnerQuery = AhkamQueryBuilder.LatestAhkam(DaysCount);
-            return Search(InnerQuery, Options, null, AhkamSearchTypes.Custom);
+            return Search(InnerQuery, Options, null, AhkamSearchTypes.Custom , "أُضـــيـــف حديــــثــــاً ");
         }
        
         public static AhkamPresentation GetHokm(int ID , FTSPredicate PredicateHighlight )
@@ -103,7 +103,7 @@ namespace Eastlaws.Services
 
 
         // Internal Search Assembler !
-        private static AhkamPresentation Search(string InnerQuery, AhkamSearchOptions Options , string CustomFakaratQuery , AhkamSearchTypes SearchType )
+        private static AhkamPresentation Search(string InnerQuery, AhkamSearchOptions Options , string CustomFakaratQuery , AhkamSearchTypes SearchType , string CustomPresentationTitle  = null)
         {
             AhkamPresentation P = new AhkamPresentation();
             if (string.IsNullOrEmpty(InnerQuery))
@@ -125,6 +125,7 @@ namespace Eastlaws.Services
                 P.FakaratList = Grid.Read<VW_AhkamFakarat>();
             }
             P.QueryInfo = Cacher.Info;
+            P.PresentationTitle = CustomPresentationTitle;
             return P;
         }
 

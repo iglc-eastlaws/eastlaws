@@ -10,6 +10,16 @@
    {
     
     <input type="hidden" value="@Model.ResultsCount" id="resultCount"/>
+    <input type="hidden" value="@Model.QueryID" id="queryHandle" />
+
+    @if (!string.IsNullOrWhiteSpace(Model.PresentationTitle))
+    {
+        <h3 style="width:100%;display:block;text-align:center;">
+            @Model.PresentationTitle
+        </h3>
+
+    }
+
     @foreach (var item in Model.AhkamList)
     {
         var Fakra = Model.FakaratList.Where(p => p.HokmID == @item.ID).ToArray();
