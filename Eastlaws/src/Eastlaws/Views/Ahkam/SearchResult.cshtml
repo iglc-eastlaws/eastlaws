@@ -7,11 +7,9 @@
     @if (Model != null)
     {
         <input type="hidden" value="@Model.ResultsCount" id="resultCount"/>
-        //@Html.Hidden("resultCount", Model.ResultsCount);
     @foreach (var item in Model.AhkamList)
     {
         var Fakra = Model.FakaratList.Where(p => p.HokmID == @item.ID).ToArray();
-      //  @Fakra.ToArray().Length;
         var FakraText = "...";
         if (Fakra.Length >0)
         {
