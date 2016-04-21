@@ -128,8 +128,13 @@
              .controller('assembleSearchCtrl', function ($scope, SearchData, $rootScope, $http) {
 
                  $scope.countries = [];
+                 $scope.Mahakem = [];
                  $scope.updatecountry = function () {
                      console.log($scope.country);
+                     $http.get('/Ahkam/GetMahakem?countryID=' + $scope.country.ID + '', {}).then(function (d) {
+                         $scope.Mahakem = d.data;
+                         console.log($scope.Mahakem);
+                     });
                  }
 
                  $http.get('/Ahkam/GetCountries', {}).then(function (d) {
@@ -138,7 +143,7 @@
                      $scope.updatecountry();
                  });
           
-
+              
 
                  $scope.Inputs = {};
                  $scope.Inputs.textType = 1; //default radio checked
