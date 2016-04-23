@@ -60,8 +60,9 @@ namespace Eastlaws.Services
         public static AhkamPresentation Search(AhkamSearchOptions Options  , AhkamAdvancedSearch SrchObj)
         {
             string FakaratQueryCustom;
-            string InnerQuery = AhkamQueryBuilder.AdvancedCustomSearch(SrchObj , out FakaratQueryCustom);
-            return Search(InnerQuery, Options, FakaratQueryCustom, AhkamSearchTypes.Advanced);
+            List<FTSPredicate> SearchPredicates; 
+            string InnerQuery = AhkamQueryBuilder.AdvancedCustomSearch(SrchObj , out FakaratQueryCustom , out SearchPredicates);
+            return Search(InnerQuery, Options, FakaratQueryCustom, AhkamSearchTypes.Advanced , null , SearchPredicates);
         }
 
 
@@ -103,7 +104,7 @@ namespace Eastlaws.Services
 
 
         // Internal Search Assembler !
-        private static AhkamPresentation Search(string InnerQuery, AhkamSearchOptions Options , string CustomFakaratQuery , AhkamSearchTypes SearchType , string CustomPresentationTitle  = null)
+        private static AhkamPresentation Search(string InnerQuery, AhkamSearchOptions Options , string CustomFakaratQuery , AhkamSearchTypes SearchType , string CustomPresentationTitle  = null , List<FTSPredicate> Predicates = null)
         {
             AhkamPresentation P = new AhkamPresentation();
             if (string.IsNullOrEmpty(InnerQuery))
@@ -112,7 +113,7 @@ namespace Eastlaws.Services
                 return P;
             }
 
-            QueryCacher Cacher = new QueryCacher((int)LegalServices.Ahkam, InnerQuery, SearchType.ToString(), NewSearch: true);
+            QueryCacher Cacher = new QueryCacher((int)LegalServices.Ahkam, InnerQuery, SearchType.ToString(), NewSearch: true , SecondaryQuery : CustomFakaratQuery);
             string CachedQuery = Cacher.GetCachedQuery();
             P.ResultsCount = Cacher.ResultsCount;
 
@@ -126,6 +127,7 @@ namespace Eastlaws.Services
             }
             P.QueryInfo = Cacher.Info;
             P.PresentationTitle = CustomPresentationTitle;
+            P.TextPredicates = Predicates;
             return P;
         }
 

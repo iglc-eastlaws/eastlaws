@@ -29,5 +29,29 @@ namespace Eastlaws.Services
         public string OfficeSuffix{get;set;}
         public string CaseDatefrom{get;set;}
         public string CaseDateTo { get; set; }
+
+
+        public List<FTSPredicate> GetValidPredicates()
+        {
+        
+            PredicateAny.Tag = 5000;
+            PredicateMabade2.Tag = 1;
+            PredicateDestoreya.Tag = -50;
+            PredicateWakae3.Tag= -1 ;
+            PredicateMantoo2.Tag  = -2;
+            PredicateHaytheyat.Tag  = -3;
+            FTSPredicate[] MyArray = { PredicateAny , PredicateMabade2 , PredicateDestoreya  , PredicateWakae3 , PredicateMantoo2 , PredicateHaytheyat };
+
+            List<FTSPredicate> retVal = new List<FTSPredicate>();
+            for(int i=0; i< MyArray.Length; i++)
+            {
+                if (MyArray[i].IsValid)
+                {
+                    retVal.Add(MyArray[i]);
+                }
+            }
+
+            return retVal;
+        }
     }
 }
