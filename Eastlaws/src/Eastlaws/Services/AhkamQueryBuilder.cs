@@ -24,9 +24,14 @@ namespace Eastlaws.Services
             return null;
         }
 
-        public static string AdvancedCustomSearch(AhkamAdvancedSearch srchObj , out string FakartQuery)
+        public static string AdvancedCustomSearch(AhkamAdvancedSearch srchObj , out string OuterFakartQuery , out List<FTSPredicate> TextMatches )
         {
-            FakartQuery = null;
+            TextMatches = srchObj.GetValidPredicates();
+
+            // this query is executed later , Ref : {AhkamQueryBuilder.GetOuterQuery()}
+            OuterFakartQuery = @"Select AF.* , dbo.GetAhkamFakraTitle(AF.FakraNo) as Title  ,dbo.GetAhkamFakraOrder(AF.FakraNo) as MyOrder  "
+                    + "\n" + "From AhkamFakarat AF Join @ResultsPage RP  on AF.HokmID = RP.ItemID ";
+            bool FakaratQueryWhereClauseAdded = false;
 
             string[] Conditions = {
                     new Range(srchObj.CountryIDs, "A.CountryID").GetCondition()
@@ -65,15 +70,20 @@ namespace Eastlaws.Services
                 ConditionsCount++;
             }
 
-     
+
+            string strOuterFakraMabade2  , strOuterFakraWakae3, strOuterFakraDestoreya, strOuterFakraHay2a, strOuterFakraMantoo2, strOuterFakraHaytheyat;
 
             string[] Queries = {
-                      GetFakraQueryForAdvancedSearch(srchObj.PredicateMabade2, "FakraNo  >=  1")
-                    , GetFakraQueryForAdvancedSearch(srchObj.PredicateWakae3, "FakraNo  =  -1")
-                    , GetFakraQueryForAdvancedSearch(srchObj.PredicateDestoreya, "FakraNo  = -50 ")
-                    , GetFakraQueryForAdvancedSearch(srchObj.PredicateHay2a, "FakraNo  = 0")
-                    , GetFakraQueryForAdvancedSearch(srchObj.PredicateMantoo2, "FakraNo  = -2")
-                    , GetFakraQueryForAdvancedSearch(srchObj.PredicateHaytheyat, "FakraNo = -3")
+                      GetFakraQueryForAdvancedSearch(srchObj.PredicateMabade2, "A.FakraNo  >=  1", out strOuterFakraMabade2)
+                    , GetFakraQueryForAdvancedSearch(srchObj.PredicateWakae3, "A.FakraNo  =  -1", out strOuterFakraWakae3)
+                    , GetFakraQueryForAdvancedSearch(srchObj.PredicateDestoreya, "A.FakraNo  = -50 " , out strOuterFakraDestoreya)
+                    , GetFakraQueryForAdvancedSearch(srchObj.PredicateHay2a, "A.FakraNo  = 0" , out strOuterFakraHay2a)
+                    , GetFakraQueryForAdvancedSearch(srchObj.PredicateMantoo2, "A.FakraNo  = -2" , out strOuterFakraMantoo2)
+                    , GetFakraQueryForAdvancedSearch(srchObj.PredicateHaytheyat, "A.FakraNo = -3" , out strOuterFakraHaytheyat)
+            };
+
+            string[] OuterFakraConditions = {
+                strOuterFakraMabade2  , strOuterFakraWakae3, strOuterFakraDestoreya, strOuterFakraHay2a, strOuterFakraMantoo2, strOuterFakraHaytheyat
             };
 
 
@@ -93,6 +103,17 @@ namespace Eastlaws.Services
                     BuilderText.Append(Queries[i]);
                     BuilderText.Append("\n");
                     BuilderText.Append(Operator);
+
+                    if (FakaratQueryWhereClauseAdded)
+                    {
+                        OuterFakartQuery += " OR " + OuterFakraConditions[i];
+                    }
+                    else
+                    {
+                        OuterFakartQuery += " Where " + OuterFakraConditions[i];
+                        FakaratQueryWhereClauseAdded = true;
+                    }
+
                 }
             }
             if(TextQueriesCount > 0)
@@ -104,6 +125,32 @@ namespace Eastlaws.Services
             string GeneralSearchQuery = GeneralSearch(srchObj.PredicateAny);
             string TextQuery = BuilderText.ToString();
             string AhkamMasterQuery = Builder.ToString();
+
+
+            // Adjusting Outer Fakarat Query 
+            if(!string.IsNullOrEmpty(GeneralSearchQuery))
+            {
+                if (FakaratQueryWhereClauseAdded)
+                {
+                    OuterFakartQuery += " OR  ( Contains(AF.Text , " + srchObj.PredicateAny.BuildPredicate() + ") ) ";
+                }
+                else
+                {
+                    OuterFakartQuery += " Where  " + " Contains(AF.Text , " +  srchObj.PredicateAny.BuildPredicate() + ") ";
+                    FakaratQueryWhereClauseAdded = true;
+                }
+            }
+
+
+            // if no where clause is specified use the default query that comes in the {AhkamQueryBuilder.GetOuterQuery()}
+            if (!FakaratQueryWhereClauseAdded)
+            {
+                OuterFakartQuery = null;
+            }
+            else // else Add the Correct Order By clause 
+            {
+                OuterFakartQuery += "\n Order By AF.HokmID ,  MyOrder";
+            }
 
             Dictionary<string, string> FinalQueries = new Dictionary<string, string>();
 
@@ -157,10 +204,12 @@ namespace Eastlaws.Services
     
         }
 
-        private static string GetFakraQueryForAdvancedSearch(FTSPredicate Predicate, string FakraNumCondition)
+        private static string GetFakraQueryForAdvancedSearch(FTSPredicate Predicate, string FakraNumCondition , out string FakraWhereClause)
         {
+            FakraWhereClause = null;
             if (Predicate.IsValid)
             {
+                FakraWhereClause = "(" +  FakraNumCondition.Replace("A." , "AF.") + " And Contains(AF.Text , "  + Predicate.BuildPredicate() +") )";
                 return "Select HokmID as ID  , 0 as DefaultRank  From AhkamFakarat  A  "
                     + "\n" + "Where " + FakraNumCondition + " And Contains(A.Text , " + Predicate.BuildPredicate() + ") "
                     + "\n" + "Group By A.HokmID";
@@ -214,7 +263,7 @@ namespace Eastlaws.Services
                 }
                 else
                 {
-                    // Temp 
+                    // get the default Fakra for each hokm  
                     builder.Append(@"Select AF.* From VW_AhkamFakarat AF Join @ResultsPage RP  on AF.HokmID = RP.ItemID Where AF.IsDefault = 1 ");
                 }
             }

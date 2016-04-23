@@ -4,29 +4,79 @@
 
     var countrow = 0;
 }
-    @if (Model != null)
+
+
+ @if (Model != null)
+   {
+    
+    <input type="hidden" value="@Model.ResultsCount" id="resultCount"/>
+    <input type="hidden" value="@Model.QueryID" id="queryHandle" />
+
+    @if (!string.IsNullOrWhiteSpace(Model.PresentationTitle))
     {
-        <input type="hidden" value="@Model.ResultsCount" id="resultCount"/>
+        <h3 style="width:100%;display:block;text-align:center;">
+            @Model.PresentationTitle
+        </h3>
+
+    }
+
     @foreach (var item in Model.AhkamList)
-    {
-        var Fakra = Model.FakaratList.Where(p => p.HokmID == @item.ID).ToArray();
-        var FakraText = "...";
-        if (Fakra.Length >0)
         {
-            var FakraArray = Fakra[0];
-            FakraText = @FakraArray.Text.Substring(0, (FakraArray.Text.Length > 200) ? 200 : FakraArray.Text.Length);
-        }
-        countrow += 1;
+            countrow += 1;
+
+            var Fakrat = Model.FakaratList.Where(p => p.HokmID == @item.ID).ToArray();
+            var PredicatesHighlight = Model.TextPredicates;
+            int MaxFakraTextLen = 250;
+
+
         <div class="result-block">
             <h4><i class="fa fa-bank fa-2x icon"></i></h4>
             <div class="row-search selector">
                 
                 
                 <h3><img src="~/Content/images/Flags/Small/@item.CountryFlagPic" width="16" height="11" alt="" />&nbsp; @item.FullName</h3>
-                <p c-font-scale="{{fontsize}}">
+                @for (int i = 0; i < Fakrat.Length; i++)
+                {
+                    var CurrentFakra = Fakrat[i];
+                    string FakraText = CurrentFakra.Text;
+                    if (PredicatesHighlight == null || PredicatesHighlight.Count == 0)
+                    {
+                        FakraText = FakraText.Substring(0, Math.Min(FakraText.Length, MaxFakraTextLen));
 
-                    <a target="_blank" href="view?ID=@item.ID">@FakraText</a>
-                </p>
+                    }
+                    else
+                    {
+                        var MatchingPredicate = (from x in PredicatesHighlight
+                                                 where Convert.ToInt32(x.Tag) == CurrentFakra.FakraNo || Convert.ToInt32(x.Tag) == 5000
+                                                 select x).FirstOrDefault();
+
+                        if(MatchingPredicate == null)
+                        {
+                            FakraText = FakraText.Substring(0, Math.Min(FakraText.Length, MaxFakraTextLen));
+                        }
+                        else
+                        {
+                            FakraText = Eastlaws.Infrastructure.Temp.HighlightTextTrim(FakraText, MatchingPredicate.Input, MatchingPredicate.SqlMode, MaxFakraTextLen);
+
+                        }
+                    }
+
+                        <p c-font-scale="{{fontsize}}">
+                            <span class="fakr-title-search" style="color:red;">
+                                @CurrentFakra.Title : 
+                            </span>
+                            <a target="_blank" href="View?ID=@item.ID#@CurrentFakra.ID">@Html.Raw(FakraText)</a>
+                        </p>
+
+                        if(i < Fakrat.Length - 1 && Fakrat.Length > 1)
+                        {
+                            <div class="fakarat-search-separator">
+                                <hr />
+                            </div>
+                        }
+                }
+
+
                     <div class="nav-control">
                     <ul>
                         <li><a href="#"><i class="fa fa-desktop"></i> قراءة النص</a></li>
@@ -45,8 +95,8 @@
         @if (countrow == 0)
         {
             <h3>لا يوجد نتائج</h3>
-            }
-        }
+         }
+   }
         else if (Model == null)
         {
         <h3>لا يوجد نتائج</h3>

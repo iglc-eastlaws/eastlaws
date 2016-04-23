@@ -26,10 +26,8 @@
         <!-- Multi Checkbox-->
         <div ng-show="Mahakem.length>0" class="form-group multi-check">
             <label class="col-lg-2 col-sm-3 control-label bg-color title">اختيار المحكمة</label>
-            <div class="col-sm-9 "></div>
-            
-            <label class="col-sm-3 control-label bg-color title"></label>
-            <div class="col-sm-9  checkbox">
+           
+            <div class="col-lg-10 col-sm-9  checkbox">
                 <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12" ng-repeat="n in Mahakem">
                     <label><input type="checkbox" ng-click='MahakemCheck(n.ID,$event)' />{{n.Name}} </label>
                 </div>
@@ -111,48 +109,47 @@
             </div>
         </div>
 
-       
 
-<hr class="spacer" />
 
-<div class="form-group   ">
+        <hr class="spacer" />
 
-    <div class="col-md-5 col-sm-5">
-        <label for="horizontal_search" class="col-lg-5 col-md-5 col-sm-6 control-label bg-color title">  مجموعة عمر : </label>
-        <div class="col-md-7 col-sm-6" style="padding-left:0px; padding-right:0px;padding-top:7px;">
-            <input type="checkbox" ng-model="omarGroup" ng-click="omarGroupChecked($event)">
-        </div>
-    </div>
-</div>
+        <div class="form-group   ">
 
-<hr class="spacer" />
-<div class="form-group   ">
-    <label for="horizontal_search" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title">تاريخ الجلسة من :</label>
-    <div class="col-md-4 col-sm-4 search">
-        <div class="input-group " data-provide="datepicker">
-            <c-date-picker date="Inputs.dateGalsaFrom"></c-date-picker>
-            @*<input type="text" class="form-control">
-                <div class="input-group-addon"> <span class="glyphicon glyphicon-th"></span> </div>*@
-        </div>
-    </div>
-    <div class="col-md-5 col-sm-5">
-        <label for="horizontal_search" class="col-lg-5 col-md-5 col-sm-6 control-label bg-color title"> إلى: </label>
-        <div class="col-md-7 col-sm-6" style="padding-left:0px; padding-right:0px;">
-            <div class="input-group " data-provide="datepicker">
-                <c-date-picker date="Inputs.dateGalsaTo"></c-date-picker>
+            <div class="col-md-5 col-sm-5">
+                <label for="horizontal_search" class="col-lg-5 col-md-5 col-sm-6 control-label bg-color title">  مجموعة عمر : </label>
+                <div class="col-md-4  search">
+                    <input type="checkbox" ng-model="omarGroup" ng-click="omarGroupChecked($event)">
+                </div>
             </div>
         </div>
-    </div>
-</div>
+        <hr class="spacer" />
+        <div class="form-group   ">
+            <label class="col-lg-2 col-md-3  control-label bg-color title">تاريخ الجلسة من :</label>
+            <div class="col-md-4  search">
+
+                <c-date-picker date="Inputs.dateGalsaFrom"></c-date-picker>
+                @*<input type="text" class="form-control">
+                <div class="input-group-addon"> <span class="glyphicon glyphicon-th"></span> </div>*@
+
+            </div>
+
+            <label for="horizontal_search" class="col-lg-2 col-md-3  control-label bg-color title"> إلى: </label>
+
+            <div class="col-md-4  search">
+                <c-date-picker date="Inputs.dateGalsaTo"></c-date-picker>
+            </div>
+            </div>
 
 
 
-<div class="form-group   ">
-    <label class="col-lg-3 col-md-3 col-sm-3 "> </label>
-    <div class="col-sm-9">
-        <input type="submit" class="btn butt-yellow" value="بـحـث">
-    </div>
-</div>
-    </form>
+
+
+            <div class="form-group   ">
+                <label class="col-lg-3 col-md-3 col-sm-3 "> </label>
+                <div class="col-sm-9">
+                    <input type="submit" class="btn butt-yellow" value="بـحـث">
+                </div>
+            </div>
+</form>
 </div>
 <hr class="spacer" />

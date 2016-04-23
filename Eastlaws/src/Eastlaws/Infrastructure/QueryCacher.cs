@@ -16,7 +16,7 @@ namespace Eastlaws.Infrastructure
         public string Query { get; set; }
         public int ResultsCount { get; set; }
         public string Hash { get; set; }
-        public string SubQuery { get; set; }
+        public string SecondaryQuery { get; set; }
     }
 
     public class QueryCacher
@@ -31,13 +31,15 @@ namespace Eastlaws.Infrastructure
         public int ResultsCount { get; private set; }
         private bool IncreaseSearchCount { get; set; }
         public QueryInfo Info { get; private set; }
+        public string SecondaryQuery { get; private set; }
 
-        public QueryCacher(int ServiceID , string Query , string SearchType , bool NewSearch = false)
+        public QueryCacher(int ServiceID , string Query , string SearchType , bool NewSearch = false , string SecondaryQuery = null)
         {
             this.ServiceID = ServiceID;
             this.Query = Query;
             this.SearchType = SearchType;
             this.IncreaseSearchCount = NewSearch;
+            this.SecondaryQuery = SecondaryQuery;
 
             PerformQueryHash();
             this.Info = Execute();
@@ -67,6 +69,7 @@ namespace Eastlaws.Infrastructure
             Parameters.Add("@QueryHash", QueryHash);
             Parameters.Add("@SearchType", SearchType);
             Parameters.Add("@IncreaseHits", IncreaseSearchCount);
+            Parameters.Add("@SecondaryQuery", SecondaryQuery);
             QueryInfo Info =  con.Query<QueryInfo>(Proc, Parameters, null, true, null, CommandType.StoredProcedure).FirstOrDefault();
             if(Info != null)
             {

@@ -25,12 +25,14 @@ namespace Eastlaws.Infrastructure
         // Min and max valid lengths after filtering the predicate 
         private const int MIN_PREDICATE_LENGTH = 2;
         private const int MAX_PREDICATE_LENGTH = 1000;
-        private int match;
+
+        
 
         public string Input { get; }
         public string Output { get; private set; } = null;    
         public FTSSqlModes SqlMode { get; set; } = FTSSqlModes.None;
         private bool IsPredicateBuilt { get; set; } = false;
+        public object Tag { get; set; }
         public bool IsValid
         {
             get
@@ -61,10 +63,6 @@ namespace Eastlaws.Infrastructure
             SqlMode = GetSQLMode(MatchingType);
         }
 
-        public FTSPredicate(string Input, int match) : this(Input)
-        {
-            this.match = match;
-        }
 
         private FTSSqlModes GetSQLMode(MatchType MatchingType)
         {

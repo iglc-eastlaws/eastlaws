@@ -16,10 +16,10 @@
         <div class="card">
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation"  class="active"><a href="#assembleSearch" aria-controls="assembleSearch" role="tab" data-toggle="tab">بحث</a></li>
-                <li role="presentation"><a href="#home" aria-controls="home" role="tab" data-toggle="tab"> بحث عام</a></li>
+                @*<li role="presentation"><a href="#home" aria-controls="home" role="tab" data-toggle="tab"> بحث عام</a></li>
                 <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">بحث متقدم</a></li>
                 <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">بحث متخصص</a></li>
-                <li role="presentation"><a href="#allSearch" aria-controls="home" role="tab" data-toggle="tab"> بحث عام 2</a></li>
+                <li role="presentation"><a href="#allSearch" aria-controls="home" role="tab" data-toggle="tab"> بحث عام 2</a></li>*@
                 <li role="presentation"><a href="#mada" aria-controls="mada" role="tab" data-toggle="tab">بحث بتطبيقات المادة</a></li>
             </ul>
 
@@ -362,7 +362,8 @@
                         $http.get('/Ahkam/Latest', {
                             params: { "Days": 10,  "PageNo": $rootScope.currentPage }
                         }).then(function (d) {
-                            searchOptionAfterAjax(d);
+                      
+                            searchOptionAfterAjax(d.data);
                         });
                     }
                     else if (data.searchType === 1) // GeneralSearch
@@ -405,7 +406,7 @@
                  //   $('#searchResult').html('00000000000000000')
                     var searchresult = $('#searchResult');
                     searchresult.html(d);
-               //    console.log(d)
+                //   console.log(d)
                     if (searchresult.find('#resultCount').length) {
                         if (data.CountSearchChange == 1) {
                             $rootScope.pageCount = 0;

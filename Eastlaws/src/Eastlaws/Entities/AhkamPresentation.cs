@@ -26,7 +26,9 @@ namespace Eastlaws.Entities
             {
                 return this.QueryInfo.ID;
             }
-        }        
+        }
+        public string PresentationTitle { get; set; } = "";
+        public List<FTSPredicate> TextPredicates { get;  set; }
 
         public AhkamPresentation()
         {

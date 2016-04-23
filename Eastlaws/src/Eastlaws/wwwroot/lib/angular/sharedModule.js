@@ -171,32 +171,35 @@
         var getTemplate = function () {
             var d = new Date();
             var template = '';
-            template += '<div>';
-            template += '<input type="text" ng-model="date" ng-click="clicktext($event)" />';
+            template += '<div class="input-group date" >';
+            template += '<input type="text" ng-model="date" ng-click="clicktext($event)" class="form-control" /> ';
+            template +='<span class="input-group-addon">';
+            template += '<span class="glyphicon glyphicon-calendar"></span>';
+            template +=  '</span>';
             template += '</br>';
-            template += '<div class="c-date-picker" style="display:none">';
-            template += '<span>اليوم</span><select ng-options="t.val for t in days track by t.key" ng-model="modelday" ng-change="updateDate(1)">';
+            template += '<div class="c-date-picker bootstrap-datetimepicker-widget dropdown-menu bottom form-inline" style="display:none"><div class="col-lg-12"> ';
+            template += '<label>اليوم: </label> <select class="search form-control" ng-options="t.val for t in days track by t.key" ng-model="modelday" ng-change="updateDate(1)">';
             for (var i = 1; i <= 30; i++) {
                 template += '<option label="' + i + '" value="' + i + '">' + i + '</option>';
             }
             template += '</select>';
-            template += '</br>';
-            template += '<span>الشهر</span><select ng-options="t.val for t in ::months track by t.key" ng-model="modelmonth"  ng-change="updateDate(2)">';
+            template += '';
+            template += '<label>الشهر</label><select class="search form-control" ng-options="t.val for t in ::months track by t.key" ng-model="modelmonth"  ng-change="updateDate(2)">';
             for (var i = 1; i <= 12; i++) {
                 template += '<option label="' + i + '" value="' + i + '">' + i + '</option>';
             }
             template += '</select>';
-            template += '</br>';
-            template += '<span>السنة</span><select ng-options="t.val for t in ::years track by t.key" ng-model="modelyear" ng-change="updateDate(3)">';
+         
+            template += '<label>السنة</label><select class="search form-control" ng-options="t.val for t in ::years track by t.key" ng-model="modelyear" ng-change="updateDate(3)">';
             for (var i = d.getFullYear() ; i >= 1881; i--) {
                 template += '<option label="' + i + '" value="' + i + '">' + i + '</option>'
             }
             template += '</select>';
             template += '</br>';
-            template += '<input type="button" value="ok" ng-click="clickDate($event)" />';
-            template += '<input type="button" value="remove" ng-click="removeDate($event)" />';
-            template += '<input type="button" value="close" ng-click="closeDate($event)" />';
-            template += '</div></div>';
+            template += '<label> </label><button type="button" value="ok" ng-click="clickDate($event)"><i class="fa fa-check" aria-hidden="true"></i></ button>';
+            template += '<button type="button" value="remove" ng-click="removeDate($event)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>';
+            template += '<button type="button" value="close" ng-click="closeDate($event)"> <i class="fa fa-times" aria-hidden="true"></i></button>';
+            template += '</div></div></div>';
             return template;
             //var template = '';
             //template += '<div>';
