@@ -340,7 +340,7 @@
 
            
                 data.GetSearch = function () {
-                   // alert($rootScope.sortType)
+                    console.log( data.AssembleSearchInputs)
                     if (data.searchType === 0) // AssymbleSearch
                     {
                         $.post('/Ahkam/SearchResultAssembly', { "AssembleSearchInputs": data.AssembleSearchInputs, "PageNo": $rootScope.currentPage, "Sort": $rootScope.sortType }, function (d) {
