@@ -372,8 +372,8 @@ nav.sidebar:hover{margin-right: 0px;}
 .result-search .col-sm-9:first-child, .resulte-search .col-sm-3:first-child{padding:0px;}
 .result-block h4 .icon{ background-color:#4d4a4a; padding:4px 6px;color:#fff;}
 .result-block{ /*box-shadow:0 0 0 0 rgba(0, 0, 0, 0.3) inset, 2px 0px 5px -3px rgba(0, 0, 0, 0.3);*/ margin-bottom:10px;}
-.list-content .col-md-4:nth-child(3n+1){ padding-right:0px; padding-left:0px;}
-.list-content .col-md-4:nth-child(3n+0){ padding-right:0px; padding-left:0px;}
+/*.list-content .col-md-4:nth-child(3n+1){ padding-right:0px; padding-left:0px;}
+.list-content .col-md-4:nth-child(3n+0){ padding-right:0px; padding-left:0px;}*/
 .result-block h4{margin:0 0 3px; font:bold 1em arial; color:#333; /*background-image:linear-gradient(to bottom, #d9b163 0px, #f0c675 100%);*/ background-color:#a3bdc9; border:1px solid #c5c5c5; display:none;}
 .row-search, .view-law{ background: #fff none repeat scroll 0 0;border: 1px solid rgba(224, 184, 105, 0.57);box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); padding:0 12px; transition:all 0.4s ease 0s;}
 .view-law{ }
