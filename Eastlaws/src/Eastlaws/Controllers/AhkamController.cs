@@ -65,10 +65,10 @@ namespace Eastlaws.Controllers
             Obj.PartNo = AssembleSearchInputs.partNo;
 
 
-            AhkamPresentation Model = AhkamService.Search(Options, Obj);
-                if (Model.IsValid)
+            AhkamPresentation Model1 = AhkamService.Search(Options, Obj);
+                if (Model1.IsValid)
                 {
-                    return View("SearchResult", Model);
+                    return View("SearchResult", Model1);
             }
                 else
                 {
