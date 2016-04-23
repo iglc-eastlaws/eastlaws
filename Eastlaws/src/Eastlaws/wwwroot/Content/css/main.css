@@ -359,10 +359,10 @@ nav.sidebar:hover{margin-right: 0px;}
     margin-bottom: 0px;
 }
 .search-form {}
-.search-form label.title{font:0.8em/32px "Droid Arabic Kufi"; padding-top:0px!important;}
+.search-form label.title{font:0.72em/32px "Droid Arabic Kufi"; padding-top:0px!important;}
 .search-form label{font:0.7em "Droid Arabic Kufi";}
 .search-form label.bg-color{  color:#333;}
-.search-form input{border-radius: 0;}
+.search-form input{border-radius: 0; background-color:#fffaf4;}
 .search-form select{ padding-top:0px;border-radius: 0; line-height:normal;}
 .col-sm-9 label.checkbox-inline:first-child { margin-right:20px;}
 .search-form .form-group{ margin-bottom:5px;}
@@ -479,9 +479,9 @@ p.total-chart {color:#666; font:bold 14px arial;}
 .multi-check .checkbox{ border:1px solid #CCC; padding:12px 12px; margin-bottom:20px; }
 .badge{ background-color:#675650;}
 /*select Date*/
-.search .c-date-picker{ border-radius:0px; border:0 none; background-color: #D9B672;}
+.search .c-date-picker{ border-radius:0px; border:0 none; background-color: #D9B672; min-width:140px;}
 .c-date-picker .form-control{height:25px;width:50px;font-family:Arial; }
-.search c-date-picker .input-group .form-control{font:bold 1em Arial; color:#B28939; }
+.search c-date-picker .input-group .form-control{font:bold 1em Arial; color:#B28939;/*background-color: transparent;*/ border:0 none; }
 .c-date-picker .form-control select, .c-date-picker .search .input-group .form-control select{ padding:3px; font:bold 12px Arial!important;  }
 .c-date-picker .btn-primary{ background-image:linear-gradient(to bottom, #4d3c36 0px, #6e5d57 100%)!important; border-color:#675650;}
 .c-date-picker .btn-primary:focus, .c-date-picker .btn-primary:hover{ background-color:#675650;}
