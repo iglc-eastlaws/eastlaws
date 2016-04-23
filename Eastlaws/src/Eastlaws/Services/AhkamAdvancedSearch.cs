@@ -40,7 +40,9 @@ namespace Eastlaws.Services
             PredicateWakae3.Tag= -1 ;
             PredicateMantoo2.Tag  = -3;//canceled
             PredicateHaytheyat.Tag  = -2;
-            FTSPredicate[] MyArray = { PredicateAny , PredicateMabade2 , PredicateDestoreya  , PredicateWakae3 , PredicateMantoo2 , PredicateHaytheyat };
+            PredicateHay2a.Tag = 0;
+
+            FTSPredicate[] MyArray = { PredicateAny , PredicateMabade2 , PredicateDestoreya  , PredicateWakae3 , PredicateMantoo2 , PredicateHaytheyat , PredicateHay2a };
 
             List<FTSPredicate> retVal = new List<FTSPredicate>();
             for(int i=0; i< MyArray.Length; i++)
