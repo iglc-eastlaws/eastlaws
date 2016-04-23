@@ -132,6 +132,7 @@
              
                 SearchData.searchType = -2; // load
                 SearchData.CountSearchChange = 1;
+                SearchData.SortChange=0;
                 $rootScope.currentPage = 1;
                 $rootScope.sortType = 5;
                 SearchData.GetSearch();
@@ -151,6 +152,7 @@
                      $scope.Mahakem = [];
                      $scope.choiceMahakem = [];
                      $scope.Inputs.country = $scope.country.ID;
+                     $scope.Inputs.mahakem = "";
                      if ($scope.country.ID > 0) {
                          $http.get('/Ahkam/GetMahakem?countryID=' + $scope.country.ID + '', {}).then(function (d) {
                              $scope.Mahakem = d.data;
@@ -203,7 +205,7 @@
                      $rootScope.currentPage = 1;
                      SearchData.searchType = 0; // assemble Search
                      SearchData.CountSearchChange = 1;
-
+                     SearchData.SortChange=0;
                      SearchData.GetSearch();
 
                  };
@@ -321,10 +323,11 @@
 
                
          })
-             .controller('SortCtrl', function ($scope, SearchData, $rootScope) {
+            .controller('SortCtrl', function ($scope, SearchData, $rootScope) {
                  $scope.changeSort = function (type) {
                      $rootScope.sortType = type;
-                     SearchData.CountSearchChange = 0;
+                     $rootScope.currentPage = 1;
+                     SearchData.SortChange=1;
                      SearchData.GetSearch();
                  }
              })
@@ -334,13 +337,13 @@
                 var data = {};
                 data.searchType = 1;      //GeneralSearch 1   advancedserch 2  .... etc
                 data.CountSearchChange = 0;     //1 CountSearch Change    0 CountSearch not Change
+                data.SortChange = 0;    // 1 SortChanged 0 No
                 data.AssembleSearchInputs = {};
                 data.GeneralSearchInputs = {};
                 data.AdvancedSearchInputs = {};
 
            
                 data.GetSearch = function () {
-                   // alert($rootScope.sortType)
                     if (data.searchType === 0) // AssymbleSearch
                     {
                         $.post('/Ahkam/SearchResultAssembly', { "AssembleSearchInputs": data.AssembleSearchInputs, "PageNo": $rootScope.currentPage, "Sort": $rootScope.sortType }, function (d) {
@@ -415,13 +418,16 @@
                                 $rootScope.pageCount = countpage;
                                 InitPageingControl(countpage);
                             }
-
+                           
                             //tasfia
                             $http.get('/Ahkam/TasfyaSearch', {}).then(function (d) {
                                 // console.log('-------------------');
                                 $('#TasfyaSearch').html(d.data);
                                 $rootScope.$broadcast("tasfyaResult", true);
                             })
+                        }
+                        if (data.SortChange == 1) {
+                            InitPageingControl($rootScope.pageCount);
                         }
                     }
 
