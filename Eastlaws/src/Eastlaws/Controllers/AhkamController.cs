@@ -28,7 +28,6 @@ namespace Eastlaws.Controllers
                 AhkamPresentation Model = AhkamService.Search(Options, new FTSPredicate(q, (FTSSqlModes)Match));
                 if (Model.IsValid)
                 {
-                    //ViewBag.aa = Match;
                     return View(Model);
                 }
                 else
@@ -65,10 +64,10 @@ namespace Eastlaws.Controllers
             Obj.PartNo = AssembleSearchInputs.partNo;
 
 
-            AhkamPresentation Model = AhkamService.Search(Options, Obj);
-                if (Model.IsValid)
+            AhkamPresentation Model1 = AhkamService.Search(Options, Obj);
+                if (Model1.IsValid)
                 {
-                    return View("SearchResult", Model);
+                    return View("SearchResult", Model1);
             }
                 else
                 {
@@ -77,9 +76,9 @@ namespace Eastlaws.Controllers
            
         }
 
-        public IActionResult Latest(int Days = 10,int PageNo = 1)
+        public IActionResult Latest(int Days = 10,int PageNo = 1, int Sort=5)
         {
-            AhkamSearchOptions Options = new AhkamSearchOptions { PageNo = PageNo, SortBy = AhkamSortColumns.DateAdded , SortDirection = SearchSortType.DESC };
+            AhkamSearchOptions Options = new AhkamSearchOptions { PageNo = PageNo, SortBy = (AhkamSortColumns)Sort , SortDirection = SearchSortType.DESC };
             AhkamPresentation Model = AhkamService.GetLatest(Options, Days);
             return View("SearchResult", Model);
         }
