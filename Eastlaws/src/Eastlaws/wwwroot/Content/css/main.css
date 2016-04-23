@@ -480,6 +480,7 @@ p.total-chart {color:#666; font:bold 14px arial;}
 /*select Date*/
 .search .c-date-picker{ border-radius:0px; border:0 none; background-color: #D9B672;}
 .c-date-picker .form-control{height:25px;width:50px;font-family:Arial; }
+.search c-date-picker .input-group .form-control{font:bold 1em Arial; color:#B28939; }
 .c-date-picker .form-control select, .c-date-picker .search .input-group .form-control select{ padding:3px; font:bold 12px Arial!important;  }
 .c-date-picker .btn-primary{ background-image:linear-gradient(to bottom, #4d3c36 0px, #6e5d57 100%)!important; border-color:#675650;}
 .c-date-picker .btn-primary:focus, .c-date-picker .btn-primary:hover{ background-color:#675650;}
