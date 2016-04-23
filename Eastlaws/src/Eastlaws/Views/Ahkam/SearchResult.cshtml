@@ -51,7 +51,8 @@
                     {
                         var MatchingPredicate = (from x in PredicatesHighlight
                                                  where Convert.ToInt32(x.Tag) == CurrentFakra.FakraNo || Convert.ToInt32(x.Tag) == 5000
-                                                 select x).FirstOrDefault();
+                                                 orderby Convert.ToInt32(x.Tag)
+                                                 select x ).FirstOrDefault();
 
                         if (MatchingPredicate == null)
                         {
@@ -60,7 +61,6 @@
                         else
                         {
                             FakraText = Eastlaws.Infrastructure.Temp.HighlightTextTrim(FakraText, MatchingPredicate.Input, MatchingPredicate.SqlMode, MaxFakraTextLen);
-
                         }
                     }
 

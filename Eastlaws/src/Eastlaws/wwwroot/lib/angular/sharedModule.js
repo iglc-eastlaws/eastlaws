@@ -115,7 +115,7 @@
             },
             link: function (scope, elem) {
                 scope.inputText = '';
-                scope.selectedValue = 1;
+                scope.selectedValue =0;
                 scope.changval = function (val) {
                     scope.selectedValue = val;
                 }

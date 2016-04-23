@@ -66,7 +66,7 @@ namespace Eastlaws.Services
             }
             if (DateTime.TryParseExact(srchObj.CaseDateTo, DataHelpers.ClientDateFormats, null, System.Globalization.DateTimeStyles.AllowWhiteSpaces, out dtCaseDateTo))
             {
-                Builder.Append("\n And A.CaseDate >= " + "'" + dtCaseDateFrom.ToString("yyyy-MM-dd") + "'");
+                Builder.Append("\n And A.CaseDate <= " + "'" + dtCaseDateTo.ToString("yyyy-MM-dd") + "'");
                 ConditionsCount++;
             }
 
@@ -78,8 +78,8 @@ namespace Eastlaws.Services
                     , GetFakraQueryForAdvancedSearch(srchObj.PredicateWakae3, "A.FakraNo  =  -1", out strOuterFakraWakae3)
                     , GetFakraQueryForAdvancedSearch(srchObj.PredicateDestoreya, "A.FakraNo  = -50 " , out strOuterFakraDestoreya)
                     , GetFakraQueryForAdvancedSearch(srchObj.PredicateHay2a, "A.FakraNo  = 0" , out strOuterFakraHay2a)
-                    , GetFakraQueryForAdvancedSearch(srchObj.PredicateMantoo2, "A.FakraNo  = -2" , out strOuterFakraMantoo2)
-                    , GetFakraQueryForAdvancedSearch(srchObj.PredicateHaytheyat, "A.FakraNo = -3" , out strOuterFakraHaytheyat)
+                    , GetFakraQueryForAdvancedSearch(srchObj.PredicateMantoo2, "A.FakraNo  = -3" , out strOuterFakraMantoo2)
+                    , GetFakraQueryForAdvancedSearch(srchObj.PredicateHaytheyat, "A.FakraNo = -2" , out strOuterFakraHaytheyat)
             };
 
             string[] OuterFakraConditions = {
