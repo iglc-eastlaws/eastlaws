@@ -197,7 +197,7 @@
             template += '</select></div>';
             template += '</br>';
             template += '<div class="col-sm-12"><label> </label><button type="button" value="ok" ng-click="clickDate($event)"><i class="fa fa-check" aria-hidden="true"></i></ button>';
-            template += '<button type="button" value="remove" ng-click="removeDate($event)" class="btn btn-success"><i class="fa fa-trash-o" aria-hidden="true"></i></button>';
+            template += '<button type="button" value="remove" ng-click="removeDate($event)" class=""><i class="fa fa-trash-o" aria-hidden="true"></i></button>';
             template += '<button type="button" value="close" ng-click="closeDate($event)"> <i class="fa fa-times" aria-hidden="true"></i></button></div>';
             template += '</div></div></div>';
             return template;
