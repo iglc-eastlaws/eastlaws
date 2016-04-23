@@ -102,7 +102,8 @@ namespace Eastlaws.Controllers
         public IActionResult TasfeyaList  (int QueryID)
         {
             if (QueryID == 0)
-                QueryID = 1;
+                QueryID = 56;
+
             List<AhkamTasfeyaCategories> UsedCategories;
             var Data = AhkamTasfeya.List(QueryID, AhkamSearchTypes.Advanced,out UsedCategories, "", "", null);
             return null;
