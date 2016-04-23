@@ -133,6 +133,7 @@
                 SearchData.searchType = -2; // load
                 SearchData.CountSearchChange = 1;
                 $rootScope.currentPage = 1;
+                $rootScope.sortType = 5;
                 SearchData.GetSearch();
 
 
@@ -259,9 +260,6 @@
                 $scope.getmypage();
             })
             .controller('tasfyaCtrl', function ($scope, tasfiaData, SearchData, $rootScope, $compile) {
-            
-     
-               
 
                 var cleantasfia = $rootScope.$on('tasfyaResult', function () {
                     $compile($('#TasfyaSearch'))($scope);
@@ -324,6 +322,11 @@
                
          })
              .controller('SortCtrl', function ($scope, SearchData, $rootScope) {
+                 $scope.changeSort = function (type) {
+                     $rootScope.sortType = type;
+                     SearchData.CountSearchChange = 0;
+                     SearchData.GetSearch();
+                 }
              })
             app.factory('SearchData', function ($http, $rootScope, $compile) {
                // $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
@@ -331,36 +334,24 @@
                 var data = {};
                 data.searchType = 1;      //GeneralSearch 1   advancedserch 2  .... etc
                 data.CountSearchChange = 0;     //1 CountSearch Change    0 CountSearch not Change
-
-
                 data.AssembleSearchInputs = {};
                 data.GeneralSearchInputs = {};
                 data.AdvancedSearchInputs = {};
 
            
                 data.GetSearch = function () {
+                   // alert($rootScope.sortType)
                     if (data.searchType === 0) // AssymbleSearch
                     {
-                    
-                        $.post('/Ahkam/SearchResultAssembly', { "AssembleSearchInputs": data.AssembleSearchInputs, "PageNo": $rootScope.currentPage, "Sort": 0 }, function (d) {
-                            //console.log(d);
+                        $.post('/Ahkam/SearchResultAssembly', { "AssembleSearchInputs": data.AssembleSearchInputs, "PageNo": $rootScope.currentPage, "Sort": $rootScope.sortType }, function (d) {
                             searchOptionAfterAjax(d);
                         })
-                        //$http.post('/Ahkam/SearchResultAssembly', {
-                        //    params: { "PageNo": 5, "Sort": 0 }
-                        //}).then(function (d) {
-                        //    searchOptionAfterAjax(d);
-                        //});
-                        //console.log('text : ' + data.AssembleSearchInputs.Alltext);
-                        //console.log('Count Change : ' + data.CountSearchChange);
-                        //console.log(data.AssembleSearchInputs);
-                        //console.log('current Page : ' + $rootScope.currentPage);
                     }
                     else if (data.searchType === -2) // loadPage
                     {
-                       
+                        //$rootScope.sortType = 5;
                         $http.get('/Ahkam/Latest', {
-                            params: { "Days": 10,  "PageNo": $rootScope.currentPage }
+                            params: { "Days": 10, "PageNo": $rootScope.currentPage, "Sort": $rootScope.sortType }
                         }).then(function (d) {
                       
                             searchOptionAfterAjax(d.data);
@@ -368,7 +359,6 @@
                     }
                     else if (data.searchType === 1) // GeneralSearch
                     {
-                        //console.log(data.GeneralSearchInputs);
                         $http.get('/Ahkam/SearchResult',
                             {
                                 params: {
@@ -480,28 +470,7 @@
 
                  return data;
              });
-            app.directive('cDropSortOptions', function ($rootScope, SearchData) {
-                return {
-                    restrict: 'E',
-                    replace: false,
-                    template: '<li><a ng-click="sortby(0)" href="javascript:;"><i class="fa fa-random"></i> افتراضي</a></li>' +
-                             '<li><a ng-click="sortby(1)" href="javascript:;"><i class="fa fa-qrcode"></i> رقم الحكم</a></li>' +
-                             '<li><a ng-click="sortby(2)" href="javascript:;"><i class="fa fa-calendar" aria-hidden="true"></i>  السنة القضائية</a></li>' +
-                             '<li><a ng-click="sortby(3)" href="javascript:;"><i class="glyphicon glyphicon-time"></i> تاريخ الحكم</a></li>',
-
-                    scope: {
-                        Sortvalue: '=?bind',
-                        onSortChange: '&',
-                    },
-                    link: function (scope, elem) {
-                        $rootScope.Sortvalue = 0;
-                        scope.sortby = function (val) {
-                            $rootScope.Sortvalue = val;
-                            SearchData.GetSearch();
-                        }
-                    }
-                };
-            })
+           
         })();
 
     </script>
