@@ -10,7 +10,7 @@
             template: '<ul class="pagination">' +
                         '<li ng-class="{disabled : currentPage == 1}"><a href="javascript:;" ng-click="getPrevPage()">«</a></li>' +
                         '<li ng-repeat="p in totalPagesCount()  | limitTo:limitNo" ng-class="{active : currentPage == p}">' +
-                            '<a href="javascript:;" ng-click="getCurrentPage(p)">{{ p }}</a>' +
+                            '<a href="javascript:;" ng-click="getCurrentPage(p)">{{p}}</a>' +
                        '</li>' +
                         '<li ng-class="{disabled : currentPage == pagesCount}"><a href="javascript:;" ng-click="getNextPage()">»</a></li>' +
                     '</ul>',
@@ -54,10 +54,13 @@
                     return pagesArray;
                 }
 
-                elem.on('click', function () { scope.onGetpage(); });
+                elem.on('click', function () {
+                    scope.onGetpage();
+                   // console.log(scope.onGetpage)
+                });
 
                 scope.getCurrentPage = function (p) {
-                    // console.log(scope.currentPage + ' ' + scope.pagesCount);
+                   console.log(scope.currentPage + ' ' + scope.pagesCount);
                     scope.currentPage = p;
                 }
 
@@ -171,8 +174,8 @@
         var getTemplate = function () {
             var d = new Date();
             var template = '';
-            template += '<div class="input-group date" >';
-            template += '<input type="text" ng-model="date" ng-click="clicktext($event)" class="form-control" /> ';
+            template += '<div class="input-group date date-piker-input" >';
+            template += '<input type="text" ng-model="date" ng-click="clicktext($event)" class="form-control " /> ';
            // template +='<span class="input-group-addon">';
            // template += '<span class="glyphicon glyphicon-calendar"></span>';
            // template +=  '</span>';
@@ -235,8 +238,11 @@
         return {
             restrict: "E",
             scope: {
-                date: '='
+                date: '=',
+                closePicker: '&',
+                formID: '@'
             },
+
             ////bad performance   // do it for evey componant
             //template: '<div>' +
             //    '<input type="text" ng-model="date" ng-click="clicktext($event)" />' +
@@ -334,7 +340,7 @@
                         
                          
             },
-            link: function (scope, elm) {
+            link: function (scope, elm, attrs) {
                 ////get template dynamic for wooow performance
                 elm.html(getTemplate());
                 $compile(elm.contents())(scope);
@@ -354,6 +360,15 @@
                     $('.c-date-picker').hide();
                     $(ev.target).parent().find('.c-date-picker').show();
                 }
+
+                var obj = $(elm).closest('form');
+                obj.on('click', function (e) {
+                    if (!(($(e.target).hasClass('date-piker-input')) || ($(e.target).parents('.date-piker-input').length))) {
+                        scope.datetemp = scope.date;
+                        $('.c-date-picker').hide();
+                    }
+                });
+
 
   
             }

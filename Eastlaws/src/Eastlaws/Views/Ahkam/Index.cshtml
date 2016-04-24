@@ -22,7 +22,8 @@
             <div class="tab-content">
 
                 <div role="tabpanel" class="tab-pane active" id="assembleSearch">
-                    <div class="search-form form-horizontal" ng-controller="assembleSearchCtrl">@Html.Partial("_AssembleSearch")</div>
+                    <div class="search-form form-horizontal"
+                         ng-controller="assembleSearchCtrl">@Html.Partial("_AssembleSearch")</div>
                 </div>
 
                     <div role="tabpanel" class="tab-pane" id="mada">
@@ -44,19 +45,11 @@
                     <hr class="spacer" />
                    
                      <div class="paging-search text-center" ng-controller="pagesCtrl">
-                        <c-pageing ng-show="pageCount > 1"
-                                   on-init="initPaging"
-                                   pages-count="{{pageCount}}"
-                                   limit-no="10"
-                                   current-page="mypage"
-                                   on-getpage="getmypage()">
-
+                        <c-pageing ng-show="pageCount > 1" 
+                                   on-init="initPaging" 
+                                   pages-count="{{pageCount}}" limit-no="10" current-page="mypage" on-getpage="getmypage()">
                         </c-pageing>
-
-
                     </div>
-
-
 
                 </div>
 
@@ -87,21 +80,30 @@
             app
             .controller('ahkamCtrl', function ($http, $rootScope, SearchData) {
 
+        
+
                 SearchData.searchType = -2; 
-                SearchData.CountSearchChange = 1;
+                // SearchData.CountSearchChange = 1;
+                 SearchData.newSearch = 1;
                 SearchData.SortChange=0;
                 $rootScope.currentPage = 1;
                 $rootScope.sortType = 5;
                 SearchData.GetSearch();
+
+
             })
              .controller('assembleSearchCtrl', function ($scope, SearchData, $rootScope, $http) {
+            
                  $scope.Inputs = {};
+                 $scope.date = {};
+                 
+
                  $scope.choiceMahakem = [];
 
                  $scope.countries = [];
                  $scope.Mahakem = [];
                  $scope.MahkamaReplies = [];
-          
+    
 
                  $scope.updatecountry = function () {
                      $scope.Mahakem = [];
@@ -140,7 +142,6 @@
                      } else {
                          $scope.choiceMahakem.splice($scope.choiceMahakem.indexOf(id), 1);
                      }
-
                      $scope.Inputs.mahakem = $scope.choiceMahakem.join(',');
                  }
               
@@ -151,66 +152,27 @@
                          $scope.Inputs.omarGroup = '';
                      }
                  }
-                
+              
  
 
                  $scope.search = function () {
-                     
                      SearchData.searchType = 0;
-                     SearchData.CountSearchChange = 1;
+                     SearchData.newSearch = 1;
                      SearchData.SortChange = 0;
                      $rootScope.currentPage = 1;
                      SearchData.AssembleSearchInputs = $scope.Inputs;
                      SearchData.GetSearch();
+
                  };
               })
-            //.controller('GeneralSearchCtrl', function ($scope, SearchData, $rootScope, $compile) {
-            //    $scope.Inputs = {};
-            //    $scope.Inputs.textType = 1; //default radio checked
-
-
-            //    $scope.search = function () {
-            //        SearchData.GeneralSearchInputs = $scope.Inputs;
-            //        $rootScope.currentPage = 1;
-            //        SearchData.searchType = 1; // GeneralSearch
-            //        SearchData.CountSearchChange = 1;
-            //        SearchData.GetSearch();
-                 
-            //    };
-
-
-
-
-            //})
-            //.controller('AdvancedSearchCtrl', function ($scope, SearchData, $rootScope) {
-            //    $scope.Inputs = {};
-            //    $scope.Inputs.ElementsTypeChoice = 1;
-
-
-            //    $scope.search = function () {
-            //        SearchData.AdvancedSearchInputs = $scope.Inputs;
-            //        $rootScope.currentPage = 1;
-            //        SearchData.searchType = 2; // AdvancedSearch
-            //        SearchData.CountSearchChange = 1;
-
-            //        SearchData.GetSearch();
-
-
-            //        //console.log($scope.waka23SearchType)
-            //    }
-
-            //})
-            //.controller('SpecialSearchCtrl', function ($scope) {
-  
-            //})
+         
             .controller('pagesCtrl', function ($scope, SearchData, $rootScope) {
-
-               // $scope.mypage = { page:1};
                 $scope.getmypage = function () {
-                  //  alert('this is my page'+$scope.mypage.page);
                     $rootScope.currentPage = $scope.mypage;
+                    console.log($rootScope.currentPage)
                     if ($rootScope.currentPage !== undefined) {
-                        SearchData.CountSearchChange = 0;
+                        //SearchData.CountSearchChange = 0;
+                        SearchData.newSearch = 0;
                         SearchData.GetSearch();
                     }
                 }
@@ -244,7 +206,8 @@
 
                     ////Search
                     $rootScope.currentPage = 1;
-                    SearchData.CountSearchChange = 1;
+                    //SearchData.CountSearchChange = 1;
+                    SearchData.newSearch = 1;
                    SearchData.GetSearch();
                 }
             })
@@ -257,7 +220,8 @@
 
                     //Search
                     $rootScope.currentPage = 1;
-                    SearchData.CountSearchChange = 1;
+                    // SearchData.CountSearchChange = 1;
+                    SearchData.newSearch = 1;
                     SearchData.GetSearch();
                 }
 
@@ -268,7 +232,7 @@
                 //  //  alert($rootScope.fontsize)
                 //}
             })
-            .controller('searchResultCtrl', function ($scope, $rootScope, $compile, SearchData) { })
+            .controller('searchResultCtrl', function () { })
             .controller('toolbarCtrl', function ($scope, SearchData, $rootScope) {
                 $scope.pageSizes = [10, 50, 100];
                 $scope.pSize = 10;
@@ -277,7 +241,6 @@
                  $scope.changeSort = function (type) {
                      $rootScope.sortType = type;
                      $rootScope.currentPage = 1;
-                    // SearchData.SortChange=1;
                      SearchData.GetSearch();
                      switch (type)
                      {
@@ -307,6 +270,7 @@
          
                      $scope.pSize = size;
                      $rootScope.currentPage = 1;
+                     SearchData.currentPage = 1;
                      SearchData.pageSize = $scope.pSize;
                      SearchData.GetSearch();
    
@@ -316,56 +280,21 @@
             app.factory('SearchData', function ($http, $rootScope, $compile) {
                 var data = {};
                 data.searchType = 1;             //GeneralSearch 1   advancedserch 2  .... etc
-                data.CountSearchChange = 0;      //1 CountSearch Change    0 CountSearch not Change
-                data.SortChange = 0;             // 1 SortChanged 0 No
+                data.InitPageing = 1;
+                //  data.CountSearchChange = 0;      //1 CountSearch Change    0 CountSearch not Change
+                data.newSearch = 0;
+              //  data.SortChange = 0;             // 1 SortChanged 0 No
                 data.pageSize = 10;
                 data.AssembleSearchInputs = {};
                 data.GeneralSearchInputs = {};
                 data.AdvancedSearchInputs = {};
                 data.TotalCount = 0;
+                data.currentPage = 1;
+                
            
-                function searchOptionAfterAjax(d) {
-                    var searchresult = $('#searchResult');
-                    searchresult.html(d);
-                   
-                    if (searchresult.find('#resultCount').length) {
-                        if (data.CountSearchChange == 1) {
-                            //$rootScope.pageCount = 0;
-                            data.TotalCount = $("#resultCount").val();
-                            $('#TotalCount').html('');
-                    
-                            if (data.TotalCount > 0) {
-                                $('#TotalCount').html(" <i class='fa fa-line-chart '></i> وجد اجمالي [" + data.TotalCount + "] حكم")
-                            }
-
-                            $http.get('/Ahkam/TasfyaSearch', {}).then(function (d) {
-                                $('#TasfyaSearch').html(d.data);
-                                $rootScope.$broadcast("tasfyaResult", true);
-                            })
-                        }
-
-                     //   alert($rootScope.currentPage)
-                        if (($rootScope.currentPage == 1) || ($rootScope.currentPage == undefined)) {
-                           // alert('init');
-                            var countpage = 1;
-                            if (data.TotalCount > Number(data.pageSize)) {
-                                countpage = Math.ceil(data.TotalCount / Number(data.pageSize));
-                            }
-                            $rootScope.pageCount = countpage;
-                            InitPageingControl(countpage);
-                        }
 
 
-                        //if (data.SortChange == 1) {
-                        //    InitPageingControl($rootScope.pageCount);
-                        //}
-    
-                    }
-
-                }
-
-                data.GetSearch = function () {
-                 //   console.log(data.AssembleSearchInputs)
+              data.GetSearch = function () {
                     if (data.searchType === 0) // AssymbleSearch
                     {
                         $.post('/Ahkam/SearchResultAssembly', {
@@ -374,7 +303,7 @@
                             "Sort": $rootScope.sortType,
                             "pageSize": data.pageSize
                             }, function (d) {
-                            searchOptionAfterAjax(d);
+                                searchOptionAfterAjax(d);
                         })
                     }
                     else if (data.searchType === -2) // loadPage
@@ -390,73 +319,82 @@
                             searchOptionAfterAjax(d.data);
                         });
                     }
-                    else if (data.searchType === 1) // GeneralSearch
-                    {
-                        $http.get('/Ahkam/SearchResult',
-                            {
-                                params: {
-                                    "searchtype": data.searchType,
-                                    "Countsearchchange": data.CountSearchChange,
-                                    "PageNo": $rootScope.currentPage,
-                                    "Match": data.GeneralSearchInputs.textType,
-                                    "q": data.GeneralSearchInputs.text
-                                }
-                            }).then(function (d) {
-                                searchOptionAfterAjax(d);
 
-                            });
-
-                    }
-                    //else if (data.searchType === 2) // AdvancedSearch
-                    //{
-                    //    let txtsearch = data.AdvancedSearchInputs.Mabdaa;
-
-                    //    $http.get('/Ahkam/SearchResult',
-                    //        { params: { "q": txtsearch } }).then(function (d) {
-                    //            $('#searchResult').html(d.data);
-
-                    //            $('#pagenumber').html(testData(data.searchType,
-                    //                                   data.CountSearchChange,
-                    //                                   $rootScope.currentPage,
-                    //                                   data.AdvancedSearchInputs));
-                    //            if ($rootScope.currentPage == 1) {
-                    //                InitPageingControl(28)
-                    //            }
-
-                    //        });
-
-                    //}
                 };
 
-         
-                function InitPageingControl(pagecount) {
-                    if (pagecount > 1) {
-                      //  alert('done')
-                        $rootScope.pageCount = pagecount;
-                        $rootScope.$broadcast('initPaging'); // re_init pageing controll
-                    }
+              function HtmlResultCount() {
+                  data.TotalCount = $("#resultCount").val();
+                  $('#TotalCount').html('');
+                  if (data.TotalCount > 0) {
+                      $('#TotalCount').html(" <i class='fa fa-line-chart '></i> وجد اجمالي [" + data.TotalCount + "] حكم")
+                  }
+              }
+
+              function getTasfya() {
+                  $http.get('/Ahkam/TasfyaSearch', {}).then(function (d) {
+                      $('#TasfyaSearch').html(d.data);
+                      $rootScope.$broadcast("tasfyaResult", true);
+                  })
                 }
 
-                //function testData(typeSearch, CountSearchChange, pagenumber, object) {
-                //    var html = '';
-                //    var jsonObj = $.parseJSON(JSON.stringify(object));
+        
+                function searchOptionAfterAjax(d) {
+                    var searchresult = $('#searchResult');
+                    searchresult.html(d);
 
-                //    html += '<br/>';
-                //    html += 'search Type :>> ' + typeSearch;
-                //    html += '<br/>';
-                //    html += 'is count result change :>> ' + CountSearchChange;
-                //    html += '<br/>';
-                //    html += 'Page Number :>> ' + pagenumber;
-                //    html += '<br/>';
-                //    $.each(jsonObj, function (k, v) {
-                //        html += '' + k + ' : ' + v + ' ' + '</br>';
-                //    });
+                    if (searchresult.find('#resultCount').length) {
+                        if (data.newSearch == 1) {
+                            HtmlResultCount();
+                            getTasfya();
+                        }
+                        //if (data.newSearch == 1) {
+                        //    data.TotalCount = $("#resultCount").val();
+                        //    $('#TotalCount').html('');
 
-                //    return html;
-                //}
+                        //    if (data.TotalCount > 0) {
+                        //        $('#TotalCount').html(" <i class='fa fa-line-chart '></i> وجد اجمالي [" + data.TotalCount + "] حكم")
+                        //    }
+
+                        //    getTasfya();
+                        //}
+
+                      
+                        if (($rootScope.currentPage == 1) || ($rootScope.currentPage == undefined)) {
+                            // alert('init');
+                            var countpage = 1;
+                            if (data.TotalCount > Number(data.pageSize)) {
+                                countpage = Math.ceil(data.TotalCount / Number(data.pageSize));
+                            }
+                            //  alert(countpage);
+                            $rootScope.pageCount = countpage;
+                            if (countpage > 1) {
+                                $rootScope.pageCount = countpage;
+                                $rootScope.$broadcast('initPaging'); // re_init pageing controll
+                            }
+
+                            //InitPageingControl(countpage);
+                        }
+
+                        //sort and paging
+                        //if (Number(data.currentPage) == 1) {
+                        //    $rootScope.$broadcast('initPaging'); // re_init pageing controll
+                        //}
+
+
+                        //if (data.SortChange == 1) {
+                        //    InitPageingControl($rootScope.pageCount);
+                        //}
+
+                    }
+
+                }
+
+
                 return data;
             })
-             .factory('tasfiaData', function () {
+
+
+            app.factory('tasfiaData', function () {
                  var data = {};
                  data.list = [];
                  //can be better and send as one object
