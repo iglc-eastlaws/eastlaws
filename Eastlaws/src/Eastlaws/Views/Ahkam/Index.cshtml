@@ -12,42 +12,18 @@
 
 <div class="main" ng-app="ahkamApp">
     <div class="col-lg-12" ng-controller="ahkamCtrl">
-        <!-- Nav tabs -->
         <div class="card">
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation"  class="active"><a href="#assembleSearch" aria-controls="assembleSearch" role="tab" data-toggle="tab">بحث</a></li>
-                @*<li role="presentation"><a href="#home" aria-controls="home" role="tab" data-toggle="tab"> بحث عام</a></li>
-                <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">بحث متقدم</a></li>
-                <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">بحث متخصص</a></li>
-                <li role="presentation"><a href="#allSearch" aria-controls="home" role="tab" data-toggle="tab"> بحث عام 2</a></li>*@
                 <li role="presentation"><a href="#mada" aria-controls="mada" role="tab" data-toggle="tab">بحث بتطبيقات المادة</a></li>
             </ul>
 
 
-
-
-            <!-- Tab panes -->
             <div class="tab-content">
 
                 <div role="tabpanel" class="tab-pane active" id="assembleSearch">
                     <div class="search-form form-horizontal" ng-controller="assembleSearchCtrl">@Html.Partial("_AssembleSearch")</div>
                 </div>
-
-                @*<div role="tabpanel" class="tab-pane " id="home">
-                    <div class="search-form form-horizontal" ng-controller="GeneralSearchCtrl"> @Html.Partial("_GeneralSearch")</div>
-                </div>
-
-                    <div role="tabpanel" class="tab-pane" id="profile">
-                        <div class="search-form form-horizontal" ng-controller="AdvancedSearchCtrl"> @Html.Partial("_AdvancedSearch")</div>
-                    </div>
-
-                    <div role="tabpanel" class="tab-pane" id="messages">
-                        <div class="search-form form-horizontal" ng-controller="SpecialSearchCtrl"> @Html.Partial("_SpecialSearch")</div>
-                    </div>
-
-                <div role="tabpanel" class="tab-pane " id="allSearch">
-                    <div class="search-form form-horizontal" ng-controller="GeneralSearchCtrl"> @Html.Partial("_GeneralSearch2")</div>
-                </div>*@
 
                     <div role="tabpanel" class="tab-pane" id="mada">
                         <div class="search-form form-horizontal">@Html.Partial("_tadbekMadaSearch")</div>
@@ -59,34 +35,15 @@
                 <p class="total-chart" id="TotalCount"> </p>
 
                 <div class="col-lg-9 col-md-8  col-sm-8 list-content">
-                    <!-- Formating result -->
-                    <div class="format-result" ng-controller="toolbarCtrl">
+                    <div class="format-result" ng-controller="toolbarCtrl"> @Html.Partial("_toolbar")</div>
+                    <div class="filter-element" ng-controller="filterElementCtrl">@Html.Partial("_filterElement") </div>
+                   
+                     <hr class="spacer" />
 
-                        @Html.Partial("_toolbar")
-                    </div>
-
-
-                    <div class="filter-element" ng-controller="filterElementCtrl">@Html.Partial("_filterElement") 
-                        @*<div class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-font "></i> حجم الخط  </a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#" ng-click="size(20)">كبير</a></li>
-                                <li><a href="#"  ng-click="size(15)">متوسط</a></li>
-                                <li><a href="#"  ng-click="size(10)">صغير</a></li>
-
-                            </ul>
-                        </div>*@
-
-                    </div>
+                    <div id="searchResult" ng-controller="searchResultCtrl" ></div>
                     <hr class="spacer" />
-
-                    <div id="searchResult" ng-controller="searchResultCtrl" >
-                        
-                    </div>
-                    <hr class="spacer" />
-                    <div class="paging-search text-center" ng-controller="pagesCtrl">
-
-                        <h1 id="pagenumber"></h1>
+                   
+                     <div class="paging-search text-center" ng-controller="pagesCtrl">
                         <c-pageing ng-show="pageCount > 1"
                                    on-init="initPaging"
                                    pages-count="{{pageCount}}"
@@ -104,9 +61,7 @@
                 </div>
 
                 <div class="col-lg-3 col-md-4 col-sm-4 filter-search" ng-controller="tasfyaCtrl">
-
                       <div id="TasfyaSearch"></div>
-                    @*@Html.Partial("TasfyaSearch")*@
                 </div>
 
                 <hr class="spacer" />
@@ -132,16 +87,12 @@
             app
             .controller('ahkamCtrl', function ($http, $rootScope, SearchData) {
 
-
-             
-                SearchData.searchType = -2; // load
+                SearchData.searchType = -2; 
                 SearchData.CountSearchChange = 1;
                 SearchData.SortChange=0;
                 $rootScope.currentPage = 1;
                 $rootScope.sortType = 5;
                 SearchData.GetSearch();
-
-
             })
              .controller('assembleSearchCtrl', function ($scope, SearchData, $rootScope, $http) {
                  $scope.Inputs = {};
@@ -201,62 +152,62 @@
                      }
                  }
                 
-               //  $scope.Inputs.textType = 1; //default radio checked
-
+ 
 
                  $scope.search = function () {
-                     SearchData.AssembleSearchInputs = $scope.Inputs;
-                     $rootScope.currentPage = 1;
-                     SearchData.searchType = 0; // assemble Search
+                     
+                     SearchData.searchType = 0;
                      SearchData.CountSearchChange = 1;
-                     SearchData.SortChange=0;
+                     SearchData.SortChange = 0;
+                     $rootScope.currentPage = 1;
+                     SearchData.AssembleSearchInputs = $scope.Inputs;
                      SearchData.GetSearch();
-
                  };
               })
-            .controller('GeneralSearchCtrl', function ($scope, SearchData, $rootScope, $compile) {
-                $scope.Inputs = {};
-                $scope.Inputs.textType = 1; //default radio checked
+            //.controller('GeneralSearchCtrl', function ($scope, SearchData, $rootScope, $compile) {
+            //    $scope.Inputs = {};
+            //    $scope.Inputs.textType = 1; //default radio checked
 
 
-                $scope.search = function () {
-                    SearchData.GeneralSearchInputs = $scope.Inputs;
-                    $rootScope.currentPage = 1;
-                    SearchData.searchType = 1; // GeneralSearch
-                    SearchData.CountSearchChange = 1;
-                    SearchData.GetSearch();
+            //    $scope.search = function () {
+            //        SearchData.GeneralSearchInputs = $scope.Inputs;
+            //        $rootScope.currentPage = 1;
+            //        SearchData.searchType = 1; // GeneralSearch
+            //        SearchData.CountSearchChange = 1;
+            //        SearchData.GetSearch();
                  
-                };
+            //    };
 
 
 
 
-            })
-            .controller('AdvancedSearchCtrl', function ($scope, SearchData, $rootScope) {
-                $scope.Inputs = {};
-                $scope.Inputs.ElementsTypeChoice = 1;
+            //})
+            //.controller('AdvancedSearchCtrl', function ($scope, SearchData, $rootScope) {
+            //    $scope.Inputs = {};
+            //    $scope.Inputs.ElementsTypeChoice = 1;
 
 
-                $scope.search = function () {
-                    SearchData.AdvancedSearchInputs = $scope.Inputs;
-                    $rootScope.currentPage = 1;
-                    SearchData.searchType = 2; // AdvancedSearch
-                    SearchData.CountSearchChange = 1;
+            //    $scope.search = function () {
+            //        SearchData.AdvancedSearchInputs = $scope.Inputs;
+            //        $rootScope.currentPage = 1;
+            //        SearchData.searchType = 2; // AdvancedSearch
+            //        SearchData.CountSearchChange = 1;
 
-                    SearchData.GetSearch();
+            //        SearchData.GetSearch();
 
 
-                    //console.log($scope.waka23SearchType)
-                }
+            //        //console.log($scope.waka23SearchType)
+            //    }
 
-            })
-            .controller('SpecialSearchCtrl', function ($scope) {
+            //})
+            //.controller('SpecialSearchCtrl', function ($scope) {
   
-            })
+            //})
             .controller('pagesCtrl', function ($scope, SearchData, $rootScope) {
 
+               // $scope.mypage = { page:1};
                 $scope.getmypage = function () {
-                    //alert($scope.mypage);
+                  //  alert('this is my page'+$scope.mypage.page);
                     $rootScope.currentPage = $scope.mypage;
                     if ($rootScope.currentPage !== undefined) {
                         SearchData.CountSearchChange = 0;
@@ -317,16 +268,7 @@
                 //  //  alert($rootScope.fontsize)
                 //}
             })
-            .controller('searchResultCtrl', function ($scope, $rootScope, $compile, SearchData) {
-             $rootScope.fontsize = 15;
-                //$scope.fontsize = SearchData.fontsize;
-                //$rootScope.$on('changeResult', function () {
-                //    $compile($('#searchResult'))($scope);
-                  
-                //});
-
-               
-         })
+            .controller('searchResultCtrl', function ($scope, $rootScope, $compile, SearchData) { })
             .controller('toolbarCtrl', function ($scope, SearchData, $rootScope) {
                 $scope.pageSizes = [10, 50, 100];
                 $scope.pSize = 10;
@@ -388,7 +330,7 @@
                    
                     if (searchresult.find('#resultCount').length) {
                         if (data.CountSearchChange == 1) {
-                            $rootScope.pageCount = 0;
+                            //$rootScope.pageCount = 0;
                             data.TotalCount = $("#resultCount").val();
                             $('#TotalCount').html('');
                     
@@ -402,7 +344,9 @@
                             })
                         }
 
+                     //   alert($rootScope.currentPage)
                         if (($rootScope.currentPage == 1) || ($rootScope.currentPage == undefined)) {
+                           // alert('init');
                             var countpage = 1;
                             if (data.TotalCount > Number(data.pageSize)) {
                                 countpage = Math.ceil(data.TotalCount / Number(data.pageSize));
@@ -443,7 +387,6 @@
                                 "pageSize": data.pageSize
                             }
                         }).then(function (d) {
-                      
                             searchOptionAfterAjax(d.data);
                         });
                     }
@@ -452,8 +395,11 @@
                         $http.get('/Ahkam/SearchResult',
                             {
                                 params: {
-                                    "searchtype": data.searchType, "Countsearchchange": data.CountSearchChange,
-                                    "PageNo": $rootScope.currentPage, "Match": data.GeneralSearchInputs.textType, "q": data.GeneralSearchInputs.text
+                                    "searchtype": data.searchType,
+                                    "Countsearchchange": data.CountSearchChange,
+                                    "PageNo": $rootScope.currentPage,
+                                    "Match": data.GeneralSearchInputs.textType,
+                                    "q": data.GeneralSearchInputs.text
                                 }
                             }).then(function (d) {
                                 searchOptionAfterAjax(d);
@@ -461,52 +407,53 @@
                             });
 
                     }
-                    else if (data.searchType === 2) // AdvancedSearch
-                    {
-                        let txtsearch = data.AdvancedSearchInputs.Mabdaa;
+                    //else if (data.searchType === 2) // AdvancedSearch
+                    //{
+                    //    let txtsearch = data.AdvancedSearchInputs.Mabdaa;
 
-                        $http.get('/Ahkam/SearchResult',
-                            { params: { "q": txtsearch } }).then(function (d) {
-                                $('#searchResult').html(d.data);
+                    //    $http.get('/Ahkam/SearchResult',
+                    //        { params: { "q": txtsearch } }).then(function (d) {
+                    //            $('#searchResult').html(d.data);
 
-                                $('#pagenumber').html(testData(data.searchType,
-                                                       data.CountSearchChange,
-                                                       $rootScope.currentPage,
-                                                       data.AdvancedSearchInputs));
-                                if ($rootScope.currentPage == 1) {
-                                    InitPageingControl(28)
-                                }
+                    //            $('#pagenumber').html(testData(data.searchType,
+                    //                                   data.CountSearchChange,
+                    //                                   $rootScope.currentPage,
+                    //                                   data.AdvancedSearchInputs));
+                    //            if ($rootScope.currentPage == 1) {
+                    //                InitPageingControl(28)
+                    //            }
 
-                            });
+                    //        });
 
-                    }
+                    //}
                 };
 
          
                 function InitPageingControl(pagecount) {
                     if (pagecount > 1) {
+                      //  alert('done')
                         $rootScope.pageCount = pagecount;
                         $rootScope.$broadcast('initPaging'); // re_init pageing controll
                     }
                 }
 
-                function testData(typeSearch, CountSearchChange, pagenumber, object) {
-                    var html = '';
-                    var jsonObj = $.parseJSON(JSON.stringify(object));
+                //function testData(typeSearch, CountSearchChange, pagenumber, object) {
+                //    var html = '';
+                //    var jsonObj = $.parseJSON(JSON.stringify(object));
 
-                    html += '<br/>';
-                    html += 'search Type :>> ' + typeSearch;
-                    html += '<br/>';
-                    html += 'is count result change :>> ' + CountSearchChange;
-                    html += '<br/>';
-                    html += 'Page Number :>> ' + pagenumber;
-                    html += '<br/>';
-                    $.each(jsonObj, function (k, v) {
-                        html += '' + k + ' : ' + v + ' ' + '</br>';
-                    });
+                //    html += '<br/>';
+                //    html += 'search Type :>> ' + typeSearch;
+                //    html += '<br/>';
+                //    html += 'is count result change :>> ' + CountSearchChange;
+                //    html += '<br/>';
+                //    html += 'Page Number :>> ' + pagenumber;
+                //    html += '<br/>';
+                //    $.each(jsonObj, function (k, v) {
+                //        html += '' + k + ' : ' + v + ' ' + '</br>';
+                //    });
 
-                    return html;
-                }
+                //    return html;
+                //}
                 return data;
             })
              .factory('tasfiaData', function () {
