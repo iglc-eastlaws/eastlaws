@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Collections;
 using Eastlaws.Entities;
 using Dapper;
+using System.Collections.Generic;
 
 namespace Eastlaws.Controllers
 {
@@ -95,6 +96,17 @@ namespace Eastlaws.Controllers
                 return View();
             }
      
+        }
+
+
+        public IActionResult TasfeyaList  (int QueryID)
+        {
+            if (QueryID == 0)
+                QueryID = 56;
+
+            List<AhkamTasfeyaCategories> UsedCategories;
+            var Data = AhkamTasfeya.List(QueryID, AhkamSearchTypes.Advanced,out UsedCategories, "", "", null);
+            return null;
         }
 
         public IActionResult TasfyaSearch()
