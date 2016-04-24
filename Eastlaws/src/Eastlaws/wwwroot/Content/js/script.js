@@ -58,7 +58,7 @@ $(document).ready(function () {
         });
     });
 
-    
+    //Grid View
     $(".layout-view li a").click(function () {
         $(".layout-view li a").removeClass("active");
         $(this).addClass("active");
@@ -69,6 +69,24 @@ $(document).ready(function () {
         }
 
     });
+
+    // toolbar
+ 
+    $(".format-result li a.sort i").click(function () {
+       
+            if ($(this).hasClass("fa-sort-numeric-asc active")) {
+                $(this).prev().addClass("active");
+                $(this).removeClass("active");
+              
+            }else{
+                $(this).next().addClass("active");
+                $(this).removeClass("active");
+              
+            }
+
+        });
+
+
 
 
 
