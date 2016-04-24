@@ -60,7 +60,7 @@
 
                 <div class="col-lg-9 col-md-8  col-sm-8 list-content">
                     <!-- Formating result -->
-                    <div class="format-result" ng-controller="SortCtrl">
+                    <div class="format-result" ng-controller="toolbarCtrl">
 
                         @Html.Partial("_toolbar")
                     </div>
@@ -327,12 +327,36 @@
 
                
          })
-            .controller('SortCtrl', function ($scope, SearchData, $rootScope) {
+            .controller('toolbarCtrl', function ($scope, SearchData, $rootScope) {
+
+                $scope.sortTitle = "ترتيب النتائج";
                  $scope.changeSort = function (type) {
                      $rootScope.sortType = type;
                      $rootScope.currentPage = 1;
                      SearchData.SortChange=1;
                      SearchData.GetSearch();
+                     switch (type)
+                     {
+                         case 1:
+                             {
+                                 $scope.sortTitle = "رقم الحكم";
+                                 break;
+                             }
+                         case 2:
+                             {
+                                 $scope.sortTitle = "السنة القضائية";
+                                 break;
+                             }
+                         case 3:
+                             {
+                                 $scope.sortTitle = "تاريخ الحكم";
+                                 break;
+                             }
+                         default:
+                             $scope.sortTitle = "ترتيب النتائج";
+                             break;
+                     }
+                    
                  }
              })
             app.factory('SearchData', function ($http, $rootScope, $compile) {
