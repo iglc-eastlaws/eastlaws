@@ -272,7 +272,7 @@
             .controller('toolbarCtrl', function ($scope, SearchData, $rootScope) {
                 $scope.pageSizes = [10, 50, 100];
                 $scope.pSize = 10;
-                $scope.sortTitle = "ترتيب النتائج";
+                $scope.sortTitle = " النتائج";
 
                  $scope.changeSort = function (type) {
                      $rootScope.sortType = type;
@@ -283,21 +283,21 @@
                      {
                          case 1:
                              {
-                                 $scope.sortTitle = "رقم الحكم";
+                                 $scope.sortTitle = "  برقم الحكم ";
                                  break;
                              }
                          case 2:
                              {
-                                 $scope.sortTitle = "السنة القضائية";
+                                 $scope.sortTitle = "بالسنة القضائية";
                                  break;
                              }
                          case 3:
                              {
-                                 $scope.sortTitle = "تاريخ الحكم";
+                                 $scope.sortTitle = " بالتاريخ الحكم";
                                  break;
                              }
                          default:
-                             $scope.sortTitle = "ترتيب النتائج";
+                             $scope.sortTitle = "النتائج";
                              break;
                      }
                     

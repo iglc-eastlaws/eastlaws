@@ -5,11 +5,11 @@
     <form class="search-form form-horizontal " ng-submit="search()">
         <div class="form-group">
             <div class="col-lg-6 col-md-12 col-side">
-                <label class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title">
+                <label class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title" for="nassAll">
                     كافه النصوص :
                 </label>
                 <div class="col-lg-9 col-md-9 col-sm-9 search">
-                    <c-drop-match-search selected-value="Inputs.alltextSearchType" input-text="Inputs.Alltext"></c-drop-match-search>
+                    <c-drop-match-search selected-value="Inputs.alltextSearchType" input-text="Inputs.Alltext" ></c-drop-match-search>
                 </div>
             </div>
             <hr class="spacer" />
@@ -97,9 +97,9 @@
                     <input type="text" ng-model="Inputs.partNo" class="string search  form-control">
                 </div>
 
-                <label for="horizontal_search" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title"> رقم الصفحة : </label>
+                <label for="pageNumber" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title"> رقم الصفحة : </label>
                 <div class="col-lg-3 col-md-3 col-sm-3 search">
-                    <input type="text" ng-model="Inputs.pageNo" class="string search  form-control">
+                    <input type="text" ng-model="Inputs.pageNo" class="string search  form-control" id="pageNumber">
                 </div>
                 <hr class="spacer" />
 
