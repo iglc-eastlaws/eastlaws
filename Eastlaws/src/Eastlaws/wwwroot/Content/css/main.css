@@ -83,7 +83,7 @@ section{ margin:0 0 20px;}
 .groups-eastlaws .block-east h4{ font-size: 0.9em;line-height: 30px;}
 .groups-eastlaws .block-east p{ font: 0.78em "droid arabic kufi"; text-align: justify; color:#5b5858;}
 .groups-eastlaws .col-lg-4 p{font:0.9em "droid arabic kufi"; text-align:justify;}
-.form-control{font:0.8em "droid arabic kufi"}
+.form-control{font:0.8em "droid arabic kufi";}
 .groups-eastlaws .block-east a.more, .updates-day div .more{ color:#be9651;font: 0.9em "droid arabic kufi"; float:left;}
 .updates-day div .more{ margin-left:10px;}
 .packages{ margin:20px 0 40px;}
@@ -460,6 +460,7 @@ p.total-chart {color:#666; font:bold 14px arial;}
 .format-result .navbar { padding:0px; margin:0px; min-height:unset; border:0 none; border-radius:0px;   }
 .format-result .navbar li {background: url('../images/spacer-toolbar.png') no-repeat left center; margin-left:2px; }
  .format-result .navbar li:last-child,.format-result .navbar li .dropdown-menu li{ background:none; margin-left:0px;}
+ .sort{ float:right}
 .format-result .navbar li a{ color:#675650; padding:10px 5px; } 
 .format-result .navbar li:hover a{ color:#d9b163;}
 .format-result .navbar li:hover .open, .format-result .nav .open > a, .format-result .nav .open > a:hover, .format-result .nav .open > a:focus { background-color:#D9B672; color:#000; }
@@ -481,9 +482,9 @@ p.total-chart {color:#666; font:bold 14px arial;}
 /*select Date*/
 .search .c-date-picker{ border-radius:0px; border:0 none; background-color: #D9B672; min-width:140px;}
 .c-date-picker .form-control{height:25px;width:50px;font-family:Arial; }
-.search c-date-picker .input-group .form-control{font:bold 1em Arial; color:#B28939;/*background-color: transparent;*/ border:0 none; }
+.search c-date-picker .input-group .form-control{font:bold 1em Arial; color:#B28939;/*background-color: transparent;*/  }
 .c-date-picker .form-control select, .c-date-picker .search .input-group .form-control select{ padding:3px; font:bold 12px Arial!important;  }
-.c-date-picker .btn-primary{ background-image:linear-gradient(to bottom, #4d3c36 0px, #6e5d57 100%)!important; border-color:#675650;}
+.c-date-picker .btn-primary{ background-image:linear-gradient(to bottom, #4d3c36 0px, #6e5d57 100%)!important; border-color:#675650;width: 100%;}
 .c-date-picker .btn-primary:focus, .c-date-picker .btn-primary:hover{ background-color:#675650;}
  .c-date-picker .btn-primary option:hover{ background-color:#d9b163;}
 .col-side{padding:0px;}
