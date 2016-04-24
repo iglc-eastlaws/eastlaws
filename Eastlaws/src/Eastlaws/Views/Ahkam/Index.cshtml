@@ -328,8 +328,10 @@
                
          })
             .controller('toolbarCtrl', function ($scope, SearchData, $rootScope) {
-
+                $scope.pageSizes = [10, 50, 100];
+                $scope.pSize = 10;
                 $scope.sortTitle = "ترتيب النتائج";
+
                  $scope.changeSort = function (type) {
                      $rootScope.sortType = type;
                      $rootScope.currentPage = 1;
@@ -358,31 +360,87 @@
                      }
                     
                  }
+                 $scope.changePageSize = function (size)
+                 {
+         
+                     $scope.pSize = size;
+                     $rootScope.currentPage = 1;
+                     SearchData.pageSize = $scope.pSize;
+                     SearchData.GetSearch();
+   
+                 }
+
              })
             app.factory('SearchData', function ($http, $rootScope, $compile) {
-               // $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
-
                 var data = {};
-                data.searchType = 1;      //GeneralSearch 1   advancedserch 2  .... etc
-                data.CountSearchChange = 0;     //1 CountSearch Change    0 CountSearch not Change
-                data.SortChange = 0;    // 1 SortChanged 0 No
+                data.searchType = 1;             //GeneralSearch 1   advancedserch 2  .... etc
+                data.CountSearchChange = 0;      //1 CountSearch Change    0 CountSearch not Change
+                data.SortChange = 0;             // 1 SortChanged 0 No
+                data.pageSize = 10;
                 data.AssembleSearchInputs = {};
                 data.GeneralSearchInputs = {};
                 data.AdvancedSearchInputs = {};
-
+                data.TotalCount = 0;
            
+                function searchOptionAfterAjax(d) {
+                    var searchresult = $('#searchResult');
+                    searchresult.html(d);
+                   
+                    if (searchresult.find('#resultCount').length) {
+                        if (data.CountSearchChange == 1) {
+                            $rootScope.pageCount = 0;
+                            data.TotalCount = $("#resultCount").val();
+                            $('#TotalCount').html('');
+                    
+                            if (data.TotalCount > 0) {
+                                $('#TotalCount').html(" <i class='fa fa-line-chart '></i> وجد اجمالي [" + data.TotalCount + "] حكم")
+                            }
+
+                            $http.get('/Ahkam/TasfyaSearch', {}).then(function (d) {
+                                $('#TasfyaSearch').html(d.data);
+                                $rootScope.$broadcast("tasfyaResult", true);
+                            })
+                        }
+
+                        if (($rootScope.currentPage == 1) || ($rootScope.currentPage == undefined)) {
+                            var countpage = 1;
+                            if (data.TotalCount > Number(data.pageSize)) {
+                                countpage = Math.ceil(data.TotalCount / Number(data.pageSize));
+                            }
+                            $rootScope.pageCount = countpage;
+                            InitPageingControl(countpage);
+                        }
+
+
+                        //if (data.SortChange == 1) {
+                        //    InitPageingControl($rootScope.pageCount);
+                        //}
+    
+                    }
+
+                }
+
                 data.GetSearch = function () {
                     if (data.searchType === 0) // AssymbleSearch
                     {
-                        $.post('/Ahkam/SearchResultAssembly', { "AssembleSearchInputs": data.AssembleSearchInputs, "PageNo": $rootScope.currentPage, "Sort": $rootScope.sortType }, function (d) {
+                        $.post('/Ahkam/SearchResultAssembly', {
+                            "AssembleSearchInputs": data.AssembleSearchInputs,
+                            "PageNo": $rootScope.currentPage,
+                            "Sort": $rootScope.sortType,
+                            "pageSize": data.pageSize
+                        }, function (d) {
                             searchOptionAfterAjax(d);
                         })
                     }
                     else if (data.searchType === -2) // loadPage
                     {
-                        //$rootScope.sortType = 5;
                         $http.get('/Ahkam/Latest', {
-                            params: { "Days": 10, "PageNo": $rootScope.currentPage, "Sort": $rootScope.sortType }
+                            params: {
+                                "Days": 10,
+                                "PageNo": $rootScope.currentPage,
+                                "Sort": $rootScope.sortType,
+                                "pageSize": data.pageSize
+                            }
                         }).then(function (d) {
                       
                             searchOptionAfterAjax(d.data);
@@ -423,43 +481,7 @@
                     }
                 };
 
-                function searchOptionAfterAjax(d) {
-                 //   $('#searchResult').html('00000000000000000')
-                    var searchresult = $('#searchResult');
-                    searchresult.html(d);
-                //   console.log(d)
-                    if (searchresult.find('#resultCount').length) {
-                        if (data.CountSearchChange == 1) {
-                            $rootScope.pageCount = 0;
-                            var TotalCount = $("#resultCount").val();
-                            $('#TotalCount').html('');
-                    
-                            if (TotalCount > 0) {
-                                $('#TotalCount').html(" <i class='fa fa-line-chart '></i> وجد اجمالي [" + TotalCount + "] حكم")
-                            }
-                  
-                            if (($rootScope.currentPage == 1) ||($rootScope.currentPage == undefined)) {
-                                var countpage = 1;
-                                if (TotalCount > 10) {
-                                    countpage = Math.ceil(TotalCount / 10);
-                                }
-                                $rootScope.pageCount = countpage;
-                                InitPageingControl(countpage);
-                            }
-                           
-                            //tasfia
-                            $http.get('/Ahkam/TasfyaSearch', {}).then(function (d) {
-                                // console.log('-------------------');
-                                $('#TasfyaSearch').html(d.data);
-                                $rootScope.$broadcast("tasfyaResult", true);
-                            })
-                        }
-                        if (data.SortChange == 1) {
-                            InitPageingControl($rootScope.pageCount);
-                        }
-                    }
-
-                }
+         
                 function InitPageingControl(pagecount) {
                     if (pagecount > 1) {
                         $rootScope.pageCount = pagecount;

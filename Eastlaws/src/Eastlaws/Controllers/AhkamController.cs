@@ -42,10 +42,10 @@ namespace Eastlaws.Controllers
             }
         }
         [HttpPost]
-        public IActionResult SearchResultAssembly(AssemblySearch AssembleSearchInputs,int PageNo,int Sort)
+        public IActionResult SearchResultAssembly(AssemblySearch AssembleSearchInputs,int PageNo,int Sort,int pageSize)
         {
             //AssemblySearch AssembleSearchInputs = new AssemblySearch();
-            AhkamSearchOptions Options = new AhkamSearchOptions { SortBy = (AhkamSortColumns)Sort, PageNo = PageNo };
+            AhkamSearchOptions Options = new AhkamSearchOptions { SortBy = (AhkamSortColumns)Sort, PageNo = PageNo,PageSize=pageSize };
             AhkamAdvancedSearch Obj = new AhkamAdvancedSearch();
             Obj.PredicateAny = new FTSPredicate(string.IsNullOrEmpty(AssembleSearchInputs.Alltext) ?"": AssembleSearchInputs.Alltext, (FTSSqlModes)AssembleSearchInputs.alltextSearchType);
             Obj.PredicateHay2a= new FTSPredicate(string.IsNullOrEmpty(AssembleSearchInputs.hay2a) ? "" : AssembleSearchInputs.hay2a, (FTSSqlModes)AssembleSearchInputs.hay2aSearchType);
@@ -77,9 +77,9 @@ namespace Eastlaws.Controllers
            
         }
 
-        public IActionResult Latest(int Days = 10,int PageNo = 1, int Sort=5)
+        public IActionResult Latest(int Days = 10,int PageNo = 1, int Sort=5, int pageSize = 10)
         {
-            AhkamSearchOptions Options = new AhkamSearchOptions { PageNo = PageNo, SortBy = (AhkamSortColumns)Sort , SortDirection = SearchSortType.DESC };
+            AhkamSearchOptions Options = new AhkamSearchOptions { PageNo = PageNo, SortBy = (AhkamSortColumns)Sort , SortDirection = SearchSortType.DESC ,PageSize= pageSize };
             AhkamPresentation Model = AhkamService.GetLatest(Options, Days);
             return View("SearchResult", Model);
         }
