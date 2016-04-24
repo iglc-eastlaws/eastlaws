@@ -14,7 +14,7 @@
             </div>
             <hr class="spacer" />
             <div class="col-lg-6 col-side">
-                <label for="horizontal_search" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title"> اختار الدولة :</label>
+                <label for="ddlCountries" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title"> اختار الدولة :</label>
                 <div class="col-lg-9 col-md-9 col-sm-9 search">
                     <select tabindex="3" class="string search  form-control" id="ddlCountries" name="d"
                             ng-options="t.Name for t in countries track by t.ID" ng-model="country" ng-change="updatecountry()"></select>
@@ -22,7 +22,7 @@
                 <hr class="spacer" />
                 <!-- Multi Checkbox-->
                 <div ng-if="Mahakem.length>0" class="form-group multi-check">
-                    <label class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title">اختيار المحكمة</label>
+                    <label class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title" >اختيار المحكمة</label>
 
                     <div class="col-lg-9 col-md-9 col-sm-9 search ">
                         <div class="checkbox">
@@ -36,7 +36,7 @@
                 </div>
 
 
-                <label class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title">
+                <label class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title" >
                     المبدأ :
                 </label>
                 <div class="col-lg-9 col-md-9 col-sm-9 search">
@@ -45,7 +45,7 @@
                 </div>
 
 
-                <label class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title">الوقائع : </label>
+                <label  class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title">الوقائع : </label>
                 <div class="col-lg-9 col-md-9 col-sm-9 search">
                     <c-drop-match-search  selected-value="Inputs.waka23SearchType" 
                                          input-text="Inputs.waka23"></c-drop-match-search>
@@ -66,27 +66,27 @@
 
             </div>
             <div class="col-lg-6  col-side ">
-                <label for="horizontal_search" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title">  سنة المكتب فنى : </label>
+                <label for="yearTec" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title">  سنة المكتب فنى : </label>
                 <div class="col-lg-3 col-md-3 col-sm-3 col-sm-2 search">
-                    <input type="text" class="form-control" ng-model="Inputs.officeYear">
+                    <input type="text" class="form-control" id="yearTec" ng-model="Inputs.officeYear">
                 </div>
-                <label for="horizontal_search" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title">  مجموعة عمر : <input type="checkbox" ng-model="omarGroup" ng-click="omarGroupChecked($event)"></label>
+                <label for="amor" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title">  مجموعة عمر : <input type="checkbox" id="amor" ng-model="omarGroup" ng-click="omarGroupChecked($event)"></label>
                 <div class="col-lg-3 col-md-3 col-sm-3 search checkbox">
 
                 </div>
                 <hr class="spacer" />
-                <label for="horizontal_search" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title">  رقم الطعن : </label>
+                <label for="ta3an" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title">  رقم الطعن : </label>
                 <div class="col-lg-3 col-md-3 col-sm-3 search">
-                    <input type="text" ng-model="Inputs.caseNo" class="form-control">
+                    <input type="text" ng-model="Inputs.caseNo" class="form-control" id="ta3an">
                 </div>
-                <label class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title" for="horizontal_search">السنة القضائية :  </label>
+                <label class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title" for="yearKada">السنة القضائية :  </label>
                 <div class="col-lg-3 col-md-3 col-sm-3 search">
-                    <input type="text" ng-model="Inputs.caseYear" class="form-control">
+                    <input type="text" ng-model="Inputs.caseYear" class="form-control" id="yearKada">
                 </div>
                 <hr class="spacer" />
-                <label for="horizontal_search" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title"> بيان قبول الطعن  :</label>
+                <label for="byan" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title" > بيان قبول الطعن  :</label>
                 <div class="col-lg-3 col-md-3 col-sm-3 search">
-                    <select tabindex="3" class="string search  form-control"
+                    <select tabindex="3" class="string search  form-control" id="byan"
                             ng-options="t.Name for t in MahkamaReplies track by t.ID" ng-model="MahkamaReplay" ng-change="updateMahkamaReplies()"></select>
 
                 </div>
