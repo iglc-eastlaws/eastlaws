@@ -7,9 +7,14 @@ using System.Collections;
 using Eastlaws.Entities;
 using Dapper;
 using System.Collections.Generic;
+using System.Dynamic;
 
 namespace Eastlaws.Controllers
 {
+    public class aaa : DynamicObject
+    {
+
+    }
     public class AhkamController : Controller
     {
         public IActionResult Index()
@@ -41,9 +46,11 @@ namespace Eastlaws.Controllers
                 return View();
             }
         }
+
         [HttpPost]
         public IActionResult SearchResultAssembly(AssemblySearch AssembleSearchInputs,int PageNo,int Sort,int pageSize)
         {
+ 
             //AssemblySearch AssembleSearchInputs = new AssemblySearch();
             AhkamSearchOptions Options = new AhkamSearchOptions { SortBy = (AhkamSortColumns)Sort, PageNo = PageNo,PageSize=pageSize };
             AhkamAdvancedSearch Obj = new AhkamAdvancedSearch();

@@ -335,7 +335,7 @@
                  $scope.changeSort = function (type) {
                      $rootScope.sortType = type;
                      $rootScope.currentPage = 1;
-                     SearchData.SortChange=1;
+                    // SearchData.SortChange=1;
                      SearchData.GetSearch();
                      switch (type)
                      {
@@ -421,6 +421,7 @@
                 }
 
                 data.GetSearch = function () {
+                 //   console.log(data.AssembleSearchInputs)
                     if (data.searchType === 0) // AssymbleSearch
                     {
                         $.post('/Ahkam/SearchResultAssembly', {
@@ -428,7 +429,7 @@
                             "PageNo": $rootScope.currentPage,
                             "Sort": $rootScope.sortType,
                             "pageSize": data.pageSize
-                        }, function (d) {
+                            }, function (d) {
                             searchOptionAfterAjax(d);
                         })
                     }

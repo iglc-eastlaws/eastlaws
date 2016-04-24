@@ -42,7 +42,7 @@ namespace Eastlaws.Services
                     ,new Range(srchObj.PartNo, "A.PartNo").GetCondition()
                     ,new Range(srchObj.PageNo, "A.PageNo").GetCondition()
                     ,new Range(srchObj.IFAgree, "A.IfAgree").GetCondition()
-                    ,new Range(srchObj.OfficeSuffix, "A.OfficeSuffix").GetCondition()
+                  //  ,new Range(srchObj.OfficeSuffix, "A.OfficeSuffix").GetCondition()   // ommar group not in range condation
             };
 
             StringBuilder Builder = new StringBuilder();
@@ -58,6 +58,15 @@ namespace Eastlaws.Services
                     ConditionsCount++;
                 }
             }
+
+            //add ommar group condation
+            if ((!string.IsNullOrWhiteSpace(srchObj.OfficeSuffix)) && (srchObj.OfficeSuffix.Trim() == "ع"))
+            {
+                Builder.Append("\n And A.OfficeSuffix = 'ع'");
+                ConditionsCount++;
+            }
+       
+
             DateTime dtCaseDateFrom, dtCaseDateTo;
             if (DateTime.TryParseExact(srchObj.CaseDatefrom, DataHelpers.ClientDateFormats, null, System.Globalization.DateTimeStyles.AllowWhiteSpaces, out dtCaseDateFrom))
             {
@@ -69,6 +78,8 @@ namespace Eastlaws.Services
                 Builder.Append("\n And A.CaseDate <= " + "'" + dtCaseDateTo.ToString("yyyy-MM-dd") + "'");
                 ConditionsCount++;
             }
+
+
 
 
             string strOuterFakraMabade2  , strOuterFakraWakae3, strOuterFakraDestoreya, strOuterFakraHay2a, strOuterFakraMantoo2, strOuterFakraHaytheyat;
