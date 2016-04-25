@@ -27,6 +27,7 @@ namespace Eastlaws.Services
         public static IEnumerable<TasfeyaItem> List (int QueryID , AhkamSearchTypes SearchType, out List<AhkamTasfeyaCategories> UsedCategories , string TasfeyaFilter = "" , string PreviousTasfeyaQuery  = "", AhkamTasfeyaCategories? CategorySender = null )
         {
             List<AhkamTasfeyaCategories> Cats = new List<AhkamTasfeyaCategories>();
+
             Cats.Add(AhkamTasfeyaCategories.Country);
             Cats.Add(AhkamTasfeyaCategories.Ma7kama);
             Cats.Add(AhkamTasfeyaCategories.JudgeYear);
@@ -135,7 +136,7 @@ namespace Eastlaws.Services
                             Where QCR.MasterID  = {1}  And A.CaseDate is not null  {2}  
                             Group By Datepart(Year , A.CaseDate )
                             Order By Count(*) desc ", MAX_RECORD_COUNT_PER_CATEGORY, MasterQueryID, ProcessedFilter, SafyListJoinClause);
-                    }
+                    }                    
                 default:
                     {
                         return "";               
