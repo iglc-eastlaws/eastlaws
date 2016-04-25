@@ -64,7 +64,7 @@
                                 <div class='well' style='max-height:200px;overflow: auto;'>
                                     <ul class='list-group' style='max-height:200px;overflow: auto;'>
                                         <label ng-repeat="details in catList | filter :{CategoryID:data.CategoryID}" class='list-group-item'>
-                                            <input type='checkbox' ng-click='changeCheck(details,$event)' /> {{details.Name}}
+                                            <input type='checkbox' ng-click='changeCheck(details,$event)' /> {{details.Name}} - ({{details.Count}})
                                         </label>
                                     </ul>
                                 </div>
@@ -349,9 +349,16 @@
          $scope.changeCheck = function (item,event) { 
              if ($(event.target).is(':checked')) {
                tasfiaData.PushList(item.CategoryID + '_' + item.ID, item.Name, item.Count);
-                 $(event.target).parent().addClass('active')
+               $(event.target).parent().addClass('active');
+
+    
+
              } else {
+                 tasfiaData.splice(item.Name)
                  $(event.target).parent().removeClass('active');
+
+                 //filter    Update Filter Dynamic
+                // $scope.catList.splice($scope.catList.indexOf(item), 1);
              }
 
          };
