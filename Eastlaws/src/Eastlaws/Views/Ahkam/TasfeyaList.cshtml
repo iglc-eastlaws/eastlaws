@@ -1,0 +1,21 @@
+﻿@using Eastlaws.Services;
+@*@model IEnumerable<TasfeyaItem>*@
+@{
+}
+
+@foreach (var item in Model)
+{
+    @item.ID   
+    <text>&nbsp;</text>
+ @item.Name
+    <text>&nbsp;</text>
+    @item.Count
+     <text> &nbsp;</text>
+   @item.CategoryID
+
+    <text> &nbsp;</text>
+    @((int)(AhkamTasfeyaCategories)Enum.Parse(typeof(AhkamTasfeyaCategories), item.CategoryID.ToString()))
+ 
+ 
+<br />
+}

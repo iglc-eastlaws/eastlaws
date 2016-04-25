@@ -112,12 +112,19 @@ namespace Eastlaws.Controllers
 
             List<AhkamTasfeyaCategories> UsedCategories;
             var Data = AhkamTasfeya.List(QueryID, AhkamSearchTypes.Advanced,out UsedCategories, "", "", null);
-            return null;
+            return View(Data);
         }
 
         public IActionResult TasfyaSearch()
         {
             return View();
+        }
+
+         public JsonResult TasfyaListJson()
+        {
+            List<AhkamTasfeyaCategories> UsedCategories;
+            var Data = AhkamTasfeya.List(56, AhkamSearchTypes.Advanced, out UsedCategories, "", "", null);
+            return new JsonResult(Data);
         }
 
         public JsonResult GetCountries()

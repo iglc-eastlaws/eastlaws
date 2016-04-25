@@ -32,7 +32,7 @@ namespace Eastlaws.Services
             Cats.Add(AhkamTasfeyaCategories.Ma7kama);
             Cats.Add(AhkamTasfeyaCategories.JudgeYear);
             Cats.Add(AhkamTasfeyaCategories.Year);
-
+   
 
             bool IsSafyList = !string.IsNullOrWhiteSpace(PreviousTasfeyaQuery);
             string SafyListQuery = "";

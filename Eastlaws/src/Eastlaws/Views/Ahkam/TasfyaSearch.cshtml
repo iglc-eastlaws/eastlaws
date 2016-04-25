@@ -1,5 +1,65 @@
-﻿
-@using System.Text;
+﻿@using System.Text;
+@using Eastlaws.Entities;
+@using Eastlaws.Services;
+
+
+@{
+    Layout = null;
+
+    List<AhkamTasfeyaCategories> UsedCategories;
+    var allTasfia = AhkamTasfeya.List(56, AhkamSearchTypes.Advanced, out UsedCategories, "", "", null);
+    var catgGroup = allTasfia.GroupBy(n => new
+    {
+        category = ((int)(AhkamTasfeyaCategories)Enum.Parse(typeof(AhkamTasfeyaCategories), n.CategoryID.ToString())),
+        categoryName = n.CategoryID
+    }).ToList();
+    var countCroup = catgGroup.Count();
+}
+
+@for (int i = 0; i < countCroup; i++)
+{
+    var catgID = ((int)(AhkamTasfeyaCategories)Enum.Parse(typeof(AhkamTasfeyaCategories), catgGroup[i].Key.category.ToString()));
+    var catg = allTasfia.Where(n => catgID == catgGroup[i].Key.category);
+    <div class='filter-section'>
+        <h5>@catgGroup[i].Key.categoryName</h5>
+        <div class='well' style='max-height:200px;overflow: auto;'>
+            <ul class='list-group'>
+
+                @tasfyaSub(allTasfia, catgGroup[i].Key.category)
+            </ul>
+        </div>
+    </div>
+}
+
+
+
+
+@functions{
+    public static HtmlString tasfyaSub(IEnumerable<TasfeyaItem> alltafia, int catgID)
+    {
+        var Result = new StringBuilder();
+        var catg = alltafia.Where(n =>
+        ((int)(AhkamTasfeyaCategories)Enum.Parse(typeof(AhkamTasfeyaCategories), n.CategoryID.ToString()))
+        == catgID);
+        foreach (var item in catg)
+        {
+            Result.AppendFormat(@"<label for='id_{1}' class='list-group-item'>
+                                    <input id='id_{1}' type='checkbox'
+                                            ng-click='changeCheck(val{1},$event)'
+                                            ng-model='val{1}'
+                                            dataname='{0}'
+                                            datacount='{2}'/> {0}  </label>",
+                                            item.Name, (item.ID+"_"+catgID), item.Count);
+
+        }
+
+        return new HtmlString(Result.ToString());
+    }
+
+}
+
+
+@*@using System.Text;
 @using Eastlaws.Entities;
 @{
     Layout = null;
@@ -7,13 +67,7 @@
     var catgGroup = allTasfia.GroupBy(n => new { n.category, n.categoryName }).ToList();
     var countCroup = catgGroup.Count();
 }
-@*
-    --******* important notice  ********/
-    in future , after finished some javascript behavior and improve isolated scope,
-    this componant will be act  as (shared componant) not (re use componant)
-    so we can shared it between (ahkam - tash - fatwa - ...... etc )
 
-*@
 
 
 
@@ -68,7 +122,7 @@
             return new HtmlString(Result.ToString());
         }
 
-    }
+    }*@
 
 
     @*<div class="">
