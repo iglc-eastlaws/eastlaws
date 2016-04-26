@@ -238,6 +238,11 @@
    
                  }
 
+                 $scope.changeTypeView = function (v)
+                 {
+                     alert(v);
+                 }
+
              })
             app.factory('SearchData', function ($http, $rootScope, $compile, tasfiaData, tasfiaAllData) {
                 var data = {};
@@ -272,8 +277,8 @@
                                 searchOptionAfterAjax(d);
                         })
                     }
-                    else if (data.searchType === -2) // loadPage
-                    {
+                    //else if (data.searchType === -2) // loadPage
+                    //{
                         //$.post('/Ahkam/SearchResultAssembly', {
                         //    "AssembleSearchInputs": data.AssembleSearchInputs,
                         //    "PageNo": $rootScope.currentPage,
@@ -297,7 +302,7 @@
                         //}).then(function (d) {
                         //    searchOptionAfterAjax(d.data);
                         //});
-                    }
+                    //}
 
                 };
 
