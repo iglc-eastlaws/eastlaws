@@ -62,16 +62,22 @@ $(document).ready(function () {
     $(".layout-view li a").click(function () {
         $(".layout-view li a").removeClass("active");
         $(this).addClass("active");
-        if ($(this).parent().hasClass("list")) {
+        if ($(this).parent().hasClass("view-list")) {
             $(".list-content .result-block").removeClass("col-md-4");
-        }else{
-         $(".list-content .result-block").addClass("col-md-4");
+        } else if ($(this).parent().hasClass("view-grid"))
+        {
+            $(".list-content .result-block").addClass("col-md-4");
         }
+
+        //if ($(this).parent().hasClass("list")) {
+        //    $(".list-content .result-block").removeClass("col-md-4");
+        //}else{
+        // $(".list-content .result-block").addClass("col-md-4");
+        //}
 
     });
 
     // toolbar
- 
     $(".format-result li a.sort i").click(function () {
        
             if ($(this).hasClass("fa-sort-numeric-asc active")) {
