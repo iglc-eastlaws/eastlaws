@@ -1,0 +1,68 @@
+﻿@{
+    Layout = null;
+}
+
+
+
+
+
+<div class="main inner views">
+
+
+    <div class="col-lg-9 col-md-8  col-sm-8 ">
+
+
+
+
+
+        @if (Model != null)
+        {
+            var Hokm = Model.AhkamList.ToArray()[0];
+
+            <div class="view-law">
+
+                <h1>
+
+                 @if (!string.IsNullOrEmpty(Hokm.CountryFlagPic))
+                {
+                        <img src="~/Content/images/Flags/Small/@Hokm.CountryFlagPic" />
+
+                    }
+                    @Hokm.FullName
+                </h1>
+
+
+                @foreach (var Fakra in Model.FakaratList)
+                {
+                    @if (@Fakra.FakraNo <= 1)
+                    {
+                        <h4 class="fakr-title">
+                            <i class="fa fa-file" aria-hidden="true"></i>
+                            <span> @Fakra.Title</span>
+                        </h4>
+                    }
+
+                    @if (@Fakra.FakraNo >= 1)
+                    {
+                        <h4 class="number-title">
+                            <span> @Fakra.FakraNo </span>
+                        </h4>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(Fakra.MogazText))
+                    {
+                        <p class="FakraMogaz">
+                            @Fakra.MogazText
+                        </p>
+                    }
+
+                    <p class="fakra-text">
+                        @Fakra.Text
+                    </p>
+
+                }
+            </div>
+        }
+    </div>
+
+</div>

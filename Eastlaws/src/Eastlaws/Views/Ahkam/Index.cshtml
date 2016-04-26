@@ -194,7 +194,15 @@
                 $scope.getmypage();
             })
        
-            .controller('searchResultCtrl', function () { })
+            .controller('searchResultCtrl', function ($scope) {
+                $(document).on('click', '.hokmView', function () {
+                    var idHokm = $(this).data('idhokm');
+                    $.get('/Ahkam/FullHokmView', { 'ID': idHokm },function (data) {
+                            $('#hokmview').html(data)
+                        });
+                })
+
+             })
             .controller('toolbarCtrl', function ($scope, SearchData, $rootScope) {
                 $scope.pageSizes = [10, 50, 100];
                 $scope.pSize = 10;
