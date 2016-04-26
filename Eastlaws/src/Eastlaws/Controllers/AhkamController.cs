@@ -48,48 +48,58 @@ namespace Eastlaws.Controllers
         }
 
         [HttpPost]
-        public IActionResult SearchResultAssembly(AssemblySearch AssembleSearchInputs,int PageNo,int Sort,int pageSize)
+        public IActionResult SearchResultAssembly(AssemblySearch AssembleSearchInputs,int PageNo,int Sort,int pageSize,
+                                                   bool Latest = false,int Days = 10, 
+                                                   int typeView = 1)
         {
- 
-            //AssemblySearch AssembleSearchInputs = new AssemblySearch();
-            AhkamSearchOptions Options = new AhkamSearchOptions { SortBy = (AhkamSortColumns)Sort, PageNo = PageNo,PageSize=pageSize };
-            AhkamAdvancedSearch Obj = new AhkamAdvancedSearch();
-            Obj.PredicateAny = new FTSPredicate(string.IsNullOrEmpty(AssembleSearchInputs.Alltext) ?"": AssembleSearchInputs.Alltext, (FTSSqlModes)AssembleSearchInputs.alltextSearchType);
-            Obj.PredicateHay2a= new FTSPredicate(string.IsNullOrEmpty(AssembleSearchInputs.hay2a) ? "" : AssembleSearchInputs.hay2a, (FTSSqlModes)AssembleSearchInputs.hay2aSearchType);
-            Obj.PredicateHaytheyat=new FTSPredicate(string.IsNullOrEmpty(AssembleSearchInputs.hyseyt) ? "" : AssembleSearchInputs.hyseyt, (FTSSqlModes)AssembleSearchInputs.hyseytSearchType);
-            Obj.PredicateMabade2 = new FTSPredicate(string.IsNullOrEmpty(AssembleSearchInputs.Mabdaa) ? "" : AssembleSearchInputs.Mabdaa, (FTSSqlModes)AssembleSearchInputs.MabdaaSearchType);
-            Obj.PredicateWakae3 = new FTSPredicate(string.IsNullOrEmpty(AssembleSearchInputs.waka23) ? "" : AssembleSearchInputs.waka23, (FTSSqlModes)AssembleSearchInputs.waka23SearchType);
-            Obj.CaseDatefrom = AssembleSearchInputs.dateGalsaFrom;
-            Obj.CaseDateTo = AssembleSearchInputs.dateGalsaTo;
-            Obj.CaseYear = AssembleSearchInputs.caseYear;
-            Obj.CaseNo = AssembleSearchInputs.caseNo;
-            Obj.CountryIDs = AssembleSearchInputs.country=="0"?"":AssembleSearchInputs.country;
-            Obj.IFAgree = AssembleSearchInputs.MahkamaReplay == "0" ? "":AssembleSearchInputs.MahkamaReplay;
-            Obj.Ma7akemIds = AssembleSearchInputs.mahakem;
-            Obj.OfficeSuffix = AssembleSearchInputs.omarGroup;
-            Obj.OfficeYear = AssembleSearchInputs.officeYear;
-            Obj.PageNo = AssembleSearchInputs.pageNo;
-            Obj.PartNo = AssembleSearchInputs.partNo;
 
+            ViewBag.typeView = typeView;
+            AhkamPresentation Model = new AhkamPresentation();
+            AhkamSearchOptions Options = new AhkamSearchOptions { SortBy = (AhkamSortColumns)Sort, PageNo = PageNo, PageSize = pageSize };
 
-            AhkamPresentation Model1 = AhkamService.Search(Options, Obj);
-                if (Model1.IsValid)
+            if (Latest == true)
+            {
+                 Model = AhkamService.GetLatest(Options, Days);
+            }
+            else {
+                //AssemblySearch AssembleSearchInputs = new AssemblySearch();
+                AhkamAdvancedSearch Obj = new AhkamAdvancedSearch();
+                Obj.PredicateAny = new FTSPredicate(string.IsNullOrEmpty(AssembleSearchInputs.Alltext) ? "" : AssembleSearchInputs.Alltext, (FTSSqlModes)AssembleSearchInputs.alltextSearchType);
+                Obj.PredicateHay2a = new FTSPredicate(string.IsNullOrEmpty(AssembleSearchInputs.hay2a) ? "" : AssembleSearchInputs.hay2a, (FTSSqlModes)AssembleSearchInputs.hay2aSearchType);
+                Obj.PredicateHaytheyat = new FTSPredicate(string.IsNullOrEmpty(AssembleSearchInputs.hyseyt) ? "" : AssembleSearchInputs.hyseyt, (FTSSqlModes)AssembleSearchInputs.hyseytSearchType);
+                Obj.PredicateMabade2 = new FTSPredicate(string.IsNullOrEmpty(AssembleSearchInputs.Mabdaa) ? "" : AssembleSearchInputs.Mabdaa, (FTSSqlModes)AssembleSearchInputs.MabdaaSearchType);
+                Obj.PredicateWakae3 = new FTSPredicate(string.IsNullOrEmpty(AssembleSearchInputs.waka23) ? "" : AssembleSearchInputs.waka23, (FTSSqlModes)AssembleSearchInputs.waka23SearchType);
+                Obj.CaseDatefrom = AssembleSearchInputs.dateGalsaFrom;
+                Obj.CaseDateTo = AssembleSearchInputs.dateGalsaTo;
+                Obj.CaseYear = AssembleSearchInputs.caseYear;
+                Obj.CaseNo = AssembleSearchInputs.caseNo;
+                Obj.CountryIDs = AssembleSearchInputs.country == "0" ? "" : AssembleSearchInputs.country;
+                Obj.IFAgree = AssembleSearchInputs.MahkamaReplay == "0" ? "" : AssembleSearchInputs.MahkamaReplay;
+                Obj.Ma7akemIds = AssembleSearchInputs.mahakem;
+                Obj.OfficeSuffix = AssembleSearchInputs.omarGroup;
+                Obj.OfficeYear = AssembleSearchInputs.officeYear;
+                Obj.PageNo = AssembleSearchInputs.pageNo;
+                Obj.PartNo = AssembleSearchInputs.partNo;
+                Model = AhkamService.Search(Options, Obj);
+            }
+          //  AhkamPresentation Model1 = AhkamService.Search(Options, Obj);
+                if (Model.IsValid)
                 {
-                    return View("SearchResult", Model1);
+                    return View("SearchResult", Model);
             }
                 else
                 {
-                    return View();
+                    return View("SearchResult");
                 }
            
         }
 
-        public IActionResult Latest(int Days = 10,int PageNo = 1, int Sort=5, int pageSize = 10)
-        {
-            AhkamSearchOptions Options = new AhkamSearchOptions { PageNo = PageNo, SortBy = (AhkamSortColumns)Sort , SortDirection = SearchSortType.DESC ,PageSize= pageSize };
-            AhkamPresentation Model = AhkamService.GetLatest(Options, Days);
-            return View("SearchResult", Model);
-        }
+        //public IActionResult Latest(int Days = 10, int PageNo = 1, int Sort = 5, int pageSize = 10, int typeView = 1)
+        //{
+        //    AhkamSearchOptions Options = new AhkamSearchOptions { PageNo = PageNo, SortBy = (AhkamSortColumns)Sort, SortDirection = SearchSortType.DESC, PageSize = pageSize };
+        //    AhkamPresentation Model = AhkamService.GetLatest(Options, Days);
+        //    return View("SearchResult", Model);
+        //}
 
         public IActionResult View(int ID)
         {

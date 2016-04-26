@@ -96,11 +96,13 @@
             .controller('ahkamCtrl', function ($http, $rootScope, SearchData) {
 
         
-                SearchData.searchType = -2; 
+                //SearchData.searchType = -2; 
+                SearchData.searchType = 0;
                 SearchData.newSearch = 1;
                 SearchData.SortChange=0;
                 $rootScope.currentPage = 1;
                 $rootScope.sortType = 5;
+                SearchData.Latest = true;
                 SearchData.GetSearch();
 
 
@@ -174,6 +176,7 @@
                      SearchData.SortChange = 0;
                      $rootScope.currentPage = 1;
                      SearchData.AssembleSearchInputs = $scope.Inputs;
+                     SearchData.Latest = false;
                      SearchData.GetSearch();
 
 
@@ -249,34 +252,51 @@
                 data.AdvancedSearchInputs = {};
                 data.TotalCount = 0;
                 data.currentPage = 1;
-                
-           
+                data.typeView = 1;  //rows - grid - table 
+                data.days = 10;
+                data.Latest = true;
 
-
-              data.GetSearch = function () {
+                data.GetSearch = function () {
+                  
                     if (data.searchType === 0) // AssymbleSearch
                     {
                         $.post('/Ahkam/SearchResultAssembly', {
                             "AssembleSearchInputs": data.AssembleSearchInputs,
                             "PageNo": $rootScope.currentPage,
                             "Sort": $rootScope.sortType,
-                            "pageSize": data.pageSize
+                            "pageSize": data.pageSize,
+                            "Latest": data.Latest,
+                            "Days": data.days,
+                            "typeView": data.typeView
                             }, function (d) {
                                 searchOptionAfterAjax(d);
                         })
                     }
                     else if (data.searchType === -2) // loadPage
                     {
-                        $http.get('/Ahkam/Latest', {
-                            params: {
-                                "Days": 10,
-                                "PageNo": $rootScope.currentPage,
-                                "Sort": $rootScope.sortType,
-                                "pageSize": data.pageSize
-                            }
-                        }).then(function (d) {
-                            searchOptionAfterAjax(d.data);
-                        });
+                        //$.post('/Ahkam/SearchResultAssembly', {
+                        //    "AssembleSearchInputs": data.AssembleSearchInputs,
+                        //    "PageNo": $rootScope.currentPage,
+                        //    "Sort": $rootScope.sortType,
+                        //    "pageSize": data.pageSize,
+                        //    "Latest": true,
+                        //    "Days": 10,
+                        //    "typeView": data.typeView
+                        //}, function (d) {
+                        //    searchOptionAfterAjax(d);
+                        //})
+
+                        //$http.get('/Ahkam/Latest', {
+                        //    params: {
+                        //        "Days": 10,
+                        //        "PageNo": $rootScope.currentPage,
+                        //        "Sort": $rootScope.sortType,
+                        //        "pageSize": data.pageSize,
+                        //        "typeView": data.typeView
+                        //    }
+                        //}).then(function (d) {
+                        //    searchOptionAfterAjax(d.data);
+                        //});
                     }
 
                 };
