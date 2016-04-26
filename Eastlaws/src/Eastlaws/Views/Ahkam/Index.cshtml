@@ -63,9 +63,9 @@
                                 <h5>{{catgoryName(data.CategoryID)}}</h5>
                                 <div class='well' style='max-height:200px;overflow: auto;'>
                                     <ul class='list-group' style='max-height:200px;overflow: auto;'>
-                                        <label ng-repeat="details in catList | filter :{CategoryID:data.CategoryID}" class='list-group-item'>
-                                            <input type='checkbox' ng-click='changeCheck(details,$event)' /> {{details.Name}} - ({{details.Count}})
-                                        </label>
+                                        <li ng-repeat="details in catList | filter :{CategoryID:data.CategoryID}" class='list-group-item'>
+                                            <input type='checkbox' ng-click='changeCheck(details,$event)' />&nbsp; <label> {{details.Name}} - ({{details.Count}})</label>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -540,5 +540,7 @@
             //---
 
         })();
+
+    
 
     </script>

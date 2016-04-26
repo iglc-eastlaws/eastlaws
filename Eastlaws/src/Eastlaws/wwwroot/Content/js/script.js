@@ -49,6 +49,7 @@ $(document).ready(function () {
         scrollButtons: "1"
 
     });
+
     // muilt check
 
     // Hide Element Filter
@@ -76,7 +77,18 @@ $(document).ready(function () {
         //}
 
     });
+    // Row Tabel View
 
+
+    $(".hokmView").click(function () {
+        if ($(this).hasClass("active")) {
+           
+            $(this).removeClass("active");
+        } else {
+            $(this).addClass("active");
+        }
+       
+    });
     // toolbar
     $(".format-result li a.sort i").click(function () {
        
