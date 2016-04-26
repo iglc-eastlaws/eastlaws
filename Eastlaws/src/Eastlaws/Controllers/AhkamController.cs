@@ -11,10 +11,7 @@ using System.Dynamic;
 
 namespace Eastlaws.Controllers
 {
-    public class aaa : DynamicObject
-    {
 
-    }
     public class AhkamController : Controller
     {
         public IActionResult Index()
@@ -115,6 +112,19 @@ namespace Eastlaws.Controllers
         }
 
 
+
+        public IActionResult FullHokmView(int ID)
+        {
+            var Model = AhkamService.GetHokm(ID, null);
+            if (Model.IsValid)
+            {
+                return View(Model);
+            }
+            else
+            {
+                return View();
+            }
+        }
         public IActionResult TasfeyaList  (int QueryID)
         {
             if (QueryID == 0)

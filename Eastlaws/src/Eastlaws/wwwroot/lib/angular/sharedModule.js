@@ -60,7 +60,7 @@
                 });
 
                 scope.getCurrentPage = function (p) {
-                   console.log(scope.currentPage + ' ' + scope.pagesCount);
+                  // console.log(scope.currentPage + ' ' + scope.pagesCount);
                     scope.currentPage = p;
                 }
 
