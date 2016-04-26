@@ -1,4 +1,6 @@
-﻿@model Eastlaws.Entities.AhkamPresentation
+﻿@using System.Text;
+@using Eastlaws.Infrastructure;
+@model Eastlaws.Entities.AhkamPresentation
 @{
     Layout = null;
 
@@ -25,16 +27,21 @@
 
     }
 
+    if ((ViewBag.typeView == 1))
+    {
+        <h3>Table </h3>
+
+    }
+    else if ((ViewBag.typeView == 2) || (ViewBag.typeView == 3))
+    {
     @foreach (var item in Model.AhkamList)
     {
         countrow += 1;
 
         var Fakrat = Model.FakaratList.Where(p => p.HokmID == @item.ID).ToArray();
-        var PredicatesHighlight = Model.TextPredicates;
-        int MaxFakraTextLen = 250;
 
-
-        <div class="result-block">
+         <div class="result-block @((ViewBag.typeView == 3)?"col-md-4":"")">
+ 
             <h4><i class="fa fa-bank fa-2x icon"></i></h4>
             <div class="row-search selector">
 
@@ -43,30 +50,11 @@
                 @for (int i = 0; i < Fakrat.Length; i++)
                 {
                     var CurrentFakra = Fakrat[i];
-                    string FakraText = CurrentFakra.Text;
-                    if (PredicatesHighlight == null || PredicatesHighlight.Count == 0)
-                    {
-                        FakraText = FakraText.Substring(0, Math.Min(FakraText.Length, MaxFakraTextLen));
-
-                    }
-                    else
-                    {
-                        var MatchingPredicate = (from x in PredicatesHighlight
-                                                 where Convert.ToInt32(x.Tag) == CurrentFakra.FakraNo || Convert.ToInt32(x.Tag) == 5000
-                                                 orderby Convert.ToInt32(x.Tag)
-                                                 select x ).FirstOrDefault();
-
-                        if (MatchingPredicate == null)
-                        {
-                            FakraText = FakraText.Substring(0, Math.Min(FakraText.Length, MaxFakraTextLen));
-                        }
-                        else
-                        {
-                            FakraText = Eastlaws.Infrastructure.Temp.HighlightTextTrim(FakraText, MatchingPredicate.Input, MatchingPredicate.SqlMode, MaxFakraTextLen);
-                        }
-                    }
-
-                    <p c-font-scale="{{fontsize}}">
+                    string FakraText = gerFakraText(CurrentFakra.Text,
+                                                    CurrentFakra.FakraNo,
+                                                    Model.TextPredicates).ToString();
+             
+                    <p>
                         <span class="fakr-title-search" style="color:red;">
                             @CurrentFakra.Title :
                         </span>
@@ -101,9 +89,47 @@
     {
         <h3>لا يوجد نتائج</h3>
     }
-}
-else if (Model == null)
-{
+    }
+    else if (Model == null)
+    {
     <h3>لا يوجد نتائج</h3>
+    }
 }
 
+
+
+
+
+
+@functions{
+    public static StringBuilder gerFakraText(string FakraText,int FakraNo, List<FTSPredicate> PredicatesHighlight)
+    {
+        var Result = new StringBuilder();
+        int MaxFakraTextLen = 250;
+
+        if (PredicatesHighlight == null || PredicatesHighlight.Count == 0)
+        {
+            FakraText = FakraText.Substring(0, Math.Min(FakraText.Length, MaxFakraTextLen));
+
+        }
+        else
+        {
+            var MatchingPredicate = (from x in PredicatesHighlight
+                                     where Convert.ToInt32(x.Tag) == FakraNo || Convert.ToInt32(x.Tag) == 5000
+                                     orderby Convert.ToInt32(x.Tag)
+                                     select x).FirstOrDefault();
+
+            if (MatchingPredicate == null)
+            {
+                FakraText = FakraText.Substring(0, Math.Min(FakraText.Length, MaxFakraTextLen));
+            }
+            else
+            {
+                FakraText =  Temp.HighlightTextTrim(FakraText, MatchingPredicate.Input, MatchingPredicate.SqlMode, MaxFakraTextLen);
+            }
+        }
+        Result.Append(FakraText);
+        return Result;
+    }
+
+}

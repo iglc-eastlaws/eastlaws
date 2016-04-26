@@ -240,7 +240,11 @@
 
                  $scope.changeTypeView = function (v)
                  {
-                     //alert(v);
+            
+                     SearchData.typeView = v;
+                     SearchData.newtasfya = false;
+                     SearchData.GetSearch();
+
                  }
 
              })
@@ -257,14 +261,23 @@
                 data.AdvancedSearchInputs = {};
                 data.TotalCount = 0;
                 data.currentPage = 1;
-                data.typeView = 1;  //rows - grid - table 
+                data.typeView = 2;  //rows - grid - table 
+             
                 data.days = 10;
                 data.Latest = true;
+                data.newtasfya = true;
 
                 data.GetSearch = function () {
                   
                     if (data.searchType === 0) // AssymbleSearch
                     {
+                       // console.log(data.Latest + '   ' + data.typeView + '   ' + data.searchType + '  ' + $rootScope.currentPage)
+                        //until to be servise not rootscope
+                        if (($rootScope.currentPage == 0) || ($rootScope.currentPage == undefined))
+                        {
+
+                            $rootScope.currentPage = 1;
+                        }
                         $.post('/Ahkam/SearchResultAssembly', {
                             "AssembleSearchInputs": data.AssembleSearchInputs,
                             "PageNo": $rootScope.currentPage,
@@ -275,6 +288,9 @@
                             "typeView": data.typeView
                             }, function (d) {
                                 searchOptionAfterAjax(d);
+                                if (data.newtasfya == true) {
+                                    getTasfya();
+                                }
                         })
                     }
                     //else if (data.searchType === -2) // loadPage
@@ -326,7 +342,7 @@
                     if (searchresult.find('#resultCount').length) {
                         if (data.newSearch == 1) {
                             HtmlResultCount();
-                            getTasfya();
+                           // getTasfya();
                         }
 
                       
