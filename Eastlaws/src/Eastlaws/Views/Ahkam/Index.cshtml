@@ -252,6 +252,26 @@
                 $scope.pageSizes = [10, 50, 100];
                 $scope.pSize = 10;
                 $scope.sortTitle = " النتائج";
+      
+                $scope.fontsize = function (size) {
+
+                    // var sizearr = [0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3];
+                    var sizearr = [8,10, 12, 14, 16, 18, 20];
+                    var currentSize = parseFloat($('.fakra-text').css('font-size')) ;
+                    if (size == '+')
+                    {
+                        var newsize = sizearr.NextSize(currentSize);
+                        $('.fakra-text').css('font-size', newsize + 'px');
+                    }
+                    else if (size == '-')
+                    {
+                        var newsize = sizearr.PrevSize(currentSize);
+                        $('.fakra-text').css('font-size', newsize + 'px');
+                     } else
+                    {
+                        $('.fakra-text').css('font-size', 14 + 'px');
+                    }
+                }
 
                  $scope.changeSort = function (type) {
                      $rootScope.sortType = type;
@@ -333,7 +353,7 @@
 
                             $rootScope.currentPage = 1;
                         }
-                        console.log(data.AssembleSearchInputs);
+                     //   console.log(data.AssembleSearchInputs);
                         $('#searchResult').html('<img src="/content/images/preload.gif" />');
                         $.post('/Ahkam/SearchResultAssembly', {
                             "AssembleSearchInputs": data.AssembleSearchInputs,
@@ -573,6 +593,41 @@
 
         })();
 
-    
+        //---
+        Array.prototype.NextSize = function (currentsize) {
+            var NextSize = 0;
+            var arr = this;
+            var arrlenth = arr.length;
+        
+            for (var i = 0; i < arrlenth; i++) {
+                if (currentsize < arr[i])
+                {
+                    NextSize = arr[i];
+                    return NextSize;
+                }
+            }
+            if (NextSize == 0)
+            {
+                NextSize = arr[arrlenth-1];
+            }
+            return NextSize;
+        }
+
+        Array.prototype.PrevSize = function (currentsize) {
+            var PrevSize = 0;
+            var arr = this;
+            var arrlenth = arr.length;
+            for (var i = arrlenth ; i >= 0; i--) {
+                if (currentsize > arr[i]) {
+                    PrevSize = arr[i];
+                    return PrevSize;
+                }
+            }
+            if (PrevSize == 0) {
+                PrevSize = arr[0];
+            }
+            return PrevSize;
+        }
+
 
     </script>
