@@ -81,6 +81,10 @@ Join FehresCategories FC on FC.ProgCountryID = FPC.ID
 Order By FP.MyOrder , C.ID , FC.MyOrder
 
 
+Go 
+
+
+
 Select * From VW_FehresMap
 Where ProgramName Like N'%דהַÚ%'
 
