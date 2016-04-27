@@ -297,7 +297,9 @@
                             }, function (d) {
                                 searchOptionAfterAjax(d);
                                 if (data.newtasfya == true) {
-                                    getTasfya();
+                                  //  $scope.apply(function () {
+                                        getTasfya();
+                                    //});
                                 }
                         })
                     }
@@ -339,6 +341,7 @@
               }
 
               function getTasfya() {
+                 
                  tasfiaAllData.getTasyaList();
                }
 
