@@ -57,8 +57,8 @@
                
                     @*@Html.Partial("TasfyaSearch")*@
                       @*<div id="TasfyaSearch"></div> *@
-         
-                        <div>
+                    <div id="tasfyaLood" style="display:none"><img src="/content/images/preload.gif" /></div>
+                        <div id="Div-tasfya" style="display:none">
                             <div class='filter-section' ng-repeat="data in catList | unique: 'CategoryID'">
                                 <h5>{{catgoryName(data.CategoryID)}}</h5>
                                 <div class='well' style='max-height:200px;overflow: auto;'>
@@ -82,12 +82,21 @@
 
     <script>
       
-        //-------------------------------- >>>> select all and none select all
-        //-------------------------------- >>>> looooooooding   
-        //-------------------------------- >>>> OMAR GROUP
-
-        // tomorrow Task
-        //convert rootscope to service
+        //************** tasks ***********************//
+        //------------- done ------------------- >>>> looooooooding  
+        //-------------- done ------------------ >>>> OMAR GROUP show and hide with egypt country
+        //------------  done ---------------- >>>> select all and none select all
+        //---------------  done  --------------- >>>> when user sernd all contries or all ma7akem (send as null)
+        //-------------------------------- >>> change font size
+        //-------------------------------- >>> desc and asc in sort
+        //-------------------------------- >>> table height equal to hokm div
+        //-------------------------------- >>> filter section from server
+        //-------------------------------- >>> convert $rootscope to service
+        //-------------------------------- >>> fixed Paging bugs
+        //-------------------------------- >>> hide and show right section
+        //-------------------------------- >>> arrange js code 
+        //-------------------------------- >>> switch between  3 type views  changes in css only 
+        
         "use strict";
         (function () {
 
@@ -108,7 +117,7 @@
 
             })
              .controller('assembleSearchCtrl', function ($scope, SearchData, $rootScope, $http) {
-            
+                 $scope.omarGroupShow = false;
                  $scope.Inputs = {};
                  $scope.date = {};
                  
@@ -121,15 +130,20 @@
     
 
                  $scope.updatecountry = function () {
+                     $scope.omarGroupShow = false;
                      $scope.Mahakem = [];
                      $scope.choiceMahakem = [];
                      $scope.Inputs.country = $scope.country.ID;
                      $scope.Inputs.mahakem = "";
                      if ($scope.country.ID > 0) {
+
                          $http.get('/Ahkam/GetMahakem?countryID=' + $scope.country.ID + '', {}).then(function (d) {
                              $scope.Mahakem = d.data;
                          });
-                     }
+                         if ($scope.country.ID == 1) {
+                             $scope.omarGroupShow = true;
+                         } 
+                     } 
                  }
 
                  $http.get('/Ahkam/GetCountries', {}).then(function (d) {
@@ -141,6 +155,23 @@
 
                  $scope.updateMahkamaReplies = function () {
                      $scope.Inputs.MahkamaReplay = $scope.MahkamaReplay.ID;
+                 }
+
+                 $scope.selectCheckboxes = function (val) {
+                     if (val === 1)
+                     {
+                         $('.ma7kama_checkbox').prop('checked', true);
+                         $scope.Mahakem.forEach(function (e) {
+                             $scope.choiceMahakem.push(e.ID);
+                         });
+                         $scope.Inputs.mahakem = $scope.choiceMahakem.join(',');
+                     }
+                     else if (val === 0)
+                     {
+                         $('.ma7kama_checkbox').prop('checked', false);
+                         $scope.choiceMahakem.splice(0, $scope.choiceMahakem.length);
+                         $scope.Inputs.mahakem = '';
+                     }
                  }
 
                  $http.get('/Ahkam/GetMahkamaReplies', {}).then(function (d) {
@@ -169,8 +200,15 @@
                  }
               
  
+                 function setAllMhakem()
+                 {
+                     if ($scope.Mahakem.length === $scope.choiceMahakem.length)
+                     { $scope.Inputs.mahakem = ''; }
+                 }
 
                  $scope.search = function () {
+                     setAllMhakem();
+
                      SearchData.searchType = 0;
                      SearchData.newSearch = 1;
                      SearchData.SortChange = 0;
@@ -218,6 +256,7 @@
                  $scope.changeSort = function (type) {
                      $rootScope.sortType = type;
                      $rootScope.currentPage = 1;
+                     SearchData.newtasfya = false;
                      SearchData.GetSearch();
                      switch (type)
                      {
@@ -249,6 +288,7 @@
                      $rootScope.currentPage = 1;
                      SearchData.currentPage = 1;
                      SearchData.pageSize = $scope.pSize;
+                     SearchData.newtasfya = false;
                      SearchData.GetSearch();
    
                  }
@@ -293,6 +333,8 @@
 
                             $rootScope.currentPage = 1;
                         }
+                        console.log(data.AssembleSearchInputs);
+                        $('#searchResult').html('<img src="/content/images/preload.gif" />');
                         $.post('/Ahkam/SearchResultAssembly', {
                             "AssembleSearchInputs": data.AssembleSearchInputs,
                             "PageNo": $rootScope.currentPage,
@@ -301,39 +343,16 @@
                             "Latest": data.Latest,
                             "Days": data.days,
                             "typeView": data.typeView
-                            }, function (d) {
-                                searchOptionAfterAjax(d);
-                                if (data.newtasfya == true) {
-                                    getTasfya();
-                                }
-                        })
+                        }, function (d) {
+                            searchOptionAfterAjax(d);
+                            if (data.newtasfya == true) {
+                                //  $scope.apply(function () {
+                                getTasfya();
+                                //});
+                            }
+                        });
                     }
-                    //else if (data.searchType === -2) // loadPage
-                    //{
-                        //$.post('/Ahkam/SearchResultAssembly', {
-                        //    "AssembleSearchInputs": data.AssembleSearchInputs,
-                        //    "PageNo": $rootScope.currentPage,
-                        //    "Sort": $rootScope.sortType,
-                        //    "pageSize": data.pageSize,
-                        //    "Latest": true,
-                        //    "Days": 10,
-                        //    "typeView": data.typeView
-                        //}, function (d) {
-                        //    searchOptionAfterAjax(d);
-                        //})
-
-                        //$http.get('/Ahkam/Latest', {
-                        //    params: {
-                        //        "Days": 10,
-                        //        "PageNo": $rootScope.currentPage,
-                        //        "Sort": $rootScope.sortType,
-                        //        "pageSize": data.pageSize,
-                        //        "typeView": data.typeView
-                        //    }
-                        //}).then(function (d) {
-                        //    searchOptionAfterAjax(d.data);
-                        //});
-                    //}
+                  
 
                 };
 
@@ -346,6 +365,7 @@
               }
 
               function getTasfya() {
+                 
                  tasfiaAllData.getTasyaList();
                }
 
@@ -516,10 +536,15 @@
                 datalist.listAllTasfya = [];
 
                 datalist.getTasyaList = function () {
+
+                    $('#tasfyaLood').show();
+                    $('#Div-tasfya').hide();
                     $http.get('/Ahkam/TasfyaListJson', {}).then(function (d) {
+                        $('#Div-tasfya').show(); $('#tasfyaLood').hide();
                         datalist.listAllTasfya = d.data;
                         //tasfiaData.resetlist();
-                      $rootScope.$broadcast('getTasfiyaList');
+                        $rootScope.$broadcast('getTasfiyaList');
+                        
 
                     })
 
