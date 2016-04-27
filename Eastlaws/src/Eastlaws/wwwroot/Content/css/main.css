@@ -363,12 +363,12 @@ nav.sidebar:hover{margin-right: 0px;}
 /*.list-content .col-md-4:nth-child(3n+1){ padding-right:0px; padding-left:0px;}
 .list-content .col-md-4:nth-child(3n+0){ padding-right:0px; padding-left:0px;}*/
 .result-block h4{margin:0 0 3px; font:bold 1em arial; color:#333; /*background-image:linear-gradient(to bottom, #d9b163 0px, #f0c675 100%);*/ background-color:#a3bdc9; border:1px solid #c5c5c5; display:none;}
-.row-search, .view-law, .tabel-views{ background: #fff none repeat scroll 0 0;border: 1px solid rgba(224, 184, 105, 0.57);box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); padding:0 12px; transition:all 0.4s ease 0s;}
+.row-search, .view-law{ background: #fff none repeat scroll 0 0;border: 1px solid rgba(224, 184, 105, 0.57);box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); padding:0 12px; transition:all 0.4s ease 0s;}
+.tabel-views{ border:0 none; background-color:transparent; box-shadow:none;}
 .view-law{ }
 .tabel-views{ padding:0px;}
 .tabel-views h3{ padding:0 12px; margin:5px 0;}
-.tabel-views h3 .main-title{ font-size:0.60em;}
-
+.tabel-views h3 .main-title{ color: #4c3b35; font-size: 0.5em;text-shadow: 0 0 0;}
 .row-search:hover{ background-color:#FFFFEA; /*#e6e6e6*/}
 .row-search h3,  .view-law h1{ /*background-color:#B6E1E1;*/ font-size:0.9em; padding:12px 0; margin:0px; line-height:1.9em; color:#9f7324;}
 .view-law h1{ font-size:1.1em;}
@@ -478,7 +478,7 @@ p.total-chart {color:#666; font:bold 14px arial;}
 .fakr-title i{ color:#675650;}
 .number-title{ text-align:center; margin:10px 0;}
 .number-title span{ padding:6px 12px; background-color:#675650; color:#FFF; border:3px solid rgba(228, 196, 134, 1); font:bold 0.8em arial;}
-.multi-check .checkbox{ border:1px solid #CCC; padding:12px 12px; margin:13px 10px 20px; }
+.multi-check .checkbox{ border:1px solid #CCC; padding:12px 12px; margin:13px 10px 20px; overflow-y:auto; height:300px; }
 .badge{ background-color:#675650;}
 /*select Date*/
 .search .c-date-picker{ border-radius:0px; border:0 none; background-color: #D9B672; min-width:140px;}
@@ -506,34 +506,30 @@ p.total-chart {color:#666; font:bold 14px arial;}
 margin-bottom: 0;
 border: none;
 }
-.widget-content #hokmview{ padding:0 12px; overflow-y:auto;}
+.widget-content #hokmview{ padding:0 12px; overflow-y:auto; height:403px; border: 1px solid rgba(224, 184, 105, 0.57);}
 .widget.widget-table .widget-content {padding: 0;}
+.widget.widget-table .col-lg-7{ padding-left:8px;}
 .widget .widget-header + .widget-content {border-top: none;border-radius: 0px;}
 .widget .widget-content {padding: 20px 15px 15px;background: #FFF;border-radius: 0px;}
 .widget .widget-header {
 position: relative;
 height: 40px;
 line-height: 40px;
-background: #E9E9E9;
-background: -moz-linear-gradient(top, #fafafa 0%, #e9e9e9 100%);
-background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fafafa), color-stop(100%, #e9e9e9));
-background: -webkit-linear-gradient(top, #fafafa 0%, #e9e9e9 100%);
-background: -o-linear-gradient(top, #fafafa 0%, #e9e9e9 100%);
-background: -ms-linear-gradient(top, #fafafa 0%, #e9e9e9 100%);
-background: linear-gradient(top, #fafafa 0%, #e9e9e9 100%);
+background: #F8E9C9;border: 1px solid rgba(224, 184, 105, 0.57);box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
 text-shadow: 0 1px 0 #fff;
 box-shadow: 0 2px 5px rgba(0,0,0,0.1),inset 0 1px 0 white,inset 0 -1px 0 rgba(255,255,255,0.7);
-border-bottom: 1px solid #bababa;
+
 filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FAFAFA', endColorstr='#E9E9E9');
 -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#FAFAFA', endColorstr='#E9E9E9')";
-border: 1px solid #D5D5D5;
+
 -webkit-background-clip: padding-box;
 }
 
 thead { background-color:#686868;  color:#efdcb6; font:0.8em "Droid Arabic Kufi",arial; text-align:center;
 display: table-header-group;vertical-align: middle;border-color: inherit;}
 .tabel-views .table > thead > tr > th{ padding:8px 5px;}
-.hokmView.active, tr.hokmView:hover, .table-striped > tbody> tr:nth-child(2n+1):hover  > td, .table-striped > tbody > tr:nth-child(2n+1):hover > th:hover{ background-color:#675650!important; color:#E8BF6F; cursor:pointer;}
+.hokmView.active, .hokmView.active td, tr.hokmView:hover, .table-striped > tbody> tr:nth-child(2n+1):hover  > td, .table-striped > tbody > tr:nth-child(2n+1):hover > th:hover{ background-color:#675650!important; color:#E8BF6F; cursor:pointer;}
 
 
 

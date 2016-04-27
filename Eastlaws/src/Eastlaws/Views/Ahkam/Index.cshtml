@@ -234,6 +234,13 @@
        
             .controller('searchResultCtrl', function ($scope) {
                 $(document).on('click', '.hokmView', function () {
+                    $(".hokmView").removeClass("active");
+                    if ($(this).hasClass("active")) {
+
+                        $(this).removeClass("active");
+                    } else {
+                        $(this).addClass("active");
+                    }
                     var idHokm = $(this).data('idhokm');
                     $.get('/Ahkam/FullHokmView', { 'ID': idHokm },function (data) {
                             $('#hokmview').html(data)

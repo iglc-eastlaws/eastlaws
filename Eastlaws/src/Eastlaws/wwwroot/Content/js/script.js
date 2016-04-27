@@ -80,29 +80,29 @@ $(document).ready(function () {
     // Row Tabel View
 
 
-    $(".hokmView").click(function () {
-        if ($(this).hasClass("active")) {
-           
-            $(this).removeClass("active");
-        } else {
-            $(this).addClass("active");
-        }
+    $(function () {
+       // var newheight = $(window).innerHeight();
+       // var newHeight = $(".list-table table").height();
+        //alert(newHeight);
+
+        //  $("#hokmview").css({ 'height': ($(window).height()) + 'px' });
        
+        
     });
     // toolbar
     $(".format-result li a.sort i").click(function () {
        
-            if ($(this).hasClass("fa-sort-numeric-asc active")) {
-                $(this).prev().addClass("active");
-                $(this).removeClass("active");
+        if ($(this).hasClass("fa-sort-numeric-asc active")) {
+            $(this).prev().addClass("active");
+            $(this).removeClass("active");
               
-            }else{
-                $(this).next().addClass("active");
-                $(this).removeClass("active");
+        }else{
+            $(this).next().addClass("active");
+            $(this).removeClass("active");
               
-            }
+        }
 
-        });
+    });
 
 
 
