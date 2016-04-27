@@ -130,7 +130,7 @@ namespace Eastlaws.Controllers
             if (QueryID == 0)
                 QueryID = 56;
 
-            List<AhkamTasfeyaCategories> UsedCategories;
+            List<AhkamTasfeyaCategory> UsedCategories;
             var Data = AhkamTasfeya.List(QueryID, AhkamSearchTypes.Advanced,out UsedCategories, "", "", null);
             return View(Data);
         }
@@ -142,7 +142,7 @@ namespace Eastlaws.Controllers
 
          public JsonResult TasfyaListJson()
         {
-            List<AhkamTasfeyaCategories> UsedCategories;
+            List<AhkamTasfeyaCategory> UsedCategories;
             var Data = AhkamTasfeya.List(56, AhkamSearchTypes.Advanced, out UsedCategories, "", "", null);
             return new JsonResult(Data);
         }

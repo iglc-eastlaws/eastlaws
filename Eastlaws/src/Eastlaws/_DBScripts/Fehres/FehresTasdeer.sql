@@ -38,8 +38,7 @@ Insert EastlawsData..FehresItemsDetails (ID , FehresItemID , ServiceID ,ServiceI
 Select - ID , Fehres_ID ,EastlawsData.dbo.GetServiceIDFromFehres(Detail_Type) ,Detail_Rec_ID , MyOrder , Start_Color , End_Color   From General_Fehres_AH_Tash
 Where EastlawsData.dbo.GetServiceIDFromFehres(Detail_Type) is not null 
 Union All 
-Select ID , Master_ID , EastlawsData.dbo.GetServiceIDFromFehres(ProgType) , Rec_ID , MyOrder , Start_Color , End_Color From General_Fehres_Details
-Where EastlawsData.dbo.GetServiceIDFromFehres(ProgType) is not null 
+Select ID , Master_ID , 1, Rec_ID , MyOrder , Start_Color , End_Color From General_Fehres_Details
 
 Go 
 
