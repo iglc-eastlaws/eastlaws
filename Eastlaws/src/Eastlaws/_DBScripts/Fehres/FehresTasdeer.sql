@@ -39,7 +39,6 @@ Select - ID , Fehres_ID ,EastlawsData.dbo.GetServiceIDFromFehres(Detail_Type) ,D
 Where EastlawsData.dbo.GetServiceIDFromFehres(Detail_Type) is not null 
 Union All 
 Select ID , Master_ID , 1, Rec_ID , MyOrder , Start_Color , End_Color From General_Fehres_Details
-Where EastlawsData.dbo.GetServiceIDFromFehres(ProgType) is not null 
 
 Go 
 
