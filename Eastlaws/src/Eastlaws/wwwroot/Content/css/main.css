@@ -511,23 +511,12 @@ border: none;
 .widget.widget-table .col-lg-7{ padding-left:8px;}
 .widget .widget-header + .widget-content {border-top: none;border-radius: 0px;}
 .widget .widget-content {padding: 20px 15px 15px;background: #FFF;border-radius: 0px;}
-.widget .widget-header {
-position: relative;
-height: 40px;
-line-height: 40px;
+.widget .widget-header {position: relative;height: 40px;line-height: 40px;
 background: #F8E9C9;border: 1px solid rgba(224, 184, 105, 0.57);box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-
-text-shadow: 0 1px 0 #fff;
-box-shadow: 0 2px 5px rgba(0,0,0,0.1),inset 0 1px 0 white,inset 0 -1px 0 rgba(255,255,255,0.7);
-
+text-shadow: 0 1px 0 #fff;box-shadow: 0 2px 5px rgba(0,0,0,0.1),inset 0 1px 0 white,inset 0 -1px 0 rgba(255,255,255,0.7);
 filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FAFAFA', endColorstr='#E9E9E9');
--ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#FAFAFA', endColorstr='#E9E9E9')";
-
--webkit-background-clip: padding-box;
-}
-
-thead { background-color:#686868;  color:#efdcb6; font:0.8em "Droid Arabic Kufi",arial; text-align:center;
-display: table-header-group;vertical-align: middle;border-color: inherit;}
+-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#FAFAFA', endColorstr='#E9E9E9')";-webkit-background-clip: padding-box;}
+thead { background-color:#686868;  color:#efdcb6; font:0.8em "Droid Arabic Kufi",arial; text-align:center;display: table-header-group;vertical-align: middle;border-color: inherit;}
 .tabel-views .table > thead > tr > th{ padding:8px 5px;}
 .hokmView.active, .hokmView.active td, tr.hokmView:hover, .table-striped > tbody> tr:nth-child(2n+1):hover  > td, .table-striped > tbody > tr:nth-child(2n+1):hover > th:hover{ background-color:#675650!important; color:#E8BF6F; cursor:pointer;}
 
