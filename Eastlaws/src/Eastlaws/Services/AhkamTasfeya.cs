@@ -9,7 +9,7 @@ namespace Eastlaws.Services
 {
     public enum AhkamTasfeyaCategories
     {
-        Country = 0, Ma7kama = 1, CrimeType = 2, RelatedTash = 3, Fehres = 4, Defoo3 = 5, Year = 6, JudgeYear = 7, Ma7kamaAction = 8
+        Country = 0, Ma7kama = 1, CrimeType = 2, RelatedTash = 3, Fehres = 4, Defoo3 = 5, Year = 6, JudgeYear = 7, Ma7kamaAction = 8 , Mana3y = 9
     }
     public class TasfeyaItem
     {
@@ -27,6 +27,18 @@ namespace Eastlaws.Services
         public static IEnumerable<TasfeyaItem> List (int QueryID , AhkamSearchTypes SearchType, out List<AhkamTasfeyaCategories> UsedCategories , string TasfeyaFilter = "" , string PreviousTasfeyaQuery  = "", AhkamTasfeyaCategories? CategorySender = null )
         {
             List<AhkamTasfeyaCategories> Cats = new List<AhkamTasfeyaCategories>();
+
+            if (false)
+            {
+                Cats.Add(AhkamTasfeyaCategories.RelatedTash);
+
+                Cats.Add(AhkamTasfeyaCategories.CrimeType);
+                Cats.Add(AhkamTasfeyaCategories.Defoo3);
+                Cats.Add(AhkamTasfeyaCategories.Fehres);
+                Cats.Add(AhkamTasfeyaCategories.Mana3y);
+                Cats.Add(AhkamTasfeyaCategories.Ma7kamaAction);
+
+            }
 
             Cats.Add(AhkamTasfeyaCategories.Country);
             Cats.Add(AhkamTasfeyaCategories.Ma7kama);
