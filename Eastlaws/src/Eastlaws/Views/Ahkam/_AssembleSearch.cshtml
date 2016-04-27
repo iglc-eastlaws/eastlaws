@@ -26,8 +26,13 @@
 
                     <div class="col-lg-9 col-md-9 col-sm-9 search ">
                         <div class="checkbox">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <a href="javascript:;" ng-click="selectCheckboxes(1)">تحديد الكل</a> &nbsp;&nbsp;
+                                <a href="javascript:;" ng-click="selectCheckboxes(0)">الغاء تحديد الكل</a>
+                            </div>
+
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" ng-repeat="n in Mahakem">
-                                <label><input type="checkbox" ng-click='MahakemCheck(n.ID,$event)' />{{n.Name}} </label>
+                                <label><input class="ma7kama_checkbox" type="checkbox" ng-click='MahakemCheck(n.ID,$event)' />{{n.Name}} </label>
                             </div><hr class="spacer" />
                         </div>
 
@@ -70,7 +75,7 @@
                 <div class="col-lg-3 col-md-3 col-sm-3 col-sm-2 search">
                     <input type="text" class="form-control" id="yearTec" ng-model="Inputs.officeYear">
                 </div>
-                <label for="amor" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title">  مجموعة عمر : <input type="checkbox" id="amor" ng-model="omarGroup" ng-click="omarGroupChecked($event)"></label>
+                <label ng-show="omarGroupShow" for="amor" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title">  مجموعة عمر : <input type="checkbox" id="amor" ng-model="omarGroup" ng-click="omarGroupChecked($event)"></label>
                 <div class="col-lg-3 col-md-3 col-sm-3 search checkbox">
 
                 </div>
