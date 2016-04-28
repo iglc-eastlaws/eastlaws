@@ -59,7 +59,7 @@
                       @*<div id="TasfyaSearch"></div> *@
                     <div id="tasfyaLood" style="display:none"><img src="/content/images/preload.gif" /></div>
                         <div id="Div-tasfya" style="display:none">
-                            <div class='filter-section' ng-repeat="data in catList | unique: 'CategoryID'">
+                            @*<div class='filter-section' ng-repeat="data in catList | unique: 'CategoryID'">
                                 <h5>{{catgoryName(data.CategoryID)}}</h5>
                                 <div class='well' style='max-height:200px;overflow: auto;'>
                                     <ul class='list-group' style='max-height:200px;overflow: auto;'>
@@ -68,7 +68,19 @@
                                         </li>
                                     </ul>
                                 </div>
+                            </div>*@
+
+                            <div class='filter-section' ng-repeat="data in categoryList">
+                                <h5>{{data.Name}}</h5>
+                                <div class='well' style='max-height:200px;overflow: auto;'>
+                                    <ul class='list-group' style='max-height:200px;overflow: auto;'>
+                                        <li ng-repeat="details in tasfyaList | filter :{CategoryID:data.ID}" class='list-group-item'>
+                                            <input type='checkbox' ng-click='changeCheck(details,$event)' />&nbsp; <label> {{details.Name}} - ({{details.Count}})</label>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
+
                         </div>
                     </div>
 
@@ -87,10 +99,11 @@
         //-------------- done ------------------ >>>> OMAR GROUP show and hide with egypt country
         //------------  done ---------------- >>>> select all and none select all
         //---------------  done  --------------- >>>> when user sernd all contries or all ma7akem (send as null)
-        //-------------------------------- >>> change font size
+        //------------- done --------------- >>> change font size
+        //-------------------------------- >>> filter section from server
         //-------------------------------- >>> desc and asc in sort
         //-------------------------------- >>> table height equal to hokm div
-        //-------------------------------- >>> filter section from server
+
         //-------------------------------- >>> convert $rootscope to service
         //-------------------------------- >>> fixed Paging bugs
         //-------------------------------- >>> hide and show right section
@@ -387,7 +400,8 @@
 
               function getTasfya() {
                  
-                 tasfiaAllData.getTasyaList();
+                  tasfiaAllData.getTasyaList();
+                 
                }
 
         
@@ -435,11 +449,17 @@
 
      .controller('tasfyaCtrl', function ($scope, tasfiaData, SearchData, $rootScope, $compile, tasfiaAllData) {
 
-         
-         $scope.catList = [];
+         $scope.categoryList = [];
+         $scope.tasfyaList = [];
+
+         //$scope.catList = [];
 
          $rootScope.$on('getTasfiyaList', function () {
-             $scope.catList = tasfiaAllData.listAllTasfya;
+             $scope.categoryList = tasfiaAllData.listAllCatg;
+             $scope.tasfyaList = tasfiaAllData.listAllTasfya;
+           //  console.log($scope.tasfyaList)
+            // $scope.catList = tasfiaAllData.listAllTasfya;
+             
              console.log('tasfia event fire')
          });
 
@@ -555,15 +575,16 @@
     app.factory('tasfiaAllData', function ($http, $rootScope, tasfiaData) {
                 var datalist = {};
                 datalist.listAllTasfya = [];
-
+                datalist.listAllCatg = [];
                 datalist.getTasyaList = function () {
 
                     $('#tasfyaLood').show();
                     $('#Div-tasfya').hide();
                     $http.get('/Ahkam/TasfyaListJson', {}).then(function (d) {
+                        //console.log(d.data[0]);
                         $('#Div-tasfya').show(); $('#tasfyaLood').hide();
-                        datalist.listAllTasfya = d.data;
-                        //tasfiaData.resetlist();
+                        datalist.listAllTasfya = d.data[0][1];
+                        datalist.listAllCatg = d.data[1][1];
                         $rootScope.$broadcast('getTasfiyaList');
                         
 

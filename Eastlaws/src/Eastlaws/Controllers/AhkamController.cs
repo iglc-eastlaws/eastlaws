@@ -144,7 +144,12 @@ namespace Eastlaws.Controllers
         {
             List<AhkamTasfeyaCategory> UsedCategories;
             var Data = AhkamTasfeya.List(56, AhkamSearchTypes.Advanced, out UsedCategories, "", "", null);
-            return new JsonResult(Data);
+            var datajson = new[] {
+                new object[] { "Data" , Data},
+                new object[] { "Catg" , UsedCategories }
+            };
+            return new JsonResult(datajson);
+          //  return new JsonResult(new { Data="Data", UsedCategories = "Catg" });
         }
 
         public JsonResult GetCountries()
