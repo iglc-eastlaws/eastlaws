@@ -134,3 +134,7 @@ sp_helpindex FehresItems
 
 Select Top 100 * From FehresItems
 Create Clustered Index IX_FehresItems on FehresItems (FehresCategoryID)
+
+
+Select * From VW_FehresMap
+ORder By ProgramID
