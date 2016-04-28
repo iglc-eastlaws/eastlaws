@@ -70,11 +70,12 @@
                                 </div>
                             </div>*@
 
-                            <div class='filter-section' ng-repeat="data in categoryList">
-                                <h5>{{data.Name}}</h5>
+                            <div class='filter-section' ng-repeat="data in categoryList" ng-show="displayCatg(data.ID)">
+                                <h5>{{data.Name}} </h5>
                                 <div class='well' style='max-height:200px;overflow: auto;'>
-                                    <ul class='list-group' style='max-height:200px;overflow: auto;' buffered-scroll="increaseLimit();">
+                                    <ul class='list-group' style='max-height:200px;overflow: auto;' infinite-scroll="increaseLimit()">
                                         <li ng-repeat="details in tasfyaList | filter :{CategoryID:data.ID} | limitTo:limit" class='list-group-item'>
+                                            {{countCatgID(details.CategoryID)}}
                                             <input type='checkbox' ng-click='changeCheck(details,$event)' />&nbsp; <label> {{details.Name}} - ({{details.Count}})</label>
                                         </li>
                                     </ul>
@@ -462,11 +463,30 @@
          $scope.categoryList = [];
          $scope.tasfyaList = [];
 
+         $scope.catgDistinct = [];
+         $scope.countCatgID = function (catgID) {
+          
+
+                   var indx = $scope.catgDistinct.indexOf(catgID);
+                   if (indx === -1) {
+                       $scope.catgDistinct.push(catgID);
+                   }
+            
+         }
+         $scope.displayCatg = function (catgID) {
+             var result = false;
+             var indx = $scope.catgDistinct.indexOf(catgID);
+             if (indx !== -1) {
+                 result = true;
+             }
+             return result;
+         }
+       
          //$scope.catList = [];
          $scope.limit = 20;
          $scope.increaseLimit = function () {
              if ($scope.limit < $scope.tasfyaList.length) {
-                 $scope.limit += 15;
+                 $scope.limit += 20;
              }
          }
          $rootScope.$on('getTasfiyaList', function () {
@@ -624,6 +644,7 @@
                 };
             })
 
+  
 
 
 
