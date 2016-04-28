@@ -405,4 +405,41 @@
 
 
 
+    //----- Global pure js 
+    Array.prototype.findElemnet = function (val, typeElemnet) {
+        var Result = 0;
+        var arr = this;
+        var arrlenth = arr.length;
+        var typeval = 'next';
+        if (typeElemnet == 'prev')
+        { typeval = 'prev'; }
+
+        if ((val <= arr[0]) && (typeval == 'prev')) {
+            Result = arr[0]; return Result;
+        }
+
+        if ((val >= arr[arrlenth - 1]) && (typeval == 'next')) {
+            Result = arr[arrlenth - 1]; return Result;
+        }
+
+        for (var i = 0; i < arrlenth ; i++) {
+            switch (typeval) {
+                case 'next': {
+                    if (val < arr[i]) {
+                        Result = arr[i]; return Result;
+                    }
+                    break;
+                }
+                case 'prev': {
+                    if ((val >= arr[i]) && (val <= arr[i + 1])) {
+                        Result = arr[i]; return Result;
+                    }
+                    break;
+                }
+            }
+
+        }
+        return Result;
+    }
+
 })();
