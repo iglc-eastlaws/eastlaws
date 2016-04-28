@@ -73,8 +73,8 @@
                             <div class='filter-section' ng-repeat="data in categoryList">
                                 <h5>{{data.Name}}</h5>
                                 <div class='well' style='max-height:200px;overflow: auto;'>
-                                    <ul class='list-group' style='max-height:200px;overflow: auto;'>
-                                        <li ng-repeat="details in tasfyaList | filter :{CategoryID:data.ID} | limitTo:20" class='list-group-item'>
+                                    <ul class='list-group' style='max-height:200px;overflow: auto;' buffered-scroll="increaseLimit();">
+                                        <li ng-repeat="details in tasfyaList | filter :{CategoryID:data.ID} | limitTo:limit" class='list-group-item'>
                                             <input type='checkbox' ng-click='changeCheck(details,$event)' />&nbsp; <label> {{details.Name}} - ({{details.Count}})</label>
                                         </li>
                                     </ul>
@@ -463,7 +463,12 @@
          $scope.tasfyaList = [];
 
          //$scope.catList = [];
-
+         $scope.limit = 20;
+         $scope.increaseLimit = function () {
+             if ($scope.limit < $scope.tasfyaList.length) {
+                 $scope.limit += 15;
+             }
+         }
          $rootScope.$on('getTasfiyaList', function () {
              $scope.categoryList = tasfiaAllData.listAllCatg;
              $scope.tasfyaList = tasfiaAllData.listAllTasfya;
