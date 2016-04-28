@@ -77,8 +77,23 @@ Go
 
 
 Insert EastlawsData..FehresItemsDetails (ID , FehresItemID , ServiceID ,ServiceItemID , MyOrder , StartColor , EndColor )
-Select - ID , Fehres_ID ,EastlawsData.dbo.GetServiceIDFromFehres(Detail_Type) ,Detail_Rec_ID , MyOrder , Start_Color , End_Color   From General_Fehres_AH_Tash
-Where EastlawsData.dbo.GetServiceIDFromFehres(Detail_Type) is not null 
+Select - ID , Fehres_ID ,1 ,Detail_Rec_ID , MyOrder , Start_Color , End_Color   From General_Fehres_AH_Tash
 Union All 
-Select ID , Master_ID , 1, Rec_ID , MyOrder , Start_Color , End_Color From General_Fehres_Details
+Select ID , Master_ID , EastlawsData.dbo.GetServiceIDFromFehres(ProgType), Rec_ID , MyOrder , Start_Color , End_Color From General_Fehres_Details
+Where EastlawsData.dbo.GetServiceIDFromFehres(ProgType) is not null 
 Go
+
+
+
+---------------ServicesFehresDetails---------
+Truncate Table EastlawsData..ServicesFehresDetails 
+
+Go 
+
+
+Insert Into  EastlawsData..ServicesFehresDetails (ServiceID , ItemID , SubItemID , FehresItemID , FehresCategoryID , FehresProgramID)
+Select ServiceID , F.HokmID , FD.ServiceItemID , FD.FehresItemID  , FC.ID , Map.ProgramID    From EastlawsData..FehresItemsDetails FD
+Join EastlawsData..FehresItems FI on FI.ID = FD.FehresItemID
+Join EastlawsData..FehresCategories FC on FC.ID = FI.FehresCategoryID
+Join EastlawsData..VW_FehresMap Map on Map.CategoryID = FC.ID
+Join EastlawsData..AhkamFakarat F on F.ID = FD.ServiceItemID And FD.ServiceID = 1 

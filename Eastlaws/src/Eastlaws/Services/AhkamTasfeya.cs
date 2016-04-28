@@ -7,20 +7,23 @@ using Dapper;
 
 namespace Eastlaws.Services
 {
+
+    public enum FehresPrograms { Mana3y = 29 , Defoo3 = 30 ,Da3awaMadaneya = 8, Da3awaGena2ya = 16 , AhkamFehres = 9 }
     public enum AhkamTasfeyaCategoryDisplay
     {List = 0 , Range = 1  }
+
     public class AhkamTasfeyaCategory
     {
         public AhkamTasfeyaCategoryIds ID { get; set; }
         public string Name { get; set; }
         public int DisplayOrder { get; set; } = 1;
         public AhkamTasfeyaCategoryDisplay Display { get; set; } = AhkamTasfeyaCategoryDisplay.List;
-
+        public FehresPrograms? ParentProgram { get; set; } = null;
     }
 
     public enum AhkamTasfeyaCategoryIds 
     {
-        Country = 0, Ma7kama = 1, CrimeType = 2, RelatedTash = 3, Fehres = 4, Defoo3 = 5, Year = 6, JudgeYear = 7, Ma7kamaAction = 8 , Mana3y = 9
+        Country = 0, Ma7kama = 1, CrimeType = 2, RelatedTash = 3, Fehres = 4, Defoo3 = 5, Year = 6, JudgeYear = 7, Ma7kamaAction = 8 , Mana3y = 9 , Da3waType = 10
     }
     public class TasfeyaItem
     {
@@ -28,6 +31,7 @@ namespace Eastlaws.Services
         public string Name { get; set; }
         public int Count { get; set; }
         public AhkamTasfeyaCategoryIds CategoryID { get; set; }
+
     }
 
     public class AhkamTasfeya
@@ -39,18 +43,11 @@ namespace Eastlaws.Services
         {
             List<AhkamTasfeyaCategory> Cats = new List<AhkamTasfeyaCategory>();
 
-            if (false)
-            {
-                /*
-                Cats.Add(AhkamTasfeyaCategories.RelatedTash);
+            Cats.Add(new AhkamTasfeyaCategory { ID = AhkamTasfeyaCategoryIds.Defoo3, Name = "بالدفوع", Display = AhkamTasfeyaCategoryDisplay.List, ParentProgram = FehresPrograms.Defoo3 });
+            Cats.Add(new AhkamTasfeyaCategory { ID = AhkamTasfeyaCategoryIds.Mana3y, Name = "بالمناعي", Display = AhkamTasfeyaCategoryDisplay.List, ParentProgram = FehresPrograms.Mana3y });
+            Cats.Add(new AhkamTasfeyaCategory { ID = AhkamTasfeyaCategoryIds.CrimeType, Name = "بنوع الجريمة", Display = AhkamTasfeyaCategoryDisplay.List, ParentProgram = FehresPrograms.Da3awaGena2ya  });
+            Cats.Add(new AhkamTasfeyaCategory { ID = AhkamTasfeyaCategoryIds.Da3waType, Name = "بنوع الدعوى", Display = AhkamTasfeyaCategoryDisplay.List, ParentProgram = FehresPrograms.Da3awaMadaneya });
 
-                Cats.Add(AhkamTasfeyaCategories.CrimeType);
-                Cats.Add(AhkamTasfeyaCategories.Defoo3);
-                Cats.Add(AhkamTasfeyaCategories.Fehres);
-                Cats.Add(AhkamTasfeyaCategories.Mana3y);
-                Cats.Add(AhkamTasfeyaCategories.Ma7kamaAction);
-                */
-            }
 
             Cats.Add(new AhkamTasfeyaCategory { ID = AhkamTasfeyaCategoryIds.Country , Name = "بالدولة"  , Display = AhkamTasfeyaCategoryDisplay.List });
             Cats.Add(new AhkamTasfeyaCategory { ID = AhkamTasfeyaCategoryIds.Ma7kama, Name = "بالمحكمة", Display = AhkamTasfeyaCategoryDisplay.List });
@@ -77,7 +74,7 @@ namespace Eastlaws.Services
 
 
             string MasterQuery = string.Join("\n Union All \n " ,  (from c in Cats
-                                                  select GetCategoryQuery(QueryID, c.ID, TasfeyaFilter, IsSafyList)
+                                                  select GetCategoryQuery(QueryID, c, TasfeyaFilter, IsSafyList)
                                                   ).ToArray()
                                   );
 
@@ -94,10 +91,10 @@ namespace Eastlaws.Services
             return List;
         }
 
-        private static string GetCategoryQuery(int MasterQueryID , AhkamTasfeyaCategoryIds Cat , string Filter, bool isSafyList = false)
+        private static string GetCategoryQuery(int MasterQueryID , AhkamTasfeyaCategory Cat , string Filter, bool isSafyList = false)
         {
             string SafyListJoinClause = (isSafyList) ? " Join #IDS I on I.ID = QCR.ItemID "  : "";
-            switch (Cat )
+            switch (Cat.ID )
             {
                 
                 case AhkamTasfeyaCategoryIds.Country:
@@ -164,9 +161,28 @@ namespace Eastlaws.Services
                     }                    
                 default:
                     {
-                        return "";               
+                        string ProcessedFilter = "";
+                        return GetTasfeyaQueryFehres(MasterQueryID, ProcessedFilter, SafyListJoinClause, Cat);           
                     }
             }
+        }
+
+
+        private static string GetTasfeyaQueryFehres(int MasterQueryID, string ProcessedFilter , string SafyListJoinClause , AhkamTasfeyaCategory Category )
+        {
+            return string.Format(@"Select Top {0} Min(FI.ID) as ID ,  FI.Name , Count(sss.ItemID) as Count , {5} as CategoryID , Count(sss.ItemID) as SortValue From 
+                                (
+	                                Select  SFD.ItemID , SFD.FehresItemID, SFD.FehresCategoryID  From 
+	                                ServicesFehresDetails SFD  Join EastlawsUsers..QueryCacheRecords QCR on QCR.ItemID = SFD.ItemID
+	                                Where SFD.FehresProgramID = {4} And SFD.ServiceID = 1 and QCR.MasterID = {1}
+	                                Group By SFD.ItemID , SFD.FehresItemID, SFD.FehresCategoryID
+                                ) sss
+                                Join 
+                                FehresItems FI on FI.FehresCategoryID = sss.FehresCategoryID And sss.FehresItemID = FI.ID
+                                Group By FI.Name
+                                Order By Count(sss.ItemID) desc"
+
+                        , MAX_RECORD_COUNT_PER_CATEGORY, MasterQueryID, ProcessedFilter, SafyListJoinClause ,(int) Category.ParentProgram.Value , (int)Category.ID);
         }
 
 
