@@ -76,7 +76,7 @@
                                     <ul class='list-group' style='max-height:200px;overflow: auto;' infinite-scroll="increaseLimit()">
                                         <li ng-repeat="details in tasfyaList | filter :{CategoryID:data.ID} | limitTo:limit" class='list-group-item'>
                                             {{countCatgID(details.CategoryID)}}
-                                            <input type='checkbox' ng-click='changeCheck(details,$event)' />&nbsp; <label> {{details.Name}} - ({{details.Count}})</label>
+                                            <label> <input type='checkbox' ng-click='changeCheck(details,$event)' />&nbsp;  {{details.Name}} - ({{details.Count}})</label>
                                         </li>
                                     </ul>
                                 </div>
