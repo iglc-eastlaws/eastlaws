@@ -256,16 +256,17 @@
                 $scope.fontsize = function (size) {
 
                     // var sizearr = [0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3];
-                    var sizearr = [8,10, 12, 14, 20];
+                    var sizearr = [8.5,10.5,14, 12.5, 16.5,18.3,20];
                     var currentSize = parseFloat($('.fakra-text').css('font-size')) ;
                     if (size == '+')
                     {
-                        var newsize = sizearr.NextSize(currentSize);
+                      
+                        var newsize = sizearr.findElemnet(currentSize,'next');
                         $('.fakra-text').css('font-size', newsize + 'px');
                     }
                     else if (size == '-')
                     {
-                        var newsize = sizearr.PrevSize(currentSize);
+                        var newsize = sizearr.findElemnet(currentSize, 'prev');
                         $('.fakra-text').css('font-size', newsize + 'px');
                      } else
                     {
@@ -594,40 +595,10 @@
         })();
 
         //---
-        Array.prototype.NextSize = function (currentsize) {
-            var NextSize = 0;
-            var arr = this;
-            var arrlenth = arr.length;
-        
-            for (var i = 0; i < arrlenth; i++) {
-                if (currentsize < arr[i])
-                {
-                    NextSize = arr[i];
-                    return NextSize;
-                }
-            }
-            if (NextSize == 0)
-            {
-                NextSize = arr[arrlenth-1];
-            }
-            return NextSize;
-        }
 
-        Array.prototype.PrevSize = function (currentsize) {
-            var PrevSize = 0;
-            var arr = this;
-            var arrlenth = arr.length;
-            for (var i = arrlenth ; i >= 0; i--) {
-                if (currentsize > arr[i]) {
-                    PrevSize = arr[i];
-                    return PrevSize;
-                }
-            }
-            if (PrevSize == 0) {
-                PrevSize = arr[0];
-            }
-            return PrevSize;
-        }
+
+
+
 
 
     </script>
