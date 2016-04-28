@@ -83,7 +83,6 @@
 
                         </div>
                     </div>
-
                 <hr class="spacer" />
             </div>
             <hr class="spacer" />
@@ -113,7 +112,7 @@
         "use strict";
         (function () {
 
-            var app = angular.module('ahkamApp', ['ngSanitize','sharedModule']);
+            var app = angular.module('ahkamApp', ['ngSanitize', 'sharedModule', 'ngPrint']);
             app
             .controller('ahkamCtrl', function ($http, $rootScope, SearchData) {
 
