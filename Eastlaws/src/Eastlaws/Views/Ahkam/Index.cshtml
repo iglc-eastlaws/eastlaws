@@ -411,14 +411,14 @@
                     var searchresult = $('#searchResult');
                     searchresult.html(d);
 
-                    $('html, body').animate({ scrollTop: $("#TotalCount").offset().top }, 1000, function () {
+                    $('body').animate({ scrollTop: $("#TotalCount").offset().top }, 1000, function () {
                         if (data.newtasfya == true) {
                             //  $scope.apply(function () {
                             getTasfya();
                             //});
                         }
                     });
-
+     
                     if (searchresult.find('#resultCount').length) {
                         if (data.newSearch == 1) {
                             HtmlResultCount();
