@@ -484,17 +484,19 @@
        
          //$scope.catList = [];
          $scope.limit = 20;
+      
          $scope.increaseLimit = function () {
              if ($scope.limit < $scope.tasfyaList.length) {
                  $scope.limit += 20;
              }
          }
          $rootScope.$on('getTasfiyaList', function () {
+             $scope.limit = 20;
              $scope.categoryList = tasfiaAllData.listAllCatg;
              $scope.tasfyaList = tasfiaAllData.listAllTasfya;
            //  console.log($scope.tasfyaList)
             // $scope.catList = tasfiaAllData.listAllTasfya;
-             
+          
              console.log('tasfia event fire')
          });
 
