@@ -70,17 +70,12 @@ $(document).ready(function () {
             $(".list-content .result-block").addClass("col-md-4");
         }
 
-        //if ($(this).parent().hasClass("list")) {
-        //    $(".list-content .result-block").removeClass("col-md-4");
-        //}else{
-        // $(".list-content .result-block").addClass("col-md-4");
-        //}
 
     });
     // Row Tabel View
 
 
-    $(function () {
+    //$(function () {
        // var newheight = $(window).innerHeight();
        // var newHeight = $(".list-table table").height();
         //alert(newHeight);
@@ -88,7 +83,8 @@ $(document).ready(function () {
         //  $("#hokmview").css({ 'height': ($(window).height()) + 'px' });
        
         
-    });
+    //});
+
     // toolbar
     $(".format-result li a.sort i").click(function () {
        

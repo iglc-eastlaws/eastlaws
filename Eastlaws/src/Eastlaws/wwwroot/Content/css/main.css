@@ -441,7 +441,7 @@ p.total-chart {color:#666; font:bold 14px arial;}
 .filter-search .tabs-left > .nav-tabs .active > a, .filter-search.tabs-left > .nav-tabs .active > a:hover, .filter-search .tabs-left > .nav-tabs .active > a:focus {
   border-color: #675650 transparent #675650 #675650;*border-right-color: #ffffff; background-color:#675650;color:#daae4f; }
 .format-result{box-shadow:0 0 0.625em 0.08em rgba(0, 0, 0, 0.05); background-color:#FFF; padding:0px 0px; border:2px solid rgba(224, 184, 105, 0.80); font:0.85em 'Droid Arabic Kufi'; margin-bottom:2px; }
-.layout-view{padding:6px 0px;}
+.layout-view{padding:9px 0 0px;}
 .inner .layout-view, .view-article{ display:none!important;;}
 .views .view-article{ display:inline-block!important;}
 .layout-view .navbar-nav > li{ margin:0 0 0 4px;}
@@ -478,7 +478,10 @@ p.total-chart {color:#666; font:bold 14px arial;}
 .fakr-title i{ color:#675650;}
 .number-title{ text-align:center; margin:10px 0;}
 .number-title span{ padding:6px 12px; background-color:#675650; color:#FFF; border:3px solid rgba(228, 196, 134, 1); font:bold 0.8em arial;}
-.multi-check .checkbox{ border:1px solid #CCC; padding:12px 12px; margin:13px 10px 20px; overflow-y:auto; height:300px; }
+.multi-check .checkbox{ border:1px solid #CCC; padding:12px 12px; margin:0px 10px 0px; overflow-y:auto; height:180px; }
+.multi-check legend{ margin:0px; border:0 none; padding:0 12px;}
+.multi-check legend a{ color:#d9b672; text-decoration:none;font:0.5em "Droid Arabic Kufi"; transition:all 1s ease;}
+.multi-check legend a:hover{color:#675650;}
 .badge{ background-color:#675650;}
 /*select Date*/
 .search .c-date-picker{ border-radius:0px; border:0 none; background-color: #D9B672; min-width:140px;}
