@@ -103,7 +103,7 @@
         //-------------------------------- >>> filter section from server
         //-------------------------------- >>> desc and asc in sort
         //-------------------------------- >>> table height equal to hokm div
-
+        //-------------------------------- >>> scroll page
         //-------------------------------- >>> convert $rootscope to service
         //-------------------------------- >>> fixed Paging bugs
         //-------------------------------- >>> hide and show right section
@@ -238,6 +238,7 @@
                 $scope.getmypage = function () {
                     $rootScope.currentPage = $scope.mypage;
                     if ($rootScope.currentPage !== undefined) {
+                        SearchData.newtasfya = false;
                         SearchData.newSearch = 0;
                         SearchData.GetSearch();
                     }
@@ -409,6 +410,8 @@
                 function searchOptionAfterAjax(d) {
                     var searchresult = $('#searchResult');
                     searchresult.html(d);
+
+                    $('html, body').animate({ scrollTop: $("#TotalCount").offset().top }, 1000);
 
                     if (searchresult.find('#resultCount').length) {
                         if (data.newSearch == 1) {
