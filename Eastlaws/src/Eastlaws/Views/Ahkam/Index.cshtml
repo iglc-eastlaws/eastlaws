@@ -103,7 +103,7 @@
         //-------------------------------- >>> filter section from server
         //-------------------------------- >>> desc and asc in sort
         //-------------------------------- >>> table height equal to hokm div
-
+        //-------------------------------- >>> scroll page
         //-------------------------------- >>> convert $rootscope to service
         //-------------------------------- >>> fixed Paging bugs
         //-------------------------------- >>> hide and show right section
@@ -238,6 +238,7 @@
                 $scope.getmypage = function () {
                     $rootScope.currentPage = $scope.mypage;
                     if ($rootScope.currentPage !== undefined) {
+                        SearchData.newtasfya = false;
                         SearchData.newSearch = 0;
                         SearchData.GetSearch();
                     }
@@ -380,11 +381,11 @@
                             "typeView": data.typeView
                         }, function (d) {
                             searchOptionAfterAjax(d);
-                            if (data.newtasfya == true) {
-                                //  $scope.apply(function () {
-                                getTasfya();
-                                //});
-                            }
+                            //if (data.newtasfya == true) {
+                            //    //  $scope.apply(function () {
+                            //    getTasfya();
+                            //    //});
+                            //}
                         });
                     }
                   
@@ -410,6 +411,14 @@
                     var searchresult = $('#searchResult');
                     searchresult.html(d);
 
+                    $('body').animate({ scrollTop: $("#TotalCount").offset().top }, 1000, function () {
+                        if (data.newtasfya == true) {
+                            //  $scope.apply(function () {
+                            getTasfya();
+                            //});
+                        }
+                    });
+     
                     if (searchresult.find('#resultCount').length) {
                         if (data.newSearch == 1) {
                             HtmlResultCount();
