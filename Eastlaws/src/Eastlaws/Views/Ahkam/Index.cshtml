@@ -72,7 +72,7 @@
 
                             <div class='filter-section' ng-repeat="data in categoryList">
                                 <h5>{{data.Name}}</h5>
-                                <div class='well' style='max-height:200px;overflow: auto;'>
+                                <div class='well' >
                                     <ul class='list-group' style='max-height:200px;overflow: auto;'>
                                         <li ng-repeat="details in tasfyaList | filter :{CategoryID:data.ID} | limitTo:20" class='list-group-item'>
                                             <input type='checkbox' ng-click='changeCheck(details,$event)' />&nbsp; <label> {{details.Name}} - ({{details.Count}})</label>
