@@ -36,7 +36,7 @@ namespace Eastlaws.Services
 
     public class AhkamTasfeya
     {
-        private const int MAX_RECORD_COUNT_PER_CATEGORY = 100;
+        private const int MAX_RECORD_COUNT_PER_CATEGORY = 50;
 
 
         public static IEnumerable<TasfeyaItem> List (int QueryID , AhkamSearchTypes SearchType, out List<AhkamTasfeyaCategory> UsedCategories , string TasfeyaFilter = "" , string PreviousTasfeyaQuery  = "", AhkamTasfeyaCategoryIds? CategorySender = null )
