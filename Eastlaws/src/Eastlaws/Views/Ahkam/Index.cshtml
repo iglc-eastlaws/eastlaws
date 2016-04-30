@@ -247,7 +247,7 @@
                 $scope.getmypage();
             })
        
-            .controller('searchResultCtrl', function ($scope) {
+            .controller('searchResultCtrl', function ($scope, $compile) {
                 $(document).on('click', '.hokmView', function () {
                     $(".hokmView").removeClass("active");
                     if ($(this).hasClass("active")) {
@@ -261,6 +261,10 @@
                             $('#hokmview').html(data)
                         });
                 })
+
+
+
+ 
 
              })
             .controller('toolbarCtrl', function ($scope, SearchData, $rootScope) {
@@ -410,7 +414,9 @@
         
                 function searchOptionAfterAjax(d) {
                     var searchresult = $('#searchResult');
+
                     searchresult.html(d);
+
 
                     $('body').animate({ scrollTop: $("#TotalCount").offset().top }, 1000, function () {
                         if (data.newtasfya == true) {
@@ -459,6 +465,7 @@
             })
 
      .controller('tasfyaCtrl', function ($scope, tasfiaData, SearchData, $rootScope, $compile, tasfiaAllData) {
+
 
          $scope.categoryList = [];
          $scope.tasfyaList = [];
