@@ -2,6 +2,7 @@ Use iglc
 
 Go 
 
+
 Truncate Table EastlawsData..FehresPrograms
 Go
 Truncate Table EastlawsData..FehresProgCountry

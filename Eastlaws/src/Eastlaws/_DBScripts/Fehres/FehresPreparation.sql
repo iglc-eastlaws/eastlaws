@@ -3,8 +3,6 @@ Use iglc
 Go 
 
 
-
-
 Select * From FehresPrograms
 Select * From FaharessProgCountry
 Select * From General_Category

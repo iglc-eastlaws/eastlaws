@@ -45,7 +45,7 @@
                     <table id="tblAhkam" class="table table-striped table-bordered table-fixed table-responsive">
                         <thead>
                             <tr>
-                                <th >الدولة</th>
+                                <th>الدولة</th>
                                 <th>المحكمه</th>
                                 <th>الطعن</th>
                                 <th>السنة</th>
@@ -58,18 +58,18 @@
                             @foreach (var item in Model.AhkamList)
                             {
                                 <tr class="hokmView" data-idhokm="@item.ID">
-                                    <td><img src="/Content/images/Flags/Small/@item.CountryFlagPic"/> </td>
+                                    <td><img src="/Content/images/Flags/Small/@item.CountryFlagPic" class="color-tooltip" data-toggle="tooltip" data-placement="top" title="@item.CountryName" /> </td>
                                     @*<td>@item.CountryName</td>*@
                                     <td>@item.MahkamaName</td>
                                     <td>@item.CaseNo</td>
                                     <td>@item.CaseYear</td>
                                     <td style="font-size:0.9em;">
-                                      @if ((item.CaseDate != null) && (item.CaseDate.ToString() != ""))
-                                      {
-                                        @DateTime.Parse(item.CaseDate.ToString()).ToString("dd/M/yyyy")
+                                        @if ((item.CaseDate != null) && (item.CaseDate.ToString() != ""))
+                                        {
+                                            @DateTime.Parse(item.CaseDate.ToString()).ToString("dd/M/yyyy")
 
-                                      }
-                                  
+                                        }
+
                                     </td>
                                     @*<td>@item.OfficeSuffix</td>*@
 
@@ -109,41 +109,45 @@
 
             var Fakrat = Model.FakaratList.Where(p => p.HokmID == @item.ID).ToArray();
 
-            <div class="result-block @((ViewBag.typeView == 3)?"col-md-4":"")">
+            <div class="result-block @((ViewBag.typeView == 3)?"col-md-4 height-scroll":"")">
 
                 <h4><i class="fa fa-bank fa-2x icon"></i></h4>
                 <div class="row-search selector">
 
 
                     <h3><img src="~/Content/images/Flags/Small/@item.CountryFlagPic" width="16" height="11" alt="" />&nbsp; @item.FullName</h3>
-                    @for (int i = 0; i < Fakrat.Length; i++)
-                    {
-                        var CurrentFakra = Fakrat[i];
-                        string FakraText = gerFakraText(CurrentFakra.Text,
-                                                        CurrentFakra.FakraNo,
-                                                        Model.TextPredicates).ToString();
+                    <div class="content-result">
 
-                        <p>
-                            <span class="fakr-title-search" style="color:red;">
-                                @CurrentFakra.Title :
-                            </span>
-                            <a class="fakra-text" target="_blank" href="View?ID=@item.ID#@CurrentFakra.ID" >@Html.Raw(FakraText)</a>
-                        </p>
-
-                        if (i < Fakrat.Length - 1 && Fakrat.Length > 1)
+                        @for (int i = 0; i < Fakrat.Length; i++)
                         {
-                            <div class="fakarat-search-separator">
-                                <hr />
-                            </div>
-                        }
-                    }
+                            var CurrentFakra = Fakrat[i];
+                            string FakraText = gerFakraText(CurrentFakra.Text,
+                                                            CurrentFakra.FakraNo,
+                                                            Model.TextPredicates).ToString();
 
+
+                            <p>
+                                <span class="fakr-title-search" style="color:red;">
+                                    @CurrentFakra.Title :
+                                </span>
+                                <a class="fakra-text" target="_blank" href="View?ID=@item.ID#@CurrentFakra.ID">@Html.Raw(FakraText)</a>
+                            </p>
+
+
+                            if (i < Fakrat.Length - 1 && Fakrat.Length > 1)
+                            {
+                                <div class="fakarat-search-separator">
+                                    <hr class="spacer" />
+                                </div>
+                            }
+                        }
+                    </div>
 
                     <div class="nav-control">
                         <ul>
-                            <li><a href="#"><i class="fa fa-desktop"></i> قراءة النص</a></li>
-                            <li><a href="#"><i class="fa fa-camera"></i> صورة الحكم</a></li>
-                            <li><a href="#" class="btn-primary" ng-print print-element-id="printThisElement"><i class="fa fa-print"></i> طباعة </a></li>
+                            <li><a href="#" data-toggle="tooltip" data-placement="top" class="color-tooltip" title=" قراءة النص"><i class="fa fa-desktop"></i><span class="name-nav"> قراءة النص</span></a></li>
+                            <li><a href="#" data-toggle="tooltip" data-placement="top" class="color-tooltip" title=" صورة الحكم"><i class="fa fa-camera"></i><span class="name-nav"> صورة الحكم</span></a></li>
+                            <li><a href="#" data-toggle="tooltip" data-placement="top" class="color-tooltip" title=" طباعة"><i class="fa fa-print"></i><span class="name-nav"> طباعة </span></a></li>
                         </ul>
                     </div>
                     <hr class="spacer" />
@@ -207,6 +211,9 @@
 <script>
     $(document).ready(function () {
         $('#tabHokmBody').children('tr:first').trigger('click');
+        $('[data-toggle="tooltip"]').tooltip();
+
+
     });
 
 </script>

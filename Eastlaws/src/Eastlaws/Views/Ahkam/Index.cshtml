@@ -70,12 +70,13 @@
                                 </div>
                             </div>*@
 
-                            <div class='filter-section' ng-repeat="data in categoryList">
-                                <h5>{{data.Name}}</h5>
+                            <div class='filter-section' ng-repeat="data in categoryList" ng-show="displayCatg(data.ID)">
+                                <h5>{{data.Name}} </h5>
                                 <div class='well' style='max-height:200px;overflow: auto;'>
-                                    <ul class='list-group' style='max-height:200px;overflow: auto;'>
-                                        <li ng-repeat="details in tasfyaList | filter :{CategoryID:data.ID}" class='list-group-item'>
-                                            <input type='checkbox' ng-click='changeCheck(details,$event)' />&nbsp; <label> {{details.Name}} - ({{details.Count}})</label>
+                                    <ul class='list-group' style='max-height:200px;overflow: auto;' infinite-scroll="increaseLimit()">
+                                        <li ng-repeat="details in tasfyaList | filter :{CategoryID:data.ID} | limitTo:limit" class='list-group-item'>
+                                            {{countCatgID(details.CategoryID)}}
+                                            <label> <input type='checkbox' ng-click='changeCheck(details,$event)' />&nbsp;  {{details.Name}} - ({{details.Count}})</label>
                                         </li>
                                     </ul>
                                 </div>
@@ -102,7 +103,7 @@
         //-------------------------------- >>> filter section from server
         //-------------------------------- >>> desc and asc in sort
         //-------------------------------- >>> table height equal to hokm div
-
+        //-------------------------------- >>> scroll page
         //-------------------------------- >>> convert $rootscope to service
         //-------------------------------- >>> fixed Paging bugs
         //-------------------------------- >>> hide and show right section
@@ -237,6 +238,7 @@
                 $scope.getmypage = function () {
                     $rootScope.currentPage = $scope.mypage;
                     if ($rootScope.currentPage !== undefined) {
+                        SearchData.newtasfya = false;
                         SearchData.newSearch = 0;
                         SearchData.GetSearch();
                     }
@@ -379,11 +381,11 @@
                             "typeView": data.typeView
                         }, function (d) {
                             searchOptionAfterAjax(d);
-                            if (data.newtasfya == true) {
-                                //  $scope.apply(function () {
-                                getTasfya();
-                                //});
-                            }
+                            //if (data.newtasfya == true) {
+                            //    //  $scope.apply(function () {
+                            //    getTasfya();
+                            //    //});
+                            //}
                         });
                     }
                   
@@ -409,6 +411,14 @@
                     var searchresult = $('#searchResult');
                     searchresult.html(d);
 
+                    $('body').animate({ scrollTop: $("#TotalCount").offset().top }, 1000, function () {
+                        if (data.newtasfya == true) {
+                            //  $scope.apply(function () {
+                            getTasfya();
+                            //});
+                        }
+                    });
+     
                     if (searchresult.find('#resultCount').length) {
                         if (data.newSearch == 1) {
                             HtmlResultCount();
@@ -452,14 +462,40 @@
          $scope.categoryList = [];
          $scope.tasfyaList = [];
 
-         //$scope.catList = [];
+         $scope.catgDistinct = [];
+         $scope.countCatgID = function (catgID) {
+          
 
+                   var indx = $scope.catgDistinct.indexOf(catgID);
+                   if (indx === -1) {
+                       $scope.catgDistinct.push(catgID);
+                   }
+            
+         }
+         $scope.displayCatg = function (catgID) {
+             var result = false;
+             var indx = $scope.catgDistinct.indexOf(catgID);
+             if (indx !== -1) {
+                 result = true;
+             }
+             return result;
+         }
+       
+         //$scope.catList = [];
+         $scope.limit = 20;
+      
+         $scope.increaseLimit = function () {
+             if ($scope.limit < $scope.tasfyaList.length) {
+                 $scope.limit += 20;
+             }
+         }
          $rootScope.$on('getTasfiyaList', function () {
+             $scope.limit = 20;
              $scope.categoryList = tasfiaAllData.listAllCatg;
              $scope.tasfyaList = tasfiaAllData.listAllTasfya;
            //  console.log($scope.tasfyaList)
             // $scope.catList = tasfiaAllData.listAllTasfya;
-             
+          
              console.log('tasfia event fire')
          });
 
@@ -609,6 +645,7 @@
                 };
             })
 
+  
 
 
 
