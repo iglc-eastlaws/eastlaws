@@ -61,11 +61,6 @@
 			margin-right: 0px;
 		}
 		/*Center Brand*/
-		nav.sidebar .navbar-brand, nav.sidebar .navbar-header{
-			text-align: center;
-			width: 100%;
-			margin-right: 0px;
-		}
 
 		/*Center Icons*/
 		nav.sidebar a{
@@ -79,7 +74,7 @@
 
 		/*adds border to bottom nav boxes*/
 		nav.sidebar .navbar-nav > li{
-			border-bottom: 1px #e5e5e5 solid;
+			border-bottom: 0px #e5e5e5 solid;
 		}
 
 		/* Colors/style dropdown box*/
