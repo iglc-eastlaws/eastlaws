@@ -113,7 +113,7 @@
         "use strict";
         (function () {
 
-            var app = angular.module('ahkamApp', ['ngSanitize', 'sharedModule', 'ngPrint']);
+            var app = angular.module('ahkamApp', ['ngSanitize', 'sharedModule']);
             app
             .controller('ahkamCtrl', function ($http, $rootScope, SearchData) {
 
@@ -260,7 +260,7 @@
                             $('#hokmview').html(data)
                         });
                 })
-
+               
              })
             .controller('toolbarCtrl', function ($scope, SearchData, $rootScope) {
                 $scope.pageSizes = [10, 50, 100];
