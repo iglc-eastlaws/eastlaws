@@ -43,16 +43,16 @@ namespace Eastlaws.Services
         {
             List<AhkamTasfeyaCategory> Cats = new List<AhkamTasfeyaCategory>();
 
-            Cats.Add(new AhkamTasfeyaCategory { ID = AhkamTasfeyaCategoryIds.Defoo3, Name = "بالدفوع", Display = AhkamTasfeyaCategoryDisplay.List, ParentProgram = FehresPrograms.Defoo3 });
-            Cats.Add(new AhkamTasfeyaCategory { ID = AhkamTasfeyaCategoryIds.Mana3y, Name = "بالمناعي", Display = AhkamTasfeyaCategoryDisplay.List, ParentProgram = FehresPrograms.Mana3y });
-            Cats.Add(new AhkamTasfeyaCategory { ID = AhkamTasfeyaCategoryIds.CrimeType, Name = "بنوع الجريمة", Display = AhkamTasfeyaCategoryDisplay.List, ParentProgram = FehresPrograms.Da3awaGena2ya  });
-            Cats.Add(new AhkamTasfeyaCategory { ID = AhkamTasfeyaCategoryIds.Da3waType, Name = "بنوع الدعوى", Display = AhkamTasfeyaCategoryDisplay.List, ParentProgram = FehresPrograms.Da3awaMadaneya });
+            Cats.Add(new AhkamTasfeyaCategory { ID = AhkamTasfeyaCategoryIds.Defoo3, Name = "الدفوع", Display = AhkamTasfeyaCategoryDisplay.List, ParentProgram = FehresPrograms.Defoo3 });
+            Cats.Add(new AhkamTasfeyaCategory { ID = AhkamTasfeyaCategoryIds.Mana3y, Name = "المناعي", Display = AhkamTasfeyaCategoryDisplay.List, ParentProgram = FehresPrograms.Mana3y });
+            Cats.Add(new AhkamTasfeyaCategory { ID = AhkamTasfeyaCategoryIds.CrimeType, Name = "نوع الجريمة", Display = AhkamTasfeyaCategoryDisplay.List, ParentProgram = FehresPrograms.Da3awaGena2ya  });
+            Cats.Add(new AhkamTasfeyaCategory { ID = AhkamTasfeyaCategoryIds.Da3waType, Name = "نوع الدعوى", Display = AhkamTasfeyaCategoryDisplay.List, ParentProgram = FehresPrograms.Da3awaMadaneya });
 
 
-            Cats.Add(new AhkamTasfeyaCategory { ID = AhkamTasfeyaCategoryIds.Country , Name = "بالدولة"  , Display = AhkamTasfeyaCategoryDisplay.List });
-            Cats.Add(new AhkamTasfeyaCategory { ID = AhkamTasfeyaCategoryIds.Ma7kama, Name = "بالمحكمة", Display = AhkamTasfeyaCategoryDisplay.List });
-            Cats.Add(new AhkamTasfeyaCategory { ID = AhkamTasfeyaCategoryIds.JudgeYear, Name = "بالسنة القضائية", Display = AhkamTasfeyaCategoryDisplay.List });
-            Cats.Add(new AhkamTasfeyaCategory { ID = AhkamTasfeyaCategoryIds.Year, Name = "بالسنة", Display = AhkamTasfeyaCategoryDisplay.List });
+            Cats.Add(new AhkamTasfeyaCategory { ID = AhkamTasfeyaCategoryIds.Country , Name = "الدولة"  , Display = AhkamTasfeyaCategoryDisplay.List });
+            Cats.Add(new AhkamTasfeyaCategory { ID = AhkamTasfeyaCategoryIds.Ma7kama, Name = "المحكمة", Display = AhkamTasfeyaCategoryDisplay.List });
+            Cats.Add(new AhkamTasfeyaCategory { ID = AhkamTasfeyaCategoryIds.JudgeYear, Name = "السنة القضائية", Display = AhkamTasfeyaCategoryDisplay.List });
+            Cats.Add(new AhkamTasfeyaCategory { ID = AhkamTasfeyaCategoryIds.Year, Name = "السنة", Display = AhkamTasfeyaCategoryDisplay.List });
             
    
 

@@ -44,7 +44,7 @@ $(document).ready(function () {
     $("#slide-slides").cslide();
     $("#cslide-slides").cslide();
     // Scroll 
-    $(".filter-search .well").mCustomScrollbar({
+    $(".filter-search .well .panel-body").mCustomScrollbar({
         setHeight: "200px",
         theme: "3d",
         scrollButtons: "1"

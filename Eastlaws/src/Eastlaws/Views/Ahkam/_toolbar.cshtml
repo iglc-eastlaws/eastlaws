@@ -31,15 +31,19 @@
                     <li><a ng-click="changeSort(3)" href="javascript:;"><i class="glyphicon glyphicon-time"></i> ترتيب   بتاريخ  الحكم  </a></li>
                 </ul>
             </li>
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-font "></i> حجم الخط  </a>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="javascript:;" ng-click="fontsize('')">افتراضى</a></li>
-                    <li><a href="javascript:;" ng-click="fontsize('+')">تكبير</a></li>
-                    <li><a href="javascript:;" ng-click="fontsize('-')">تصغير</a></li>
+            <li class="font-option">
+                <label>
+                    حجم الخط :
 
-                </ul>
+                    <a href="javascript:;" ng-click="fontsize('')" data-toggle="tooltip" data-placement="top" class="color-tooltip" title="افتراضي"><i class="fa fa-random"></i></a> |
+                    <a href="javascript:;" ng-click="fontsize('+')" data-toggle="tooltip" data-placement="top" class="color-tooltip" title="تكبير"> +<i class="fa fa-font fa-2x "></i></a>   |
+                    <a href="javascript:;" ng-click="fontsize('-')" data-toggle="tooltip" data-placement="top" class="color-tooltip" title="تصغير"> -<i class="fa fa-font "></i></a>
+                </label>
+
+
+
             </li>
+
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-desktop "></i> عدد النتائج  فى الصفحة <span class="badge">{{pSize}}</span> <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
@@ -51,6 +55,15 @@
                     </li>
                 </ul>
             </li>
+            @*<li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-font "></i> حجم الخط  </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="javascript:;" ng-click="fontsize('')">افتراضى</a></li>
+                        <li><a href="javascript:;" ng-click="fontsize('+')">تكبير</a></li>
+                        <li><a href="javascript:;" ng-click="fontsize('-')">تصغير</a></li>
+
+                    </ul>
+                </li>*@
             @*<li>
                     <a href="#">
                         <i class="fa fa-repeat" aria-hidden="true"></i>
@@ -63,7 +76,8 @@
             <ul>
                 <li class="list pull-right "><label>العرض:</label></li>
                 <li ng-click="changeTypeView(1)" class="view-table list pull-right">
-                            <a class="" href="#columns"><i class="fa fa-columns fa-2x" aria-hidden="true"></i></a></li>
+                    <a class="" href="#columns"><i class="fa fa-columns fa-2x" aria-hidden="true"></i></a>
+                </li>
                 <li ng-click="changeTypeView(2)" class="view-list list pull-right "><a rel="nofollow" href="#auto" class="active"><i class="fa fa-align-justify fa-2x "></i></a>  </li>
                 <li ng-click="changeTypeView(3)" class="view-grid grid pull-right"><a rel="nofollow" href="#lists"><i class="fa fa-th fa-2x"></i></a> </li>
             </ul>
