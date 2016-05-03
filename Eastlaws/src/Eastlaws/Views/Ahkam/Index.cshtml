@@ -88,16 +88,17 @@
                                      <a data-toggle="collapse" data-parent="#accordion" href="#{{data.ID}}"><span class="glyphicon glyphicon-th"></span> {{data.Name}}</a>
                                 </h5>
                             </div>
-                            <div ng-class="{'in':$index == 0}" class='well panel-collapse collapse' id="{{data.ID}}" >
-                                <div class="panel-body" >
-                                    <ul class='list-group' infinite-scroll="increaseLimit()" style="max-height:200px;overflow: auto;">
-                                        <li ng-repeat="details in tasfyaList | filter :{CategoryID:data.ID} | limitTo:limit" class='list-group-item'>
+                            <div ng-class="{'in':$index == 0}" class='well panel-collapse collapse' id="{{data.ID}}">
+                                <div class="panel-body" style="height:200px; overflow-y:auto;">
+                                    <ul class='list-group' >
+                                        <li ng-repeat="details in tasfyaList | filter :{CategoryID:data.ID} " class='list-group-item'>
                                             {{countCatgID(details.CategoryID)}}
                                             <label> <input type='checkbox' ng-click='changeCheck(details,$event)' />&nbsp;  {{details.Name}} - ({{details.Count}})</label>
                                         </li>
                                     </ul>
                                 </div>
                             </div>
+               
                         </div>
                         </div>
                     </div>
@@ -112,6 +113,8 @@
 
 
     <script>
+
+  
 
         //************** tasks ***********************//
         //------------- done ------------------- >>>> looooooooding
@@ -512,6 +515,17 @@
              //  console.log($scope.tasfyaList)
              // $scope.catList = tasfiaAllData.listAllTasfya;
 
+         
+                 //$(".filter-search .well .panel-body").mCustomScrollbar({
+                 //    setHeight: "200px",
+                 //    theme: "3d",
+                 //    scrollButtons: "1"
+
+                 //});
+          
+             
+
+
              console.log('tasfia event fire')
          });
 
@@ -638,6 +652,8 @@
                         datalist.listAllCatg = d.data[1][1];
                         $rootScope.$broadcast('getTasfiyaList');
 
+
+                 
 
                     })
 

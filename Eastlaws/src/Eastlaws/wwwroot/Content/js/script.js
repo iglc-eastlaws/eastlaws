@@ -44,12 +44,12 @@ $(document).ready(function () {
     $("#slide-slides").cslide();
     $("#cslide-slides").cslide();
     // Scroll 
-    $(".filter-search .well .panel-body").mCustomScrollbar({
-        setHeight: "200px",
-        theme: "3d",
-        scrollButtons: "1"
+    //$(".filter-search .well .panel-body").mCustomScrollbar({
+    //    setHeight: "200px",
+    //    theme: "3d",
+    //    scrollButtons: "1"
 
-    });
+    //});
 
     // muilt check
 
