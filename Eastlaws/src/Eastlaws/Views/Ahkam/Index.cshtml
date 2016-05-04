@@ -60,15 +60,15 @@
                     <div id="tasfyaLood" style="display:none"><img src="/content/images/preload.gif" /></div>
                     <div id="Div-tasfya" style="display:none">
                         @*<div class='filter-section' ng-repeat="data in catList | unique: 'CategoryID'">
-                                <h5>{{catgoryName(data.CategoryID)}}</h5>
-                                <div class='well' style='max-height:200px;overflow: auto;'>
-                                    <ul class='list-group' style='max-height:200px;overflow: auto;'>
-                                        <li ng-repeat="details in catList | filter :{CategoryID:data.CategoryID}" class='list-group-item'>
-                                            <input type='checkbox' ng-click='changeCheck(details,$event)' />&nbsp; <label> {{details.Name}} - ({{details.Count}})</label>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>*@
+                    <h5>{{catgoryName(data.CategoryID)}}</h5>
+                    <div class='well' style='max-height:200px;overflow: auto;'>
+                        <ul class='list-group' style='max-height:200px;overflow: auto;'>
+                            <li ng-repeat="details in catList | filter :{CategoryID:data.CategoryID}" class='list-group-item'>
+                                <input type='checkbox' ng-click='changeCheck(details,$event)' />&nbsp; <label> {{details.Name}} - ({{details.Count}})</label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>*@
                         <h5><i class="fa fa-server"></i> تصفية النتائج </h5> <!--</div>-->
                         <div class="form-group">
                             <label for="horizontal_search" class="col-lg-12 col-sm-12 control-label bg-color title"> </label>
@@ -81,29 +81,33 @@
                                 </div>
                             </div>
                         </div>
-                       <div class="panel-group" id="accordion">
-                        <div class='filter-section panel panel-default' ng-repeat="data in categoryList" ng-show="displayCatg(data.ID)">
-                            <div class="panel-heading">
-                                <h5 class="panel-title">
-                                     <a data-toggle="collapse" data-parent="#accordion" href="#{{data.ID}}"><span class="glyphicon glyphicon-th"></span> {{data.Name}}</a>
-                                </h5>
-                            </div>
-                            <div ng-class="{'in':$index == 0}" class='well panel-collapse collapse' id="{{data.ID}}">
-                                <div class="panel-body" >
-                                    <ul class='list-group' style="height:200px; overflow-y:auto;"  infinite-scroll="increaseLimit()" >
-                                        <li ng-repeat="details in tasfyaList | filter :{CategoryID:data.ID} | limitTo:limit" class='list-group-item'>
-                                            {{countCatgID(details.CategoryID)}}
-                                            <label> <input type='checkbox' ng-click='changeCheck(details,$event)' />&nbsp;  {{details.Name}} - ({{details.Count}})</label>
-                                        </li>
-                                    </ul>
+                        @*class="panel-group"*@
+                        <div class="" id="accordion">
+                            <div class='filter-section' >
+                                <div class="panel panel-default" ng-repeat="data in categoryList" ng-show="displayCatg(data.ID)">
+                                    <div class="panel-heading">
+                                        <h5 class="panel-title">
+                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#{{data.ID}}">
+                                                <i class="indicator glyphicon glyphicon-chevron-up  pull-right"></i>&nbsp; {{data.Name}}
+                                            </a>
+                                        </h5>
+                                    </div>@*ng-class="{'in':$index == 0}"*@
+                                    <div class='well panel-collapse collapse in' id="{{data.ID}}" aria-expanded="true">
+                                        <div class="panel-body">
+                                            <ul class='list-group' style="height:200px; overflow-y:auto;" infinite-scroll="increaseLimit()">
+                                                <li ng-repeat="details in tasfyaList | filter :{CategoryID:data.ID} | limitTo:limit" class='list-group-item color-tooltip' data-toggle="tooltip" data-placement="top" title="{{details.Name}} - ({{details.Count}})">
+                                                    {{countCatgID(details.CategoryID)}}
+                                                    <label> <input type='checkbox' ng-click='changeCheck(details,$event)' />&nbsp;  {{details.Name}} - ({{details.Count}})</label>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
-               
-                        </div>
                         </div>
                     </div>
                 </div>
-
                 <hr class="spacer" />
             </div>
             <hr class="spacer" />
@@ -678,7 +682,7 @@
 
 
 
-
+           
 
             //---
 
@@ -688,7 +692,7 @@
 
 
 
-
+    
 
 
     </script>
