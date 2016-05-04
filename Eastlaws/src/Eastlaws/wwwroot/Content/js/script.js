@@ -25,6 +25,14 @@ $('#myCarousel').carousel({
     interval: 10000
 })
 $(document).ready(function () {
+    function toggleChevron(e) {
+        $(e.target)
+            .prev('.panel-heading')
+            .find("i.indicator")
+            .toggleClass('glyphicon-chevron-down glyphicon-chevron-up');
+    }
+    $('#accordion').on('hidden.bs.collapse', toggleChevron);
+    $('#accordion').on('shown.bs.collapse', toggleChevron)
 
     $('.carousel .item').each(function () {
         var next = $(this).next();
