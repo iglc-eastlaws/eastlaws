@@ -22,7 +22,7 @@
     var catg = allTasfia.Where(n => catgID == catgGroup[i].Key.category);
     <div class='filter-section'>
         <h5>@catgGroup[i].Key.categoryName</h5>
-        <div class='well' style='max-height:200px;overflow: auto;'>
+        <div class='well'  >
             <ul class='list-group'>
 
                 @tasfyaSub(allTasfia, catgGroup[i].Key.category)
