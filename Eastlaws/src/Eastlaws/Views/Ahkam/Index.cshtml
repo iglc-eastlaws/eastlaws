@@ -33,7 +33,8 @@
                 </div>
             </div>
             <div class="result-search">
-                <p class="total-chart" id="TotalCount"> </p>
+
+                <p id="TotalCount" class="total-chart"></p>
 
                 <div class="col-lg-9 col-md-8  col-sm-8 list-content">
                     <div class="format-result" ng-controller="toolbarCtrl"> @Html.Partial("_toolbar")</div>
@@ -45,7 +46,7 @@
                     <hr class="spacer" />
 
                     <div class="paging-search text-center" ng-controller="pagesCtrl">
-                        <c-pageing ng-show="pageCount > 1"
+                        <c-pageing id="pageingctr" ng-show="pageCount > 1"
                                    pages-count="{{pageCount}}"
                                    current-page="mypage"
                                    on-getpage="getmypage()"
@@ -128,46 +129,56 @@
         //------------  done ---------------- >>>> select all and none select all
         //---------------  done  --------------- >>>> when user sernd all contries or all ma7akem (send as null)
         //------------- done --------------- >>> change font size
+        //-------------- done ---------------- >>> scroll page
+        //---------------- done --------------- >>> convert $rootscope to service
+        //------------------  done  ------------ >>> fixed Paging bugs
+        //---------------- in progress  -------------- >>> arrange js code
+
+        //------------------------------ >>> Angularjs Post http
         //-------------------------------- >>> filter section from server
         //-------------------------------- >>> desc and asc in sort
         //-------------------------------- >>> table height equal to hokm div
-        //-------------------------------- >>> scroll page
-        //-------------------------------- >>> convert $rootscope to service
-        //-------------------------------- >>> fixed Paging bugs
         //-------------------------------- >>> hide and show right section
-        //-------------------------------- >>> arrange js code
         //-------------------------------- >>> switch between  3 type views  changes in css only
 
         
         (function () {
             "use strict";
-            var app = angular.module('ahkamApp', ['ngSanitize', 'sharedModule']);
+            var app = angular.module('ahkamApp', ['sharedModule']);
             app
-            .controller('ahkamCtrl', function ($http, $rootScope, SearchData) {
-
-                SearchData.searchType = 0;
-                SearchData.newSearch = 1;
-                SearchData.SortChange = 0;
+            .controller('ahkamCtrl', function (SearchData) {
+                SearchData.searchType = 1;
+                SearchData.newSearch = true;
                 SearchData.currentPage = 1;
-                $rootScope.sortType = 5;
+                SearchData.sortType = 5;
                 SearchData.Latest = true;
                 SearchData.GetSearch();
 
-
             })
-             .controller('assembleSearchCtrl', function ($scope, SearchData, $rootScope, $http) {
+            .controller('searchResultCtrl', function () {
+                       $(document).on('click', '.hokmView', function () {
+                           $(".hokmView").removeClass("active");
+                           var obj = $(this);
+                           if (obj.hasClass("active")) {
+                               obj.removeClass("active");
+                           } else {
+                               obj.addClass("active");
+                           }
+                           var idHokm = obj.data('idhokm');
+                           $.get('/Ahkam/FullHokmView', { 'ID': idHokm }, function (data) {
+                               $('#hokmview').html(data)
+                           });
+                       })
+
+              })
+            .controller('assembleSearchCtrl', function ($scope, SearchData, $http) {
                  $scope.omarGroupShow = false;
                  $scope.Inputs = {};
                  $scope.date = {};
-
-
                  $scope.choiceMahakem = [];
-
                  $scope.countries = [];
                  $scope.Mahakem = [];
                  $scope.MahkamaReplies = [];
-
-
                  $scope.updatecountry = function () {
                      $scope.omarGroupShow = false;
                      $scope.Mahakem = [];
@@ -236,7 +247,6 @@
                      }
                  }
 
-
                  function setAllMhakem() {
                      if ($scope.Mahakem.length === $scope.choiceMahakem.length)
                      { $scope.Inputs.mahakem = ''; }
@@ -244,82 +254,15 @@
 
                  $scope.search = function () {
                      setAllMhakem();
-
-                     SearchData.searchType = 0;
-                     SearchData.newSearch = 1;
-                     SearchData.SortChange = 0;
+                     SearchData.searchType = 1;
+                     SearchData.newSearch = true;
                      SearchData.currentPage = 1;
                      SearchData.AssembleSearchInputs = $scope.Inputs;
                      SearchData.Latest = false;
                      SearchData.GetSearch();
-
-
                  };
-             })
-
-            .controller('pagesCtrl', function ($scope, SearchData, $rootScope, $timeout) {
-                $scope.service = SearchData;
-                $scope.$watch('service.newSearch', function (newVal) {
-                    if (newVal == 1)
-                    {
-                        $scope.mypage = 1;
-                    }
-                });
-
-
-                $scope.$watch('service.pageCount', function (newVal) {
-                    $scope.pageCount = newVal;
-                });
-
-                $scope.$watch('service.pageSize', function (newVal, oldval) {
-                    $scope.mypage = 1;
-                    if (Number(SearchData.TotalCount) > Number(SearchData.pageSize)) {
-                        $scope.pageCount = Math.ceil(SearchData.TotalCount / Number(SearchData.pageSize));
-
-                    }
-                });
-
-
-                $scope.getmypage = function () {
-
-                    if ($scope.mypage === undefined) {
-                        $scope.mypage = 1;
-                        SearchData.newtasfya = true;
-                        SearchData.newSearch = 1;
-                        SearchData.GetSearch();
-                    } else {
-  
-                        SearchData.currentPage = $scope.mypage;
-                        if (SearchData.currentPage !== undefined) {
-                            SearchData.newtasfya = false;
-                            SearchData.newSearch = 0;
-                            SearchData.GetSearch();
-                        }
-                    }
-                }
-
-
-                $scope.getmypage();
-
             })
-
-            .controller('searchResultCtrl', function ($scope, $compile) {
-                $(document).on('click', '.hokmView', function () {
-                    $(".hokmView").removeClass("active");
-                    if ($(this).hasClass("active")) {
-
-                        $(this).removeClass("active");
-                    } else {
-                        $(this).addClass("active");
-                    }
-                    var idHokm = $(this).data('idhokm');
-                    $.get('/Ahkam/FullHokmView', { 'ID': idHokm }, function (data) {
-                        $('#hokmview').html(data)
-                    });
-                })
-
-            })
-            .controller('toolbarCtrl', function ($scope, SearchData, $rootScope) {
+            .controller('toolbarCtrl', function ($scope, SearchData) {
                 $scope.pageSizes = [10, 50, 100];
                 $scope.pSize = 10;
                 $scope.sortTitle = " النتائج";
@@ -341,9 +284,11 @@
                 }
 
                 $scope.changeSort = function (type) {
-                    $rootScope.sortType = type;
+                    SearchData.sortType = type;
                     SearchData.currentPage = 1;
                     SearchData.newtasfya = false;
+                    SearchData.newSearch = false;
+
                     SearchData.GetSearch();
                     switch (type) {
                         case 1:
@@ -369,163 +314,186 @@
                 }
                 $scope.changePageSize = function (size) {
                     $scope.pSize = size;
-                    SearchData.PageInit = 1;
-                    SearchData.currentPage = 1;
                     SearchData.pageSize = $scope.pSize;
+                    SearchData.currentPage = 1;
                     SearchData.newtasfya = false;
+                    SearchData.newSearch = false;
                     SearchData.GetSearch();
                 }
-
                 $scope.changeTypeView = function (v) {
-
                     SearchData.typeView = v;
                     SearchData.newtasfya = false;
+                    SearchData.newSearch = false;
                     SearchData.GetSearch();
+                }
+            })
+            .controller('pagesCtrl', function ($scope, SearchData) {
+                $scope.service = SearchData;
+                $scope.$watchCollection('[service.currentPage, service.pageCount,service.pageSize]',function (newValues, oldValues) {
+                    if (newValues[0] !== oldValues[0])
+                    {
+                        if (newValues[0] == 1) {
+                            $scope.mypage = 1;
+                        }
+                    }
+                    if (newValues[1] !== oldValues[1]) {
+                        $scope.pageCount = newValues[1];
+                    }
+                    if (newValues[2] !== oldValues[2]) {
+                        $scope.mypage = 1;
+                        if (Number(SearchData.TotalCount) > Number(SearchData.pageSize)) {
+                            $scope.pageCount = Math.ceil(SearchData.TotalCount / Number(SearchData.pageSize));
+                        }
+                    }
+                });
 
+
+                $scope.getmypage = function () {
+
+                    if ($scope.mypage === undefined) {
+                        SearchData.currentPage = $scope.mypage = 1;
+                        SearchData.newtasfya = true;
+                        SearchData.newSearch = true;
+                    }
+                    else
+                    {
+                       SearchData.currentPage = $scope.mypage;
+                       SearchData.newtasfya = false;
+                       SearchData.newSearch = false;
+                    }
+                    SearchData.GetSearch();
                 }
 
+                $scope.getmypage();
             })
-            app.factory('SearchData', function ($http, $rootScope, $compile, tasfiaData, tasfiaAllData) {
+            .factory('SearchData', function ($http, tasfiaData, tasfiaAllData, $rootScope) {
                 var data = {};
                 data.searchType = 1;             //GeneralSearch 1   advancedserch 2  .... etc
-                data.newSearch = 0;
                 data.pageSize = 10;
                 data.pageCount = 0;
                 data.AssembleSearchInputs = {};
                 data.TotalCount = 0;
                 data.currentPage = 1;
-                data.typeView = 2;  //rows - grid - table
+                data.typeView = 2;                   //rows - grid - table
                 data.days = 10;
                 data.Latest = true;
+                data.sortType = 5;
+
                 data.newtasfya = true;
+                data.newSearch = true;
 
                 data.GetSearch = function () {
 
-                    if (data.searchType === 0) // AssymbleSearch
+                    if (data.searchType === 1) // AssymbleSearch
                     {
-                       if ((data.currentPage == 0) || (data.currentPage == undefined)) {
-                            data.currentPage = 1;
-                        }
+                       
                         $('#searchResult').html('<img src="/content/images/preload.gif" />');
                         $.post('/Ahkam/SearchResultAssembly', {
                             "AssembleSearchInputs": data.AssembleSearchInputs,
                             "PageNo": data.currentPage,
-                            "Sort": $rootScope.sortType,
+                            "Sort": data.sortType,
                             "pageSize": data.pageSize,
                             "Latest": data.Latest,
                             "Days": data.days,
                             "typeView": data.typeView
                         }, function (d) {
-                            searchOptionAfterAjax(d);
+                            $rootScope.$apply(function () {
+                                var searchresult = $('#searchResult');
+                                searchresult.html(d);
+
+                                $('body').animate({ scrollTop: $("#TotalCount").offset().top }, 1000, function () {
+                                    if (data.newtasfya == true) {
+                                        tasfiaAllData.getTasyaList();
+                                    }
+                                });
+
+                                if (data.newSearch == true)
+                                {
+                                    data.TotalCount = 0;
+                                    if (searchresult.find('#resultCount').length) {
+                                        data.TotalCount = $("#resultCount").val();
+                                        $('#TotalCount').html('');
+                                        if (data.TotalCount > 0) {
+                                            $('#TotalCount').html(" <i class='fa fa-line-chart '></i> وجد اجمالي [" + data.TotalCount + "] حكم")
+                                        }
+                                    } 
+                                    if ((data.currentPage <= 1) || (data.currentPage == undefined)) {
+                                        var countpage = 1;
+                                        if (data.TotalCount > Number(data.pageSize)) {
+                                            countpage = Math.ceil(data.TotalCount / Number(data.pageSize));
+                                        }
+                                        data.pageCount = countpage;
+                                        data.currentPage = 1;
+
+                                    }
+                                }
+                            });
                         });
                     }
-
-
                 };
-
-                function HtmlResultCount() {
-                    data.TotalCount = $("#resultCount").val();
-                    $('#TotalCount').html('');
-                    if (data.TotalCount > 0) {
-                        $('#TotalCount').html(" <i class='fa fa-line-chart '></i> وجد اجمالي [" + data.TotalCount + "] حكم")
-                    }
-                }
-
-                function getTasfya() {
-                    tasfiaAllData.getTasyaList();
-                }
-
-
-                function searchOptionAfterAjax(d) {
-                    var searchresult = $('#searchResult');
-                    searchresult.html(d);
-
-                    $('body').animate({ scrollTop: $("#TotalCount").offset().top }, 1000, function () {
-                        if (data.newtasfya == true) {
-                            getTasfya();
-                        }
-                    });
-
-                    if (searchresult.find('#resultCount').length) {
-                        if (data.newSearch == 1) {
-                            HtmlResultCount();
-                        }
-
-
-                        if ((data.currentPage == 1) || (data.currentPage == undefined)) {
-                            var countpage = 1;
-                            if (data.TotalCount > Number(data.pageSize)) {
-                                countpage = Math.ceil(data.TotalCount / Number(data.pageSize));
-                            }
-                            data.pageCount = countpage;
-                        }
-
-                    }
-
-                }
-
 
                 return data;
             })
-
-     .controller('tasfyaCtrl', function ($scope, tasfiaData, SearchData, $rootScope, $compile, tasfiaAllData) {
-
-
-         $scope.categoryList = [];
-         $scope.tasfyaList = [];
-
-         $scope.catgDistinct = [];
-         $scope.countCatgID = function (catgID) {
+ 
+            //Tasya-------------------------------------
+            app
+            .controller('tasfyaCtrl', function ($scope, tasfiaData, SearchData, $rootScope, $compile, tasfiaAllData) {
 
 
-             var indx = $scope.catgDistinct.indexOf(catgID);
-             if (indx === -1) {
-                 $scope.catgDistinct.push(catgID);
-             }
+                 $scope.categoryList = [];
+                 $scope.tasfyaList = [];
 
-         }
-         $scope.displayCatg = function (catgID) {
-             var result = false;
-             var indx = $scope.catgDistinct.indexOf(catgID);
-             if (indx !== -1) {
-                 result = true;
-             }
-             return result;
-         }
-
-         $scope.limit = 20;
-
-         $scope.increaseLimit = function () {
-             if ($scope.limit < $scope.tasfyaList.length) {
-                 $scope.limit += 20;
-             }
-         }
-         $rootScope.$on('getTasfiyaList', function () {
-             $scope.limit = 20;
-             $scope.categoryList = tasfiaAllData.listAllCatg;
-             $scope.tasfyaList = tasfiaAllData.listAllTasfya;
-
-         });
-
-         $scope.changeCheck = function (item, event) {
-             if ($(event.target).is(':checked')) {
-                 tasfiaData.PushList(item.CategoryID + '_' + item.ID, item.Name, item.Count);
-                 $(event.target).parent().parent().addClass('active');
+                 $scope.catgDistinct = [];
+                 $scope.countCatgID = function (catgID) {
 
 
+                     var indx = $scope.catgDistinct.indexOf(catgID);
+                     if (indx === -1) {
+                         $scope.catgDistinct.push(catgID);
+                     }
 
-             } else {
-                 tasfiaData.splice(item.Name)
-                 $(event.target).parent().parent().removeClass('active');
+                   }
+                     $scope.displayCatg = function (catgID) {
+                         var result = false;
+                         var indx = $scope.catgDistinct.indexOf(catgID);
+                         if (indx !== -1) {
+                             result = true;
+                         }
+                         return result;
+                     }
 
-             }
+                     $scope.limit = 20;
 
-         };
+                     $scope.increaseLimit = function () {
+                         if ($scope.limit < $scope.tasfyaList.length) {
+                             $scope.limit += 20;
+                         }
+                     }
+                     $rootScope.$on('getTasfiyaList', function () {
+                         $scope.limit = 20;
+                         $scope.categoryList = tasfiaAllData.listAllCatg;
+                         $scope.tasfyaList = tasfiaAllData.listAllTasfya;
+
+                     });
+
+                     $scope.changeCheck = function (item, event) {
+                         if ($(event.target).is(':checked')) {
+                             tasfiaData.PushList(item.CategoryID + '_' + item.ID, item.Name, item.Count);
+                             $(event.target).parent().parent().addClass('active');
+
+
+
+                         } else {
+                             tasfiaData.splice(item.Name)
+                             $(event.target).parent().parent().removeClass('active');
+
+                         }
+
+                     };
 
  
-     })
-
-            app.controller('filterElementCtrl', function ($scope, tasfiaData, SearchData, $rootScope, $compile) {
+                 })
+            .controller('filterElementCtrl', function ($scope, tasfiaData, SearchData, $rootScope, $compile) {
 
                 $scope.list = tasfiaData.list;
                 $scope.delete = function (obj) {
@@ -535,7 +503,7 @@
                 }
 
             })
-            app.factory('tasfiaData', function ($http, $rootScope) {
+            .factory('tasfiaData', function ($http, $rootScope) {
                 var data = {};
                 data.list = [];
 
@@ -551,12 +519,8 @@
                 }
 
                 return data;
-            });
-
-
-
-
-            app.factory('tasfiaAllData', function ($http, $rootScope, tasfiaData) {
+            })
+            .factory('tasfiaAllData', function ($http, $rootScope, tasfiaData) {
                 var datalist = {};
                 datalist.listAllTasfya = [];
                 datalist.listAllCatg = [];
@@ -565,21 +529,15 @@
                     $('#tasfyaLood').show();
                     $('#Div-tasfya').hide();
                     $http.get('/Ahkam/TasfyaListJson', {}).then(function (d) {
-                        //console.log(d.data[0]);
                         $('#Div-tasfya').show(); $('#tasfyaLood').hide();
                         datalist.listAllTasfya = d.data[0][1];
                         datalist.listAllCatg = d.data[1][1];
                         $rootScope.$broadcast('getTasfiyaList');
-
-
-
-
                     })
-
 
                 }
                 return datalist;
-            });
+            })
 
 
 
