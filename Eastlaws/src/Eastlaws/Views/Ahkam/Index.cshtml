@@ -16,6 +16,7 @@
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#assembleSearch" aria-controls="assembleSearch" role="tab" data-toggle="tab">بحث</a></li>
                 <li role="presentation"><a href="#mada" aria-controls="mada" role="tab" data-toggle="tab">بحث بتطبيقات المادة</a></li>
+                <li role="presentation"><a href="#fahras" aria-controls="mada" role="tab" data-toggle="tab">بحث موضوعى</a></li>
             </ul>
 
 
@@ -29,12 +30,15 @@
                     <div role="tabpanel" class="tab-pane" id="mada">
                         <div class="search-form form-horizontal">@Html.Partial("_tadbekMadaSearch")</div>
                     </div>
+                <div role="tabpanel" class="tab-pane" id="fahras">
+                    <div class="search-form form-horizontal">@*@Html.Partial("_MowdoeSearch")*@  </div>
+                    </div>
 
                 </div>
             </div>
             <div class="result-search">
 
-                <p id="TotalCount" class="total-chart"></p>
+                <p id = "TotalCount" class="total-chart"></p>
 
                 <div class="col-lg-9 col-md-8  col-sm-8 list-content">
                     <div class="format-result" ng-controller="toolbarCtrl"> @Html.Partial("_toolbar")</div>
@@ -42,11 +46,11 @@
 
                     <hr class="spacer" />
 
-                    <div id="searchResult" ng-controller="searchResultCtrl"></div>
+                    <div id = "searchResult" ng-controller="searchResultCtrl"></div>
                     <hr class="spacer" />
 
                     <div class="paging-search text-center" ng-controller="pagesCtrl">
-                        <c-pageing id="pageingctr" ng-show="pageCount > 1"
+                        <c-pageing id = "pageingctr" ng-show="pageCount > 1"
                                    pages-count="{{pageCount}}"
                                    current-page="mypage"
                                    on-getpage="getmypage()"
@@ -60,8 +64,10 @@
                 <div class="col-lg-3 col-md-4 col-sm-4 filter-search" ng-controller="tasfyaCtrl">
 
 
-                    <div id="tasfyaLood" style="display:none"><img src="/content/images/preload.gif" /></div>
-                    <div id="Div-tasfya" style="display:none">
+                    <div id = "tasfyaLood" style="display:none"><img src = "/content/images/preload.gif" /></ div >
+
+
+                      < div id="Div-tasfya" style="display:none">
                         @*<div class='filter-section' ng-repeat="data in catList | unique: 'CategoryID'">
                                 <h5>{{catgoryName(data.CategoryID)}}</h5>
                                 <div class='well' style='max-height:200px;overflow: auto;'>
