@@ -306,6 +306,7 @@ nav.sidebar:hover{margin-right: 0px;}
 .tabel-views{ padding:0px;}
 .tabel-views h3{ padding:0 12px; margin:5px 0;}
 .tabel-views h3 .main-title{ color: #4c3b35; font-size: 0.5em;text-shadow: 0 0 0;}
+.tabel-views h3 i, h2 i, h1 i, h4 i{ font-size:initial;}
 .row-search:hover{ background-color:#FFFFEA; /*#e6e6e6*/}
 .row-search h3,  .view-law h1{ /*background-color:#B6E1E1;*/ font-size:0.9em; padding:12px 0; margin:0px; line-height:1.9em; color:#9f7324;}
 .view-law h1{ font-size:1.1em;}
@@ -366,6 +367,10 @@ p.total-chart {color:#666; font:bold 14px arial;}
 .nav-control ul li a i{color:#E2B967; transition:all 0.4s ease 0s;}
 .nav-control ul li a{ color:#666;}
 .nav-control ul li a:hover, .nav-control ul li a:hover i{ color:#000;}
+.widget-header .nav-control{ border:0 none;}
+.widget-header .nav-control ul{ margin:0px;}
+.widget-header .nav-control ul li .name-nav{ display:none;}
+.widget-header .nav-control ul li a{ padding:0 3px;}
 .signature{ text-align:left;color:#1f3945; font:bold 1em arial; }
 .signature span{color:#9f7324;}
 /*Tab Filters*/
@@ -452,15 +457,14 @@ p.total-chart {color:#666; font:bold 14px arial;}
 .widget.widget-table .table {margin-bottom: 0;border: none;}
 .widget-content #hokmview{ padding:0 12px; border: 1px solid rgba(224, 184, 105, 0.57);overflow-y:auto; height:403px; }
 .widget.widget-table .widget-content {padding: 0;}
-.widget.widget-table .col-lg-7{ padding-left:8px;}
+.widget.widget-table .col-lg-6{ padding-left:7px;}
 .widget .widget-header + .widget-content {border-top: none;border-radius: 0px;}
 .widget .widget-content {padding: 20px 15px 15px;background: #FFF;border-radius: 0px;}
-.widget .widget-header {position: relative;height: 40px;line-height: 40px;
-background: #F8E9C9;border: 1px solid rgba(224, 184, 105, 0.57);box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+.widget .widget-header {position: relative;height: 40px;line-height: 40px;background: #F8E9C9;border: 1px solid rgba(224, 184, 105, 0.57);box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 text-shadow: 0 1px 0 #fff;box-shadow: 0 2px 5px rgba(0,0,0,0.1),inset 0 1px 0 white,inset 0 -1px 0 rgba(255,255,255,0.7);
-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FAFAFA', endColorstr='#E9E9E9');
--ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#FAFAFA', endColorstr='#E9E9E9')";-webkit-background-clip: padding-box;}
-thead { background-color:#fff9d9;  color:#333; font:0.8em "Droid Arabic Kufi",arial; text-align:center;display: table-header-group;vertical-align: middle;border-color: inherit;}
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FAFAFA', endColorstr='#E9E9E9');-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#FAFAFA', endColorstr='#E9E9E9')";-webkit-background-clip: padding-box;}
+.nav-control .widget .widget-header{ line-height:38px;}
+thead { background-color:#fff9d9;  color:#333; font:0.68em "Droid Arabic Kufi",arial; text-align:center;display: table-header-group;vertical-align: middle;border-color: inherit;}
 .tabel-views .table > thead > tr > th{ padding:8px 5px;}
 .hokmView.active, .hokmView.active td, tr.hokmView:hover, .table-striped > tbody> tr:nth-child(2n+1):hover  > td, .table-striped > tbody > tr:nth-child(2n+1):hover > th:hover{ background-color:#675650!important; color:#E8BF6F; cursor:pointer;}
 
