@@ -69,18 +69,18 @@ $(document).ready(function () {
     });
 
     //Grid View
-    //$(".layout-view li a").click(function () {
-    //    $(".layout-view li a").removeClass("active");
-    //    $(this).addClass("active");
-    //    if ($(this).parent().hasClass("view-list")) {
-    //        $(".list-content .result-block").removeClass("col-md-4 height-scroll");
-    //    } else if ($(this).parent().hasClass("view-grid"))
-    //    {
-    //        $(".list-content .result-block").addClass("col-md-4 height-scroll");
-    //    }
+    $(".layout-view li a").click(function () {
+        $(".layout-view li a").removeClass("active");
+        $(this).addClass("active");
+        if ($(this).parent().hasClass("view-list")) {
+            $(".list-content .result-block").removeClass("col-md-4 height-scroll");
+        } else if ($(this).parent().hasClass("view-grid"))
+        {
+            $(".list-content .result-block").addClass("col-md-4 height-scroll");
+        }
 
 
-    //});
+    });
     // Row Tabel View
 
 
