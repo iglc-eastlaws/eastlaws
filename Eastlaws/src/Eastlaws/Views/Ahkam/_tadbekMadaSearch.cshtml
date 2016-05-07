@@ -1,30 +1,8 @@
-﻿<div class="col-lg-10 col-md-12">
-    <div class="form-group radio_buttons optional ">
-        <label class="radio_buttons  col-sm-3  "> </label>
-        <div class="col-sm-9">
-            <span class="">
-                <label for="user_horizontal_sex_male checkbox-inline">
-                    <input type="radio" value="" name="" id="" class="radio_buttons ">
-                    مطابق للجملة
-                </label>
-            </span>&nbsp;
-            <label for="user_horizontal_sex_male checkbox-inline">
-                <input type="radio" value="" name="" id="" class="radio_buttons ">
-                مطابق لجميع الكلمات
-            </label>
-        </div>
-    </div>
+﻿<div class="col-lg-6 col-md-12 col-side">
     <div class="form-group   ">
-        <label for="horizontal_search" class=" col-lg-3 col-sm-3 control-label bg-color title">
-            <!--<abbr title="required">*</abbr>-->
-            نص التشريع  :
-        </label>
-        <div class="col-sm-9">
-            <input type="text" placeholder="كلمة البحث" name="horizontal[search]" id="horizontal_search" class="string search  form-control">
-            <!--     <p class="help-block">Lorem ipsum dolor sit amet</p>-->
-        </div>
+
         <label class="col-lg-3 col-sm-3 control-label bg-color"></label>
-        <div class="col-sm-9">
+        <div class="col-sm-9 search">
             <label class="checkbox-inline">
                 <input type="checkbox" checked="" value="option1" id="inlineCheckbox1">
                 عنوان التشريع
@@ -36,12 +14,34 @@
 
         </div>
     </div>
+
+    <div class="form-group radio_buttons optional ">
+        <label class="radio_buttons  col-sm-3  " for="serachText">نص التشريع :  </label>
+        <div class="col-lg-9 col-md-9 col-sm-9 search">
+            <div class="multiple-form-group input-group">
+                <div class="input-group-btn input-group-select">
+                    <button data-toggle="dropdown" class="btn btn-default dropdown-toggle" type="button">
+                        <span class="concept">مطابق للجملة</span>
+                        <span class="caret"></span>
+                    </button>
+                    <ul role="menu" class="dropdown-menu">
+                        <li>
+                            <a href="javascript:;">مطابق للجملة</a>
+                        </li>
+                        <li> <a href="javascript:;">مطابق جميع الكلمات</a></li>
+                    </ul>
+                </div>
+                <input type="text" class="form-control ng-pristine ng-untouched ng-valid ng-empty" ng-model="inputText" id="serachText">
+            </div>
+        </div>
+    </div>
+ 
     <hr class="spacer" />
-    <br />
+
     <div class="form-group   ">
-        <label for="horizontal_search" class=" col-lg-3 col-md-3 col-sm-3 control-label bg-color title"> اختار الدولة :</label>
-        <div class="col-md-4 col-sm-4">
-            <select tabindex="3" class="string search  form-control" id="ddlCountries" name="d">
+        <label for="ddlCountries2" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title"> اختار الدولة :</label>
+        <div class="col-md-4 col-sm-4 search">
+            <select tabindex="3" class="string   form-control" id="ddlCountries2" name="d">
                 <option selected="selected" value="1">جمهورية مصر العربية</option>
                 <option value="2">المملكة الأردنية الهاشمية</option>
                 <option value="3">الجمهورية اليمنية</option>
@@ -70,25 +70,22 @@
             </select>
         </div>
         <div class="col-md-5 col-sm-5">
-            <label for="horizontal_search" class="col-lg-5 col-md-5 col-sm-6 control-label bg-color title">   رقم التشريع :  </label>
-            <div class="col-md-7 col-sm-6" style="padding-left:0px; padding-right:0px;">
-                <input type="text" placeholder="" name="horizontal[search]" id="horizontal_search" class="string search  form-control">
+            <label for="numberTashree3" class="col-lg-5 col-md-5 col-sm-6 control-label bg-color title">   رقم التشريع :  </label>
+            <div class="col-md-7 col-sm-6 search" style="padding-left:0px; padding-right:0px;">
+                <input type="text" placeholder="" name="horizontal[search]" id="numberTashree3" class="string search  form-control">
             </div>
         </div>
     </div>
     <hr class="spacer" />
     <div class="form-group   ">
-        <label for="horizontal_search" class=" col-lg-3 col-md-3 col-sm-3 control-label bg-color title">  سنة التشريع  : </label>
-        <div class="col-md-4 col-sm-4">
-            <div class="input-group " data-provide="datepicker">
-                <input type="text" class="form-control">
-                <div class="input-group-addon"> <span class="glyphicon glyphicon-th"></span> </div>
-            </div>
+        <label for="yearTashree3" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title">  سنة التشريع  : </label>
+        <div class="col-md-4 col-sm-4 search">
+            <input type="text" placeholder="" name="horizontal[search]" id="yearTashree3" class="string   form-control">
         </div>
         <div class="col-md-5 col-sm-5">
-            <label for="horizontal_search" class="col-lg-5 col-md-5 col-sm-6 control-label bg-color title"> رقم المادة  : </label>
-            <div class="col-md-7 col-sm-6" style="padding-left:0px; padding-right:0px;">
-                <input type="text" placeholder="" name="horizontal[search]" id="horizontal_search" class="string search  form-control">
+            <label for="numberMada" class="col-lg-5 col-md-5 col-sm-6 control-label bg-color title"> رقم المادة  : </label>
+            <div class="col-md-7 col-sm-6 search" style="padding-left:0px; padding-right:0px;">
+                <input type="text" placeholder="" name="horizontal[search]" id="numberMada" class="string   form-control">
             </div>
         </div>
     </div>
@@ -97,7 +94,7 @@
 
     <div class="form-group   ">
         <label class="col-lg-3 col-md-3 col-sm-3 "> </label>
-        <div class="col-sm-9">
+        <div class="col-sm-9 search">
             <input type="submit" value="بـحـث" name="commit" class="btn butt-yellow">
         </div>
     </div>        
