@@ -141,12 +141,13 @@ namespace Eastlaws.Services
                         string ProcessedFilter = "";
 
                         return string.Format(
-                            @"Select Top {0} CaseYear as ID , Cast(A.CaseYear as varchar(32)) as Name , Count(*) as Count , 7 as CategoryID , Count(*) as SortValue From Ahkam A
-                                               Join EastlawsUsers..QueryCacheRecords QCR With (Nolock)  On QCR.ItemID = A.ID 
-                                               {3}
-                                               Where QCR.MasterID  = {1}  {2}  
-                                               Group By A.CaseYear
-                                               Order By Count(*) desc ", MAX_RECORD_COUNT_PER_CATEGORY, MasterQueryID, ProcessedFilter, SafyListJoinClause);
+                            @"
+                            Select Top {0} CaseYear as ID , Cast(A.CaseYear as varchar(32)) as Name , Count(*) as Count , 7 as CategoryID , Count(*) as SortValue From Ahkam A
+                            Join EastlawsUsers..QueryCacheRecords QCR With (Nolock)  On QCR.ItemID = A.ID 
+                            {3}
+                            Where QCR.MasterID  = {1}  {2}  
+                            Group By A.CaseYear
+                            Order By Count(*) desc ", MAX_RECORD_COUNT_PER_CATEGORY, MasterQueryID, ProcessedFilter, SafyListJoinClause);
                     }
                 case AhkamTasfeyaCategoryIds.Year:
                     {
