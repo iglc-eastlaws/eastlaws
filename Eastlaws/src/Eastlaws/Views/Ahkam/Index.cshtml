@@ -405,7 +405,7 @@
                     if (data.searchType === 1) // AssymbleSearch
                     {
                        console.log(data)
-                        $('#searchResult').html('<img src="/content/images/preload.gif" />');
+                        $('#searchResult').html('<div class="text-center"><img src="/content/images/preload.gif"  /></div>');
                         $.post('/Ahkam/SearchResultAssembly', {
                             "AssembleSearchInputs": data.AssembleSearchInputs,
                             "PageNo": data.currentPage,
