@@ -32,24 +32,24 @@
 
         <div class="view-law tabel-views widget  widget-table action-table">
 
-            <div class="col-lg-7 col-md-7 widget-content">
+            <div class="col-lg-5 col-md-5 widget-content">
                 <div class="widget-header">
 
                     <h3>
                         <i class="fa fa-legal "></i>&nbsp;<span class="main-title">استعراض الأحكام العربية</span>
                     </h3>
-                </div>
+                          </div>
 
                 <div class="list-table">
 
                     <table id="tblAhkam" class="table table-striped table-bordered table-fixed table-responsive">
                         <thead>
                             <tr>
-                                <th>الدولة</th>
+                                <th style="max-width:34px;">الدولة</th>
                                 <th>المحكمه</th>
-                                <th>الطعن</th>
+                                <th>رقم</th>
                                 <th>السنة</th>
-                                <th>تاريخ الجلسة</th>
+                                @*<th>تاريخ الجلسة</th>*@
                                 @*<th>مكتب فنى</th>*@
                             </tr>
                         </thead>
@@ -61,16 +61,16 @@
                                     <td><img src="/Content/images/Flags/Small/@item.CountryFlagPic" class="color-tooltip" data-toggle="tooltip" data-placement="top" title="@item.CountryName" /> </td>
                                     @*<td>@item.CountryName</td>*@
                                     <td>@item.MahkamaName</td>
-                                    <td>@item.CaseNo</td>
-                                    <td>@item.CaseYear</td>
-                                    <td style="font-size:0.9em;">
+                                    <td style="font-size:0.82em;">@item.CaseNo</td>
+                                    <td style="font-size:0.82em;">@item.CaseYear</td>
+                                    @*<td style="font-size:0.82em;">
                                         @if ((item.CaseDate != null) && (item.CaseDate.ToString() != ""))
                                         {
                                             @DateTime.Parse(item.CaseDate.ToString()).ToString("dd/M/yyyy")
 
                                         }
 
-                                    </td>
+                                    </td>*@
                                     @*<td>@item.OfficeSuffix</td>*@
 
                                 </tr>
@@ -83,13 +83,21 @@
 
                 </div>
             </div>
-            <div class="col-lg-5 col-md-5 widget-content">
+            <div class="col-lg-7 col-md-7 widget-content">
                 <div class="widget-header">
 
-                    <h3>
-                        <i class="fa fa-desktop"></i>&nbsp;<span class="main-title"> عرض الحكم </span>
+                    <h3 class="pull-right">
+                        <i class="fa fa-desktop fa"></i>&nbsp;<span class="main-title"> عرض الحكم </span>
                     </h3>
+                    <div class="nav-control pull-left text-left">
+                        <ul>
+                            <li><a title="" class="color-tooltip" data-placement="top" data-toggle="tooltip" href="#" data-original-title=" صورة الحكم"><i class="fa fa-camera"></i><span class="name-nav"> صورة الحكم</span></a></li>
+                            <li><a title="" class="color-tooltip" data-placement="top" data-toggle="tooltip" href="#" data-original-title=" طباعة"><i class="fa fa-print"></i><span class="name-nav"> طباعة </span></a></li>
+                        </ul>
+                    </div>
+                   
                 </div>
+                <hr class="spacer" />
                 <div id="hokmview"></div>
             </div>
             <hr class="spacer" />
@@ -145,7 +153,7 @@
 
                     <div class="nav-control">
                         <ul>
-                            <li><a href="javascipt:;"  data-toggle="tooltip" data-placement="top" class="color-tooltip" title=" قراءة النص"><i class="fa fa-desktop"></i><span class="name-nav"> قراءة النص</span></a></li>
+                            <li><a href="javascipt:;" data-toggle="tooltip" data-placement="top" class="color-tooltip" title=" قراءة النص"><i class="fa fa-desktop"></i><span class="name-nav"> قراءة النص</span></a></li>
                             <li><a href="#" data-toggle="tooltip" data-placement="top" class="color-tooltip" title=" صورة الحكم"><i class="fa fa-camera"></i><span class="name-nav"> صورة الحكم</span></a></li>
                             <li><a href="#" data-toggle="tooltip" data-placement="top" class="color-tooltip" title=" طباعة"><i class="fa fa-print"></i><span class="name-nav"> طباعة </span></a></li>
                         </ul>
