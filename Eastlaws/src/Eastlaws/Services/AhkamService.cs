@@ -83,7 +83,7 @@ namespace Eastlaws.Services
         public static AhkamPresentation GetLatest(AhkamSearchOptions Options , int DaysCount = 10)
         {
             string InnerQuery = AhkamQueryBuilder.LatestAhkam(DaysCount);
-            return Search(InnerQuery, Options, null, AhkamSearchTypes.Custom , "أُضـــيـــف حديــــثــــاً ");
+            return Search(InnerQuery, Options, null, AhkamSearchTypes.Custom , "أحدث الأحكام");  //أُضـــيـــف حديــــثــــاً 
         }
        
         public static AhkamPresentation GetHokm(int ID , FTSPredicate PredicateHighlight )
