@@ -545,8 +545,6 @@
                 datalist.listAllCatg = [];
                 datalist.getTasyaList = function () {
 
-                    //var queryID = $('#queryHandle').val();
-                    //console.log(queryID);
                     $('#tasfyaLood').show();
                     $('#Div-tasfya').hide();
                     $http.get('/Ahkam/TasfyaListJson?QueryID=' + $('#queryHandle').val() + '', {}).then(function (d) {

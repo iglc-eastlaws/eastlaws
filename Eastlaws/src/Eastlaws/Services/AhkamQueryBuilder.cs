@@ -218,7 +218,6 @@ namespace Eastlaws.Services
         public static string LatestAhkamByDate()
         {
             return "Select   top 500 A.ID , 0 as DefaultRank From Ahkam A Where CountryID != 9 order by A.caseDate desc";
-          //  return "Select A.ID , 0 as DefaultRank From Ahkam A Where A.DateAdded >= DateAdd(Day , -20 ,  (Select Max(DateAdded) From Ahkam ))";
 
         }
 

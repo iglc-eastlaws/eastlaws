@@ -141,7 +141,7 @@ namespace Eastlaws.Controllers
             return View();
         }
 
-         public JsonResult TasfyaListJson(int QueryID = 0)
+         public JsonResult TasfyaListJson(int QueryID)
         {
             List<AhkamTasfeyaCategory> UsedCategories;
             var Data = AhkamTasfeya.List(QueryID, AhkamSearchTypes.Advanced, out UsedCategories, "", "", null);
