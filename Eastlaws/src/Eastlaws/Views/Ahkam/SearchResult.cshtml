@@ -32,7 +32,7 @@
 
         <div class="view-law tabel-views widget  widget-table action-table">
 
-            <div class="col-lg-6 col-md-6 widget-content">
+            <div class="col-lg-5 col-md-5 widget-content">
                 <div class="widget-header">
 
                     <h3>
@@ -49,7 +49,7 @@
                                 <th>المحكمه</th>
                                 <th>رقم</th>
                                 <th>السنة</th>
-                                <th>تاريخ الجلسة</th>
+                                @*<th>تاريخ الجلسة</th>*@
                                 @*<th>مكتب فنى</th>*@
                             </tr>
                         </thead>
@@ -63,14 +63,14 @@
                                     <td>@item.MahkamaName</td>
                                     <td style="font-size:0.82em;">@item.CaseNo</td>
                                     <td style="font-size:0.82em;">@item.CaseYear</td>
-                                    <td style="font-size:0.82em;">
+                                    @*<td style="font-size:0.82em;">
                                         @if ((item.CaseDate != null) && (item.CaseDate.ToString() != ""))
                                         {
                                             @DateTime.Parse(item.CaseDate.ToString()).ToString("dd/M/yyyy")
 
                                         }
 
-                                    </td>
+                                    </td>*@
                                     @*<td>@item.OfficeSuffix</td>*@
 
                                 </tr>
@@ -83,7 +83,7 @@
 
                 </div>
             </div>
-            <div class="col-lg-6 col-md-6 widget-content">
+            <div class="col-lg-7 col-md-7 widget-content">
                 <div class="widget-header">
 
                     <h3 class="pull-right">
