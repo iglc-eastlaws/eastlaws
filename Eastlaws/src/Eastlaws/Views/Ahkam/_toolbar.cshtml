@@ -17,8 +17,8 @@
 
             <li class="dropdown btn-group ">
                 <a class="btn btn-default sort" href="javascript:;">
-                    <i class="fa fa-sort-numeric-desc  " aria-hidden="true"></i>
-                    <i class="fa fa-sort-numeric-asc active" aria-hidden="true"></i>
+                    <i ng-click="changeSortDirection(1)" class="fa fa-sort-numeric-desc  " aria-hidden="true"></i>
+                    <i ng-click="changeSortDirection(0)" class="fa fa-sort-numeric-asc active" aria-hidden="true"></i>
                 </a>
                 <button aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" class="btn  dropdown-toggle" type="button">
                     ترتيب {{sortTitle}} <span class="caret"></span>

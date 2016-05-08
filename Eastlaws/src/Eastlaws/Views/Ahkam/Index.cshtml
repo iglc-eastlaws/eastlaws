@@ -139,12 +139,12 @@
         //-------------- done ---------------- >>> scroll page
         //---------------- done --------------- >>> convert $rootscope to service
         //------------------  done  ------------ >>> fixed Paging bugs
+        //---------------- done ------------ >>> table height equal to hokm div
         //---------------- in progress  -------------- >>> arrange js code
+        //-------------------------------- >>> desc and asc in sort
 
         //------------------------------ >>> Angularjs Post http
         //-------------------------------- >>> filter section from server
-        //-------------------------------- >>> desc and asc in sort
-        //-------------------------------- >>> table height equal to hokm div
         //-------------------------------- >>> hide and show right section
         //-------------------------------- >>> switch between  3 type views  changes in css only
 
@@ -290,6 +290,7 @@
                     }
                 }
 
+
                 $scope.changeSort = function (type) {
                     SearchData.sortType = type;
                     SearchData.currentPage = 1;
@@ -319,6 +320,16 @@
                     }
 
                 }
+
+                $scope.changeSortDirection = function (dir) {
+                    SearchData.sortTypeDir = dir;
+                    SearchData.currentPage = 1;
+                    SearchData.newtasfya = false;
+                    SearchData.newSearch = false;
+
+                    SearchData.GetSearch();
+                }
+
                 $scope.changePageSize = function (size) {
                     $scope.pSize = size;
                     SearchData.pageSize = $scope.pSize;
@@ -385,7 +396,7 @@
                 data.days = 10;
                 data.Latest = true;
                 data.sortType = 5;
-
+                data.sortTypeDir = 1;
                 data.newtasfya = true;
                 data.newSearch = true;
 
@@ -402,7 +413,8 @@
                             "pageSize": data.pageSize,
                             "Latest": data.Latest,
                             "Days": data.days,
-                            "typeView": data.typeView
+                            "typeView": data.typeView,
+                            "SortDir":data.sortTypeDir
                         }, function (d) {
                             $rootScope.$apply(function () {
                                 var searchresult = $('#searchResult');

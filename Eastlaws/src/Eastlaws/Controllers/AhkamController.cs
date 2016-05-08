@@ -47,12 +47,12 @@ namespace Eastlaws.Controllers
         [HttpPost]
         public IActionResult SearchResultAssembly(AssemblySearch AssembleSearchInputs,int PageNo,int Sort,int pageSize,
                                                    bool Latest = false,int Days = 10, 
-                                                   int typeView = 1)
+                                                   int typeView = 1,int SortDir = 1)
         {
 
             ViewBag.typeView = typeView;
             AhkamPresentation Model = new AhkamPresentation();
-            AhkamSearchOptions Options = new AhkamSearchOptions { SortBy = (AhkamSortColumns)Sort, PageNo = PageNo, PageSize = pageSize };
+            AhkamSearchOptions Options = new AhkamSearchOptions { SortBy = (AhkamSortColumns)Sort, PageNo = PageNo, PageSize = pageSize, SortDirection = (SearchSortType)SortDir };
 
             if (Latest == true)
             {
