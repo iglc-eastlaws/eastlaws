@@ -43,6 +43,7 @@
 	@media (min-width: 768px) {
  .inside nav.sidebar .van{ left:0px; right:auto;}
      .inside nav.sidebar:hover  .move-right{transform:translate(0px, 0px); left:auto; right:0px;}
+
 		/*Allow main to be next to Nav*/
 		.main{
 			
@@ -150,10 +151,12 @@
 	@media (min-width: 1330px) {
         .inside nav.sidebar .van{ left:auto; right:0px;}
      .inside nav.sidebar:hover  .move-right{transform:translate(0px, 0px); left:auto; right:0px;}
+     
 		/*Allow main to be next to Nav*/
 		.main{
 			width: calc(100% - 215px); /*keeps 100% minus nav size*/
 			margin-right: 215px;
+            min-height:855px;
 		}
 
 		/*Show all nav*/

@@ -246,7 +246,7 @@ nav.sidebar .navbar-collapse{padding: 0 0px 0 0px;}
 			color: #777;
 		}
 
-nav.sidebar{width: 245px;margin-right: -200px;float: right;z-index: 8000;position:absolute;margin-bottom: 0px;}
+nav.sidebar{width: 215px;margin-right: -200px;float: right;z-index: 8000;position:absolute;margin-bottom: 0px;}
 /*give sidebar 100% width;*/
 nav.sidebar li {width: 100%;}
 nav.sidebar:hover{margin-right: 0px;}		
