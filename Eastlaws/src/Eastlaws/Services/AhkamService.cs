@@ -40,6 +40,8 @@ namespace Eastlaws.Services
         public AhkamSortColumns SortBy { get; set; } = AhkamSortColumns.Default;
         public SearchSortType SortDirection { get; set; } = SearchSortType.DESC;
         public AhkamDisplayMode DisplayMode { get; set; } = AhkamDisplayMode.Divs;
+
+     
     }
 
     public class AhkamService
@@ -83,9 +85,19 @@ namespace Eastlaws.Services
         public static AhkamPresentation GetLatest(AhkamSearchOptions Options , int DaysCount = 10)
         {
             string InnerQuery = AhkamQueryBuilder.LatestAhkam(DaysCount);
-            return Search(InnerQuery, Options, null, AhkamSearchTypes.Custom , "أحدث الأحكام");  //أُضـــيـــف حديــــثــــاً 
+            return Search(InnerQuery, Options, null, AhkamSearchTypes.Custom, "أُضـــيـــف حديــــثــــاً");
         }
-       
+
+
+        public static AhkamPresentation GetLatestByDate(AhkamSearchOptions Options)
+        {
+            string InnerQuery = AhkamQueryBuilder.LatestAhkamByDate();
+            Options.SortBy = AhkamSortColumns.CaseDate;
+            Options.SortDirection = SearchSortType.DESC;
+          
+            return Search(InnerQuery, Options, null, AhkamSearchTypes.Custom, "أحدث الأحكام");  
+        }
+
         public static AhkamPresentation GetHokm(int ID , FTSPredicate PredicateHighlight )
         {
             AhkamPresentation P = new AhkamPresentation();

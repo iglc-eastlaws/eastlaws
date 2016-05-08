@@ -159,7 +159,7 @@
                 SearchData.currentPage = 1;
                 SearchData.sortType = 5;
                 SearchData.Latest = true;
-                SearchData.GetSearch();
+                //SearchData.GetSearch();
 
             })
             .controller('searchResultCtrl', function () {
@@ -404,7 +404,7 @@
 
                     if (data.searchType === 1) // AssymbleSearch
                     {
-                       
+                       console.log(data)
                         $('#searchResult').html('<img src="/content/images/preload.gif" />');
                         $.post('/Ahkam/SearchResultAssembly', {
                             "AssembleSearchInputs": data.AssembleSearchInputs,
@@ -545,9 +545,11 @@
                 datalist.listAllCatg = [];
                 datalist.getTasyaList = function () {
 
+                    //var queryID = $('#queryHandle').val();
+                    //console.log(queryID);
                     $('#tasfyaLood').show();
                     $('#Div-tasfya').hide();
-                    $http.get('/Ahkam/TasfyaListJson', {}).then(function (d) {
+                    $http.get('/Ahkam/TasfyaListJson?QueryID=' + $('#queryHandle').val() + '', {}).then(function (d) {
                         $('#Div-tasfya').show(); $('#tasfyaLood').hide();
                         datalist.listAllTasfya = d.data[0][1];
                         datalist.listAllCatg = d.data[1][1];

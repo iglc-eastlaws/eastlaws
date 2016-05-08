@@ -56,7 +56,8 @@ namespace Eastlaws.Controllers
 
             if (Latest == true)
             {
-                 Model = AhkamService.GetLatest(Options, Days);
+                //Model = AhkamService.GetLatest(Options, Days);
+                Model = AhkamService.GetLatestByDate(Options);
             }
             else {
                 //AssemblySearch AssembleSearchInputs = new AssemblySearch();
@@ -140,10 +141,10 @@ namespace Eastlaws.Controllers
             return View();
         }
 
-         public JsonResult TasfyaListJson()
+         public JsonResult TasfyaListJson(int QueryID = 0)
         {
             List<AhkamTasfeyaCategory> UsedCategories;
-            var Data = AhkamTasfeya.List(56, AhkamSearchTypes.Advanced, out UsedCategories, "", "", null);
+            var Data = AhkamTasfeya.List(QueryID, AhkamSearchTypes.Advanced, out UsedCategories, "", "", null);
             var datajson = new[] {
                 new object[] { "Data" , Data},
                 new object[] { "Catg" , UsedCategories }
