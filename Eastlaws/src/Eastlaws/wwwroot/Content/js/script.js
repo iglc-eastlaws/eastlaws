@@ -51,6 +51,16 @@ $(document).ready(function () {
 
     $("#slide-slides").cslide();
     $("#cslide-slides").cslide();
+
+
+    // menu hide
+    $(".menu-side").click(function () {
+        $(".container-fluid").toggleClass("hide-sidebar");
+        $(".main").addClass("")
+
+
+    });
+
     // Scroll 
     //$(".filter-search .well .panel-body").mCustomScrollbar({
     //    setHeight: "200px",

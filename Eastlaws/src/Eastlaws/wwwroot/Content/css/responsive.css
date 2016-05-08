@@ -109,6 +109,7 @@
 			position:absolute;
 			margin-bottom: 0px;
 		}
+      .hide-sidebar{margin-right: -183px!important;}
 
 	.filter-search nav{
 			width:95%;
@@ -129,7 +130,7 @@
 		nav.sidebar:hover{
 			margin-right: 0px;
 		}		
-		.inside nav.sidebar .move-right{
+		.inside nav.sidebar .move-right {
     transform: translate(0,0);
     -webkit-transform: translate(0x,0); /** Chrome & Safari **/
     -o-transform: translate(0,0); /** Opera **/
