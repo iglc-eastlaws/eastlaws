@@ -129,7 +129,7 @@
                         @for (int i = 0; i < Fakrat.Length; i++)
                         {
                             var CurrentFakra = Fakrat[i];
-                            string FakraText = gerFakraText(CurrentFakra.Text,
+                            string FakraText = GetFakraText(CurrentFakra.Text,
                                                             CurrentFakra.FakraNo,
                                                             Model.TextPredicates).ToString();
 
@@ -183,7 +183,7 @@
 
 
 @functions{
-    public static StringBuilder gerFakraText(string FakraText, int FakraNo, List<FTSPredicate> PredicatesHighlight)
+    public static StringBuilder GetFakraText(string FakraText, int FakraNo, List<FTSPredicate> PredicatesHighlight)
     {
         var Result = new StringBuilder();
         int MaxFakraTextLen = 250;

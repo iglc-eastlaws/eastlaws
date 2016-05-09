@@ -8,15 +8,6 @@ namespace Eastlaws.Controllers
     public class HomeController : Controller
     {
 
-        private IRestaurantData _restaurantData;
-        private string _greeter;
-
-        public HomeController(IRestaurantData restaurantData)
-        {
-            _restaurantData = restaurantData;
-            _greeter = "Hello Home Controller";
-        }
-
         public ViewResult Index()
         {
             return View();

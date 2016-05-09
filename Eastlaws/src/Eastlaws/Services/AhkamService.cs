@@ -66,6 +66,7 @@ namespace Eastlaws.Services
             string InnerQuery = AhkamQueryBuilder.AdvancedCustomSearch(SrchObj , out FakaratQueryCustom , out SearchPredicates);
             return Search(InnerQuery, Options, FakaratQueryCustom, AhkamSearchTypes.Advanced , null , SearchPredicates);
         }
+        
 
 
         public static AhkamPresentation Search(AhkamSearchOptions Options , int CachedQueryID)
