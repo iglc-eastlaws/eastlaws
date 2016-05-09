@@ -19,6 +19,7 @@ namespace Eastlaws.Services
         public int DisplayOrder { get; set; } = 1;
         public AhkamTasfeyaCategoryDisplay Display { get; set; } = AhkamTasfeyaCategoryDisplay.List;
         public FehresPrograms? ParentProgram { get; set; } = null;
+
     }
 
     public enum AhkamTasfeyaCategoryIds 
@@ -31,6 +32,7 @@ namespace Eastlaws.Services
         public string Name { get; set; }
         public int Count { get; set; }
         public AhkamTasfeyaCategoryIds CategoryID { get; set; }
+        public string Param { get; set; } = "";
 
     }
 
@@ -38,23 +40,28 @@ namespace Eastlaws.Services
     {
         private const int MAX_RECORD_COUNT_PER_CATEGORY = 100;
 
-
-        public static IEnumerable<TasfeyaItem> List (int QueryID , AhkamSearchTypes SearchType, out List<AhkamTasfeyaCategory> UsedCategories , string TasfeyaFilter = "" , string PreviousTasfeyaQuery  = "", AhkamTasfeyaCategoryIds? CategorySender = null )
+        private static List<AhkamTasfeyaCategory> GetAllCategories()
         {
             List<AhkamTasfeyaCategory> Cats = new List<AhkamTasfeyaCategory>();
-
             Cats.Add(new AhkamTasfeyaCategory { ID = AhkamTasfeyaCategoryIds.Defoo3, Name = "الدفوع", Display = AhkamTasfeyaCategoryDisplay.List, ParentProgram = FehresPrograms.Defoo3 });
             Cats.Add(new AhkamTasfeyaCategory { ID = AhkamTasfeyaCategoryIds.Mana3y, Name = "المناعي", Display = AhkamTasfeyaCategoryDisplay.List, ParentProgram = FehresPrograms.Mana3y });
-            Cats.Add(new AhkamTasfeyaCategory { ID = AhkamTasfeyaCategoryIds.CrimeType, Name = "نوع الجريمة", Display = AhkamTasfeyaCategoryDisplay.List, ParentProgram = FehresPrograms.Da3awaGena2ya  });
+            Cats.Add(new AhkamTasfeyaCategory { ID = AhkamTasfeyaCategoryIds.CrimeType, Name = "نوع الجريمة", Display = AhkamTasfeyaCategoryDisplay.List, ParentProgram = FehresPrograms.Da3awaGena2ya });
             Cats.Add(new AhkamTasfeyaCategory { ID = AhkamTasfeyaCategoryIds.Da3waType, Name = "نوع الدعوى", Display = AhkamTasfeyaCategoryDisplay.List, ParentProgram = FehresPrograms.Da3awaMadaneya });
 
 
-            Cats.Add(new AhkamTasfeyaCategory { ID = AhkamTasfeyaCategoryIds.Country , Name = "الدولة"  , Display = AhkamTasfeyaCategoryDisplay.List });
+            Cats.Add(new AhkamTasfeyaCategory { ID = AhkamTasfeyaCategoryIds.Country, Name = "الدولة", Display = AhkamTasfeyaCategoryDisplay.List });
             Cats.Add(new AhkamTasfeyaCategory { ID = AhkamTasfeyaCategoryIds.Ma7kama, Name = "المحكمة", Display = AhkamTasfeyaCategoryDisplay.List });
             Cats.Add(new AhkamTasfeyaCategory { ID = AhkamTasfeyaCategoryIds.JudgeYear, Name = "السنة القضائية", Display = AhkamTasfeyaCategoryDisplay.List });
             Cats.Add(new AhkamTasfeyaCategory { ID = AhkamTasfeyaCategoryIds.Year, Name = "السنة", Display = AhkamTasfeyaCategoryDisplay.List });
-            
-   
+            return Cats;
+        }
+
+
+        public static IEnumerable<TasfeyaItem> List (int QueryID , AhkamSearchTypes SearchType, out List<AhkamTasfeyaCategory> UsedCategories , string TasfeyaFilter = "" , string PreviousTasfeyaQuery  = "", AhkamTasfeyaCategoryIds? CategorySender = null )
+        {
+            List<AhkamTasfeyaCategory> Cats =  GetAllCategories();
+
+
 
             bool IsSafyList = !string.IsNullOrWhiteSpace(PreviousTasfeyaQuery);
             string SafyListQuery = "";
@@ -114,8 +121,6 @@ namespace Eastlaws.Services
                                 Group By C.ID , C.Name 
                                 Order By Count(*) desc "
                                 , MAX_RECORD_COUNT_PER_CATEGORY, MasterQueryID , ProcessedFilter , SafyListJoinClause);
-                        
-  
                     }
                 case AhkamTasfeyaCategoryIds.Ma7kama:
                     {
@@ -141,12 +146,13 @@ namespace Eastlaws.Services
                         string ProcessedFilter = "";
 
                         return string.Format(
-                            @"Select Top {0} CaseYear as ID , Cast(A.CaseYear as varchar(32)) as Name , Count(*) as Count , 7 as CategoryID , Count(*) as SortValue From Ahkam A
-                                               Join EastlawsUsers..QueryCacheRecords QCR With (Nolock)  On QCR.ItemID = A.ID 
-                                               {3}
-                                               Where QCR.MasterID  = {1}  {2}  
-                                               Group By A.CaseYear
-                                               Order By Count(*) desc ", MAX_RECORD_COUNT_PER_CATEGORY, MasterQueryID, ProcessedFilter, SafyListJoinClause);
+                            @"
+                            Select Top {0} CaseYear as ID , Cast(A.CaseYear as varchar(32)) as Name , Count(*) as Count , 7 as CategoryID , Count(*) as SortValue From Ahkam A
+                            Join EastlawsUsers..QueryCacheRecords QCR With (Nolock)  On QCR.ItemID = A.ID 
+                            {3}
+                            Where QCR.MasterID  = {1}  {2}  
+                            Group By A.CaseYear
+                            Order By Count(*) desc ", MAX_RECORD_COUNT_PER_CATEGORY, MasterQueryID, ProcessedFilter, SafyListJoinClause);
                     }
                 case AhkamTasfeyaCategoryIds.Year:
                     {

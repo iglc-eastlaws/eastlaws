@@ -43,46 +43,54 @@ namespace Eastlaws.Controllers
             }
         }
 
+        private AhkamAdvancedSearch GetSearchObject(AssemblySearch AssembleSearchInputs)
+        {
+            AhkamAdvancedSearch Obj = new AhkamAdvancedSearch();
+            Obj.PredicateAny = new FTSPredicate(string.IsNullOrEmpty(AssembleSearchInputs.Alltext) ? "" : AssembleSearchInputs.Alltext, (FTSSqlModes)AssembleSearchInputs.alltextSearchType);
+            Obj.PredicateHay2a = new FTSPredicate(string.IsNullOrEmpty(AssembleSearchInputs.hay2a) ? "" : AssembleSearchInputs.hay2a, (FTSSqlModes)AssembleSearchInputs.hay2aSearchType);
+            Obj.PredicateHaytheyat = new FTSPredicate(string.IsNullOrEmpty(AssembleSearchInputs.hyseyt) ? "" : AssembleSearchInputs.hyseyt, (FTSSqlModes)AssembleSearchInputs.hyseytSearchType);
+            Obj.PredicateMabade2 = new FTSPredicate(string.IsNullOrEmpty(AssembleSearchInputs.Mabdaa) ? "" : AssembleSearchInputs.Mabdaa, (FTSSqlModes)AssembleSearchInputs.MabdaaSearchType);
+            Obj.PredicateWakae3 = new FTSPredicate(string.IsNullOrEmpty(AssembleSearchInputs.waka23) ? "" : AssembleSearchInputs.waka23, (FTSSqlModes)AssembleSearchInputs.waka23SearchType);
+            Obj.CaseDatefrom = AssembleSearchInputs.dateGalsaFrom;
+            Obj.CaseDateTo = AssembleSearchInputs.dateGalsaTo;
+            Obj.CaseYear = AssembleSearchInputs.caseYear;
+            Obj.CaseNo = AssembleSearchInputs.caseNo;
+            Obj.CountryIDs = AssembleSearchInputs.country == "0" ? "" : AssembleSearchInputs.country;
+            Obj.IFAgree = AssembleSearchInputs.MahkamaReplay == "0" ? "" : AssembleSearchInputs.MahkamaReplay;
+            Obj.Ma7akemIds = AssembleSearchInputs.mahakem;
+            Obj.OfficeSuffix = AssembleSearchInputs.omarGroup;
+            Obj.OfficeYear = AssembleSearchInputs.officeYear;
+            Obj.PageNo = AssembleSearchInputs.pageNo;
+            Obj.PartNo = AssembleSearchInputs.partNo;
+            return Obj;
+        }
+
         [HttpPost]
         public IActionResult SearchResultAssembly(AssemblySearch AssembleSearchInputs,int PageNo,int Sort,int pageSize,
                                                    bool Latest = false,int Days = 10, 
-                                                   int typeView = 1)
+                                                   int typeView = 1,int SortDir = 1)
         {
 
             ViewBag.typeView = typeView;
             AhkamPresentation Model = new AhkamPresentation();
-            AhkamSearchOptions Options = new AhkamSearchOptions { SortBy = (AhkamSortColumns)Sort, PageNo = PageNo, PageSize = pageSize };
+            AhkamSearchOptions Options = new AhkamSearchOptions { SortBy = (AhkamSortColumns)Sort, PageNo = PageNo, PageSize = pageSize, SortDirection = (SearchSortType)SortDir };
 
             if (Latest == true)
             {
-                 Model = AhkamService.GetLatest(Options, Days);
+                //Model = AhkamService.GetLatest(Options, Days);
+                Model = AhkamService.GetLatestByDate(Options);
             }
-            else {
+            else
+            {
                 //AssemblySearch AssembleSearchInputs = new AssemblySearch();
-                AhkamAdvancedSearch Obj = new AhkamAdvancedSearch();
-                Obj.PredicateAny = new FTSPredicate(string.IsNullOrEmpty(AssembleSearchInputs.Alltext) ? "" : AssembleSearchInputs.Alltext, (FTSSqlModes)AssembleSearchInputs.alltextSearchType);
-                Obj.PredicateHay2a = new FTSPredicate(string.IsNullOrEmpty(AssembleSearchInputs.hay2a) ? "" : AssembleSearchInputs.hay2a, (FTSSqlModes)AssembleSearchInputs.hay2aSearchType);
-                Obj.PredicateHaytheyat = new FTSPredicate(string.IsNullOrEmpty(AssembleSearchInputs.hyseyt) ? "" : AssembleSearchInputs.hyseyt, (FTSSqlModes)AssembleSearchInputs.hyseytSearchType);
-                Obj.PredicateMabade2 = new FTSPredicate(string.IsNullOrEmpty(AssembleSearchInputs.Mabdaa) ? "" : AssembleSearchInputs.Mabdaa, (FTSSqlModes)AssembleSearchInputs.MabdaaSearchType);
-                Obj.PredicateWakae3 = new FTSPredicate(string.IsNullOrEmpty(AssembleSearchInputs.waka23) ? "" : AssembleSearchInputs.waka23, (FTSSqlModes)AssembleSearchInputs.waka23SearchType);
-                Obj.CaseDatefrom = AssembleSearchInputs.dateGalsaFrom;
-                Obj.CaseDateTo = AssembleSearchInputs.dateGalsaTo;
-                Obj.CaseYear = AssembleSearchInputs.caseYear;
-                Obj.CaseNo = AssembleSearchInputs.caseNo;
-                Obj.CountryIDs = AssembleSearchInputs.country == "0" ? "" : AssembleSearchInputs.country;
-                Obj.IFAgree = AssembleSearchInputs.MahkamaReplay == "0" ? "" : AssembleSearchInputs.MahkamaReplay;
-                Obj.Ma7akemIds = AssembleSearchInputs.mahakem;
-                Obj.OfficeSuffix = AssembleSearchInputs.omarGroup;
-                Obj.OfficeYear = AssembleSearchInputs.officeYear;
-                Obj.PageNo = AssembleSearchInputs.pageNo;
-                Obj.PartNo = AssembleSearchInputs.partNo;
+                AhkamAdvancedSearch Obj = GetSearchObject(AssembleSearchInputs);
                 Model = AhkamService.Search(Options, Obj);
             }
           //  AhkamPresentation Model1 = AhkamService.Search(Options, Obj);
                 if (Model.IsValid)
                 {
                     return View("SearchResult", Model);
-            }
+                }
                 else
                 {
                     return View("SearchResult");
@@ -138,16 +146,40 @@ namespace Eastlaws.Controllers
             return View();
         }
 
-         public JsonResult TasfyaListJson()
+        public JsonResult TasfyaListJson(int QueryID)
         {
             List<AhkamTasfeyaCategory> UsedCategories;
-            var Data = AhkamTasfeya.List(56, AhkamSearchTypes.Advanced, out UsedCategories, "", "", null);
+            var Data = AhkamTasfeya.List(QueryID, AhkamSearchTypes.Advanced, out UsedCategories, "", "", null);
             var datajson = new[] {
                 new object[] { "Data" , Data},
                 new object[] { "Catg" , UsedCategories }
             };
             return new JsonResult(datajson);
           //  return new JsonResult(new { Data="Data", UsedCategories = "Catg" });
+        }
+
+        public JsonResult TasfeyaListJson(AssemblySearch AssemblySearchInputs , string TasfeyaSearch = "" )
+        {
+            AhkamAdvancedSearch Obj = GetSearchObject(AssemblySearchInputs);
+
+            // needs to be sent as a param 
+            AhkamSearchTypes SearchType = AhkamSearchTypes.Advanced;
+
+            string FakaratQueryCustom;
+            List<FTSPredicate> SearchPredicates;
+            string InnerQuery = AhkamQueryBuilder.AdvancedCustomSearch(Obj, out FakaratQueryCustom, out SearchPredicates);
+            QueryCacher Cacher = new QueryCacher((int)LegalServices.Ahkam, InnerQuery, SearchType.ToString(), NewSearch: false, SecondaryQuery: FakaratQueryCustom);
+
+            int QueryID = Cacher.ID;
+            List<AhkamTasfeyaCategory> UsedCategories;
+            var Data = AhkamTasfeya.List(QueryID, SearchType, out UsedCategories, TasfeyaSearch , "", null);
+            var datajson = new[] {
+                new object[] { "Data" , Data},
+                new object[] { "Catg" , UsedCategories }
+            };
+            return new JsonResult(datajson);
+
+
         }
 
         public JsonResult GetCountries()

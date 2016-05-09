@@ -1,7 +1,7 @@
 ﻿@{
     Layout = null;
 }
-<div class="col-lg-12 col-md-12">
+<div class="">
     <form class="search-form form-horizontal" ng-submit="search()" ng-click="formclick($event)">
         <div class="form-group">
             <div class="col-lg-6 col-md-12 col-side">
@@ -11,40 +11,13 @@
                 <div class="col-lg-9 col-md-9 col-sm-9 search">
                     <c-drop-match-search selected-value="Inputs.alltextSearchType" input-text="Inputs.Alltext"></c-drop-match-search>
                 </div>
-            </div>
-            <hr class="spacer" />
-            <div class="col-lg-6 col-side">
+                <hr class="spacer" />
                 <label for="ddlCountries" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title"> اختار الدولة :</label>
                 <div class="col-lg-9 col-md-9 col-sm-9 search">
                     <select tabindex="3" class="string search  form-control" id="ddlCountries" name="d"
                             ng-options="t.Name for t in countries track by t.ID" ng-model="country" ng-change="updatecountry()"></select>
                 </div>  <!--End Country-->
                 <hr class="spacer" />
-                <!-- Multi Checkbox-->
-                <div ng-if="Mahakem.length>0" class="form-group multi-check">
-                    <label class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title">اختيار المحكمة</label>
-
-                    <div class="col-lg-9 col-md-9 col-sm-9 search ">
-                        <div class="">
-                            <fieldset>
-                                <legend>
-                                    <a href="javascript:;" ng-click="selectCheckboxes(1)">تحديد الكل</a> &nbsp;|&nbsp;
-                                    <a href="javascript:;" ng-click="selectCheckboxes(0)">الغاء تحديد الكل</a>
-                                </legend>
-                                <div class="checkbox">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-repeat="n in Mahakem">
-                                        <label><input class="ma7kama_checkbox" type="checkbox" ng-click='MahakemCheck(n.ID,$event)' />{{n.Name}} </label>
-                                    </div>
-                                </div>
-                                <hr class="spacer" />
-
-                            </fieldset>
-                        </div>
-                    </div>
-
-                </div>
-
-
                 <label class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title">
                     المبدأ :
                 </label>
@@ -71,10 +44,40 @@
                 <div class="col-lg-9 col-md-9 col-sm-9 search">
                     <c-drop-match-search selected-value="Inputs.hyseytSearchType" input-text="Inputs.hyseyt"></c-drop-match-search>
                 </div>
+          
 
+                <label for="byan" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title">  قبول الحكم او رفض :</label>
+                <div class="col-lg-9 col-md-9 col-sm-9 search">
+                    <select tabindex="3" class="string search  form-control" id="byan"
+                            ng-options="t.Name for t in MahkamaReplies track by t.ID" ng-model="MahkamaReplay" ng-change="updateMahkamaReplies()"></select>
 
+                </div>
             </div>
-            <div class="col-lg-6  col-side ">
+            <div class="col-lg-6 col-lg-6">
+                <div  class="form-group multi-check">
+                    @*<label class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title">اختيار المحكمة</label>*@
+
+                    <div class="col-lg-12 col-md-12 col-sm-12  " >
+                        <div class="checkbox" style="height:110px; ">
+                            <fieldset ng-if="Mahakem.length>0">
+                                <legend>
+                                    <a href="javascript:;" ng-click="selectCheckboxes(1)">تحديد الكل</a> &nbsp;|&nbsp;
+                                    <a href="javascript:;" ng-click="selectCheckboxes(0)">الغاء تحديد الكل</a>
+                                </legend>
+                                <div  class="search" style="height:78px; overflow-y:auto; overflow-x:hidden; padding:10px 12px 0;">
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" ng-repeat="n in Mahakem">
+                                        <label><input class="ma7kama_checkbox" type="checkbox" ng-click='MahakemCheck(n.ID,$event)' />{{n.Name}} </label>
+                                    </div>
+                                   
+                                </div>
+                                <hr class="spacer" />
+
+                            </fieldset>
+                        </div>
+                    </div>
+
+                </div>
+                <hr class="spacer" />
                 <label for="yearTec" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title">  سنة المكتب فنى : </label>
                 <div class="col-lg-3 col-md-3 col-sm-3 col-sm-2 search">
                     <input type="text" class="form-control" id="yearTec" ng-model="Inputs.officeYear">
@@ -84,7 +87,7 @@
 
                 </div>
                 <hr class="spacer" />
-                <label for="ta3an" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title">  رقم الطعن : </label>
+                <label for="ta3an" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title">  رقم الحكم : </label>
                 <div class="col-lg-3 col-md-3 col-sm-3 search">
                     <input type="text" ng-model="Inputs.caseNo" class="form-control" id="ta3an">
                 </div>
@@ -93,16 +96,7 @@
                     <input type="text" ng-model="Inputs.caseYear" class="form-control" id="yearKada">
                 </div>
                 <hr class="spacer" />
-                <label for="byan" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title"> بيان قبول الطعن  :</label>
-                <div class="col-lg-9 col-md-9 col-sm-9 search">
-                    <select tabindex="3" class="string search  form-control" id="byan"
-                            ng-options="t.Name for t in MahkamaReplies track by t.ID" ng-model="MahkamaReplay" ng-change="updateMahkamaReplies()"></select>
-
-                </div>
-
-
-
-                <hr class="spacer" />
+            
                 <label for="horizontal_search" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title"> رقم الجزء :</label>
                 <div class="col-lg-3 col-md-3 col-sm-3 search">
                     <input type="text" ng-model="Inputs.partNo" class="string search  form-control">
@@ -113,25 +107,23 @@
                     <input type="text" ng-model="Inputs.pageNo" class="string search  form-control" id="pageNumber">
                 </div>
                 <hr class="spacer" />
-
-
-            </div>
-
-
-            <div class="col-lg-6  col-side">
                 <label for="horizontal_search" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title"> تاريخ الجلسة من :</label>
                 <div class="col-lg-3 col-md-3   search">
                     <c-date-picker date="Inputs.dateGalsaFrom"></c-date-picker>
                 </div>
 
-                <label for="horizontal_search" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title"> إلى: </label>
+                <label for="horizontal_search" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title "> إلى: </label>
 
                 <div class="col-lg-3 col-md-3   search">
                     <c-date-picker date="Inputs.dateGalsaTo"></c-date-picker>
                 </div>
 
 
+                <hr class="spacer" />
             </div>
+            <hr class="spacer" />
+     
+
             <hr class="spacer" />
             <div class="col-lg-6 col-side ">
 

@@ -2,9 +2,6 @@
 (function () {
     var sharedModule = angular.module('sharedModule', []);
     sharedModule.directive('cPageing', function ($rootScope) {
-        /* <c-pageing pages-count="250" limit-no="10" current-page="mypage" on-getpage="getmypage()">
-          </c-pageing> */
-
         return {
             restrict: 'E',
             template: '<ul class="pagination">' +
@@ -56,20 +53,12 @@
 
                 elem.on('click', function () {
                     scope.onGetpage();
-                   // console.log(scope.onGetpage)
                 });
 
                 scope.getCurrentPage = function (p) {
-                  // console.log(scope.currentPage + ' ' + scope.pagesCount);
                     scope.currentPage = p;
                 }
 
-
-                //scope.getFirstPage = function () {
-                //    if (scope.currentPage > 1) {
-                //        scope.currentPage = 1;
-                //    }
-                //}
 
                 scope.getPrevPage = function () {
                     if (scope.currentPage > 1) {
@@ -83,17 +72,102 @@
                     }
                 }
 
-                //reset directive
-                $rootScope.$on(attr.onInit, function () {
-                    scope.currentPage = 1;
-                    transclude(function (clone) {
-                        elem.parent().append(clone);
-                    });
-                });
+                ////reset directive
+                //$rootScope.$on(attr.onInit, function () {
+                //    scope.currentPage = 1;
+                //    transclude(function (clone) {
+                //        elem.parent().append(clone);
+                //    });
+                //});
 
             }
         };
     })
+
+    sharedModule.component('cPageingCtrl', {
+        template: '<ul class="pagination">' +
+                          '<li ng-class="{disabled : model.currentPage == 1}"><a href="javascript:;" ng-click="model.getPrevPage()">«</a></li>' +
+                          '<li ng-repeat="p in model.totalPagesCount()  | limitTo:model.limitNo" ng-class="{active : model.currentPage == p}">' +
+                              '<a href="javascript:;" ng-click="model.getCurrentPage(p)">{{p}}</a>' +
+                         '</li>' +
+                          '<li ng-class="{disabled : model.currentPage == model.pagesCount}"><a href="javascript:;" ng-click="model.getNextPage()">»</a></li>' +
+                      '</ul>',
+        bindings: {
+            onGetpage: '&',
+            limitNo: '@',
+            pagesCount: '@',
+            currentPage: '=?'
+
+        },
+        controllerAs:'model',
+        controller: function () {
+            var model = this;
+
+            model.$onInit = function () {
+                //console.log('$On  Init')
+            }
+
+            model.$onChanges = function () {
+                 console.log('$On  $OnChanges');
+                //model.currentPage = 1;
+                model.totalPagesCount();
+            }
+
+            model.getCurrentPage = function (p) {
+                model.currentPage = p;
+                console.log('Page >>> '+p)
+                model.onGetpage();
+            }
+
+
+            model.getPrevPage = function () {
+                if (model.currentPage > 1) {
+                    model.currentPage -= 1;
+                    model.onGetpage();
+                }
+            }
+
+            model.getNextPage = function (p) {
+                if (model.currentPage < model.pagesCount) {
+                    model.currentPage += 1;
+                    model.onGetpage();
+                }
+            }
+
+            model.totalPagesCount = function() {
+                var pagesArray = [];
+                if (model.limitNo === undefined) { model.limitNo = 10; }
+                 if (model.currentPage === undefined) { model.currentPage = 1; }
+    
+                    var startpage = 1;
+                    var mylimt = Number(model.limitNo);
+                    var mycount = Number(model.pagesCount);
+                    var mycurrentpage = Number(model.currentPage);
+
+                    var halfLimit = Math.ceil((mylimt / 2));
+                    if (mycurrentpage >= halfLimit) {
+                        var sPage = (mycurrentpage - halfLimit);
+                        startpage = (sPage < 1) ? 1 : sPage;
+                    }
+
+
+                    var endpage = (startpage + mylimt);
+                    if (endpage > mycount) { endpage = mycount; }
+
+                    if ((endpage - startpage < mylimt) && (mylimt < mycount)) {
+                        startpage = (mycount - mylimt) + 1;
+                    }
+
+                    for (var i = startpage; i <= endpage; i++) {
+                        pagesArray.push(i);
+                    }
+
+                    return pagesArray;
+            }
+
+        }
+    })
+
     sharedModule.directive('cDropMatchSearch', function () {
 
         return {
@@ -180,25 +254,25 @@
            // template += '<span class="glyphicon glyphicon-calendar"></span>';
            // template +=  '</span>';
            
-            template += '<div class="c-date-picker bootstrap-datetimepicker-widget dropdown-menu form-inline" style="display:none"><div > ';
-            template += '<label class="col-lg-3 col-md-3">اليوم </label><div class="col-lg-9 col-md-9 "> <select class="search   btn btn-primary ng-isolate-scope" ng-options="t.val for t in days track by t.key" ng-model="modelday" ng-change="updateDate(1)">';
+            template += '<div class="c-date-picker bootstrap-datetimepicker-widget dropdown-menu form-inline" style="display:none"> ';
+            template += '<div ><label class="col-lg-3 col-md-3">اليوم </label><div class="col-lg-9 col-md-9 "> <select class="search   btn btn-primary ng-isolate-scope" ng-options="t.val for t in days track by t.key" ng-model="modelday" ng-change="updateDate(1)">';
             for (var i = 1; i <= 30; i++) {
-                template += '<option label="' + i + '" value="' + i + '">' + i + '</option></div>';
+                template += '<option label="' + i + '" value="' + i + '">' + i + '</option>';
             }
-            template += '</select></div>';
-            template += '';
+            template += '</select></div></div>';
+            template += '<hr class="spacer"/>';
             template += '<div ><label class="col-lg-3 col-md-3">الشهر </label><div class="col-lg-9 col-md-9 "><select class="search  btn btn-primary ng-isolate-scope" ng-options="t.val for t in ::months track by t.key" ng-model="modelmonth"  ng-change="updateDate(2)">';
             for (var i = 1; i <= 12; i++) {
                 template += '<option label="' + i + '" value="' + i + '">' + i + '</option></div>';
             }
-            template += '</select></div>';
-         
+            template += '</select></div></div>';
+            template += '<hr class="spacer"/>';
             template += '<div ><label class="col-lg-3 col-md-3">السنة </label><div class="col-lg-9 col-md-9"><select class="search btn btn-primary ng-isolate-scope" ng-options="t.val for t in ::years track by t.key" ng-model="modelyear" ng-change="updateDate(3)">';
             for (var i = d.getFullYear() ; i >= 1881; i--) {
-                template += '<option label="' + i + '" value="' + i + '">' + i + '</option></div>'
+                template += '<option label="' + i + '" value="' + i + '">' + i + '</option>'
             }
-            template += '</select></div>';
-            template += '</br>';
+            template += '</select></div></div>';
+            template += '<hr class="spacer"/>';
             template += '<div class="col-sm-12 text-left"><label> </label><button type="button" value="ok" ng-click="clickDate($event)"><i class="fa fa-check" aria-hidden="true"></i></ button>';
             template += '<button type="button" value="remove" ng-click="removeDate($event)" class=""><i class="fa fa-trash-o" aria-hidden="true"></i></button>';
             template += '<button type="button" value="close" ng-click="closeDate($event)"> <i class="fa fa-times" aria-hidden="true"></i></button></div>';

@@ -43,6 +43,7 @@
 	@media (min-width: 768px) {
  .inside nav.sidebar .van{ left:0px; right:auto;}
      .inside nav.sidebar:hover  .move-right{transform:translate(0px, 0px); left:auto; right:0px;}
+
 		/*Allow main to be next to Nav*/
 		.main{
 			
@@ -53,7 +54,7 @@
 
 		/*lets nav bar to be showed on mouseover*/
 		nav.sidebar:hover + .main{
-			margin-right: 245px;
+			margin-right: 215px;
 		}
 
 		/*Center Brand*/
@@ -61,11 +62,6 @@
 			margin-right: 0px;
 		}
 		/*Center Brand*/
-		nav.sidebar .navbar-brand, nav.sidebar .navbar-header{
-			text-align: center;
-			width: 100%;
-			margin-right: 0px;
-		}
 
 		/*Center Icons*/
 		nav.sidebar a{
@@ -79,7 +75,7 @@
 
 		/*adds border to bottom nav boxes*/
 		nav.sidebar .navbar-nav > li{
-			border-bottom: 1px #e5e5e5 solid;
+			border-bottom: 0px #e5e5e5 solid;
 		}
 
 		/* Colors/style dropdown box*/
@@ -106,14 +102,15 @@
 
 		/*gives sidebar width/height*/
 		nav.sidebar{
-			width: 245px;
+			width: 215px;
 			/*height: 100%;*/
-			margin-right: -205px;
+			margin-right: -183px;
 			float: right;
 			z-index: 8000;
 			position:absolute;
 			margin-bottom: 0px;
 		}
+      .hide-sidebar{margin-right: -183px!important;}
 
 	.filter-search nav{
 			width:95%;
@@ -134,7 +131,7 @@
 		nav.sidebar:hover{
 			margin-right: 0px;
 		}		
-		.inside nav.sidebar .move-right{
+		.inside nav.sidebar .move-right {
     transform: translate(0,0);
     -webkit-transform: translate(0x,0); /** Chrome & Safari **/
     -o-transform: translate(0,0); /** Opera **/
@@ -154,10 +151,12 @@
 	@media (min-width: 1330px) {
         .inside nav.sidebar .van{ left:auto; right:0px;}
      .inside nav.sidebar:hover  .move-right{transform:translate(0px, 0px); left:auto; right:0px;}
+     
 		/*Allow main to be next to Nav*/
 		.main{
-			width: calc(100% - 245px); /*keeps 100% minus nav size*/
-			margin-right: 245px;
+			width: calc(100% - 215px); /*keeps 100% minus nav size*/
+			margin-right: 215px;
+            min-height:855px;
 		}
 
 		/*Show all nav*/
