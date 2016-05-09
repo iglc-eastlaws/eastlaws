@@ -46,7 +46,7 @@
                 </div>
           
 
-                <label for="byan" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title">  قبول الحكم  :</label>
+                <label for="byan" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title">  قبول الحكم او رفض :</label>
                 <div class="col-lg-9 col-md-9 col-sm-9 search">
                     <select tabindex="3" class="string search  form-control" id="byan"
                             ng-options="t.Name for t in MahkamaReplies track by t.ID" ng-model="MahkamaReplay" ng-change="updateMahkamaReplies()"></select>
@@ -64,7 +64,7 @@
                                     <a href="javascript:;" ng-click="selectCheckboxes(1)">تحديد الكل</a> &nbsp;|&nbsp;
                                     <a href="javascript:;" ng-click="selectCheckboxes(0)">الغاء تحديد الكل</a>
                                 </legend>
-                                <div  class="search" style="height:78px; overflow:auto; padding:10px 12px 0;">
+                                <div  class="search" style="height:78px; overflow-y:auto; overflow-x:hidden; padding:10px 12px 0;">
                                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" ng-repeat="n in Mahakem">
                                         <label><input class="ma7kama_checkbox" type="checkbox" ng-click='MahakemCheck(n.ID,$event)' />{{n.Name}} </label>
                                     </div>

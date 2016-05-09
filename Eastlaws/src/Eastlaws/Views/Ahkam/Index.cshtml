@@ -124,7 +124,7 @@
         </div>
     </div>
 
-
+<hr class="spacer" />
 
     <script>
 
@@ -140,8 +140,10 @@
         //---------------- done --------------- >>> convert $rootscope to service
         //------------------  done  ------------ >>> fixed Paging bugs
         //---------------- done ------------ >>> table height equal to hokm div
+        //----------------- done ------------- >>> desc and asc in sort
         //---------------- in progress  -------------- >>> arrange js code
-        //-------------------------------- >>> desc and asc in sort
+
+        //------------------------------------------- >>> hide empty tasfya
 
         //------------------------------ >>> Angularjs Post http
         //-------------------------------- >>> filter section from server
@@ -404,7 +406,7 @@
 
                     if (data.searchType === 1) // AssymbleSearch
                     {
-                       console.log(data)
+                      // console.log(data)
                         $('#searchResult').html('<img src="/content/images/preload.gif" />');
                         $.post('/Ahkam/SearchResultAssembly', {
                             "AssembleSearchInputs": data.AssembleSearchInputs,
@@ -422,6 +424,20 @@
 
                                 $('body').animate({ scrollTop: $("#TotalCount").offset().top }, 1000, function () {
                                     if (data.newtasfya == true) {
+
+                                        console.log('------------- 1 ----------------')
+                                        for (var i = 0; i < $rootScope.catgDistinct.length; i++) {
+                                            console.log($rootScope.catgDistinct[i])
+                                        }
+
+                                        console.log('------------- 2 ----------------')
+
+                                        $rootScope.catgDistinct = [];
+                                        console.log('------------- 3 ----------------')
+                                        for (var i = 0; i < $rootScope.catgDistinct.length; i++) {
+                                            console.log($rootScope.catgDistinct[i])
+                                        }
+                                        console.log('------------- 4 ----------------')
                                         tasfiaAllData.getTasyaList();
                                     }
                                 });
@@ -457,24 +473,27 @@
             //Tasya-------------------------------------
             app
             .controller('tasfyaCtrl', function ($scope, tasfiaData, SearchData, $rootScope, $compile, tasfiaAllData) {
-
+               // console.log('000000')
 
                  $scope.categoryList = [];
                  $scope.tasfyaList = [];
 
-                 $scope.catgDistinct = [];
+                 $rootScope.catgDistinct = [];
                  $scope.countCatgID = function (catgID) {
 
-
-                     var indx = $scope.catgDistinct.indexOf(catgID);
+                  
+                     var indx = $rootScope.catgDistinct.indexOf(catgID);
                      if (indx === -1) {
-                         $scope.catgDistinct.push(catgID);
+                        // console.log(catgID)
+                         $rootScope.catgDistinct.push(catgID);
+                        
                      }
 
                    }
-                     $scope.displayCatg = function (catgID) {
+                 $scope.displayCatg = function (catgID) {
+                     
                          var result = false;
-                         var indx = $scope.catgDistinct.indexOf(catgID);
+                         var indx = $rootScope.catgDistinct.indexOf(catgID);
                          if (indx !== -1) {
                              result = true;
                          }
@@ -492,6 +511,11 @@
                          $scope.limit = 20;
                          $scope.categoryList = tasfiaAllData.listAllCatg;
                          $scope.tasfyaList = tasfiaAllData.listAllTasfya;
+                         
+
+                         //for (var i = 0; i < $scope.tasfyaList.length; i++) {
+                         //    console.log($scope.tasfyaList[i])
+                         //}
 
                      });
 
