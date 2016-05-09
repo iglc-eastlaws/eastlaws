@@ -43,6 +43,7 @@
 	@media (min-width: 768px) {
  .inside nav.sidebar .van{ left:0px; right:auto;}
      .inside nav.sidebar:hover  .move-right{transform:translate(0px, 0px); left:auto; right:0px;}
+
 		/*Allow main to be next to Nav*/
 		.main{
 			
@@ -109,6 +110,7 @@
 			position:absolute;
 			margin-bottom: 0px;
 		}
+      .hide-sidebar{margin-right: -183px!important;}
 
 	.filter-search nav{
 			width:95%;
@@ -129,7 +131,7 @@
 		nav.sidebar:hover{
 			margin-right: 0px;
 		}		
-		.inside nav.sidebar .move-right{
+		.inside nav.sidebar .move-right {
     transform: translate(0,0);
     -webkit-transform: translate(0x,0); /** Chrome & Safari **/
     -o-transform: translate(0,0); /** Opera **/
@@ -149,10 +151,12 @@
 	@media (min-width: 1330px) {
         .inside nav.sidebar .van{ left:auto; right:0px;}
      .inside nav.sidebar:hover  .move-right{transform:translate(0px, 0px); left:auto; right:0px;}
+     
 		/*Allow main to be next to Nav*/
 		.main{
 			width: calc(100% - 215px); /*keeps 100% minus nav size*/
 			margin-right: 215px;
+            min-height:855px;
 		}
 
 		/*Show all nav*/
