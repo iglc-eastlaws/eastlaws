@@ -16,7 +16,6 @@ namespace Eastlaws.Controllers
     {
         public IActionResult Index()
         {
-            
             return View();
         }
 
@@ -111,8 +110,6 @@ namespace Eastlaws.Controllers
             }     
         }
 
-
-
         public IActionResult FullHokmView(int ID)
         {
             var Model = AhkamService.GetHokm(ID, null);
@@ -125,6 +122,7 @@ namespace Eastlaws.Controllers
                 return View();
             }
         }
+
         public IActionResult TasfeyaList  (int QueryID)
         {
             if (QueryID == 0)

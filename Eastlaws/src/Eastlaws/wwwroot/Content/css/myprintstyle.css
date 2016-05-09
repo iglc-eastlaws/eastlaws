@@ -1,4 +1,5 @@
-﻿@charset "utf-8";
+﻿@media print {
+  @charset "utf-8";
 font-face {font-family: "Droid Arabic Kufi"; font-style: normal;font-weight: 400;}
 @font-face {font-family: "Droid Arabic Kufi";font-style: normal;font-weight: 700;src: url("../fonts/DroidKufi-Bold.eot?#iefix") format("embedded-opentype"), url("../fonts/DroidKufi-Bold.woff2") format("woff2"), url("../fonts/DroidKufi-Bold.ttf") format("truetype");}
 .fa{ font-family:FontAwesome !important;}
@@ -12,9 +13,7 @@ hr{ margin:0px; }
 h1 {font-size: 2.2em;}
 .color-tooltip .tooltip-arrow, .color-tooltip + .tooltip > .tooltip-inner {background-image:linear-gradient(to bottom, #d9b163 0px, #f0c675 100%); color:#000; border:1px solid #675650;}
 .color-tooltip .tooltip-arrow {border-top-color: #00a8c4!important;}
-@media print {
-    body{background-color:red !important;}
-}
+
 
 
 .form-horizontal .control-label{ text-align:right;}
@@ -505,3 +504,6 @@ thead { background-color:#fff9d9;  color:#333; font:0.8em "Droid Arabic Kufi",ar
 
 
 
+
+
+}

@@ -98,15 +98,12 @@
 
 
 
-
-
     }
     else if ((ViewBag.typeView == 2) || (ViewBag.typeView == 3))
     {
         @foreach (var item in Model.AhkamList)
         {
             countrow += 1;
-
             var Fakrat = Model.FakaratList.Where(p => p.HokmID == @item.ID).ToArray();
 
             <div id="result_@item.ID" class="result-block @((ViewBag.typeView == 3)?"col-md-4 height-scroll":"")">
@@ -127,7 +124,7 @@
 
 
                             <p>
-                                <span class="fakr-title-search" style="color:red;">
+                                <span class="fakr-title-search" style="color:red;" FakraID="@CurrentFakra.ID">
                                     @CurrentFakra.Title :
                                 </span>
                                 <a class="fakra-text" target="_blank" href="View?ID=@item.ID#@CurrentFakra.ID">@Html.Raw(FakraText)</a>
@@ -147,7 +144,7 @@
                         <ul>
                             <li><a href="javascipt:;"  data-toggle="tooltip" data-placement="top" class="color-tooltip" title=" قراءة النص"><i class="fa fa-desktop"></i><span class="name-nav"> قراءة النص</span></a></li>
                             <li><a href="#" data-toggle="tooltip" data-placement="top" class="color-tooltip" title=" صورة الحكم"><i class="fa fa-camera"></i><span class="name-nav"> صورة الحكم</span></a></li>
-                            <li><a href="#" data-toggle="tooltip" data-placement="top" class="color-tooltip" onclick="Printing(result_@item.ID)" title="  طباعة"><i class="fa fa-print"></i><span class="name-nav"> طباعة </span></a></li>
+                            <li><a href="#" data-toggle="tooltip" data-placement="top" class="color-tooltip printing" PrintID="result_@item.ID" title="  طباعة"><i class="fa fa-print"></i><span class="name-nav"> طباعة </span></a></li>
                         </ul>
                     </div>
                     <hr class="spacer" />
@@ -168,10 +165,6 @@
         <h3>لا يوجد نتائج</h3>
     }
 }
-
-
-
-
 
 
 @functions{
@@ -209,11 +202,10 @@
 
 
 <script>
+  
     $(document).ready(function () {
         $('#tabHokmBody').children('tr:first').trigger('click');
         $('[data-toggle="tooltip"]').tooltip();
-
-
     });
 
 </script>
