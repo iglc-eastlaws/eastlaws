@@ -5,14 +5,14 @@
     var headstr = "<html><head><title></title>" + document.getElementsByTagName('head')[0].innerHTML + "<link rel='stylesheet' type='text/css' href='/content/css/print.css'></head><body>";
     var footstr = "</body></html>" 
     var newstr = "";
-    //if (Type == 0) {
+    if (Type == 0) {
     newstr = $('#' + printID).html();
-   // }
-   // else {
+    }
+    else {
 
-    //    newstr = "hiiiiiiiiii"
-    //
-   // }
+        newstr = "hiiiiiiiiii"
+    
+    }
     window.frames["print_frame"].document.write(headstr + newstr + footstr);
     setTimeout(function () {
         window.frames["print_frame"].window.focus()
@@ -23,5 +23,5 @@
 }
 
 $(document).on('click', '.printing', function () {
-    printdiv($(this).attr('PrintID'), 1, $(this).attr('PrintID'))
+    printdiv($(this).attr('printid'), 0, $(this).attr('PrintID'))
 })
