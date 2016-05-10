@@ -17,7 +17,7 @@
 <div class="main inner views">
 
 
-    <div class="col-lg-9 col-md-8  col-sm-8 ">
+    <div class="col-lg-9 col-md-8  col-sm-8 "  id="view">
 
 
         <div class="search-inner  ">
@@ -57,16 +57,17 @@
             </div>
             <hr class="spacer" />
         </div>
-        <div class="format-result">
+        <div class="format-result" >
 
             @Html.Partial("_toolbar")
+            <li><a href="#" data-toggle="tooltip" data-placement="top" class="color-tooltip printing" PrintID="view" title=" طباعة"><i class="fa fa-print"></i><span class="name-nav"> طباعة </span></a></li>
         </div>
 
         @if (Model != null)
         {
             var Hokm = Model.AhkamList.ToArray()[0];
 
-             <div class="view-law">
+             <div class="view-law" >
 
             <h1>
 
@@ -157,5 +158,6 @@
 
     </div>
 </div>
-
+<script>
+</script>
 
