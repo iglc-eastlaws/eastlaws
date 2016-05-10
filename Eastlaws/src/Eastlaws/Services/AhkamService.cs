@@ -8,6 +8,7 @@ using Eastlaws.Infrastructure;
 using Eastlaws;
 using Dapper;
 using System.Data.SqlClient;
+using System.Text;
 
 namespace Eastlaws.Services
 {
@@ -33,6 +34,7 @@ namespace Eastlaws.Services
         General , Custom , Advanced , Mada 
     }
 
+
     public class AhkamSearchOptions
     {
         public int PageNo { get; set; } = 1;
@@ -41,11 +43,15 @@ namespace Eastlaws.Services
         public SearchSortType SortDirection { get; set; } = SearchSortType.DESC;
         public AhkamDisplayMode DisplayMode { get; set; } = AhkamDisplayMode.Divs;
 
+        public List<AhkamTasfeyaSelection> TasfeyaSelection { get; set; }
+
      
     }
 
     public class AhkamService
     {
+
+
         // General Search 
         public static AhkamPresentation Search(AhkamSearchOptions Options , FTSPredicate SearchPredicate)
         {

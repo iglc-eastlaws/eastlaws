@@ -242,33 +242,62 @@ namespace Eastlaws.Services
 
 
 
-        public static string GetOuterQuery(QueryCacher Cacher, AhkamSearchOptions Options, string CustomFakaratQuery = null)
+        public static string ResolveTasfeyaQuery(List<AhkamTasfeyaSelection> SelectedItems)
         {
+            if (SelectedItems == null || SelectedItems.Count == 0)
+            {
+                return "";
+            }
+
+            var Data = (
+                        from x in SelectedItems
+                        where !string.IsNullOrWhiteSpace(x.Parameter)
+                        group x.Parameter by x.CategoryID into g
+                        select new KeyValuePair<AhkamTasfeyaCategoryIds, string>
+                        (g.Key, string.Join(",", g.ToList()))
+                ).ToList();
+
             StringBuilder builder = new StringBuilder();
-          
+            foreach (var item in Data)
+            {
+
+
+            }
+            return builder.ToString();
+        }
+
+
+        public static string GetOuterQuery(QueryCacher Cacher, AhkamSearchOptions Options, string CustomFakaratQuery = null , List<AhkamTasfeyaSelection> TasfeyaSelection = null)
+        {
+            StringBuilder builder = new StringBuilder(2048);
+
+            string TasfeyaQuery = ResolveTasfeyaQuery(TasfeyaSelection);
+
 
             QuerySortInfo Info = GetSortQuery(Options);
             string InnerQuery = Cacher.GetCachedQuery(Info.SortQuery , Info.ColumnName);
             // Creating the temp table and adding the current Page Data
-            builder.AppendFormat(@"Set NoCount on ;
-                                   Declare @PageNo int ={0} , @PageSize int = {1} 
-                                   Declare @ResultsPage Table(ItemID int Primary Key  ,  SortValue Sql_Variant )
-                                   Insert Into @ResultsPage 
-                                   Select  ItemID , MyRank as SortValue From 
-                                   (
-                                       Select Row_Number() Over (Order By MyRank " + Info.Direction  + @") as Serial , *  From 
-                                       (
-                                            {2} 
-                                       ) ResultsTableInner  
-                                   ) ResultsTableOuter 
-                                   Where Serial > ((@PageNo - 1) * @PageSize) And Serial <= (@PageNo * @PageSize)"
-        , Options.PageNo, Options.PageSize , InnerQuery ); 
+            builder.AppendFormat(
+                @"Set NoCount on ;
+
+                Declare @PageNo int ={0} , @PageSize int = {1} 
+                Declare @ResultsPage Table(ItemID int Primary Key  ,  SortValue Sql_Variant )
+                Insert Into @ResultsPage 
+                Select  ItemID , MyRank as SortValue From 
+                (
+                    Select Row_Number() Over (Order By MyRank " + Info.Direction  + @") as Serial , *  From 
+                    (
+                        {2} 
+                    ) ResultsTableInner  
+                ) ResultsTableOuter 
+                Where Serial > ((@PageNo - 1) * @PageSize) And Serial <= (@PageNo * @PageSize)"
+            , Options.PageNo, Options.PageSize , InnerQuery ); 
 
 
-            builder.Append("\n");
+      
 
             // Ahkam Data  (Master Data )
-            builder.Append(@"Select A.* From @ResultsPage RP  
+            builder.AppendLine(@"Select A.* From @ResultsPage RP  
                 join VW_Ahkam A WITH(NOLOCK)  On A.ID = RP.ItemID  
                 Order By RP.SortValue  " + Info.Direction );
 
@@ -276,12 +305,12 @@ namespace Eastlaws.Services
             {
                 if (!string.IsNullOrEmpty(CustomFakaratQuery))
                 {
-                    builder.Append(CustomFakaratQuery);
+                    builder.AppendLine(CustomFakaratQuery);
                 }
                 else
                 {
                     // get the default Fakra for each hokm  
-                    builder.Append(@"Select AF.* From VW_AhkamFakarat AF Join @ResultsPage RP  on AF.HokmID = RP.ItemID Where AF.IsDefault = 1 ");
+                    builder.AppendLine(@"Select AF.* From VW_AhkamFakarat AF Join @ResultsPage RP  on AF.HokmID = RP.ItemID Where AF.IsDefault = 1 ");
                 }
             }
             return builder.ToString();

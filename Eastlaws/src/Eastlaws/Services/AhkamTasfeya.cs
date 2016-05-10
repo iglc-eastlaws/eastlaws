@@ -9,6 +9,7 @@ namespace Eastlaws.Services
 {
 
     public enum FehresPrograms { Mana3y = 29 , Defoo3 = 30 ,Da3awaMadaneya = 8, Da3awaGena2ya = 16 , AhkamFehres = 9 }
+
     public enum AhkamTasfeyaCategoryDisplay
     {List = 0 , Range = 1  }
 
@@ -19,7 +20,6 @@ namespace Eastlaws.Services
         public int DisplayOrder { get; set; } = 1;
         public AhkamTasfeyaCategoryDisplay Display { get; set; } = AhkamTasfeyaCategoryDisplay.List;
         public FehresPrograms? ParentProgram { get; set; } = null;
-
     }
 
     public enum AhkamTasfeyaCategoryIds 
@@ -32,8 +32,28 @@ namespace Eastlaws.Services
         public string Name { get; set; }
         public int Count { get; set; }
         public AhkamTasfeyaCategoryIds CategoryID { get; set; }
-        public string Param { get; set; } = "";
+        string m_Param = null;
+        public string Param
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(m_Param))
+                {
+                    return ID.ToString();
+                }
+                return m_Param;
+            }
+            set
+            {
+                m_Param = value;
+            }
+        }
+    }
 
+    public class AhkamTasfeyaSelection
+    {
+        public AhkamTasfeyaCategoryIds CategoryID { get; set; }
+        public string Parameter { get; set; }
     }
 
     public class AhkamTasfeya
@@ -56,6 +76,17 @@ namespace Eastlaws.Services
             return Cats;
         }
 
+
+        public static IEnumerable<TasfeyaItem> List(AhkamAdvancedSearch Obj, AhkamSearchTypes SearchType , out List<AhkamTasfeyaCategory> UsedCategories, string TasfeyaFilter = "", string PreviousTasfeyaQuery = "", AhkamTasfeyaCategoryIds? CategorySender = null)
+        {
+            string FakaratQueryCustom;
+            List<FTSPredicate> SearchPredicates;
+            string InnerQuery = AhkamQueryBuilder.AdvancedCustomSearch(Obj, out FakaratQueryCustom, out SearchPredicates);
+            QueryCacher Cacher = new QueryCacher((int)LegalServices.Ahkam, InnerQuery, SearchType.ToString(), NewSearch: false, SecondaryQuery: FakaratQueryCustom);
+            int QueryID = Cacher.ID;  
+            var Data = AhkamTasfeya.List(QueryID, SearchType, out UsedCategories, TasfeyaFilter, "", null);
+            return Data;
+        }
 
         public static IEnumerable<TasfeyaItem> List (int QueryID , AhkamSearchTypes SearchType, out List<AhkamTasfeyaCategory> UsedCategories , string TasfeyaFilter = "" , string PreviousTasfeyaQuery  = "", AhkamTasfeyaCategoryIds? CategorySender = null )
         {

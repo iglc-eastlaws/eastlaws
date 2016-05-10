@@ -167,14 +167,9 @@ namespace Eastlaws.Controllers
             // needs to be sent as a param 
             AhkamSearchTypes SearchType = AhkamSearchTypes.Advanced;
 
-            string FakaratQueryCustom;
-            List<FTSPredicate> SearchPredicates;
-            string InnerQuery = AhkamQueryBuilder.AdvancedCustomSearch(Obj, out FakaratQueryCustom, out SearchPredicates);
-            QueryCacher Cacher = new QueryCacher((int)LegalServices.Ahkam, InnerQuery, SearchType.ToString(), NewSearch: false, SecondaryQuery: FakaratQueryCustom);
-
-            int QueryID = Cacher.ID;
             List<AhkamTasfeyaCategory> UsedCategories;
-            var Data = AhkamTasfeya.List(QueryID, SearchType, out UsedCategories, TasfeyaSearch , "", null);
+            var Data = AhkamTasfeya.List(Obj, SearchType, out UsedCategories, TasfeyaSearch, "", null);
+
             var datajson = new[] {
                 new object[] { "Data" , Data},
                 new object[] { "Catg" , UsedCategories }
@@ -200,6 +195,28 @@ namespace Eastlaws.Controllers
         {
             var MahkamaReplies = AhkamService.GetMahkamaReplies();
             return new JsonResult(MahkamaReplies);
+        }
+
+
+        public IActionResult TestBesada55()
+        {
+            List<AhkamTasfeyaSelection> SelectedItems = new List<AhkamTasfeyaSelection>();
+            SelectedItems.Add(new AhkamTasfeyaSelection() { CategoryID = AhkamTasfeyaCategoryIds.Country , Parameter= "1" });
+            SelectedItems.Add(new AhkamTasfeyaSelection() { CategoryID = AhkamTasfeyaCategoryIds.Country, Parameter = "2" });
+            SelectedItems.Add(new AhkamTasfeyaSelection() { CategoryID = AhkamTasfeyaCategoryIds.Country, Parameter = "3" });
+
+
+
+            SelectedItems.Add(new AhkamTasfeyaSelection() { CategoryID = AhkamTasfeyaCategoryIds.Defoo3, Parameter = "1" });
+            SelectedItems.Add(new AhkamTasfeyaSelection() { CategoryID = AhkamTasfeyaCategoryIds.Defoo3, Parameter = "2" });
+
+
+            SelectedItems.Add(new AhkamTasfeyaSelection() { CategoryID = AhkamTasfeyaCategoryIds.Mana3y, Parameter = "3" });
+
+
+            string XXX = AhkamQueryBuilder.ResolveTasfeyaQuery(SelectedItems);
+
+            return null;
         }
     }
 
