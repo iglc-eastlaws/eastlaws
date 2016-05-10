@@ -8,6 +8,7 @@ using Eastlaws.Entities;
 using Dapper;
 using System.Collections.Generic;
 using System.Dynamic;
+using Newtonsoft.Json;
 
 namespace Eastlaws.Controllers
 {
@@ -242,6 +243,40 @@ namespace Eastlaws.Controllers
             return View();
         }
 
+
+    
+        [HttpPost]
+        public ActionResult test2(List<tasfyaIDs> IDs)
+      //  public ActionResult test2(string IDs)
+        {
+
+           // tasfyaIDsCollection listIDS  = JsonConvert.DeserializeObject<tasfyaIDsCollection>(IDs);
+
+          //  IEnumerable<tasfyaIDs> listIDS = ;
+          //  var myid = IDs;
+            //List<AhkamTasfeyaSelection> SelectedItems = new List<AhkamTasfeyaSelection>();
+            //IDs.Add(new AhkamTasfeyaSelection() { CategoryID = (AhkamTasfeyaCategoryIds)1, Parameter = "1" });
+            //IDs.Add(new AhkamTasfeyaSelection() { CategoryID = (AhkamTasfeyaCategoryIds)1, Parameter = "2" });
+            //IDs.Add(new AhkamTasfeyaSelection() { CategoryID = (AhkamTasfeyaCategoryIds)1, Parameter = "3" });
+           // ViewBag.IDs = IDs;
+            /*
+             List<AhkamTasfeyaSelection> IDS 
+
+                  IDS =  {
+                        { CategoryID:1,Parameter:1},
+                        { CategoryID:1,Parameter:2},
+                        { CategoryID:1,Parameter:3},
+                        { CategoryID:5,Parameter:1},
+                        { CategoryID:5,Parameter:6},
+                        { CategoryID:6,Parameter:10},
+                }
+            eventfire = catg:1
+
+            */
+
+            //-----
+            return View();
+        }
 
         public IActionResult TestBesada55()
         {

@@ -425,19 +425,19 @@
                                 $('body').animate({ scrollTop: $("#TotalCount").offset().top }, 1000, function () {
                                     if (data.newtasfya == true) {
 
-                                        console.log('------------- 1 ----------------')
+                                        //console.log('------------- 1 ----------------')
                                         for (var i = 0; i < $rootScope.catgDistinct.length; i++) {
                                             console.log($rootScope.catgDistinct[i])
                                         }
 
-                                        console.log('------------- 2 ----------------')
+                                        //console.log('------------- 2 ----------------')
 
                                         $rootScope.catgDistinct = [];
-                                        console.log('------------- 3 ----------------')
+                                        //console.log('------------- 3 ----------------')
                                         for (var i = 0; i < $rootScope.catgDistinct.length; i++) {
                                             console.log($rootScope.catgDistinct[i])
                                         }
-                                        console.log('------------- 4 ----------------')
+                                        //console.log('------------- 4 ----------------')
                                         tasfiaAllData.getTasyaList();
                                     }
                                 });
@@ -472,7 +472,7 @@
  
             //Tasya-------------------------------------
             app
-            .controller('tasfyaCtrl', function ($scope, tasfiaData, SearchData, $rootScope, $compile, tasfiaAllData) {
+            .controller('tasfyaCtrl', function ($scope, tasfiaData, SearchData, $rootScope, $compile, tasfiaAllData, $http) {
                // console.log('000000')
 
                  $scope.categoryList = [];
@@ -521,7 +521,7 @@
 
                      $scope.changeCheck = function (item, event) {
                          if ($(event.target).is(':checked')) {
-                             tasfiaData.PushList(item.CategoryID + '_' + item.ID, item.Name, item.Count);
+                             tasfiaData.PushList(item.CategoryID + '_' + item.ID, item.Name, item.Count,item.CategoryID,item.ID);
                              $(event.target).parent().parent().addClass('active');
 
 
@@ -531,6 +531,36 @@
                              $(event.target).parent().parent().removeClass('active');
 
                          }
+
+                         var sendobj = [];
+ 
+                         for (var i = 0; i < tasfiaData.list.length; i++) {
+ 
+                             var CategoryID = tasfiaData.list[i].itemcatgID;
+                             var Parameter = tasfiaData.list[i].itemrealID;
+                             sendobj.push({ CategoryID, Parameter})
+                         }
+                         console.log(sendobj)
+                         //var IDs = JSON.stringify(sendobj);
+                         var IDs = JSON.stringify({ "IDs": sendobj });
+                         console.log(IDs)
+                         $.ajax({
+                             type: 'POST',
+                             url: '/Ahkam/test2',
+                             //  data: JSON.stringify({ "IDs": sendobj }),
+                             data: "IDs="+JSON.stringify(sendobj),
+                             contentType: "application/json",
+                             dataType: 'json',
+                            // dataType: 'text'
+                          
+                             
+                        
+                         });
+
+                         //$.post('/Ahkam/test2?IDs=' + IDs + '', {}).then(function (d) {
+                         //    console.log(d);
+                         //})
+ 
 
                      };
 
@@ -550,8 +580,8 @@
                 var data = {};
                 data.list = [];
 
-                data.PushList = function (itemid, itemname, itemcount) {
-                    data.list.push({ itemid, itemname, itemcount });
+                data.PushList = function (itemid, itemname, itemcount, itemcatgID, itemrealID) {
+                    data.list.push({ itemid, itemname, itemcount ,itemcatgID,itemrealID});
                  }
 
                   data.splice = function (itemname) {
