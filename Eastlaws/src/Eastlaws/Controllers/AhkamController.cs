@@ -246,6 +246,7 @@ namespace Eastlaws.Controllers
 
     
         [HttpPost]
+        // public ActionResult test2(tasfyaIDs[] IDs)
         public ActionResult test2(List<tasfyaIDs> IDs)
       //  public ActionResult test2(string IDs)
         {

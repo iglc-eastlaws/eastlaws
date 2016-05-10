@@ -540,17 +540,17 @@
                              var Parameter = tasfiaData.list[i].itemrealID;
                              sendobj.push({ CategoryID, Parameter})
                          }
-                         console.log(sendobj)
+                         //console.log(sendobj)
                          //var IDs = JSON.stringify(sendobj);
-                         var IDs = JSON.stringify({ "IDs": sendobj });
+                         var IDs = JSON.stringify({ IDs: sendobj });
                          console.log(IDs)
                          $.ajax({
                              type: 'POST',
                              url: '/Ahkam/test2',
-                             //  data: JSON.stringify({ "IDs": sendobj }),
-                             data: "IDs="+JSON.stringify(sendobj),
+                             data: IDs,
+                             //data: "IDs="+JSON.stringify(sendobj),
                              contentType: "application/json",
-                             dataType: 'json',
+                              dataType: 'json',
                             // dataType: 'text'
                           
                              
