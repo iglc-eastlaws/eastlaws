@@ -41,8 +41,11 @@
                 <p id = "TotalCount" class="total-chart"></p>
 
                 <div class="col-lg-9 col-md-8  col-sm-8 list-content">
-                    <div class="format-result" ng-controller="toolbarCtrl"> @Html.Partial("_toolbar")</div>
-                    <div class="filter-element" ng-controller="filterElementCtrl">@Html.Partial("_filterElement") </div>
+                    <div class="format-result" ng-controller="toolbarCtrl"> @Html.Partial("_toolbar") </div>
+                    <div class="filter-element" ng-controller="filterElementCtrl">
+                        <div id="tasfyaTest"></div>
+                    @Html.Partial("_filterElement") 
+                    </div>
 
                     <hr class="spacer" />
 
@@ -473,8 +476,7 @@
             //Tasya-------------------------------------
             app
             .controller('tasfyaCtrl', function ($scope, tasfiaData, SearchData, $rootScope, $compile, tasfiaAllData, $http) {
-               // console.log('000000')
-
+ 
                  $scope.categoryList = [];
                  $scope.tasfyaList = [];
 
@@ -484,7 +486,6 @@
                   
                      var indx = $rootScope.catgDistinct.indexOf(catgID);
                      if (indx === -1) {
-                        // console.log(catgID)
                          $rootScope.catgDistinct.push(catgID);
                         
                      }
@@ -533,47 +534,34 @@
                          }
 
                          var sendobj = [];
- 
                          for (var i = 0; i < tasfiaData.list.length; i++) {
- 
                              var CategoryID = tasfiaData.list[i].itemcatgID;
                              var Parameter = tasfiaData.list[i].itemrealID;
                              sendobj.push({ CategoryID, Parameter})
                          }
-                         //console.log(sendobj)
-                         //var IDs = JSON.stringify(sendobj);
-                         var IDs = JSON.stringify({ IDs: sendobj });
-                         console.log(IDs)
+       
+
                          $.ajax({
-                             type: 'POST',
-                             url: '/Ahkam/test2',
-                             data: IDs,
-                             //data: "IDs="+JSON.stringify(sendobj),
+                             url: "/Ahkam/test2",
+                             type: "POST",
                              contentType: "application/json",
-                              dataType: 'json',
-                            // dataType: 'text'
-                          
-                             
-                        
+                             data: JSON.stringify(sendobj),
+                             success: function (data) {
+                                 $('#tasfyaTest').html(data)
+                             }
                          });
-
-                         //$.post('/Ahkam/test2?IDs=' + IDs + '', {}).then(function (d) {
-                         //    console.log(d);
-                         //})
- 
-
                      };
 
  
                  })
             .controller('filterElementCtrl', function ($scope, tasfiaData, SearchData, $rootScope, $compile) {
 
-                $scope.list = tasfiaData.list;
+                /*$scope.list = tasfiaData.list;
                 $scope.delete = function (obj) {
                     tasfiaData.spliceObj(obj);
                     $('#' + obj.itemid + '').prop('checked', false);
 
-                }
+                }*/
 
             })
             .factory('tasfiaData', function ($http, $rootScope) {

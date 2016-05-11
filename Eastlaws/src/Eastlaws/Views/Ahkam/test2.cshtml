@@ -1,10 +1,11 @@
 ﻿@using Eastlaws.Services;
 
 @{
-//List<AhkamTasfeyaSelection> IDs = ViewBag.IDs;
+    Layout = null;
+    List<AhkamTasfeyaSelection> ahkamTasfeya = ViewBag.ahkamTasfeya;
 }
 
-@*@foreach (var item in IDs)
+@foreach (var item in ahkamTasfeya)
 {
-    <p>@item.CategoryID  &nbsp;&nbsp;&nbsp; @item.Parameter</p>
-}*@
+    <span style="border:solid 1px blue">@item.CategoryID  &nbsp;&nbsp;&nbsp; @item.Parameter</span>
+}

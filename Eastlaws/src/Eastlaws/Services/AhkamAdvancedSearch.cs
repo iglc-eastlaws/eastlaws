@@ -57,17 +57,7 @@ namespace Eastlaws.Services
         }
     }
 
-    public class tasfyaIDs
-    {
-        public int CategoryID { get; set; }
-        public int Parameter { get; set; }
-        
-    }
-
-    class tasfyaIDsCollection
-    {
-        public IEnumerable<tasfyaIDs> mylist { get; set; }
-    }
+ 
 
 
 }
