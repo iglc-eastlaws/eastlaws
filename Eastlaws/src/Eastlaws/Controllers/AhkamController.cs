@@ -78,12 +78,19 @@ namespace Eastlaws.Controllers
 
             AssemblySearch AssembleSearchInputs = SearchParms.AssemblySearch;
             SearchTools SearchTools = SearchParms.SearchTools;
-            List<AhkamTasfeyaSelection> ahkamTasfeya = SearchParms.ahkamTasfeya;
 
-            if (ahkamTasfeya.Count > 0)
-            {
-                string result = AhkamQueryBuilder.ResolveTasfeyaQuery(ahkamTasfeya);
-            }
+            //List<AhkamTasfeyaSelection> ahkamTasfeya;
+            //if (SearchParms.ahkamTasfeya != null)
+            //{
+            //    ahkamTasfeya = SearchParms.ahkamTasfeya;
+            //    //if (ahkamTasfeya.Count > 0)
+            //    //{
+            //    //    string result = AhkamQueryBuilder.ResolveTasfeyaQuery(ahkamTasfeya);
+            //    //}
+            //}
+
+
+
 
             int PageNo = SearchTools.PageNo;
             int Sort = SearchTools.Sort;
@@ -106,7 +113,15 @@ namespace Eastlaws.Controllers
             {
                 //AssemblySearch AssembleSearchInputs = new AssemblySearch();
                 AhkamAdvancedSearch Obj = GetSearchObject(AssembleSearchInputs);
-                Model = AhkamService.Search(Options, Obj);
+                if (SearchParms.ahkamTasfeya != null)
+                {
+                    Model = AhkamService.Search(Options, Obj, SearchParms.ahkamTasfeya);
+                }
+                else
+                {
+                    Model = AhkamService.Search(Options, Obj);
+                }
+                   
             }
           //  AhkamPresentation Model1 = AhkamService.Search(Options, Obj);
                 if (Model.IsValid)
