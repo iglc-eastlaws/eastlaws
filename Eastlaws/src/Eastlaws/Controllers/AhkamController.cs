@@ -67,10 +67,17 @@ namespace Eastlaws.Controllers
         }
 
         [HttpPost]
-        public IActionResult SearchResultAssembly(AssemblySearch AssembleSearchInputs,int PageNo,int Sort,int pageSize,
-                                                   bool Latest = false,int Days = 10, 
-                                                   int typeView = 1,int SortDir = 1)
+        //public IActionResult SearchResultAssembly(AssemblySearch AssembleSearchInputs,int PageNo,int Sort,int pageSize, bool Latest = false,int Days = 10,int typeView = 1,int SortDir = 1)
+        public IActionResult SearchResultAssembly(AssemblySearch AssembleSearchInputs, SearchTools SearchTools)  
         {
+
+            int PageNo = SearchTools.PageNo;
+            int Sort = SearchTools.Sort;
+            int pageSize = SearchTools.pageSize;
+            bool Latest = SearchTools.Latest;
+            int Days =  SearchTools.Days;
+            int typeView = SearchTools.typeView;
+            int SortDir = SearchTools.SortDir;
 
             ViewBag.typeView = typeView;
             AhkamPresentation Model = new AhkamPresentation();

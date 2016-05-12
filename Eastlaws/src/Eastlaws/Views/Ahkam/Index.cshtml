@@ -404,14 +404,21 @@
                 data.sortTypeDir = 1;
                 data.newtasfya = true;
                 data.newSearch = true;
+                data.SearchTools = {};
 
                 data.GetSearch = function () {
 
                     if (data.searchType === 1) // AssymbleSearch
                     {
-                      // console.log(data)
-                        $('#searchResult').html('<img src="/content/images/preload.gif" />');
-                        $.post('/Ahkam/SearchResultAssembly', {
+                        data.SearchTools.PageNo = data.currentPage;
+                        data.SearchTools.Sort = data.sortType;
+                        data.SearchTools.pageSize = data.pageSize;
+                        data.SearchTools.Latest = data.Latest;
+                        data.SearchTools.Days = data.days;
+                        data.SearchTools.typeView = data.typeView;
+                        data.SearchTools.SortDir = data.sortTypeDir;
+                        // console.log(data)
+                        /*$.post('/Ahkam/SearchResultAssembly', {
                             "AssembleSearchInputs": data.AssembleSearchInputs,
                             "PageNo": data.currentPage,
                             "Sort": data.sortType,
@@ -419,7 +426,10 @@
                             "Latest": data.Latest,
                             "Days": data.days,
                             "typeView": data.typeView,
-                            "SortDir":data.sortTypeDir
+                            "SortDir":data.sortTypeDir*/
+                        $('#searchResult').html('<img src="/content/images/preload.gif" />');
+                        $.post('/Ahkam/SearchResultAssembly', {
+                            "AssembleSearchInputs": data.AssembleSearchInputs,"SearchTools": data.SearchTools
                         }, function (d) {
                             $rootScope.$apply(function () {
                                 var searchresult = $('#searchResult');
@@ -556,12 +566,12 @@
                  })
             .controller('filterElementCtrl', function ($scope, tasfiaData, SearchData, $rootScope, $compile) {
 
-                /*$scope.list = tasfiaData.list;
+                $scope.list = tasfiaData.list;
                 $scope.delete = function (obj) {
                     tasfiaData.spliceObj(obj);
                     $('#' + obj.itemid + '').prop('checked', false);
 
-                }*/
+                }
 
             })
             .factory('tasfiaData', function ($http, $rootScope) {
