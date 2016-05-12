@@ -45,6 +45,7 @@ namespace Eastlaws.Services
                   //  ,new Range(srchObj.OfficeSuffix, "A.OfficeSuffix").GetCondition()   // ommar group not in range condation
             };
 
+
             StringBuilder Builder = new StringBuilder();
             Builder.Append(@"Select A.ID as ID  ,  0 as DefaultRank From Ahkam A Where (1 = 1)");
 
@@ -58,6 +59,7 @@ namespace Eastlaws.Services
                     ConditionsCount++;
                 }
             }
+
 
             //add ommar group condation
             if ((!string.IsNullOrWhiteSpace(srchObj.OfficeSuffix)) && (srchObj.OfficeSuffix.Trim() == "ع"))
