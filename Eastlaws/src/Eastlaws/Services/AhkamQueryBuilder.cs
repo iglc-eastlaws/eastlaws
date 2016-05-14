@@ -62,7 +62,7 @@ namespace Eastlaws.Services
             //add ommar group condation
             if ((!string.IsNullOrWhiteSpace(srchObj.OfficeSuffix)) && (srchObj.OfficeSuffix.Trim() == "ع"))
             {
-                Builder.Append("\n And A.OfficeSuffix = 'ع'");
+                Builder.Append("\n And A.OfficeSuffix = 'ع' ");
                 ConditionsCount++;
             }
        
