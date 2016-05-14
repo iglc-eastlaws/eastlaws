@@ -1,4 +1,4 @@
-﻿function printdiv(printpage, Type,printID) {
+﻿function printdiv(Type,printID,html) {
     if ($("#print_frame").length == 0) {
         $("body").append("<iframe id='print_frame' name='print_frame' width='0' height='0' frameborder='0' src='about:blank' ></iframe>");
     }
@@ -10,7 +10,7 @@
     }
     else {
 
-        newstr = "hiiiiiiiiii"
+        newstr = html;
     
     }
     window.frames["print_frame"].document.write(headstr + newstr + footstr);
@@ -23,5 +23,5 @@
 }
 
 $(document).on('click', '.printing', function () {
-    printdiv($(this).attr('printid'), 0, $(this).attr('PrintID'))
+    printdiv(0, $(this).attr('PrintID'), "");
 })

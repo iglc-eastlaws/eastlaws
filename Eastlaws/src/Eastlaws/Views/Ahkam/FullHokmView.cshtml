@@ -1,6 +1,8 @@
 ﻿@{
     Layout = null;
 }
+@model Eastlaws.Entities.AhkamPresentation
+
 
       @if (Model != null)
         {
@@ -17,11 +19,15 @@
                     }
                     @Hokm.FullName
                 </h1>
+            var FakaratArray = Model.FakaratList;
 
-
-                @foreach (var Fakra in Model.FakaratList)
+              if (ViewBag.fakarat != null)
+              {
+                  FakaratArray = Model.FakaratList.Where(o => ViewBag.fakarat.Contains(o.ID)).ToArray();
+              }
+              @foreach (var Fakra in FakaratArray)
                 {
-                    @if (@Fakra.FakraNo <= 1)
+              @if (@Fakra.FakraNo <= 1)
                     {
                         <h4 class="fakr-title">
                             <i class="fa fa-file" aria-hidden="true"></i>

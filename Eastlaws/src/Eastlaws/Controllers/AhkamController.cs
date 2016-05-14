@@ -125,12 +125,13 @@ namespace Eastlaws.Controllers
                 return View();
             }     
         }
-
-        public IActionResult FullHokmView(int ID)
-        {
+        [HttpPost]
+        public IActionResult FullHokmView(int ID, [FromBody] int [] fakarat)
+         {
             var Model = AhkamService.GetHokm(ID, null);
             if (Model.IsValid)
             {
+                ViewBag.PrintedFakarat = fakarat;
                 return View(Model);
             }
             else
@@ -203,62 +204,14 @@ namespace Eastlaws.Controllers
             return new JsonResult(MahkamaReplies);
         }
 
-
-
         [HttpPost]
         public ActionResult test2([FromBody] List<AhkamTasfeyaSelection> ahkamTasfeya)
         {
-            ViewBag.ahkamTasfeya = ahkamTasfeya;
-            return View();
+            //string Tasfya = AhkamQueryBuilder.ResolveTasfeyaQuery(ahkamTasfeya);
+
+                ViewBag.ahkamTasfeya = ahkamTasfeya;
+                return View();
         }
-
-        public IActionResult test1(string IDS)
-        {
-            List<AhkamTasfeyaSelection> SelectedItems = new List<AhkamTasfeyaSelection>();
-            //--- test1
-
-            //if (countrIDs != "")
-            //{
-            //    string[] ids = ["1", "2", "3"];
-            //    SelectedItems.Add(new AhkamTasfeyaSelection() { CategoryID = AhkamTasfeyaCategoryIds.Country, Parameter = "1" });
-            //    SelectedItems.Add(new AhkamTasfeyaSelection() { CategoryID = AhkamTasfeyaCategoryIds.Country, Parameter = "2" });
-            //    SelectedItems.Add(new AhkamTasfeyaSelection() { CategoryID = AhkamTasfeyaCategoryIds.Country, Parameter = "3" });
-            //}
-
-            // test 2
-            /*
-
-            IDS =  {
-                    { catgID:1,IDs:1,2,3},
-                    { catgID:5,IDs:1,2,3}
-                }
-            eventfire = catg:1
-
-            // pares IDs to list of SelectedItems
-            */
-
-            //test 3
-            /*
-             List<AhkamTasfeyaSelection> IDS 
-
-                  IDS =  {
-                        { CategoryID:1,Parameter:1},
-                        { CategoryID:1,Parameter:2},
-                        { CategoryID:1,Parameter:3},
-                        { CategoryID:5,Parameter:1},
-                        { CategoryID:5,Parameter:6},
-                        { CategoryID:6,Parameter:10},
-                }
-            eventfire = catg:1
-
-            */
-
-            //-----
-            return View();
-        }
-
- 
-
 
         public IActionResult TestBesada55()
         {
