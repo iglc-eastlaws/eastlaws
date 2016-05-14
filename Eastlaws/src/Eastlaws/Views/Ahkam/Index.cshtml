@@ -146,6 +146,8 @@
         //----------------- done ------------- >>> desc and asc in sort
         //---------------- in progress  -------------- >>> arrange js code
 
+        //---/********/ merge tasfya sevices with search service    <<<<<<<<<<<<<<<<<<<<<<<<<<<<< ******* to important
+
         //------------------------------------------- >>> hide empty tasfya
 
         //------------------------------ >>> Angularjs Post http
@@ -404,14 +406,22 @@
                 data.sortTypeDir = 1;
                 data.newtasfya = true;
                 data.newSearch = true;
-
+                data.SearchTools = {};
+                data.ahkamlist = {};
+    
                 data.GetSearch = function () {
 
                     if (data.searchType === 1) // AssymbleSearch
                     {
-                      // console.log(data)
-                        $('#searchResult').html('<img src="/content/images/preload.gif" />');
-                        $.post('/Ahkam/SearchResultAssembly', {
+                        data.SearchTools.PageNo = data.currentPage;
+                        data.SearchTools.Sort = data.sortType;
+                        data.SearchTools.pageSize = data.pageSize;
+                        data.SearchTools.Latest = data.Latest;
+                        data.SearchTools.Days = data.days;
+                        data.SearchTools.typeView = data.typeView;
+                        data.SearchTools.SortDir = data.sortTypeDir;
+                        // console.log(data)
+                        /*$.post('/Ahkam/SearchResultAssembly', {
                             "AssembleSearchInputs": data.AssembleSearchInputs,
                             "PageNo": data.currentPage,
                             "Sort": data.sortType,
@@ -419,7 +429,160 @@
                             "Latest": data.Latest,
                             "Days": data.days,
                             "typeView": data.typeView,
-                            "SortDir":data.sortTypeDir
+                            "SortDir":data.sortTypeDir*/
+
+                        //console.log(data.ahkamlist)
+                        var obj1 = {
+                            AssemblySearch: data.AssembleSearchInputs,
+                            SearchTools: data.SearchTools,
+                            ahkamTasfeya: data.ahkamlist
+                        };
+
+                        //console.log(obj1);
+                        //console.log(JSON.stringify(obj1));
+                        $('#searchResult').html('<img src="/content/images/preload.gif" />');
+
+                        $.ajax({
+                            url: "/Ahkam/SearchResultAssembly",
+                            type: "POST",
+                            data:{ "SearchParms": obj1},
+
+                            success: function (d) {
+                               // $('#tasfyaTest').html(d)
+                                $rootScope.$apply(function () {
+                                    var searchresult = $('#searchResult');
+                                    searchresult.html(d);
+
+                                    $('body').animate({ scrollTop: $("#TotalCount").offset().top }, 1000, function () {
+                                        if (data.newtasfya == true) {
+
+                                            //console.log('------------- 1 ----------------')
+                                            for (var i = 0; i < $rootScope.catgDistinct.length; i++) {
+                                                console.log($rootScope.catgDistinct[i])
+                                            }
+
+                                            //console.log('------------- 2 ----------------')
+
+                                            $rootScope.catgDistinct = [];
+                                            //console.log('------------- 3 ----------------')
+                                            for (var i = 0; i < $rootScope.catgDistinct.length; i++) {
+                                                console.log($rootScope.catgDistinct[i])
+                                            }
+                                            //console.log('------------- 4 ----------------')
+                                            tasfiaAllData.getTasyaList();
+                                        }
+                                    });
+
+                                    if (data.newSearch == true) {
+                                        data.TotalCount = 0;
+                                        if (searchresult.find('#resultCount').length) {
+                                            data.TotalCount = $("#resultCount").val();
+                                            $('#TotalCount').html('');
+                                            if (data.TotalCount > 0) {
+                                                $('#TotalCount').html(" <i class='fa fa-line-chart '></i> وجد اجمالي [" + data.TotalCount + "] حكم")
+                                            }
+                                        }
+                                        if ((data.currentPage <= 1) || (data.currentPage == undefined)) {
+                                            var countpage = 1;
+                                            if (data.TotalCount > Number(data.pageSize)) {
+                                                countpage = Math.ceil(data.TotalCount / Number(data.pageSize));
+                                            }
+                                            data.pageCount = countpage;
+                                            data.currentPage = 1;
+
+                                        }
+                                    }
+                                });
+                            }
+                        });
+
+
+                        /*
+                        $.ajax({
+                            url: "/Ahkam/SearchResultAssembly",
+                            type: "POST",
+                            //contentType: "application/json",
+                            data:
+                         {
+                             "SearchParms": obj1
+                             //"SearchParms": obj1
+                             //,"ahkamTasfeya": data.ahkamlist
+                         },
+                          
+                            //contentType: "application/json"
+                            //data:
+                            //    {
+                            //        "AssembleSearchInputs": data.AssembleSearchInputs,
+                            //        "SearchTools": data.SearchTools
+                            //        //,"ahkamTasfeya": data.ahkamlist
+                            //    }
+                          //  ,
+                            success: function (d) {
+                                //$('#tasfyaTest').html(d)
+                                $rootScope.$apply(function () {
+                                    var searchresult = $('#searchResult');
+                                    searchresult.html(d);
+
+                                    $('body').animate({ scrollTop: $("#TotalCount").offset().top }, 1000, function () {
+                                        if (data.newtasfya == true) {
+
+                                            //console.log('------------- 1 ----------------')
+                                            for (var i = 0; i < $rootScope.catgDistinct.length; i++) {
+                                                console.log($rootScope.catgDistinct[i])
+                                            }
+
+                                            //console.log('------------- 2 ----------------')
+
+                                            $rootScope.catgDistinct = [];
+                                            //console.log('------------- 3 ----------------')
+                                            for (var i = 0; i < $rootScope.catgDistinct.length; i++) {
+                                                console.log($rootScope.catgDistinct[i])
+                                            }
+                                            //console.log('------------- 4 ----------------')
+                                            tasfiaAllData.getTasyaList();
+                                        }
+                                    });
+
+                                    if (data.newSearch == true) {
+                                        data.TotalCount = 0;
+                                        if (searchresult.find('#resultCount').length) {
+                                            data.TotalCount = $("#resultCount").val();
+                                            $('#TotalCount').html('');
+                                            if (data.TotalCount > 0) {
+                                                $('#TotalCount').html(" <i class='fa fa-line-chart '></i> وجد اجمالي [" + data.TotalCount + "] حكم")
+                                            }
+                                        }
+                                        if ((data.currentPage <= 1) || (data.currentPage == undefined)) {
+                                            var countpage = 1;
+                                            if (data.TotalCount > Number(data.pageSize)) {
+                                                countpage = Math.ceil(data.TotalCount / Number(data.pageSize));
+                                            }
+                                            data.pageCount = countpage;
+                                            data.currentPage = 1;
+
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                        */
+/*
+                      
+                        $.ajax({
+                            url: "/Ahkam/test2",
+                            type: "POST",
+                            contentType: "application/json",
+                            data: JSON.stringify(data.ahkamlist),
+                            success: function (data) {
+                                $('#tasfyaTest').html(data)
+                            }
+                        });
+
+                        $.post('/Ahkam/SearchResultAssembly', {
+                            "AssembleSearchInputs": data.AssembleSearchInputs,
+                            "SearchTools": data.SearchTools,
+                            "ahkamTasfeya": JSON.stringify(data.ahkamlist)
+
                         }, function (d) {
                             $rootScope.$apply(function () {
                                 var searchresult = $('#searchResult');
@@ -466,7 +629,7 @@
                                     }
                                 }
                             });
-                        });
+                        });*/
                     }
                 };
 
@@ -541,27 +704,35 @@
                          }
        
 
-                         $.ajax({
-                             url: "/Ahkam/test2",
-                             type: "POST",
-                             contentType: "application/json",
-                             data: JSON.stringify(sendobj),
-                             success: function (data) {
-                                 $('#tasfyaTest').html(data)
-                             }
-                         });
+                         //$.ajax({
+                         //    url: "/Ahkam/test2",
+                         //    type: "POST",
+                         //    contentType: "application/json",
+                         //    data: JSON.stringify(sendobj),
+                         //    success: function (data) {
+                         //        $('#tasfyaTest').html(data)
+                         //    }
+                         //});
+
+                         SearchData.searchType = 1;
+                         SearchData.newSearch = true;
+                         SearchData.currentPage = 1;
+                         SearchData.ahkamlist = sendobj;//JSON.stringify(sendobj);
+                         SearchData.Latest = false;
+                         SearchData.GetSearch();
+
                      };
 
  
                  })
             .controller('filterElementCtrl', function ($scope, tasfiaData, SearchData, $rootScope, $compile) {
 
-                /*$scope.list = tasfiaData.list;
+                $scope.list = tasfiaData.list;
                 $scope.delete = function (obj) {
                     tasfiaData.spliceObj(obj);
                     $('#' + obj.itemid + '').prop('checked', false);
 
-                }*/
+                }
 
             })
             .factory('tasfiaData', function ($http, $rootScope) {
@@ -585,6 +756,10 @@
                 var datalist = {};
                 datalist.listAllTasfya = [];
                 datalist.listAllCatg = [];
+
+
+                //console.log(SearchData.AssembleSearchInputs);
+
                 datalist.getTasyaList = function () {
 
                     $('#tasfyaLood').show();

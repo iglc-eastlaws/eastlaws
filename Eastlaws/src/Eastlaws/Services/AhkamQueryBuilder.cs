@@ -45,6 +45,7 @@ namespace Eastlaws.Services
                   //  ,new Range(srchObj.OfficeSuffix, "A.OfficeSuffix").GetCondition()   // ommar group not in range condation
             };
 
+
             StringBuilder Builder = new StringBuilder();
             Builder.Append(@"Select A.ID as ID  ,  0 as DefaultRank From Ahkam A Where (1 = 1)");
 
@@ -58,6 +59,7 @@ namespace Eastlaws.Services
                     ConditionsCount++;
                 }
             }
+
 
             //add ommar group condation
             if ((!string.IsNullOrWhiteSpace(srchObj.OfficeSuffix)) && (srchObj.OfficeSuffix.Trim() == "ع"))
@@ -260,8 +262,12 @@ namespace Eastlaws.Services
             StringBuilder builder = new StringBuilder();
             foreach (var item in Data)
             {
+                builder.AppendFormat("{0} , ", item.Value);
 
-
+            }
+            if (builder.Length > 0)
+            {
+                builder = builder.Remove(builder.Length-2,2);
             }
             return builder.ToString();
         }
@@ -275,7 +281,18 @@ namespace Eastlaws.Services
 
 
             QuerySortInfo Info = GetSortQuery(Options);
-            string InnerQuery = Cacher.GetCachedQuery(Info.SortQuery , Info.ColumnName);
+            // string InnerQuery = Cacher.GetCachedQuery(Info.SortQuery , Info.ColumnName);
+            string InnerQuery = "";
+
+            //for test
+            if (TasfeyaQuery.Trim() == string.Empty)
+            {
+                InnerQuery = Cacher.GetCachedQuery(Info.SortQuery, Info.ColumnName);
+            }
+            else
+            {
+                InnerQuery = Cacher.GetCachedQueryFehress(Info.SortQuery, Info.ColumnName, TasfeyaQuery);
+            }
             // Creating the temp table and adding the current Page Data
             builder.AppendFormat(
                 @"Set NoCount on ;

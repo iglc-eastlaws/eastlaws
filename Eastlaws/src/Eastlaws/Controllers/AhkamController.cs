@@ -66,11 +66,39 @@ namespace Eastlaws.Controllers
             return Obj;
         }
 
+
+       
+
         [HttpPost]
-        public IActionResult SearchResultAssembly(AssemblySearch AssembleSearchInputs,int PageNo,int Sort,int pageSize,
-                                                   bool Latest = false,int Days = 10, 
-                                                   int typeView = 1,int SortDir = 1)
+        //public IActionResult SearchResultAssembly(AssemblySearch AssembleSearchInputs,int PageNo,int Sort,int pageSize, bool Latest = false,int Days = 10,int typeView = 1,int SortDir = 1)
+        // public IActionResult SearchResultAssembly(AssemblySearch AssembleSearchInputs,  SearchTools SearchTools,[FromBody] List<AhkamTasfeyaSelection> ahkamTasfeya)  
+        public IActionResult SearchResultAssembly(SearchParms SearchParms)
+        
         {
+
+            AssemblySearch AssembleSearchInputs = SearchParms.AssemblySearch;
+            SearchTools SearchTools = SearchParms.SearchTools;
+
+            //List<AhkamTasfeyaSelection> ahkamTasfeya;
+            //if (SearchParms.ahkamTasfeya != null)
+            //{
+            //    ahkamTasfeya = SearchParms.ahkamTasfeya;
+            //    //if (ahkamTasfeya.Count > 0)
+            //    //{
+            //    //    string result = AhkamQueryBuilder.ResolveTasfeyaQuery(ahkamTasfeya);
+            //    //}
+            //}
+
+
+
+
+            int PageNo = SearchTools.PageNo;
+            int Sort = SearchTools.Sort;
+            int pageSize = SearchTools.pageSize;
+            bool Latest = SearchTools.Latest;
+            int Days =  SearchTools.Days;
+            int typeView = SearchTools.typeView;
+            int SortDir = SearchTools.SortDir;
 
             ViewBag.typeView = typeView;
             AhkamPresentation Model = new AhkamPresentation();
@@ -85,7 +113,15 @@ namespace Eastlaws.Controllers
             {
                 //AssemblySearch AssembleSearchInputs = new AssemblySearch();
                 AhkamAdvancedSearch Obj = GetSearchObject(AssembleSearchInputs);
-                Model = AhkamService.Search(Options, Obj);
+                if (SearchParms.ahkamTasfeya != null)
+                {
+                    Model = AhkamService.Search(Options, Obj, SearchParms.ahkamTasfeya);
+                }
+                else
+                {
+                    Model = AhkamService.Search(Options, Obj);
+                }
+                   
             }
           //  AhkamPresentation Model1 = AhkamService.Search(Options, Obj);
                 if (Model.IsValid)
@@ -132,7 +168,7 @@ namespace Eastlaws.Controllers
             }
         }
 
-        public IActionResult TasfeyaList  (int QueryID)
+        public IActionResult TasfeyaList(int QueryID)
         {
             if (QueryID == 0)
                 QueryID = 56;
