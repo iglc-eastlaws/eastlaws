@@ -42,10 +42,7 @@ namespace Eastlaws.Services
         public AhkamSortColumns SortBy { get; set; } = AhkamSortColumns.Default;
         public SearchSortType SortDirection { get; set; } = SearchSortType.DESC;
         public AhkamDisplayMode DisplayMode { get; set; } = AhkamDisplayMode.Divs;
-
-        public List<AhkamTasfeyaSelection> TasfeyaSelection { get; set; }
-
-     
+        public List<AhkamTasfeyaSelection> TasfeyaSelection { get; set; }     
     }
 
     public class AhkamService

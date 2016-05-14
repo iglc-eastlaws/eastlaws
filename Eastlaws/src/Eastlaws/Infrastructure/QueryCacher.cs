@@ -91,28 +91,7 @@ namespace Eastlaws.Infrastructure
         }
 
 
-        //for test
-        public string GetCachedQueryFehress(string JoinQuery = "", string SortCol = " QCR.DefaultRank ",string fehressquery = "")
-        {
-            string q = "";
-            if (fehressquery.Trim() == string.Empty)
-            {
-                q = @"Select QCR.ItemID , " + SortCol + " as MyRank From EastlawsUsers..QueryCacheRecords QCR "
-                     + "With (NoLock) "
-                    + JoinQuery
-                    + "\n" + "Where QCR.MasterID = " + this.ID;
-            }
-            else
-            {
-                q = @"Select distinct QCR.ItemID , " + SortCol + " as MyRank From EastlawsUsers..QueryCacheRecords QCR "
-                  + "With (NoLock) "
-                 + JoinQuery
-                 + " left join ServicesFehresDetails as fehres on QCR.ItemID = fehres.ItemID "+
-                 "\n" + "Where QCR.MasterID = " + this.ID + " and fehres.FehresItemID in("+ fehressquery + ")";
-            }
 
-            return q;
-        }
 
 
 
