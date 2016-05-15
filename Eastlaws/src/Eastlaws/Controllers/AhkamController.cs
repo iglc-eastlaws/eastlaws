@@ -155,8 +155,10 @@ namespace Eastlaws.Controllers
             }     
         }
 
+       
         public IActionResult FullHokmView(int ID)
         {
+
             var Model = AhkamService.GetHokm(ID, null);
             if (Model.IsValid)
             {
