@@ -142,4 +142,17 @@ Go
 Exec EastlawsData..ExportServicesSort
 
 
+Go
 
+Insert EastlawsData..[AhkamGehaType]([ID],[Name])
+select ID,Name from AH_Gaha_Type
+
+
+Go
+
+-- need to be on (( first init step ))  NOT LIKE THAT 
+UPDATE A 
+SET A.GehaTypeID = M.Gaha_Type
+From 
+EastlawsData..Ahkam as A
+JOIN AH_Master as M ON A.ID = M.ID
