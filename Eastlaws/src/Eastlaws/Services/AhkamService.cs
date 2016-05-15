@@ -42,10 +42,7 @@ namespace Eastlaws.Services
         public AhkamSortColumns SortBy { get; set; } = AhkamSortColumns.Default;
         public SearchSortType SortDirection { get; set; } = SearchSortType.DESC;
         public AhkamDisplayMode DisplayMode { get; set; } = AhkamDisplayMode.Divs;
-
-        public List<AhkamTasfeyaSelection> TasfeyaSelection { get; set; }
-
-     
+        public List<AhkamTasfeyaSelection> TasfeyaSelection { get; set; }     
     }
 
     public class AhkamService
@@ -65,12 +62,12 @@ namespace Eastlaws.Services
         /// <param name="Options">Search Options </param>
         /// <param name="SrchObj">Search Parameters (Filters ) </param>
         /// <returns></returns>
-        public static AhkamPresentation Search(AhkamSearchOptions Options  , AhkamAdvancedSearch SrchObj)
+        public static AhkamPresentation Search(AhkamSearchOptions Options  , AhkamAdvancedSearch SrchObj, List<AhkamTasfeyaSelection> TasfeyaSelection = null)
         {
             string FakaratQueryCustom;
             List<FTSPredicate> SearchPredicates; 
             string InnerQuery = AhkamQueryBuilder.AdvancedCustomSearch(SrchObj , out FakaratQueryCustom , out SearchPredicates);
-            return Search(InnerQuery, Options, FakaratQueryCustom, AhkamSearchTypes.Advanced , null , SearchPredicates);
+            return Search(InnerQuery, Options, FakaratQueryCustom, AhkamSearchTypes.Advanced , null , SearchPredicates, TasfeyaSelection);
         }
         
 
@@ -123,7 +120,8 @@ namespace Eastlaws.Services
 
 
         // Internal Search Assembler !
-        private static AhkamPresentation Search(string InnerQuery, AhkamSearchOptions Options , string CustomFakaratQuery , AhkamSearchTypes SearchType , string CustomPresentationTitle  = null , List<FTSPredicate> Predicates = null)
+        private static AhkamPresentation Search(string InnerQuery, AhkamSearchOptions Options , string CustomFakaratQuery , AhkamSearchTypes SearchType , 
+            string CustomPresentationTitle  = null , List<FTSPredicate> Predicates = null,  List<AhkamTasfeyaSelection> TasfeyaSelection = null)
         {
             AhkamPresentation P = new AhkamPresentation();
             if (string.IsNullOrEmpty(InnerQuery))
@@ -136,7 +134,7 @@ namespace Eastlaws.Services
             string CachedQuery = Cacher.GetCachedQuery();
             P.ResultsCount = Cacher.ResultsCount;
 
-            string OuterQuery = AhkamQueryBuilder.GetOuterQuery(Cacher, Options, CustomFakaratQuery);
+            string OuterQuery = AhkamQueryBuilder.GetOuterQuery(Cacher, Options, CustomFakaratQuery, TasfeyaSelection);
             SqlConnection con = DataHelpers.GetConnection(DbConnections.Data);
             var Grid = con.QueryMultiple(OuterQuery);
             P.AhkamList = Grid.Read<VW_Ahkam>();

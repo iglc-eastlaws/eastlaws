@@ -45,6 +45,7 @@ namespace Eastlaws.Services
                   //  ,new Range(srchObj.OfficeSuffix, "A.OfficeSuffix").GetCondition()   // ommar group not in range condation
             };
 
+
             StringBuilder Builder = new StringBuilder();
             Builder.Append(@"Select A.ID as ID  ,  0 as DefaultRank From Ahkam A Where (1 = 1)");
 
@@ -59,10 +60,11 @@ namespace Eastlaws.Services
                 }
             }
 
+
             //add ommar group condation
             if ((!string.IsNullOrWhiteSpace(srchObj.OfficeSuffix)) && (srchObj.OfficeSuffix.Trim() == "ع"))
             {
-                Builder.Append("\n And A.OfficeSuffix = 'ع'");
+                Builder.Append("\n And A.OfficeSuffix = 'ع' ");
                 ConditionsCount++;
             }
        
@@ -208,6 +210,7 @@ namespace Eastlaws.Services
             return builderRetVal.ToString();            
         }
 
+
         public static string LatestAhkam(int daysCount = 5)
         {
             return "Select A.ID , 0 as DefaultRank From Ahkam A Where A.DateAdded >= DateAdd(Day , -" + daysCount + " ,  (Select Max(DateAdded) From Ahkam ))";
@@ -216,7 +219,7 @@ namespace Eastlaws.Services
 
         public static string LatestAhkamByDate()
         {
-            return "Select   top 500 A.ID , 0 as DefaultRank From Ahkam A Where CountryID != 9 order by A.caseDate desc";
+            return "Select top 500 A.ID , 0 as DefaultRank From Ahkam A Where CountryID != 9 order by A.CaseDate DESC";
 
         }
 
@@ -233,14 +236,16 @@ namespace Eastlaws.Services
             return null;
         }
 
+
         public static string MadaSearch(int?  CountryID, string TashNo, string TashYear, string MadaNo , FTSPredicate TashTextFilter , bool SearchInTashTile = true , bool SearchInTashMawad = true)
         {
             return "";
         }
 
-        public static string ResolveTasfeyaQuery(List<AhkamTasfeyaSelection> SelectedItems)
+
+        public static string ResolveTasfeyaQuery(IEnumerable<AhkamTasfeyaSelection> SelectedItems)
         {
-            if (SelectedItems == null || SelectedItems.Count == 0)
+            if (SelectedItems == null || SelectedItems.Count() == 0)
             {
                 return "";
             }
@@ -253,13 +258,116 @@ namespace Eastlaws.Services
                         (g.Key, string.Join(",", g.ToList()))
                 ).ToList();
 
-            StringBuilder builder = new StringBuilder();
-            foreach (var item in Data)
+            StringBuilder Builder = new StringBuilder();
+            Data.ForEach(x => Builder.AppendLine( "\n And " + ResolveTasfeyaQuerySection(x.Key, x.Value).Predicate));
+
+            return Builder.ToString();
+
+        }
+        public static string ResolveTasfeyaQuery(IEnumerable<AhkamTasfeyaSelection> SelectedItems , string InnerQuery)
+        {
+            return InnerQuery +  ResolveTasfeyaQuery(SelectedItems);
+        }
+        public class AhkamTasfeyaParamInfo
+        {
+            public string Predicate { get; set; }
+            public bool IsSeparateQuery { get; set; } = false;
+        }
+
+        private static AhkamTasfeyaParamInfo ResolveTasfeyaQuerySection(AhkamTasfeyaCategoryIds Category , string Params)
+        {
+
+            switch (Category)
             {
-
-
+                case AhkamTasfeyaCategoryIds.Country:
+                    {
+                        Range R = new Range(Params, "AMS.CountryID");
+                        AhkamTasfeyaParamInfo Info = new AhkamTasfeyaParamInfo
+                        { IsSeparateQuery = false, Predicate = R.GetCondition() };
+                        return Info;    
+                    }                    
+                case AhkamTasfeyaCategoryIds.Ma7kama:
+                    {
+                        Range R = new Range(Params, "AMS.MahkamaID");
+                        AhkamTasfeyaParamInfo Info = new AhkamTasfeyaParamInfo
+                        { IsSeparateQuery = false, Predicate = R.GetCondition() };
+                        return Info;
+                    }
+                case AhkamTasfeyaCategoryIds.CrimeType:
+                    {
+                    
+                        Range R = new Range(Params, "FehresItemID");
+                        string Query = " AMS.ID in (Select ItemID From ServicesFehresDetails Where ServiceID = 1 And FehresProgramID = 16 And " + R.GetCondition() + "  )";
+                        AhkamTasfeyaParamInfo Info = new AhkamTasfeyaParamInfo
+                        { IsSeparateQuery = false, Predicate = Query };
+                        return Info;
+             
+                    }
+                case AhkamTasfeyaCategoryIds.RelatedTash:
+                    {
+                        break;
+                    }
+                case AhkamTasfeyaCategoryIds.Fehres:
+                    {
+                        Range R = new Range(Params, "FehresItemID");
+                        string Query = " AMS.ID in (Select ItemID From ServicesFehresDetails Where ServiceID = 1 And FehresProgramID = 9 And " + R.GetCondition() + "  )";
+                        AhkamTasfeyaParamInfo Info = new AhkamTasfeyaParamInfo
+                        { IsSeparateQuery = false, Predicate = Query };
+                        return Info;
+                        
+                    }
+                case AhkamTasfeyaCategoryIds.Defoo3:
+                    {
+                        Range R = new Range(Params, "FehresItemID");
+                        string Query = " AMS.ID in (Select ItemID From ServicesFehresDetails Where ServiceID = 1 And FehresProgramID = 30 And " + R.GetCondition() + "  )";
+                        AhkamTasfeyaParamInfo Info = new AhkamTasfeyaParamInfo
+                        { IsSeparateQuery = false, Predicate = Query };
+                        return Info;
+                    }
+                case AhkamTasfeyaCategoryIds.Year:
+                    {
+                        Range R = new Range(Params, "DatePart(Year , AMS.CaseDate)");
+                        AhkamTasfeyaParamInfo Info = new AhkamTasfeyaParamInfo
+                        { IsSeparateQuery = false, Predicate = R.GetCondition() };
+                        return Info;
+            
+                    }
+                case AhkamTasfeyaCategoryIds.JudgeYear:
+                    {
+                        Range R = new Range(Params, "AMS.CaseYear");
+                        AhkamTasfeyaParamInfo Info = new AhkamTasfeyaParamInfo
+                        { IsSeparateQuery = false, Predicate = R.GetCondition() };
+                        return Info;             
+                    }
+                case AhkamTasfeyaCategoryIds.Ma7kamaAction:
+                    {
+                        Range R = new Range(Params, "AMS.IfAgree");
+                        AhkamTasfeyaParamInfo Info = new AhkamTasfeyaParamInfo
+                        { IsSeparateQuery = false, Predicate = R.GetCondition() };
+                        return Info;
+                    }
+                case AhkamTasfeyaCategoryIds.Mana3y:
+                    {
+                        Range R = new Range(Params, "FehresItemID");
+                        string Query = " AMS.ID in (Select ItemID From ServicesFehresDetails Where ServiceID = 1 And FehresProgramID = 29 And " + R.GetCondition() + "  )";
+                        AhkamTasfeyaParamInfo Info = new AhkamTasfeyaParamInfo
+                        { IsSeparateQuery = false, Predicate = Query };
+                        return Info;
+                    }
+                case AhkamTasfeyaCategoryIds.Da3waType:
+                    {
+                        Range R = new Range(Params, "FehresItemID");
+                        string Query = " AMS.ID in (Select ItemID From ServicesFehresDetails Where ServiceID = 1 And FehresProgramID = 8 And " + R.GetCondition() + "  )";
+                        AhkamTasfeyaParamInfo Info = new AhkamTasfeyaParamInfo
+                        { IsSeparateQuery = false, Predicate = Query };
+                        return Info;
+                    }
+                default:
+                    {
+                        throw new NotImplementedException();
+                    }
             }
-            return builder.ToString();
+            return null;
         }
 
 
@@ -267,11 +375,17 @@ namespace Eastlaws.Services
         {
             StringBuilder builder = new StringBuilder(2048);
 
-            string TasfeyaQuery = ResolveTasfeyaQuery(TasfeyaSelection);
+
 
 
             QuerySortInfo Info = GetSortQuery(Options);
             string InnerQuery = Cacher.GetCachedQuery(Info.SortQuery , Info.ColumnName);
+            if(TasfeyaSelection != null && TasfeyaSelection.Count > 0)
+            {
+                InnerQuery = ResolveTasfeyaQuery(TasfeyaSelection ,InnerQuery);
+            }
+            
+
             // Creating the temp table and adding the current Page Data
             builder.AppendFormat(
                 @"Set NoCount on ;
@@ -358,7 +472,7 @@ namespace Eastlaws.Services
                         break;
                     }
             }
-
+            Info.SortQuery = "Join Ahkam AMS on AMS.ID = QCR.ItemID ";
             return Info;
         }
 

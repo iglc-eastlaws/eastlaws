@@ -1,10 +1,18 @@
-﻿using System;
+﻿using Eastlaws.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Eastlaws.ViewModels.Ahkam
 {
+    public class SearchParms
+    {
+        public AssemblySearch AssemblySearch { get; set; }
+        public SearchTools SearchTools { get; set; }
+        public List<AhkamTasfeyaSelection> ahkamTasfeya { get; set; }
+ 
+    }
     public class SearchTools
     {
         public int PageNo { get; set; } 

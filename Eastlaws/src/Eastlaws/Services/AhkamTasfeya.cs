@@ -77,22 +77,30 @@ namespace Eastlaws.Services
         }
 
 
-        public static IEnumerable<TasfeyaItem> List(AhkamAdvancedSearch Obj, AhkamSearchTypes SearchType , out List<AhkamTasfeyaCategory> UsedCategories, string TasfeyaFilter = "", string PreviousTasfeyaQuery = "", AhkamTasfeyaCategoryIds? CategorySender = null)
+
+
+        public static IEnumerable<TasfeyaItem> List(AhkamAdvancedSearch Obj, AhkamSearchTypes SearchType , out List<AhkamTasfeyaCategory> UsedCategories, string TasfeyaFilter = "", IEnumerable<AhkamTasfeyaSelection> SelectedTasfeya = null, AhkamTasfeyaCategoryIds? CategorySender = null)
         {
+
+
             string FakaratQueryCustom;
             List<FTSPredicate> SearchPredicates;
             string InnerQuery = AhkamQueryBuilder.AdvancedCustomSearch(Obj, out FakaratQueryCustom, out SearchPredicates);
             QueryCacher Cacher = new QueryCacher((int)LegalServices.Ahkam, InnerQuery, SearchType.ToString(), NewSearch: false, SecondaryQuery: FakaratQueryCustom);
             int QueryID = Cacher.ID;  
-            var Data = AhkamTasfeya.List(QueryID, SearchType, out UsedCategories, TasfeyaFilter, "", null);
+            var Data = AhkamTasfeya.List(QueryID, SearchType, out UsedCategories, TasfeyaFilter, SelectedTasfeya, null);
             return Data;
         }
 
-        public static IEnumerable<TasfeyaItem> List (int QueryID , AhkamSearchTypes SearchType, out List<AhkamTasfeyaCategory> UsedCategories , string TasfeyaFilter = "" , string PreviousTasfeyaQuery  = "", AhkamTasfeyaCategoryIds? CategorySender = null )
+        public static IEnumerable<TasfeyaItem> List (int QueryID , AhkamSearchTypes SearchType, out List<AhkamTasfeyaCategory> UsedCategories , string TasfeyaFilter = "" , IEnumerable<AhkamTasfeyaSelection> SelectedTasfeya = null, AhkamTasfeyaCategoryIds? CategorySender = null )
         {
             List<AhkamTasfeyaCategory> Cats =  GetAllCategories();
 
-
+            string PreviousTasfeyaQuery = "";
+            if (SelectedTasfeya != null && SelectedTasfeya.Count() > 0)
+            {
+                PreviousTasfeyaQuery = AhkamQueryBuilder.ResolveTasfeyaQuery(SelectedTasfeya);
+            }
 
             bool IsSafyList = !string.IsNullOrWhiteSpace(PreviousTasfeyaQuery);
             string SafyListQuery = "";
@@ -106,8 +114,8 @@ namespace Eastlaws.Services
                 SafyListQuery = 
                     @"Create  Table #IDS(ID int Primary Key ) ; 
                       Insert Into #IDS(ID ) 
-                      Select QCR.ItemID From Ahkam A Join EastlawsUsers..QueryCacheRecords QCR  on A.ID = QCR.ItemID
-                      Where  QCR.MasterID=" + QueryID + " And "+ PreviousTasfeyaQuery + " \n\n\n";
+                      Select QCR.ItemID From Ahkam AMS Join EastlawsUsers..QueryCacheRecords QCR  on AMS.ID = QCR.ItemID
+                      Where  QCR.MasterID=" + QueryID + "  "+  PreviousTasfeyaQuery + " \n\n\n";
             }
 
 

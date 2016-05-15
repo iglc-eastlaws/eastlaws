@@ -243,5 +243,19 @@
         })
 
     });
-
+    /*
+    [HttpPost]
+    public IActionResult FullHokmView(int ID, int [] fakarat)
+    {
+            var Model = AhkamService.GetHokm(ID, null);
+    if (Model.IsValid)
+    {
+        ViewBag.PrintedFakarat = fakarat;
+        return View(Model);
+    }
+    else
+    {
+        return View();
+    }
+    }
 </script>
