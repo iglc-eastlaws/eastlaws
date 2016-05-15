@@ -174,7 +174,7 @@ namespace Eastlaws.Controllers
                 QueryID = 56;
 
             List<AhkamTasfeyaCategory> UsedCategories;
-            var Data = AhkamTasfeya.List(QueryID, AhkamSearchTypes.Advanced,out UsedCategories, "", "", null);
+            var Data = AhkamTasfeya.List(QueryID, AhkamSearchTypes.Advanced,out UsedCategories, "", null, null);
             return View(Data);
         }
 
@@ -185,8 +185,14 @@ namespace Eastlaws.Controllers
 
         public JsonResult TasfyaListJson(int QueryID)
         {
+
+            List<AhkamTasfeyaSelection> PreviousSelectedItems = new List<AhkamTasfeyaSelection>();
+            // Uncomment the Following line to Safy the Tasfeya list 
+             //PreviousSelectedItems.Add(new AhkamTasfeyaSelection { CategoryID = AhkamTasfeyaCategoryIds.Country, Parameter = "1,2,3,4" });
+
+
             List<AhkamTasfeyaCategory> UsedCategories;
-            var Data = AhkamTasfeya.List(QueryID, AhkamSearchTypes.Advanced, out UsedCategories, "", "", null);
+            var Data = AhkamTasfeya.List(QueryID, AhkamSearchTypes.Advanced, out UsedCategories, "", PreviousSelectedItems, null);
             var datajson = new[] {
                 new object[] { "Data" , Data},
                 new object[] { "Catg" , UsedCategories }
@@ -197,13 +203,17 @@ namespace Eastlaws.Controllers
 
         public JsonResult TasfeyaListJson(AssemblySearch AssemblySearchInputs , string TasfeyaSearch = "" )
         {
+            List<AhkamTasfeyaSelection> PreviousSelectedItems = new List<AhkamTasfeyaSelection>();
+            // Uncomment the Following line to Safy the Tasfeya list 
+           // PreviousSelectedItems.Add(new AhkamTasfeyaSelection { CategoryID = AhkamTasfeyaCategoryIds.Country, Parameter = "1,2,3,4" });
+
             AhkamAdvancedSearch Obj = GetSearchObject(AssemblySearchInputs);
 
             // needs to be sent as a param 
             AhkamSearchTypes SearchType = AhkamSearchTypes.Advanced;
 
             List<AhkamTasfeyaCategory> UsedCategories;
-            var Data = AhkamTasfeya.List(Obj, SearchType, out UsedCategories, TasfeyaSearch, "", null);
+            var Data = AhkamTasfeya.List(Obj, SearchType, out UsedCategories, TasfeyaSearch, PreviousSelectedItems, null);
 
             var datajson = new[] {
                 new object[] { "Data" , Data},
@@ -289,26 +299,6 @@ namespace Eastlaws.Controllers
  
 
 
-        public IActionResult TestBesada55()
-        {
-            List<AhkamTasfeyaSelection> SelectedItems = new List<AhkamTasfeyaSelection>();
-            SelectedItems.Add(new AhkamTasfeyaSelection() { CategoryID = AhkamTasfeyaCategoryIds.Country , Parameter= "1" });
-            SelectedItems.Add(new AhkamTasfeyaSelection() { CategoryID = AhkamTasfeyaCategoryIds.Country, Parameter = "2" });
-            SelectedItems.Add(new AhkamTasfeyaSelection() { CategoryID = AhkamTasfeyaCategoryIds.Country, Parameter = "3" });
-
-
-
-            SelectedItems.Add(new AhkamTasfeyaSelection() { CategoryID = AhkamTasfeyaCategoryIds.Defoo3, Parameter = "1" });
-            SelectedItems.Add(new AhkamTasfeyaSelection() { CategoryID = AhkamTasfeyaCategoryIds.Defoo3, Parameter = "2" });
-
-
-            SelectedItems.Add(new AhkamTasfeyaSelection() { CategoryID = AhkamTasfeyaCategoryIds.Mana3y, Parameter = "3" });
-
-
-            string XXX = AhkamQueryBuilder.ResolveTasfeyaQuery(SelectedItems);
-
-            return null;
-        }
     }
 
   
