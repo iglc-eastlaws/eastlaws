@@ -153,21 +153,9 @@ footer{ background:#4d4a4a url("../images/pattern.png") repeat; border-top:6px s
     padding: 10px 2px 12px 25px;
 }
 
-nav {
-  
-/*  	text-align: center;  margin-top: 40px;
-  padding: 24px;
-font-family: Raleway;
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);*/
-
-
-}
-#myNavbar {
-	margin-right:0px; padding-right:0px;
-
-}
-.navbar-nav > li{
-}
+nav {}
+#myNavbar {margin-right:0px; padding-right:0px;}
+.navbar-nav > li{}
 .navbar-nav li a {transition: all 0.2s ease 0s;color:#221f0c;}
 .hvr-sweep-to-top:hover, .hvr-sweep-to-top::before {background-color:#ffe5a1 /*#E8BE6F*/; color:#221f0c; padding: 10px 15px 12px;}
 /*General */
@@ -225,29 +213,17 @@ nav:hover .forAnimate{opacity: 1;}
     -moz-transition: all 2s ease-in-out; /** Firefox **/
     -o-transition: all 2s ease-in-out; /** Opera **/
 }
-.van {
-    top: 0%;
-    right: 0%;
-}
-
+.van {top: 0%; right: 0%;}
 .main{width: calc(100% - 40px); margin-right: 40px;float: left;}
-
-		/*lets nav bar to be showed on mouseover*/
+/*lets nav bar to be showed on mouseover*/
 nav.sidebar:hover + .main{margin-right: 215px;}
-
-
-
 nav.sidebar .navbar-brand, nav.sidebar .navbar-header{padding:0 4px 0 0;width: 100%;margin-right: 0px; line-height:34px; float:none; background-color:#4D4A4A;}
 nav.sidebar .navbar-nav > li:first-child{border-top: 1px #e5e5e5 solid;}
 nav.sidebar .navbar-nav > li{border-bottom: 1px #e5e5e5 solid;}
 nav.sidebar .navbar-nav .open .dropdown-menu {position: static;float: none;width: auto;margin-top: 0;background-color: transparent;border: 0;-webkit-box-shadow: none;box-shadow: none;}
 nav.sidebar .navbar-collapse{padding: 0 0px 0 0px;}
-
-		/*colors dropdown box text */
-		.navbar-inverse .navbar-nav .open .dropdown-menu>li>a {
-			color: #777;
-		}
-
+/*colors dropdown box text */
+.navbar-inverse .navbar-nav .open .dropdown-menu>li>a {color: #777;}
 nav.sidebar{width: 215px;margin-right: -200px;float: right;z-index: 8000;position:absolute;margin-bottom: 0px;}
 /*give sidebar 100% width;*/
 nav.sidebar li {width: 100%;}
@@ -271,16 +247,9 @@ nav.sidebar:hover{margin-right: 0px;}
 .carousel-inner .prev        { left: -33%; }
 .carousel-control.left,.carousel-control.right {background-image:none;}
 /*Search Form*/
-.state-icon {
-    left: 8px;
-	color:#d9b163;
-}
-.list-group-item-primary {
-    color: rgb(255, 255, 255);
-    background-color: rgb(66, 139, 202);
-}
+.state-icon { left: 8px;color:#d9b163;}
+.list-group-item-primary {color: rgb(255, 255, 255);background-color: rgb(66, 139, 202);}
 
-/* DEMO ONLY - REMOVES UNWANTED MARGIN */
 .well .list-group { margin-bottom: 0px;}
 .search-form {}
 .search-form label.title{font:0.72em/32px "Droid Arabic Kufi"; padding-top:0px!important;}
@@ -472,6 +441,46 @@ thead { background-color:#fff9d9;  color:#333; font:0.68em "Droid Arabic Kufi",a
 .tabel-views .table > thead > tr > th{ padding:8px 5px;}
 .hokmView.active, .hokmView.active td, tr.hokmView:hover, .table-striped > tbody> tr:nth-child(2n+1):hover  > td, .table-striped > tbody > tr:nth-child(2n+1):hover > th:hover{ background-color:#675650!important; color:#E8BF6F; cursor:pointer;}
 
+/*Fahras*/
+.filter-option .select-option{ background-color:#d9b672;}
+/*Tree*/
+.tree, .tree ul {margin:0;padding:0;list-style:none}
+.tree ul {margin-right:1em;position:relative}
+.tree ul ul {margin-right:.5em}
+.tree ul:before {content:""; display:block; width:0;position:absolute;top:0;bottom:0;right:0;border-left:1px solid #D9B672;}
+.tree li {margin:0;padding:0 1em;line-height:2em;font-weight:700;position:relative}
+.tree ul li:before {content:"";display:block;width:10px;height:0;border-top:1px solid #D9B672;margin-top:-1px;position:absolute;top:1em;right:0}
+.tree ul li:last-child:before {background:#fff;height:auto;top:1em;bottom:0}
+.indicator { margin-right:5px;}
+.tree li a {text-decoration: none; color:#675650;transition:all ease 0.5s;font:0.69em droid arabic kufi;}
+.tree li a:hover{  color: #D9B672; }
+.tree li button, .tree li button:active, .tree li button:focus {text-decoration: none;color: #D9B672; border:none;background:transparent;margin:0px;padding:0px; outline: 0;}
+.tree i{ color:#675650}
+
+/*Right tabs*/
+.inner-tab{ padding:0px;}
+.inner-tab .select-option{ /*background-color:#675650;*/}
+.inner-tab .tabs-right > .nav-tabs {border-bottom: 0;}
+.card .inner-tab .tab-content{padding:0px;border:2px solid #FFF;}
+.tabs-right .nav-tabs > li > a{ box-shadow:0 0 0;}
+.inner-tab .nav-tabs > li.active > a::after, .inner-tab .nav-tabs > li:hover > a::after{ height:100%; box-shadow:none; display:none; }
+.inner-tab .tab-content > .active { display: block; /*margin-right:120px;*/}
+.inner-tab .tabs-below > .nav-tabs {border-top: 1px solid #ddd;}
+.inner-tab .tabs-below > .nav-tabs > li {margin-top: -1px;margin-bottom: 0;}
+.inner-tab .tabs-below > .nav-tabs > .active > a{border-color: transparent #ddd #ddd #ddd;background-color:#675650; color:#FFF;}
+.inner-tab .tabs-right > .nav-tabs > li {float: none;}
+.inner-tab .tabs-right > .nav-tabs > li > a {min-width: 74px;margin-right: 0;margin-bottom: 3px; background-color:#E8E5E5; transition:all ease 0.5s; }
+.inner-tab .tabs-below > .nav-tabs, .inner-tab .tabs-right > .nav-tabs {border-bottom: 0 none;}
+.inner-tab .tab-content > .tab-pane {display: none;padding:0px; height: 184px; overflow-y: auto; }
+.inner-tab .tab-content > .active{display: block; border:2px solid #675650; padding:10px 0;}
+.inner-tab .tabs-below > .nav-tabs > li > a:hover, .inner-tab .tabs-below > .nav-tabs > li > a:focus {border-bottom-color: transparent;border-top-color: #ddd;}
+.inner-tab .tabs-below > .nav-tabs > .active > a, .inner-tab tabs-below > .nav-tabs > .active > a:hover, .inner-tab .tabs-below > .nav-tabs > .active > a:focus {border-color: transparent #ddd #ddd;}
+.inner-tab .tabs-right > .nav-tabs > li {float: none; margin:0px;}
+.inner-tab  .tabs-right > .nav-tabs > li > a { margin-bottom: 1px;  min-width: 74px;}
+.inner-tab .tabs-right > .nav-tabs {border-left:0px solid #ddd; float: right; margin-top:2px; }
+.inner-tab .tabs-right > .nav-tabs > li > a {border-radius: 0 0 0 0;margin-left: 0px;}
+.inner-tab .tabs-right > .nav-tabs > li > a:hover, .inner-tab .tabs-right > .nav-tabs > li > a:focus {/*border-color: #eeeeee #eeeeee #eeeeee #dddddd;*/}
+.inner-tab .tabs-right > .nav-tabs .active > a, .inner-tab .tabs-right > .nav-tabs .active > a:hover, .tabs-right > .nav-tabs .active > a:focus { /*border-color: #ddd #ddd #ddd transparent;*/ background-color:#675650;}
 
 
 
