@@ -126,7 +126,7 @@ namespace Eastlaws.Controllers
             }     
         }
         [HttpPost]
-        public IActionResult FullHokmView(int ID, [FromBody] int [] fakarat)
+        public IActionResult FullHokmView(int ID, int [] fakarat)
          {
             var Model = AhkamService.GetHokm(ID, null);
             if (Model.IsValid)

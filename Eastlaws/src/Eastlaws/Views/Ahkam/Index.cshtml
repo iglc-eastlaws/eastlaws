@@ -177,20 +177,22 @@
                                obj.addClass("active");
                            }
                            var idHokm = obj.data('idhokm');
-                           var fakarat = ["0"];
                            //$.ajax({
                            //    url: "/Ahkam/FullHokmView",
                            //    type: "POST",
-                           //    traditional: true,
                            //    contentType: "application/json",
-                           //    data: JSON.stringify({ 'ID': idHokm, 'fakarat': fakarat }),
+                           //    data: JSON.stringify({ 'ID': idHokm}),
                            //    success: function (data) {
                            //        $('#hokmview').html(data)
                            //    }
                            //});
-                           $.post('/Ahkam/FullHokmView', { 'ID': idHokm,  fakarat }, function (data) {
+                           //alert('')
+                           var fa = [1, 2];
+                           console.log(fa)
+                           $.post('/Ahkam/FullHokmView', { 'ID': ID, 'fakarat': fa }, function (data) {
                                $('#hokmview').html(data)
                            });
+
                        })
 
               })

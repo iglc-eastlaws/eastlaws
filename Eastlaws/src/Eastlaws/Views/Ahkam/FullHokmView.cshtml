@@ -8,8 +8,6 @@
         {
             var Hokm = Model.AhkamList.ToArray()[0];
 
-   
-
                 <h1>
 
                  @if (!string.IsNullOrEmpty(Hokm.CountryFlagPic))
@@ -19,12 +17,17 @@
                     }
                     @Hokm.FullName
                 </h1>
-            var FakaratArray = Model.FakaratList;
+          var FakaratArray = Model.FakaratList.ToArray();
 
-              if (ViewBag.fakarat != null)
-              {
-                  FakaratArray = Model.FakaratList.Where(o => ViewBag.fakarat.Contains(o.ID)).ToArray();
-              }
+          if (ViewBag.PrintedFakarat != null)
+          {
+              int[] numbers = ViewBag.PrintedFakarat;
+
+              var results = (from n in Model.FakaratList
+                             where numbers.Contains(n.ID)
+                             select n).ToList();
+              FakaratArray = results.ToArray();
+          }
               @foreach (var Fakra in FakaratArray)
                 {
               @if (@Fakra.FakraNo <= 1)

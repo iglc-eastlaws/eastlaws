@@ -235,7 +235,8 @@
                 var fakraID = $(this).attr('fakraID')
                 fakarat.push({fakraID})
             })
-            $.get('/Ahkam/FullHokmView', { 'ID': ID,'fakarat':fakarat }, function (data) {
+            console.log(fakarat);
+            $.post('/Ahkam/FullHokmView', { 'ID': ID, 'fakarat': fakarat }, function (data) {
                 printdiv( 1,null, data);
             });
           

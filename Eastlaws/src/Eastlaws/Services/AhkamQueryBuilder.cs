@@ -208,7 +208,6 @@ namespace Eastlaws.Services
             return builderRetVal.ToString();            
         }
 
-
         public static string LatestAhkam(int daysCount = 5)
         {
             return "Select A.ID , 0 as DefaultRank From Ahkam A Where A.DateAdded >= DateAdd(Day , -" + daysCount + " ,  (Select Max(DateAdded) From Ahkam ))";
@@ -234,13 +233,10 @@ namespace Eastlaws.Services
             return null;
         }
 
-
         public static string MadaSearch(int?  CountryID, string TashNo, string TashYear, string MadaNo , FTSPredicate TashTextFilter , bool SearchInTashTile = true , bool SearchInTashMawad = true)
         {
             return "";
         }
-
-
 
         public static string ResolveTasfeyaQuery(List<AhkamTasfeyaSelection> SelectedItems)
         {
