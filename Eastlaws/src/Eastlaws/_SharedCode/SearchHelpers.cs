@@ -7,7 +7,7 @@ namespace Eastlaws
 {
     public enum MatchType
     {
-        Gomla = 0 , AllWords = 1 , AnyWord  = 2
+        Gomla = 0, AllWords = 1, AnyWord = 2
     }
 
     public class SimpleInputSearch
@@ -17,7 +17,7 @@ namespace Eastlaws
         public string Input
         {
             get
-            {   
+            {
                 return m_Input;
             }
             set
@@ -25,7 +25,7 @@ namespace Eastlaws
                 m_Input = value.Trim();
             }
         }
-        MatchType Match{ get; set; } 
+        MatchType Match { get; set; }
         public bool isEmpty
         {
             get
@@ -34,7 +34,7 @@ namespace Eastlaws
                 {
                     return true;
                 }
-                if(Input.Length  < 3)
+                if (Input.Length < 3)
                 {
                     return true;
                 }
