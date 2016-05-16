@@ -232,6 +232,13 @@ namespace Eastlaws.Controllers
             return new JsonResult(Countries);
         }
 
+
+        public JsonResult GetGehaType()
+        {
+            var Countries = AhkamService.GetGehaType();
+            return new JsonResult(Countries);
+        }
+
         public JsonResult GetMahakem(int countryID)
         {
             var Mahakem = AhkamService.GetMahakem(countryID);

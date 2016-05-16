@@ -155,6 +155,15 @@ namespace Eastlaws.Services
             var Data = con.Query<Country>("GetServiceCountries", new { ServiceID = 1 }, null, true, null, System.Data.CommandType.StoredProcedure);
             return Data;
         }
+
+    
+        public static IEnumerable<AhkamGehaType> GetGehaType()
+        {
+            SqlConnection con = DataHelpers.GetConnection(DbConnections.Data);
+            var Data = con.Query<AhkamGehaType>("GetAhkamGehaType", null, null, true, null, System.Data.CommandType.StoredProcedure);
+            return Data;
+        }
+
         public static IEnumerable<AhkamMahakem> GetMahakem(int CountryID)
         {
             SqlConnection con = DataHelpers.GetConnection(DbConnections.Data);

@@ -199,6 +199,8 @@
                  $scope.countries = [];
                  $scope.Mahakem = [];
                  $scope.MahkamaReplies = [];
+                 $scope.gehaType = [];
+
                  $scope.updatecountry = function () {
                      $scope.omarGroupShow = false;
                      $scope.Mahakem = [];
@@ -216,11 +218,25 @@
                      }
                  }
 
+                 $scope.updategehaType = function () {
+                     console.log($scope.gehaType);
+                  //   console.log($scope.gehaType);
+                 }
+
                  $http.get('/Ahkam/GetCountries', {}).then(function (d) {
                      $scope.countries = d.data;
                      $scope.countries.unshift({ ID: 0, Name: 'جميع الدول' });
                      $scope.country = { ID: 0 };
                      $scope.updatecountry();
+                 });
+
+
+                 $http.get('/Ahkam/GetGehaType', {}).then(function (d) {
+                     $scope.gehaType = d.data;
+                     console.log($scope.gehaType);
+                     $scope.gehaType.unshift({ ID: 0, Name: 'الكل' });
+                    // $scope.gehaTypeID = { ID: 0 };
+ 
                  });
 
                  $scope.updateMahkamaReplies = function () {
