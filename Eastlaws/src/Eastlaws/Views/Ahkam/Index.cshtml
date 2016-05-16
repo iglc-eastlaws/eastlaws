@@ -651,8 +651,6 @@
 
                  $rootScope.catgDistinct = [];
                  $scope.countCatgID = function (catgID) {
-
-
                      var indx = $rootScope.catgDistinct.indexOf(catgID);
                      if (indx === -1) {
                          $rootScope.catgDistinct.push(catgID);
@@ -661,7 +659,6 @@
 
                    }
                  $scope.displayCatg = function (catgID) {
-
                          var result = false;
                          var indx = $rootScope.catgDistinct.indexOf(catgID);
                          if (indx !== -1) {
@@ -669,9 +666,7 @@
                          }
                          return result;
                      }
-
                      $scope.limit = 20;
-
                      $scope.increaseLimit = function () {
                          if ($scope.limit < $scope.tasfyaList.length) {
                              $scope.limit += 20;
@@ -681,12 +676,6 @@
                          $scope.limit = 20;
                          $scope.categoryList = tasfiaAllData.listAllCatg;
                          $scope.tasfyaList = tasfiaAllData.listAllTasfya;
-
-
-                         //for (var i = 0; i < $scope.tasfyaList.length; i++) {
-                         //    console.log($scope.tasfyaList[i])
-                         //}
-
                      });
 
                      $scope.changeCheck = function (item, event) {
@@ -694,12 +683,9 @@
                              tasfiaData.PushList(item.CategoryID + '_' + item.ID, item.Name, item.Count,item.CategoryID,item.ID);
                              $(event.target).parent().parent().addClass('active');
 
-
-
                          } else {
                              tasfiaData.splice(item.Name)
                              $(event.target).parent().parent().removeClass('active');
-
                          }
 
                          var sendobj = [];
@@ -708,28 +694,13 @@
                              var Parameter = tasfiaData.list[i].itemrealID;
                              sendobj.push({ CategoryID, Parameter})
                          }
-
-
-                         //$.ajax({
-                         //    url: "/Ahkam/test2",
-                         //    type: "POST",
-                         //    contentType: "application/json",
-                         //    data: JSON.stringify(sendobj),
-                         //    success: function (data) {
-                         //        $('#tasfyaTest').html(data)
-                         //    }
-                         //});
-
                          SearchData.searchType = 1;
                          SearchData.newSearch = true;
                          SearchData.currentPage = 1;
-                         SearchData.ahkamlist = sendobj;//JSON.stringify(sendobj);
-                         SearchData.Latest = false;
+                         SearchData.ahkamlist = sendobj;
+                        // SearchData.Latest = false;
                          SearchData.GetSearch();
-
                      };
-
-
                  })
             .controller('filterElementCtrl', function ($scope, tasfiaData, SearchData, $rootScope, $compile) {
 
