@@ -155,13 +155,17 @@ namespace Eastlaws.Controllers
             }     
         }
 
-       
-        public IActionResult FullHokmView(int ID)
-        {
 
+        [HttpPost]
+        public IActionResult FullHokmView(int ID, int[] fakarat)
+        {
             var Model = AhkamService.GetHokm(ID, null);
             if (Model.IsValid)
             {
+                if (fakarat.Length > 0)
+                {
+                    ViewBag.PrintedFakarat = fakarat;
+                }
                 return View(Model);
             }
             else
@@ -169,7 +173,7 @@ namespace Eastlaws.Controllers
                 return View();
             }
         }
-
+       
         public IActionResult TasfeyaList(int QueryID)
         {
             if (QueryID == 0)

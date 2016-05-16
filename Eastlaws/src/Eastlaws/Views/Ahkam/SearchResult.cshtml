@@ -228,34 +228,20 @@
             scrollButtons: "1"
 
         });
-        $(document).off('click').on('click', '.printing', function () {
+    });
+    $(document).off('click', '.printing').on('click', '.printing', function () {
             var ID = $(this).attr('printid').split("_", 2)[1];
             var fakarat = [];
             $('#Content_' + ID).find('.fakra-text').each(function () {
                 var fakraID = $(this).attr('fakraID')
-                fakarat.push({fakraID})
+                fakarat.push(fakraID)
             })
             console.log(fakarat);
             $.post('/Ahkam/FullHokmView', { 'ID': ID, 'fakarat': fakarat }, function (data) {
-                printdiv( 1,null, data);
+                printdiv(1, null, data);
             });
-          
-        })
 
-    });
-    /*
-    [HttpPost]
-    public IActionResult FullHokmView(int ID, int [] fakarat)
-    {
-            var Model = AhkamService.GetHokm(ID, null);
-    if (Model.IsValid)
-    {
-        ViewBag.PrintedFakarat = fakarat;
-        return View(Model);
-    }
-    else
-    {
-        return View();
-    }
-    }
+        });
+
+   
 </script>

@@ -30,30 +30,30 @@
                     <div role="tabpanel" class="tab-pane" id="mada">
                         <div class="search-form form-horizontal">@Html.Partial("_tadbekMadaSearch")</div>
                     </div>
-                <div role="tabpanel" class="tab-pane" id="fahras">
-                    <div class="search-form form-horizontal">@Html.Partial("_MowdoeSearch")  </div>
+                    <div role="tabpanel" class="tab-pane" id="fahras">
+                        <div class="search-form form-horizontal">@Html.Partial("_MowdoeSearch")  </div>
                     </div>
 
                 </div>
             </div>
             <div class="result-search">
 
-                <p id = "TotalCount" class="total-chart"></p>
+                <p id="TotalCount" class="total-chart"></p>
 
                 <div class="col-lg-9 col-md-8  col-sm-8 list-content">
                     <div class="format-result" ng-controller="toolbarCtrl"> @Html.Partial("_toolbar") </div>
                     <div class="filter-element" ng-controller="filterElementCtrl">
                         <div id="tasfyaTest"></div>
-                    @Html.Partial("_filterElement") 
+                        @Html.Partial("_filterElement")
                     </div>
 
                     <hr class="spacer" />
 
-                    <div id = "searchResult" ng-controller="searchResultCtrl"></div>
+                    <div id="searchResult" ng-controller="searchResultCtrl"></div>
                     <hr class="spacer" />
 
                     <div class="paging-search text-center" ng-controller="pagesCtrl">
-                        <c-pageing id = "pageingctr" ng-show="pageCount > 1"
+                        <c-pageing id="pageingctr" ng-show="pageCount > 1"
                                    pages-count="{{pageCount}}"
                                    current-page="mypage"
                                    on-getpage="getmypage()"
@@ -67,10 +67,10 @@
                 <div class="col-lg-3 col-md-4 col-sm-4 filter-search" ng-controller="tasfyaCtrl">
 
 
-                    <div id ="tasfyaLood" style="display:none" class="text-center"><img src = "/content/images/preload.gif" /></div>
+                    <div id="tasfyaLood" style="display:none" class="text-center"><img src="/content/images/preload.gif" /></div>
 
 
-                      <div id="Div-tasfya" style="display:none">
+                    <div id="Div-tasfya" style="display:none">
                         @*<div class='filter-section' ng-repeat="data in catList | unique: 'CategoryID'">
                                 <h5>{{catgoryName(data.CategoryID)}}</h5>
                                 <div class='well' style='max-height:200px;overflow: auto;'>
@@ -127,7 +127,7 @@
         </div>
     </div>
 
-<hr class="spacer" />
+    <hr class="spacer" />
 
     <script>
 
@@ -155,7 +155,7 @@
         //-------------------------------- >>> hide and show right section
         //-------------------------------- >>> switch between  3 type views  changes in css only
 
-        
+
         (function () {
             "use strict";
             var app = angular.module('ahkamApp', ['sharedModule']);
@@ -179,14 +179,14 @@
                                obj.addClass("active");
                            }
                            var idHokm = obj.data('idhokm');
-                           $.get('/Ahkam/FullHokmView', { 'ID': idHokm }, function (data) {
+                           //$.get('/Ahkam/FullHokmView', { 'ID': idHokm }, function (data) {
+                           //    $('#hokmview').html(data)
+                           //});
+
+                           var arr = [];
+                           $.post('/Ahkam/FullHokmView', { 'ID': idHokm, 'arr': arr }, function (data) {
                                $('#hokmview').html(data)
                            });
-
-                          // var arr = [];
-                          // $.post('/Ahkam/FullHokmView', { 'ID': idHokm, 'arr': arr }, function (data) {
-                          //     $('#hokmview').html(data)
-                          // });
                           //// alert('22')
                        })
 
@@ -414,7 +414,7 @@
                 data.newSearch = true;
                 data.SearchTools = {};
                 data.ahkamlist = {};
-    
+
                 data.GetSearch = function () {
 
                     if (data.searchType === 1) // AssymbleSearch
@@ -514,7 +514,7 @@
                              //"SearchParms": obj1
                              //,"ahkamTasfeya": data.ahkamlist
                          },
-                          
+
                             //contentType: "application/json"
                             //data:
                             //    {
@@ -573,7 +573,7 @@
                         });
                         */
 /*
-                      
+
                         $.ajax({
                             url: "/Ahkam/test2",
                             type: "POST",
@@ -623,7 +623,7 @@
                                         if (data.TotalCount > 0) {
                                             $('#TotalCount').html(" <i class='fa fa-line-chart '></i> وجد اجمالي [" + data.TotalCount + "] حكم")
                                         }
-                                    } 
+                                    }
                                     if ((data.currentPage <= 1) || (data.currentPage == undefined)) {
                                         var countpage = 1;
                                         if (data.TotalCount > Number(data.pageSize)) {
@@ -641,27 +641,27 @@
 
                 return data;
             })
- 
+
             //Tasya-------------------------------------
             app
             .controller('tasfyaCtrl', function ($scope, tasfiaData, SearchData, $rootScope, $compile, tasfiaAllData, $http) {
- 
+
                  $scope.categoryList = [];
                  $scope.tasfyaList = [];
 
                  $rootScope.catgDistinct = [];
                  $scope.countCatgID = function (catgID) {
 
-                  
+
                      var indx = $rootScope.catgDistinct.indexOf(catgID);
                      if (indx === -1) {
                          $rootScope.catgDistinct.push(catgID);
-                        
+
                      }
 
                    }
                  $scope.displayCatg = function (catgID) {
-                     
+
                          var result = false;
                          var indx = $rootScope.catgDistinct.indexOf(catgID);
                          if (indx !== -1) {
@@ -681,7 +681,7 @@
                          $scope.limit = 20;
                          $scope.categoryList = tasfiaAllData.listAllCatg;
                          $scope.tasfyaList = tasfiaAllData.listAllTasfya;
-                         
+
 
                          //for (var i = 0; i < $scope.tasfyaList.length; i++) {
                          //    console.log($scope.tasfyaList[i])
@@ -708,7 +708,7 @@
                              var Parameter = tasfiaData.list[i].itemrealID;
                              sendobj.push({ CategoryID, Parameter})
                          }
-       
+
 
                          //$.ajax({
                          //    url: "/Ahkam/test2",
@@ -729,7 +729,7 @@
 
                      };
 
- 
+
                  })
             .controller('filterElementCtrl', function ($scope, tasfiaData, SearchData, $rootScope, $compile) {
 
@@ -785,7 +785,7 @@
 
         })();
 
- 
+
 
 
 
