@@ -1,12 +1,12 @@
 ﻿@{
     Layout = null;
 }
+@model Eastlaws.Entities.AhkamPresentation
+
 
       @if (Model != null)
         {
             var Hokm = Model.AhkamList.ToArray()[0];
-
-   
 
                 <h1>
 
@@ -17,11 +17,20 @@
                     }
                     @Hokm.FullName
                 </h1>
+          var FakaratArray = Model.FakaratList.ToArray();
 
+          if (ViewBag.PrintedFakarat != null)
+          {
+              int[] numbers = ViewBag.PrintedFakarat;
 
-                @foreach (var Fakra in Model.FakaratList)
+              var results = (from n in Model.FakaratList
+                             where numbers.Contains(n.ID)
+                             select n).ToList();
+              FakaratArray = results.ToArray();
+          }
+              @foreach (var Fakra in FakaratArray)
                 {
-                    @if (@Fakra.FakraNo <= 1)
+              @if (@Fakra.FakraNo <= 1)
                     {
                         <h4 class="fakr-title">
                             <i class="fa fa-file" aria-hidden="true"></i>

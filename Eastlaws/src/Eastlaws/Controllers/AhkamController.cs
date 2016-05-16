@@ -70,27 +70,10 @@ namespace Eastlaws.Controllers
        
 
         [HttpPost]
-        //public IActionResult SearchResultAssembly(AssemblySearch AssembleSearchInputs,int PageNo,int Sort,int pageSize, bool Latest = false,int Days = 10,int typeView = 1,int SortDir = 1)
-        // public IActionResult SearchResultAssembly(AssemblySearch AssembleSearchInputs,  SearchTools SearchTools,[FromBody] List<AhkamTasfeyaSelection> ahkamTasfeya)  
         public IActionResult SearchResultAssembly(SearchParms SearchParms)
-        
         {
-
             AssemblySearch AssembleSearchInputs = SearchParms.AssemblySearch;
             SearchTools SearchTools = SearchParms.SearchTools;
-
-            //List<AhkamTasfeyaSelection> ahkamTasfeya;
-            //if (SearchParms.ahkamTasfeya != null)
-            //{
-            //    ahkamTasfeya = SearchParms.ahkamTasfeya;
-            //    //if (ahkamTasfeya.Count > 0)
-            //    //{
-            //    //    string result = AhkamQueryBuilder.ResolveTasfeyaQuery(ahkamTasfeya);
-            //    //}
-            //}
-
-
-
 
             int PageNo = SearchTools.PageNo;
             int Sort = SearchTools.Sort;
@@ -106,12 +89,10 @@ namespace Eastlaws.Controllers
 
             if (Latest == true)
             {
-                //Model = AhkamService.GetLatest(Options, Days);
-                Model = AhkamService.GetLatestByDate(Options);
+                Model = AhkamService.GetLatestByDate(Options, SearchParms.ahkamTasfeya);
             }
             else
             {
-                //AssemblySearch AssembleSearchInputs = new AssemblySearch();
                 AhkamAdvancedSearch Obj = GetSearchObject(AssembleSearchInputs);
                 if (SearchParms.ahkamTasfeya != null)
                 {
@@ -155,13 +136,17 @@ namespace Eastlaws.Controllers
             }     
         }
 
-       
-        public IActionResult FullHokmView(int ID)
-        {
 
+        [HttpPost]
+        public IActionResult FullHokmView(int ID, int[] fakarat)
+        {
             var Model = AhkamService.GetHokm(ID, null);
             if (Model.IsValid)
             {
+                if (fakarat.Length > 0)
+                {
+                    ViewBag.PrintedFakarat = fakarat;
+                }
                 return View(Model);
             }
             else
@@ -169,7 +154,7 @@ namespace Eastlaws.Controllers
                 return View();
             }
         }
-
+       
         public IActionResult TasfeyaList(int QueryID)
         {
             if (QueryID == 0)

@@ -124,7 +124,7 @@
 
 
                     <h3><img src="~/Content/images/Flags/Small/@item.CountryFlagPic" width="16" height="11" alt="" />&nbsp; @item.FullName</h3>
-                    <div class="content-result">
+                    <div class="content-result" id="Content_@item.ID">
                         @for (int i = 0; i < Fakrat.Length; i++)
                         {
                             var CurrentFakra = Fakrat[i];
@@ -137,7 +137,7 @@
                                 <span class="fakr-title-search" style="color:red;">
                                     @CurrentFakra.Title :
                                 </span>
-                                <a class="fakra-text"  target="_blank" href="View?ID=@item.ID#@CurrentFakra.ID">@Html.Raw(FakraText)</a>
+                                <a class="fakra-text" fakraID="@CurrentFakra.ID"  target="_blank" href="View?ID=@item.ID#@CurrentFakra.ID">@Html.Raw(FakraText)</a>
                             </p>
 
 
@@ -228,10 +228,20 @@
             scrollButtons: "1"
 
         });
-        //$(document).off('click').on('click', '.printing', function () {
-        //    alert($(this).attr('printid'))
-        //})
-
     });
+    $(document).off('click', '.printing').on('click', '.printing', function () {
+            var ID = $(this).attr('printid').split("_", 2)[1];
+            var fakarat = [];
+            $('#Content_' + ID).find('.fakra-text').each(function () {
+                var fakraID = $(this).attr('fakraID')
+                fakarat.push(fakraID)
+            })
+            console.log(fakarat);
+            $.post('/Ahkam/FullHokmView', { 'ID': ID, 'fakarat': fakarat }, function (data) {
+                printdiv(1, null, data);
+            });
 
+        });
+
+   
 </script>
