@@ -66,6 +66,9 @@ namespace Eastlaws.Controllers
             return Obj;
         }
 
+
+       
+
         [HttpPost]
         public IActionResult SearchResultAssembly(SearchParms SearchParms)
         {
@@ -101,6 +104,7 @@ namespace Eastlaws.Controllers
                 }
                    
             }
+          //  AhkamPresentation Model1 = AhkamService.Search(Options, Obj);
                 if (Model.IsValid)
                 {
                     return View("SearchResult", Model);
@@ -111,6 +115,13 @@ namespace Eastlaws.Controllers
                 }
            
         }
+
+        //public IActionResult Latest(int Days = 10, int PageNo = 1, int Sort = 5, int pageSize = 10, int typeView = 1)
+        //{
+        //    AhkamSearchOptions Options = new AhkamSearchOptions { PageNo = PageNo, SortBy = (AhkamSortColumns)Sort, SortDirection = SearchSortType.DESC, PageSize = pageSize };
+        //    AhkamPresentation Model = AhkamService.GetLatest(Options, Days);
+        //    return View("SearchResult", Model);
+        //}
 
         public IActionResult View(int ID)
         {
@@ -194,7 +205,7 @@ namespace Eastlaws.Controllers
             AhkamSearchTypes SearchType = AhkamSearchTypes.Advanced;
 
             List<AhkamTasfeyaCategory> UsedCategories;
-            var Data = AhkamTasfeya.List(Obj, SearchType, out UsedCategories, SarchTasfyaParms.TasfeyaSearchText, PreviousSelectedItems, null);
+            var Data = AhkamTasfeya.List(Obj, SearchType, out UsedCategories, SarchTasfyaParms.TasfeyaSearchText, PreviousSelectedItems,null);
 
             var datajson = new[] {
                 new object[] { "Data" , Data},
