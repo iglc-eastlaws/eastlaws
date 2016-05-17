@@ -42,7 +42,7 @@
 
                 <div class="col-lg-9 col-md-8  col-sm-8 list-content">
                     <div class="format-result" ng-controller="toolbarCtrl"> @Html.Partial("_toolbar") </div>
-                    <div class="filter-element" ng-controller="filterElementCtrl">
+                    <div class="filter-element" ng-controller="selectedElementCtrl">
                         <div id="tasfyaTest"></div>
                         @Html.Partial("_filterElement")
                     </div>
@@ -71,16 +71,7 @@
 
 
                     <div id="Div-tasfya" style="display:none">
-                        @*<div class='filter-section' ng-repeat="data in catList | unique: 'CategoryID'">
-                                <h5>{{catgoryName(data.CategoryID)}}</h5>
-                                <div class='well' style='max-height:200px;overflow: auto;'>
-                                    <ul class='list-group' style='max-height:200px;overflow: auto;'>
-                                        <li ng-repeat="details in catList | filter :{CategoryID:data.CategoryID}" class='list-group-item'>
-                                            <input type='checkbox' ng-click='changeCheck(details,$event)' />&nbsp; <label> {{details.Name}} - ({{details.Count}})</label>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>*@
+
 
                         <h5><i class="fa fa-server"></i> تصفية النتائج </h5> <!--</div>-->
                         <div class="form-group">
@@ -97,6 +88,9 @@
                         @*class="panel-group"*@
                         <div class="" id="accordion">
                             <div class='filter-section'>
+                                
+                                @*<p ng-repeat="data in categoryList">000000</p>*@
+
                                 <div class="panel panel-default" ng-repeat="data in categoryList" ng-show="displayCatg(data.ID)">
                                     <div class="panel-heading">
                                         <h5 class="panel-title">
@@ -110,7 +104,7 @@
                                             <ul class='list-group' style="height:200px; overflow-y:auto;" infinite-scroll="increaseLimit()">
                                                 <li ng-repeat="details in tasfyaList | filter :{CategoryID:data.ID} | limitTo:limit" class='list-group-item color-tooltip' data-toggle="tooltip" data-placement="top" title="{{details.Name}} - ({{details.Count}})">
                                                     {{countCatgID(details.CategoryID)}}
-                                                    <label> <input type='checkbox' ng-click='changeCheck(details,$event)' />&nbsp;  {{details.Name}} - ({{details.Count}})</label>
+                                                    <label> <input type='checkbox' class="itemFilters" data-catgID="{{details.CategoryID}}" data-itemID="{{details.ID}}" ng-click='changeCheck(details,$event)' />&nbsp;  {{details.Name}} - ({{details.Count}})</label>
                                                 </li>
                                             </ul>
                                         </div>
@@ -163,6 +157,7 @@
             .controller('ahkamCtrl', function (SearchData) {
                 SearchData.searchType = 1;
                 SearchData.newSearch = true;
+                SearchData.newtasfya = true;
                 SearchData.currentPage = 1;
                 SearchData.sortType = 5;
                 SearchData.Latest = true;
@@ -292,6 +287,7 @@
                      setAllMhakem();
                      SearchData.searchType = 1;
                      SearchData.newSearch = true;
+                     SearchData.newtasfya = true;
                      SearchData.currentPage = 1;
                      SearchData.AssembleSearchInputs = $scope.Inputs;
                      SearchData.Latest = false;
@@ -431,6 +427,12 @@
                 data.SearchTools = {};
                 data.ahkamlist = {};
 
+
+                data.datalist = {};
+                data.datalist.listAllTasfya = [];
+                data.datalist.listAllCatg = [];
+
+
                 data.GetSearch = function () {
 
                     if (data.searchType === 1) // AssymbleSearch
@@ -454,7 +456,7 @@
                             TasfeyaSearchText: ''
                         };
 
-
+                     
                      // console.log(obj);
 
                         $('#searchResult').html('<img src="/content/images/preload.gif" />');
@@ -470,6 +472,7 @@
                                     searchresult.html(d);
 
                                     $('body').animate({ scrollTop: $("#TotalCount").offset().top }, 1000, function () {
+                                        //console.log(data.newtasfya)
                                         if (data.newtasfya == true) {
 
                                             //console.log('------------- 1 ----------------')
@@ -485,7 +488,7 @@
                                               //  console.log($rootScope.catgDistinct[i])
                                             }
                                             //console.log('------------- 4 ----------------')
-                                            tasfiaAllData.getTasyaList();
+                                            //tasfiaAllData.getTasyaList();
                                         }
                                     });
 
@@ -509,12 +512,37 @@
                                         }
                                     }
 
+                                    //console.log(tasfyaObj.ahkamTasfeyaList)
+                                    $('#tasfyaLood').show();
+                                    $('#Div-tasfya').hide();
                                     $.ajax({
                                         url: "/Ahkam/TasfeyaListJson",
                                         type: "POST",
                                         data: { "SarchTasfyaParms": tasfyaObj },
                                         success: function (d) {
-                                            console.log(d)
+                                            //console.log(d[0][1])
+                                            //console.log(d[1][1])
+
+                                            $('#Div-tasfya').show(); $('#tasfyaLood').hide();
+                                             data.datalist.listAllTasfya = d[0][1];
+                                             data.datalist.listAllCatg = d[1][1];
+                                             $rootScope.$broadcast('getTasfiyaList');
+                                           // console.log(data.datalist.listAllTasfya)
+
+                                            //console.log(d[0])
+                                            //console.log(d[1])
+
+
+                                       
+                                            //    $http.get('/Ahkam/TasfyaListJson?QueryID=' + $('#queryHandle').val() + '', {}).then(function (d) {
+                                            //        console.log(d.data[0])
+                                            //        console.log(d.data[1])
+                                            //        $('#Div-tasfya').show(); $('#tasfyaLood').hide();
+                                            //        datalist.listAllTasfya = d.data[0][1];
+                                            //        datalist.listAllCatg = d.data[1][1];
+                                            //        $rootScope.$broadcast('getTasfiyaList');
+                                            //    })
+
                                         }
                                     });
 
@@ -562,6 +590,7 @@
             app
             .controller('tasfyaCtrl', function ($scope, tasfiaData, SearchData, $rootScope, $compile, tasfiaAllData, $http) {
 
+
                  $scope.categoryList = [];
                  $scope.tasfyaList = [];
 
@@ -590,8 +619,28 @@
                      }
                      $rootScope.$on('getTasfiyaList', function () {
                          $scope.limit = 20;
-                         $scope.categoryList = tasfiaAllData.listAllCatg;
-                         $scope.tasfyaList = tasfiaAllData.listAllTasfya;
+                        // console.log('noooooow')
+                         $scope.categoryList = SearchData.datalist.listAllCatg;
+                         $scope.tasfyaList = SearchData.datalist.listAllTasfya;
+
+                         $('.itemFilters').each(function (e) {
+                            // console.log(e);
+                         })
+
+                         for (var i = 0; i < SearchData.ahkamlist.length; i++) {
+                          console.log(SearchData.ahkamlist[i]);
+                             let parid = SearchData.ahkamlist[i].Parameter;
+                             let catgID = SearchData.ahkamlist[i].CategoryID;
+
+                             $('.itemFilters[data-catgID="' + catgID + '"][data-itemid="' + parid + '"]').prop('checked', true);
+                         }
+                     
+                         //console.log(SearchData.datalist.listAllCatg)
+                         //$scope.categoryList = tasfiaAllData.listAllCatg;
+                         //$scope.tasfyaList = tasfiaAllData.listAllTasfya;
+
+                         //console.log(SearchData.ahkamlist)
+                         
                      });
 
                      $scope.changeCheck = function (item, event) {
@@ -612,17 +661,18 @@
                          }
 
                          SearchData.ahkamlist = sendobj;
-                         //console.log(sendobj)
+                       //  console.log(sendobj)
 
                          SearchData.searchType = 1;
                          SearchData.newSearch = true;
+                         SearchData.newtasfya = false;
                          SearchData.currentPage = 1;
                          SearchData.ahkamlist = sendobj;
                         // SearchData.Latest = false;
                          SearchData.GetSearch();
                      };
                  })
-            .controller('filterElementCtrl', function ($scope, tasfiaData, SearchData, $rootScope, $compile) {
+            .controller('selectedElementCtrl', function ($scope, tasfiaData, SearchData, $rootScope, $compile) {
 
                 $scope.list = tasfiaData.list;
                 $scope.delete = function (obj) {
@@ -649,27 +699,29 @@
 
                 return data;
             })
-            .factory('tasfiaAllData', function ($http, $rootScope, tasfiaData) {
-                var datalist = {};
-                datalist.listAllTasfya = [];
-                datalist.listAllCatg = [];
+             .factory('tasfiaAllData', function ($http, $rootScope, tasfiaData) {
+          var datalist = {};
+            //    //datalist.listAllTasfya = [];
+            //    //datalist.listAllCatg = [];
 
 
-                //console.log(SearchData.AssembleSearchInputs);
+            //    //console.log(SearchData.AssembleSearchInputs);
 
-                datalist.getTasyaList = function () {
+            //    //datalist.getTasyaList = function () {
 
-                    $('#tasfyaLood').show();
-                    $('#Div-tasfya').hide();
-                    $http.get('/Ahkam/TasfyaListJson?QueryID=' + $('#queryHandle').val() + '', {}).then(function (d) {
-                        $('#Div-tasfya').show(); $('#tasfyaLood').hide();
-                        datalist.listAllTasfya = d.data[0][1];
-                        datalist.listAllCatg = d.data[1][1];
-                        $rootScope.$broadcast('getTasfiyaList');
-                    })
+            //    //    $('#tasfyaLood').show();
+            //    //    $('#Div-tasfya').hide();
+            //    //    $http.get('/Ahkam/TasfyaListJson?QueryID=' + $('#queryHandle').val() + '', {}).then(function (d) {
+            //    //        console.log(d.data[0])
+            //    //        console.log(d.data[1])
+            //    //        $('#Div-tasfya').show(); $('#tasfyaLood').hide();
+            //    //        datalist.listAllTasfya = d.data[0][1];
+            //    //        datalist.listAllCatg = d.data[1][1];
+            //    //        $rootScope.$broadcast('getTasfiyaList');
+            //    //    })
 
-                }
-                return datalist;
+            //    //}
+                 return datalist;
             })
 
 
