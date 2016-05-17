@@ -442,26 +442,13 @@
                         data.SearchTools.Days = data.days;
                         data.SearchTools.typeView = data.typeView;
                         data.SearchTools.SortDir = data.sortTypeDir;
-                        // console.log(data)
-                        /*$.post('/Ahkam/SearchResultAssembly', {
-                            "AssembleSearchInputs": data.AssembleSearchInputs,
-                            "PageNo": data.currentPage,
-                            "Sort": data.sortType,
-                            "pageSize": data.pageSize,
-                            "Latest": data.Latest,
-                            "Days": data.days,
-                            "typeView": data.typeView,
-                            "SortDir":data.sortTypeDir*/
-
-                        //console.log(data.ahkamlist)
+                       
                         var obj1 = {
                             AssemblySearch: data.AssembleSearchInputs,
                             SearchTools: data.SearchTools,
                             ahkamTasfeya: data.ahkamlist
                         };
 
-                        //console.log(obj1);
-                        //console.log(JSON.stringify(obj1));
                         $('#searchResult').html('<img src="/content/images/preload.gif" />');
 
                         $.ajax({
@@ -470,7 +457,6 @@
                             data:{ "SearchParms": obj1},
 
                             success: function (d) {
-                               // $('#tasfyaTest').html(d)
                                 $rootScope.$apply(function () {
                                     var searchresult = $('#searchResult');
                                     searchresult.html(d);
@@ -767,9 +753,6 @@
                 }
                 return datalist;
             })
-
-
-
         })();
 
 
