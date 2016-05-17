@@ -55,11 +55,16 @@ $(document).ready(function () {
 
     // menu hide
     $(".menu-side").click(function () {
-        $(".container-fluid").toggleClass("hide-sidebar");
-        $(".main").addClass("")
-
+        $(".container-fluid").toggleClass("hide-sidebar", 1000, "easeOutSine");
 
     });
+    $(window).on('resize', function () {
+        var win = $(this);
+        if (win.width() < 1200) {
+            $('.container-fluid').removeClass('hide-sidebar');
+          //  $('.menu-side').click(false);
+        }
+      });
 
     // Scroll 
     //$(".filter-search .well .panel-body").mCustomScrollbar({
@@ -119,6 +124,7 @@ $(document).ready(function () {
 
     });
 
+    // Tree Create
     $.fn.extend({
         treed: function (o) {
 
@@ -173,15 +179,9 @@ $(document).ready(function () {
         }
     });
 
-    //Initialization of treeviews
+    //treeviews
+    $('.tree-fahrs').treed({ openedClass: 'glyphicon-folder-open', closedClass: 'glyphicon-folder-close' });
 
-    $('#tree1').treed({ openedClass: 'glyphicon-folder-open', closedClass: 'glyphicon-folder-close' });
-
-    $('#tree2').treed({ openedClass: 'glyphicon-folder-open', closedClass: 'glyphicon-folder-close' });
-
-    $('#tree3').treed({ openedClass: 'glyphicon-folder-open', closedClass: 'glyphicon-folder-close' });
-
-    $('#tree4').treed({ openedClass: 'glyphicon-folder-open', closedClass: 'glyphicon-folder-close' });
 
 
 

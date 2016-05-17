@@ -50,6 +50,7 @@
 			width: calc(100% - 40px); /*keeps 100% minus nav size*/
 			margin-right: 40px;
 			float: left;
+           
 		}
 
 		/*lets nav bar to be showed on mouseover*/
