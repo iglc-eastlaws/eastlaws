@@ -96,8 +96,8 @@ namespace Eastlaws.Services
         public static AhkamPresentation GetLatestByDate(AhkamSearchOptions Options, List<AhkamTasfeyaSelection> TasfeyaSelection = null)
         {
             string InnerQuery = AhkamQueryBuilder.LatestAhkamByDate();
-            Options.SortBy = AhkamSortColumns.CaseDate;
-            Options.SortDirection = SearchSortType.DESC;
+            //Options.SortBy = AhkamSortColumns.CaseDate;
+            //Options.SortDirection = SearchSortType.DESC;
           
             return Search(InnerQuery, Options, null, AhkamSearchTypes.Custom, "أحدث الأحكام",null,TasfeyaSelection);  
         }
