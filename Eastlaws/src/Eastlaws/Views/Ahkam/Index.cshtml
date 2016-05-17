@@ -91,7 +91,7 @@
                                 
                                 @*<p ng-repeat="data in categoryList">000000</p>*@
 
-                                <div class="panel panel-default" ng-repeat="data in categoryList" ng-show="displayCatg(data.ID)">
+                                <div class="panel panel-default" ng-repeat="data in categoryList" ng-show="displayCatg(data.ID)" on-finish-render="ngRepeatFinished">
                                     <div class="panel-heading">
                                         <h5 class="panel-title">
                                             <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#{{data.ID}}">
@@ -489,6 +489,29 @@
                                             }
                                             //console.log('------------- 4 ----------------')
                                             //tasfiaAllData.getTasyaList();
+
+
+                                            //console.log(tasfyaObj.ahkamTasfeyaList)
+
+                                           
+                                            $('#tasfyaLood').show();
+                                            $('#Div-tasfya').hide();
+                                            $.ajax({
+                                                url: "/Ahkam/TasfeyaListJson",
+                                                type: "POST",
+                                                data: { "SarchTasfyaParms": tasfyaObj },
+                                                success: function (d) {
+                                                    $rootScope.$apply(function () {
+                                              
+                                                    $('#Div-tasfya').show(); $('#tasfyaLood').hide();
+                                                    data.datalist.listAllTasfya = d[0][1];
+                                                    data.datalist.listAllCatg = d[1][1];
+                                                    $rootScope.$broadcast('getTasfiyaList');
+                                                    });
+
+                                                }
+                                            });
+
                                         }
                                     });
 
@@ -510,41 +533,13 @@
                                             data.currentPage = 1;
 
                                         }
+
+
+                            
+
                                     }
 
-                                    //console.log(tasfyaObj.ahkamTasfeyaList)
-                                    $('#tasfyaLood').show();
-                                    $('#Div-tasfya').hide();
-                                    $.ajax({
-                                        url: "/Ahkam/TasfeyaListJson",
-                                        type: "POST",
-                                        data: { "SarchTasfyaParms": tasfyaObj },
-                                        success: function (d) {
-                                            //console.log(d[0][1])
-                                            //console.log(d[1][1])
-
-                                            $('#Div-tasfya').show(); $('#tasfyaLood').hide();
-                                             data.datalist.listAllTasfya = d[0][1];
-                                             data.datalist.listAllCatg = d[1][1];
-                                             $rootScope.$broadcast('getTasfiyaList');
-                                           // console.log(data.datalist.listAllTasfya)
-
-                                            //console.log(d[0])
-                                            //console.log(d[1])
-
-
-                                       
-                                            //    $http.get('/Ahkam/TasfyaListJson?QueryID=' + $('#queryHandle').val() + '', {}).then(function (d) {
-                                            //        console.log(d.data[0])
-                                            //        console.log(d.data[1])
-                                            //        $('#Div-tasfya').show(); $('#tasfyaLood').hide();
-                                            //        datalist.listAllTasfya = d.data[0][1];
-                                            //        datalist.listAllCatg = d.data[1][1];
-                                            //        $rootScope.$broadcast('getTasfiyaList');
-                                            //    })
-
-                                        }
-                                    });
+                                    
 
 
                                     //get tasfya
@@ -623,17 +618,24 @@
                          $scope.categoryList = SearchData.datalist.listAllCatg;
                          $scope.tasfyaList = SearchData.datalist.listAllTasfya;
 
-                         $('.itemFilters').each(function (e) {
-                            // console.log(e);
-                         })
+                         //$('.itemFilters').each(function (e) {
+                         //   // console.log(e);
+                         //})
 
-                         for (var i = 0; i < SearchData.ahkamlist.length; i++) {
-                          console.log(SearchData.ahkamlist[i]);
-                             let parid = SearchData.ahkamlist[i].Parameter;
-                             let catgID = SearchData.ahkamlist[i].CategoryID;
+                         //$rootScope.$apply(function () {
+                         $scope.$on('ngRepeatFinished', function (ngRepeatFinishedEvent) {
+                             //  $('.itemFilters[data-catgID="0"][data-itemid="1"]').prop('checked', true);
+                             for (var i = 0; i < SearchData.ahkamlist.length; i++) {
 
-                             $('.itemFilters[data-catgID="' + catgID + '"][data-itemid="' + parid + '"]').prop('checked', true);
-                         }
+                                 let parid = SearchData.ahkamlist[i].Parameter;
+                                 let catgID = SearchData.ahkamlist[i].CategoryID;
+                                 //console.log(SearchData.ahkamlist[i]);
+                                 $('.itemFilters[data-catgID="' + catgID + '"][data-itemid="' + parid + '"]').prop('checked', true);
+                             }
+                         });
+        
+                       //$rootScope  });
+                         
                      
                          //console.log(SearchData.datalist.listAllCatg)
                          //$scope.categoryList = tasfiaAllData.listAllCatg;
@@ -665,7 +667,7 @@
 
                          SearchData.searchType = 1;
                          SearchData.newSearch = true;
-                         SearchData.newtasfya = false;
+                         SearchData.newtasfya = true;
                          SearchData.currentPage = 1;
                          SearchData.ahkamlist = sendobj;
                         // SearchData.Latest = false;
@@ -722,7 +724,19 @@
 
             //    //}
                  return datalist;
-            })
+             })
+            .directive('onFinishRender', function ($timeout) {
+                return {
+                    restrict: 'A',
+                    link: function (scope, element, attr) {
+                        if (scope.$last === true) {
+                            $timeout(function () {
+                                scope.$emit('ngRepeatFinished');
+                            });
+                        }
+                    }
+                }
+            });
 
 
 
