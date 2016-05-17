@@ -13,6 +13,16 @@ namespace Eastlaws.ViewModels.Ahkam
         public List<AhkamTasfeyaSelection> ahkamTasfeya { get; set; }
  
     }
+
+    public class SarchTasfyaParms
+    {
+        public AssemblySearch AssemblySearch { get; set; }
+        public List<AhkamTasfeyaSelection> ahkamTasfeyaList { get; set; }
+        public string TasfeyaSearchText { get; set; } = "";
+        
+
+    }
+
     public class SearchTools
     {
         public int PageNo { get; set; } 
