@@ -426,7 +426,7 @@
                 data.newSearch = true;
                 data.SearchTools = {};
                 data.ahkamlist = {};
-
+                data.SelectedCatgID = 0;
 
                 data.datalist = {};
                 data.datalist.listAllTasfya = [];
@@ -453,7 +453,8 @@
                         var tasfyaObj = {
                             AssemblySearch: data.AssembleSearchInputs,
                             ahkamTasfeyaList: data.ahkamlist,
-                            TasfeyaSearchText: ''
+                            TasfeyaSearchText: '',
+                            SelectedCatgID: data.SelectedCatgID
                         };
 
                      
@@ -688,7 +689,8 @@
                          }
 
                          SearchData.ahkamlist = sendobj;
-               
+                         SearchData.SelectedCatgID = item.CategoryID;
+                         //console.log(SearchData.SelectedCatgID)
 
                          SearchData.searchType = 1;
                          SearchData.newSearch = true;

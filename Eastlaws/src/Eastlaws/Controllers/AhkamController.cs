@@ -205,7 +205,8 @@ namespace Eastlaws.Controllers
             AhkamSearchTypes SearchType = AhkamSearchTypes.Advanced;
 
             List<AhkamTasfeyaCategory> UsedCategories;
-            var Data = AhkamTasfeya.List(Obj, SearchType, out UsedCategories, SarchTasfyaParms.TasfeyaSearchText, PreviousSelectedItems,null);
+            //   var Data = AhkamTasfeya.List(Obj, SearchType, out UsedCategories, SarchTasfyaParms.TasfeyaSearchText, PreviousSelectedItems,null);
+            var Data = AhkamTasfeya.List(Obj, SearchType, out UsedCategories, SarchTasfyaParms.TasfeyaSearchText, PreviousSelectedItems,(AhkamTasfeyaCategoryIds)SarchTasfyaParms.SelectedCatgID);
 
             var datajson = new[] {
                 new object[] { "Data" , Data},
