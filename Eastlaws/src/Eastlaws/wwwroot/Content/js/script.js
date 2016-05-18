@@ -77,11 +77,11 @@ $(document).ready(function () {
     // muilt check
 
     // Hide Element Filter
-    $(".filter-element ul li a i").click(function () {
-        $(this).parent().parent().fadeOut("slow", function () {
-            $(this).remove();
-        });
-    });
+    //$(".filter-element ul li a i").click(function () {
+    //    $(this).parent().parent().fadeOut("slow", function () {
+    //        $(this).remove();
+    //    });
+    //});
 
     //Grid View
     $(".layout-view li a").click(function () {

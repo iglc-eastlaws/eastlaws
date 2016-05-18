@@ -648,14 +648,18 @@
                      });
 
                      $scope.changeCheck = function (item, event) {
-                         if ($(event.target).is(':checked')) {
-                             tasfiaData.PushList(item.CategoryID + '_' + item.ID, item.Name, item.Count,item.CategoryID,item.ID);
-                             //$(event.target).parent().parent().addClass('active');
+                        // console.log(item.Name);
 
-                         } else {
-                             tasfiaData.splice(item.Name)
-                            // $(event.target).parent().parent().removeClass('active');
-                         }
+                         //$rootScope.$apply(function () {
+                             if ($(event.target).is(':checked')) {
+                                 tasfiaData.PushList(item.CategoryID + '_' + item.ID, item.Name, item.Count, item.CategoryID, item.ID);
+                                 //$(event.target).parent().parent().addClass('active');
+
+                             } else {
+                                 tasfiaData.splice(item.Name)
+                                 // $(event.target).parent().parent().removeClass('active');
+                             }
+                         //});
 
                          var sendobj = [];
                          for (var i = 0; i < tasfiaData.list.length; i++) {
@@ -676,12 +680,32 @@
                          SearchData.GetSearch();
                      };
                  })
-            .controller('selectedElementCtrl', function ($scope, tasfiaData, SearchData, $rootScope, $compile) {
+            .controller('selectedElementCtrl', function ($scope, tasfiaData, SearchData, $rootScope, $compile, $timeout) {
 
                 $scope.list = tasfiaData.list;
                 $scope.delete = function (obj) {
                     tasfiaData.spliceObj(obj);
-                    $('#' + obj.itemid + '').prop('checked', false);
+                    //console.log(obj);
+                   // $('#' + obj.itemid + '').prop('checked', false);
+                    // var currentButton = angular.element('#' + obj.itemid + '');
+                    var currentButton = angular.element('.itemFilters[data-catgID="' + obj.itemcatgID + '"][data-itemid="' + obj.itemrealID + '"]');
+                    $timeout(function () {
+                        currentButton.prop('checked', false);
+                        currentButton.triggerHandler("click");
+                    });
+
+                    //console.log(obj);
+                    //itemname
+
+                    //var currentButton = angular.element('.itemFilters[data-catgID="0"][data-itemid="1"]');
+            
+
+                    //$('.itemFilters[data-catgID="0"][data-itemid="1"]').trigger('click');
+                    //angular.element('.itemFilters[data-catgID="0"][data-itemid="1"]').triggerHandler('click');
+                    //$rootScope.$apply(function () {
+                    //    console.log('0000111');
+                    //    $('.itemFilters').first().trigger('click');
+                    //});
 
                 }
 
