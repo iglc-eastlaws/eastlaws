@@ -473,46 +473,46 @@
 
                                     $('body').animate({ scrollTop: $("#TotalCount").offset().top }, 1000, function () {
                                         //console.log(data.newtasfya)
-                                        if (data.newtasfya == true) {
+                                        //if (data.newtasfya == true) {
 
-                                            //console.log('------------- 1 ----------------')
-                                            for (var i = 0; i < $rootScope.catgDistinct.length; i++) {
-                                                //console.log($rootScope.catgDistinct[i])
-                                            }
+                                        //    //console.log('------------- 1 ----------------')
+                                        //    for (var i = 0; i < $rootScope.catgDistinct.length; i++) {
+                                        //        //console.log($rootScope.catgDistinct[i])
+                                        //    }
 
-                                            //console.log('------------- 2 ----------------')
+                                        //    //console.log('------------- 2 ----------------')
 
-                                            $rootScope.catgDistinct = [];
-                                            //console.log('------------- 3 ----------------')
-                                            for (var i = 0; i < $rootScope.catgDistinct.length; i++) {
-                                              //  console.log($rootScope.catgDistinct[i])
-                                            }
-                                            //console.log('------------- 4 ----------------')
-                                            //tasfiaAllData.getTasyaList();
+                                        //    $rootScope.catgDistinct = [];
+                                        //    //console.log('------------- 3 ----------------')
+                                        //    for (var i = 0; i < $rootScope.catgDistinct.length; i++) {
+                                        //      //  console.log($rootScope.catgDistinct[i])
+                                        //    }
+                                        //    //console.log('------------- 4 ----------------')
+                                        //    //tasfiaAllData.getTasyaList();
 
 
-                                            //console.log(tasfyaObj.ahkamTasfeyaList)
+                                        //    //console.log(tasfyaObj.ahkamTasfeyaList)
 
                                            
-                                            $('#tasfyaLood').show();
-                                            $('#Div-tasfya').hide();
-                                            $.ajax({
-                                                url: "/Ahkam/TasfeyaListJson",
-                                                type: "POST",
-                                                data: { "SarchTasfyaParms": tasfyaObj },
-                                                success: function (d) {
-                                                    $rootScope.$apply(function () {
+                                        //    $('#tasfyaLood').show();
+                                        //    $('#Div-tasfya').hide();
+                                        //    $.ajax({
+                                        //        url: "/Ahkam/TasfeyaListJson",
+                                        //        type: "POST",
+                                        //        data: { "SarchTasfyaParms": tasfyaObj },
+                                        //        success: function (d) {
+                                        //            $rootScope.$apply(function () {
                                               
-                                                    $('#Div-tasfya').show(); $('#tasfyaLood').hide();
-                                                    data.datalist.listAllTasfya = d[0][1];
-                                                    data.datalist.listAllCatg = d[1][1];
-                                                    $rootScope.$broadcast('getTasfiyaList');
-                                                    });
+                                        //            $('#Div-tasfya').show(); $('#tasfyaLood').hide();
+                                        //            data.datalist.listAllTasfya = d[0][1];
+                                        //            data.datalist.listAllCatg = d[1][1];
+                                        //            $rootScope.$broadcast('getTasfiyaList');
+                                        //            });
 
-                                                }
-                                            });
+                                        //        }
+                                        //    });
 
-                                        }
+                                        //}
                                     });
 
                                     if (data.newSearch == true) {
@@ -543,35 +543,50 @@
 
 
                                     //get tasfya
-                                    //$http.get('/Ahkam/TasfeyaListJson?AssemblySearchInputs=' + obj.AssemblySearch +
-                                    //    '&ahkamTasfeya=' + data.ahkamlist +
-                                    //    '&TasfeyaSearch=' + "" + '', {})
-                                    //    .then(function (d)
-                                    //    {
-                                    //    $('#Div-tasfya').show(); $('#tasfyaLood').hide();
-                                    //    console.log(d);
-
-                                    //});
-
-                                    //console.log('0000000000000000000   ' + $('#queryHandle').val());
-                                    //$http.get('/Ahkam/TasfyaListJson?QueryID=' + $('#queryHandle').val() + '', {}).then(function (d) {
-                                    //    $('#Div-tasfya').show(); $('#tasfyaLood').hide();
-                                    //    console.log(d);
-                                    //    //datalist.listAllTasfya = d.data[0][1];
-                                    //    //datalist.listAllCatg = d.data[1][1];
-                                    //    //$rootScope.$broadcast('getTasfiyaList');
-                                    //});
-                                    //$http.get('/Ahkam/TasfeyaListJson?AssemblySearchInputs=' + obj.AssemblySearch + '&TasfeyaSearch='+""+'', {}).then(function (d) {
-                                    //    $('#Div-tasfya').show(); $('#tasfyaLood').hide();
-                                    //    console.log(d);
-                          
-                                    //});
+                                  
 
                                     
 
                                 });
                             }
                         });
+
+
+                        if (data.newtasfya == true) {
+
+                            //for (var i = 0; i < $rootScope.catgDistinct.length; i++) {
+                            //    //console.log($rootScope.catgDistinct[i])
+                            //}
+
+                            //console.log('------------- 2 ----------------')
+
+                            //$rootScope.catgDistinct = [];
+                            ////console.log('------------- 3 ----------------')
+                            //for (var i = 0; i < $rootScope.catgDistinct.length; i++) {
+                            //    //  console.log($rootScope.catgDistinct[i])
+                            //}
+  
+
+
+                            $('#tasfyaLood').show();
+                            $('#Div-tasfya').hide();
+                            $.ajax({
+                                url: "/Ahkam/TasfeyaListJson",
+                                type: "POST",
+                                data: { "SarchTasfyaParms": tasfyaObj },
+                                success: function (d) {
+                                    $rootScope.$apply(function () {
+
+                                        $('#Div-tasfya').show(); $('#tasfyaLood').hide();
+                                        data.datalist.listAllTasfya = d[0][1];
+                                        data.datalist.listAllCatg = d[1][1];
+                                        $rootScope.$broadcast('getTasfiyaList');
+                                    });
+
+                                }
+                            });
+
+                        }
 
 
 
