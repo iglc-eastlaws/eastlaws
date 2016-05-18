@@ -672,8 +672,11 @@
 
                              } else {
                                  //   tasfiaData.splice(item.Name)
-                                 tasfiaData.spliceObj(item)
+                              tasfiaData.spliceObj(item)
                                  // $(event.target).parent().parent().removeClass('active');
+
+                                // data.list.splice(data.list.indexOf(obj), 1);
+
                              }
                          //});
 
@@ -734,11 +737,18 @@
                     data.list.push({ itemid, itemname, itemcount ,itemcatgID,itemrealID});
                  }
 
-                  data.splice = function (itemname) {
-                    data.list.splice(data.list.indexOf(itemname), 1);
-               }
-                data.spliceObj = function (obj) {
-                    data.list.splice(data.list.indexOf(obj), 1);
+               //   data.splice = function (itemname) {
+               //     data.list.splice(data.list.indexOf(itemname), 1);
+               //}
+                  data.spliceObj = function (obj) {
+                      for (var i = 0; i < data.list.length; i++) {
+                          if (data.list[i].itemcatgID == obj.CategoryID)
+                          {
+                              data.list.splice(i, 1);
+                          }
+                      }
+
+                  //  data.list.splice(data.list.indexOf(obj), 1);
                 }
 
                 return data;
