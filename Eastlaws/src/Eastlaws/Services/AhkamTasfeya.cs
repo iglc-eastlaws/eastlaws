@@ -108,7 +108,11 @@ namespace Eastlaws.Services
             {
                 if (CategorySender.HasValue)
                 {
-                    // todo: Remove Sender Category 
+                    var ItemToBeRemoved = (from C in Cats where C.ID == CategorySender.Value select C).FirstOrDefault();
+                    if(ItemToBeRemoved != null)
+                    {
+                        Cats.Remove(ItemToBeRemoved);
+                    }              
                 }
 
                 SafyListQuery = 
@@ -120,7 +124,7 @@ namespace Eastlaws.Services
 
 
             string MasterQuery = string.Join("\n Union All \n " ,  (from c in Cats
-                                                  select GetCategoryQuery(QueryID, c, TasfeyaFilter, IsSafyList)
+                                                  select GetCategoryQuery(QueryID, c, TasfeyaFilter, IsSafyList, CategorySender)
                                                   ).ToArray()
                                   );
 
@@ -137,9 +141,16 @@ namespace Eastlaws.Services
             return List;
         }
 
-        private static string GetCategoryQuery(int MasterQueryID , AhkamTasfeyaCategory Cat , string Filter, bool isSafyList = false)
+        private static string GetCategoryQuery(int MasterQueryID , AhkamTasfeyaCategory Cat , string Filter, bool isSafyList = false , AhkamTasfeyaCategoryIds? Sender = null)
         {
             string SafyListJoinClause = (isSafyList) ? " Join #IDS I on I.ID = QCR.ItemID "  : "";
+
+            //Removing Self Tasfeya Item if it was the sender  
+            if(Sender.HasValue && Sender.Value == Cat.ID)
+            {
+                SafyListJoinClause = "";
+            }
+
             switch (Cat.ID )
             {
                 
@@ -219,6 +230,7 @@ namespace Eastlaws.Services
                                 (
 	                                Select  SFD.ItemID , SFD.FehresItemID, SFD.FehresCategoryID  From 
 	                                ServicesFehresDetails SFD  Join EastlawsUsers..QueryCacheRecords QCR on QCR.ItemID = SFD.ItemID
+                                    {3}
 	                                Where SFD.FehresProgramID = {4} And SFD.ServiceID = 1 and QCR.MasterID = {1}
 	                                Group By SFD.ItemID , SFD.FehresItemID, SFD.FehresCategoryID
                                 ) sss
