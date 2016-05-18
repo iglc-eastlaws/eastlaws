@@ -622,7 +622,7 @@
                          //   // console.log(e);
                          //})
 
-                         //$rootScope.$apply(function () {
+                
                          $scope.$on('ngRepeatFinished', function (ngRepeatFinishedEvent) {
                              //  $('.itemFilters[data-catgID="0"][data-itemid="1"]').prop('checked', true);
                              for (var i = 0; i < SearchData.ahkamlist.length; i++) {
@@ -630,7 +630,9 @@
                                  let parid = SearchData.ahkamlist[i].Parameter;
                                  let catgID = SearchData.ahkamlist[i].CategoryID;
                                  //console.log(SearchData.ahkamlist[i]);
-                                 $('.itemFilters[data-catgID="' + catgID + '"][data-itemid="' + parid + '"]').prop('checked', true);
+                                 $('.itemFilters[data-catgID="' + catgID + '"][data-itemid="' + parid + '"]')
+                                 .prop('checked', true)
+                                 .parent().parent().addClass('active');
                              }
                          });
         
@@ -648,11 +650,11 @@
                      $scope.changeCheck = function (item, event) {
                          if ($(event.target).is(':checked')) {
                              tasfiaData.PushList(item.CategoryID + '_' + item.ID, item.Name, item.Count,item.CategoryID,item.ID);
-                             $(event.target).parent().parent().addClass('active');
+                             //$(event.target).parent().parent().addClass('active');
 
                          } else {
                              tasfiaData.splice(item.Name)
-                             $(event.target).parent().parent().removeClass('active');
+                            // $(event.target).parent().parent().removeClass('active');
                          }
 
                          var sendobj = [];
@@ -663,14 +665,14 @@
                          }
 
                          SearchData.ahkamlist = sendobj;
-                       //  console.log(sendobj)
+               
 
                          SearchData.searchType = 1;
                          SearchData.newSearch = true;
                          SearchData.newtasfya = true;
                          SearchData.currentPage = 1;
                          SearchData.ahkamlist = sendobj;
-                        // SearchData.Latest = false;
+                        SearchData.Latest = false;
                          SearchData.GetSearch();
                      };
                  })
