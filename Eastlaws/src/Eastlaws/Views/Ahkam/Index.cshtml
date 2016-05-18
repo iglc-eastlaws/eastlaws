@@ -186,7 +186,7 @@
                        })
 
               })
-            .controller('assembleSearchCtrl', function ($scope, SearchData, $http) {
+            .controller('assembleSearchCtrl', function ($scope, SearchData, $http, tasfiaData) {
                  $scope.omarGroupShow = false;
                  $scope.Inputs = {};
                  $scope.date = {};
@@ -285,6 +285,10 @@
 
                  $scope.search = function () {
                      setAllMhakem();
+
+                     SearchData.ahkamlist = {};
+                     tasfiaData.clearall();
+                     SearchData.SelectedCatgID = null;
                      SearchData.searchType = 1;
                      SearchData.newSearch = true;
                      SearchData.newtasfya = true;
@@ -426,7 +430,7 @@
                 data.newSearch = true;
                 data.SearchTools = {};
                 data.ahkamlist = {};
-                data.SelectedCatgID = 0;
+                data.SelectedCatgID = null;
 
                 data.datalist = {};
                 data.datalist.listAllTasfya = [];
@@ -741,7 +745,8 @@
 
                //   data.splice = function (itemname) {
                //     data.list.splice(data.list.indexOf(itemname), 1);
-               //}
+                //}
+
                   data.spliceObj = function (obj) {
                       for (var i = 0; i < data.list.length; i++) {
                           if (data.list[i].itemcatgID == obj.CategoryID)
@@ -751,7 +756,17 @@
                       }
 
                   //  data.list.splice(data.list.indexOf(obj), 1);
-                }
+                  }
+
+                  data.clearall = function () {
+                      data.list.splice(0, data.list.length);
+                      //for (var i = 0; i < data.list.length; i++) {
+                          
+                      //        data.list.splice(i, 1);
+                        
+                      //}
+                  }
+
 
                 return data;
             })
