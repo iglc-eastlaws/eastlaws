@@ -299,6 +299,9 @@ label.helper i{margin-top:8px; color:#d9b672;font-size: 12px;}
 .concept{ font-size:0.8em;}
 .total-chart i{ color:#E45625;} 
 p.total-chart {color:#666; font:bold 14px arial;}
+.side-left{ background-color:#FFF; padding:0px!important; box-shadow:0 2px 4px rgba(0, 0, 0, 0.2); border:2px solid #e3c384;}
+.side-left h4:first-child{  padding:10px 12px; margin:0px; font-size:0.87em;}
+.side-left .form-group .search, .side-left #accordion{ padding:0 10px;}
 .filter-search{ position:relative; padding:0 0 0 10px;}
 .filter-search .well{ padding:0px; margin:0px; border-color:transparent;}
 .filter-search .search{ padding:0px; margin-bottom:15px;}
