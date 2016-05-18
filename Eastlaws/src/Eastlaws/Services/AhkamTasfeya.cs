@@ -88,7 +88,7 @@ namespace Eastlaws.Services
             string InnerQuery = AhkamQueryBuilder.AdvancedCustomSearch(Obj, out FakaratQueryCustom, out SearchPredicates);
             QueryCacher Cacher = new QueryCacher((int)LegalServices.Ahkam, InnerQuery, SearchType.ToString(), NewSearch: false, SecondaryQuery: FakaratQueryCustom);
             int QueryID = Cacher.ID;  
-            var Data = AhkamTasfeya.List(QueryID, SearchType, out UsedCategories, TasfeyaFilter, SelectedTasfeya, null);
+            var Data = AhkamTasfeya.List(QueryID, SearchType, out UsedCategories, TasfeyaFilter, SelectedTasfeya, CategorySender);
             return Data;
         }
 
@@ -106,14 +106,14 @@ namespace Eastlaws.Services
             string SafyListQuery = "";
             if (IsSafyList)
             {
-                if (CategorySender.HasValue)
-                {
-                    var ItemToBeRemoved = (from C in Cats where C.ID == CategorySender.Value select C).FirstOrDefault();
-                    if(ItemToBeRemoved != null)
-                    {
-                        Cats.Remove(ItemToBeRemoved);
-                    }              
-                }
+                //if (CategorySender.HasValue)
+                //{
+                //    var ItemToBeRemoved = (from C in Cats where C.ID == CategorySender.Value select C).FirstOrDefault();
+                //    if(ItemToBeRemoved != null)
+                //    {
+                //        Cats.Remove(ItemToBeRemoved);
+                //    }              
+                //}
 
                 SafyListQuery = 
                     @"Create  Table #IDS(ID int Primary Key ) ; 
