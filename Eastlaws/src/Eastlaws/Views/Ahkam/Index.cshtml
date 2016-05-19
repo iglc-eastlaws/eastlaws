@@ -154,15 +154,29 @@
             "use strict";
             var app = angular.module('ahkamApp', ['sharedModule']);
             app
-            .controller('ahkamCtrl', function (SearchData) {
-                SearchData.searchType = 1;
-                SearchData.newSearch = true;
-                SearchData.newtasfya = true;
-                SearchData.currentPage = 1;
-                SearchData.sortType = 5;
-                SearchData.Latest = true;
+            .controller('ahkamCtrl', function (SearchData, $timeout) {
+                //SearchData.searchType = 1;
+                //SearchData.newSearch = true;
+                //SearchData.newtasfya = true;
+                //SearchData.currentPage = 1;
+                //SearchData.sortType = 5;
+                //SearchData.Latest = false;
                 //SearchData.GetSearch();
 
+                ////SearchData.Latest = false;
+             
+               
+                angular.element(document).ready(function () {
+                    SearchData.sortType = 2;
+                    SearchData.Latest = false;
+                    $('#btnsubmit').trigger('click');
+                    //console.log('page loading completed');
+                    //var currentButton = angular.element('#btnsubmit');
+                    //$timeout(function () {
+                    //    console.log('page loading ssssssssssssssss');
+                    //    currentButton.triggerHandler("click");
+                    //});
+                });
             })
             .controller('searchResultCtrl', function () {
                        $(document).on('click', '.hokmView', function () {
@@ -411,7 +425,7 @@
                     SearchData.GetSearch();
                 }
 
-                $scope.getmypage();
+              //  $scope.getmypage();
             })
             .factory('SearchData', function ($http, tasfiaData, tasfiaAllData, $rootScope) {
                 var data = {};
@@ -423,7 +437,7 @@
                 data.currentPage = 1;
                 data.typeView = 2;                   //rows - grid - table
                 data.days = 10;
-                data.Latest = true;
+                data.Latest = false;
                 data.sortType = 5;
                 data.sortTypeDir = 1;
                 data.newtasfya = true;
