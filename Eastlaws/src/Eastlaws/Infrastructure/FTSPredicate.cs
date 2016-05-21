@@ -86,6 +86,13 @@ namespace Eastlaws.Infrastructure
             return this.Output;
         }
 
+        public override string ToString()
+        {
+            return this.BuildPredicate();
+        }
+
+
+
         /// <summary>
         /// Constructs and Validates the FTS Predicate string to be appended as a clause in SQL Query 
         /// Returns null if the Input string is invalid 

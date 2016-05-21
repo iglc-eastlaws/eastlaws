@@ -123,9 +123,12 @@ namespace Eastlaws.Services
             }
 
 
-            string MasterQuery = string.Join("\n Union All \n " ,  (from c in Cats
-                                                  select GetCategoryQuery(QueryID, c, TasfeyaFilter, IsSafyList, CategorySender)
-                                                  ).ToArray()
+            string MasterQuery = string.Join("\n Union All \n " ,  
+                (from c in Cats
+                 where GetCategoryQuery(QueryID, c, TasfeyaFilter, IsSafyList, CategorySender) != ""
+                 select GetCategoryQuery(QueryID, c, TasfeyaFilter, IsSafyList, CategorySender)
+                                                  
+                 ).ToArray()
                                   );
 
             MasterQuery = string.Format("Select * From \n (\n{0}\n) \n TasfeyaList Order By CategoryID , SortValue Desc "  , MasterQuery);
@@ -194,6 +197,15 @@ namespace Eastlaws.Services
                 case AhkamTasfeyaCategoryIds.JudgeYear:
                     {
                         string ProcessedFilter = "";
+                        int Temp;
+                        if (int.TryParse(Filter , out Temp))
+                        {
+                            ProcessedFilter = " And (A.CaseYear = " + Temp + " ) ";
+                        }
+                        else if (!string.IsNullOrEmpty(Filter))
+                        {
+                            return "";
+                        }
 
                         return string.Format(
                             @"
@@ -207,6 +219,18 @@ namespace Eastlaws.Services
                 case AhkamTasfeyaCategoryIds.Year:
                     {
                         string ProcessedFilter = "";
+
+                        int Temp;
+                        if (int.TryParse(Filter, out Temp))
+                        {
+                            ProcessedFilter = " And  ( Datepart(Year , A.CaseDate ) = " + Temp + " ) ";
+                        }
+                        else if (!string.IsNullOrEmpty(Filter))
+                        {
+                            return "";
+                        }
+
+
                         return string.Format(
                             @"Select Top {0} Datepart(Year , A.CaseDate )  as ID , Cast(Datepart(Year , A.CaseDate ) as varchar(32)) as Name , Count(*) as Count , 6 as CategoryID , Count(*) as SortValue From Ahkam A
                             Join EastlawsUsers..QueryCacheRecords QCR With (Nolock)  On QCR.ItemID = A.ID 
@@ -218,6 +242,11 @@ namespace Eastlaws.Services
                 default:
                     {
                         string ProcessedFilter = "";
+                        if (!string.IsNullOrWhiteSpace(Filter))
+                        {
+                            ProcessedFilter = " Where Contains(FI.* , " + new FTSPredicate(Filter, FTSSqlModes.AND).BuildPredicate() + ") ";
+                        }
+
                         return GetTasfeyaQueryFehres(MasterQueryID, ProcessedFilter, SafyListJoinClause, Cat);           
                     }
             }
@@ -231,11 +260,12 @@ namespace Eastlaws.Services
 	                                Select  SFD.ItemID , SFD.FehresItemID, SFD.FehresCategoryID  From 
 	                                ServicesFehresDetails SFD  Join EastlawsUsers..QueryCacheRecords QCR on QCR.ItemID = SFD.ItemID
                                     {3}
-	                                Where SFD.FehresProgramID = {4} And SFD.ServiceID = 1 and QCR.MasterID = {1}
+	                                Where SFD.FehresProgramID = {4} And SFD.ServiceID = 1 and QCR.MasterID = {1} 
 	                                Group By SFD.ItemID , SFD.FehresItemID, SFD.FehresCategoryID
                                 ) sss
                                 Join 
                                 FehresItems FI on FI.FehresCategoryID = sss.FehresCategoryID And sss.FehresItemID = FI.ID
+                                {2}
                                 Group By FI.Name
                                 Order By Count(sss.ItemID) desc"
 
