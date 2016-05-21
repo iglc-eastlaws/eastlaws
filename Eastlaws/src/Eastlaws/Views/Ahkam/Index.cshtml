@@ -71,16 +71,16 @@
 
 
                     <div id="Div-tasfya" style="display:none">
-
-
+                       
+                         
                         <h4><i class="fa fa-server"></i> تصفية النتائج </h4> <!--</div>-->
                         <div class="form-group">
                             <label for="horizontal_search" class="col-lg-12 col-sm-12 control-label bg-color title"> </label>
                             <div class="col-sm-12 search">
                                 <div class="input-group">
-                                    <input type="text" placeholder="بحث فى عوامل التصفية" class="form-control">
+                                    <input ng-model="tasfyatext" type="text" placeholder="بحث فى عوامل التصفية" class="form-control">
                                     <span class="input-group-btn">
-                                        <button type="button" class="btn btn-success">إبحث</button>
+                                        <button type="button" class="btn btn-success" ng-click="gettasfya()">إبحث</button>
                                     </span>
                                 </div>
                             </div>
@@ -451,6 +451,7 @@
                 data.datalist.listAllTasfya = [];
                 data.datalist.listAllCatg = [];
 
+                data.TasfeyaSearchText = '';
 
                 data.GetSearch = function () {
 
@@ -472,104 +473,106 @@
                         var tasfyaObj = {
                             AssemblySearch: data.AssembleSearchInputs,
                             ahkamTasfeyaList: data.ahkamlist,
-                            TasfeyaSearchText: '',
+                            TasfeyaSearchText: data.TasfeyaSearchText,
                             SelectedCatgID: data.SelectedCatgID
                         };
 
                      
                      // console.log(obj);
 
-                        $('#searchResult').html('<img src="/content/images/preload.gif" />');
+                        if (data.newSearch == true) {
+                            $('#searchResult').html('<img src="/content/images/preload.gif" />');
 
-                        $.ajax({
-                            url: "/Ahkam/SearchResultAssembly",
-                            type: "POST",
-                            data:{ "SearchParms": obj},
+                            $.ajax({
+                                url: "/Ahkam/SearchResultAssembly",
+                                type: "POST",
+                                data: { "SearchParms": obj },
 
-                            success: function (d) {
-                                $rootScope.$apply(function () {
-                                    var searchresult = $('#searchResult');
-                                    searchresult.html(d);
+                                success: function (d) {
+                                    $rootScope.$apply(function () {
+                                        var searchresult = $('#searchResult');
+                                        searchresult.html(d);
 
-                                    $('body').animate({ scrollTop: $("#TotalCount").offset().top }, 1000, function () {
-                                        //console.log(data.newtasfya)
-                                        //if (data.newtasfya == true) {
+                                        $('body').animate({ scrollTop: $("#TotalCount").offset().top }, 1000, function () {
+                                            //console.log(data.newtasfya)
+                                            //if (data.newtasfya == true) {
 
-                                        //    //console.log('------------- 1 ----------------')
-                                        //    for (var i = 0; i < $rootScope.catgDistinct.length; i++) {
-                                        //        //console.log($rootScope.catgDistinct[i])
-                                        //    }
+                                            //    //console.log('------------- 1 ----------------')
+                                            //    for (var i = 0; i < $rootScope.catgDistinct.length; i++) {
+                                            //        //console.log($rootScope.catgDistinct[i])
+                                            //    }
 
-                                        //    //console.log('------------- 2 ----------------')
+                                            //    //console.log('------------- 2 ----------------')
 
-                                        //    $rootScope.catgDistinct = [];
-                                        //    //console.log('------------- 3 ----------------')
-                                        //    for (var i = 0; i < $rootScope.catgDistinct.length; i++) {
-                                        //      //  console.log($rootScope.catgDistinct[i])
-                                        //    }
-                                        //    //console.log('------------- 4 ----------------')
-                                        //    //tasfiaAllData.getTasyaList();
+                                            //    $rootScope.catgDistinct = [];
+                                            //    //console.log('------------- 3 ----------------')
+                                            //    for (var i = 0; i < $rootScope.catgDistinct.length; i++) {
+                                            //      //  console.log($rootScope.catgDistinct[i])
+                                            //    }
+                                            //    //console.log('------------- 4 ----------------')
+                                            //    //tasfiaAllData.getTasyaList();
 
 
-                                        //    //console.log(tasfyaObj.ahkamTasfeyaList)
+                                            //    //console.log(tasfyaObj.ahkamTasfeyaList)
 
-                                           
-                                        //    $('#tasfyaLood').show();
-                                        //    $('#Div-tasfya').hide();
-                                        //    $.ajax({
-                                        //        url: "/Ahkam/TasfeyaListJson",
-                                        //        type: "POST",
-                                        //        data: { "SarchTasfyaParms": tasfyaObj },
-                                        //        success: function (d) {
-                                        //            $rootScope.$apply(function () {
-                                              
-                                        //            $('#Div-tasfya').show(); $('#tasfyaLood').hide();
-                                        //            data.datalist.listAllTasfya = d[0][1];
-                                        //            data.datalist.listAllCatg = d[1][1];
-                                        //            $rootScope.$broadcast('getTasfiyaList');
-                                        //            });
 
-                                        //        }
-                                        //    });
+                                            //    $('#tasfyaLood').show();
+                                            //    $('#Div-tasfya').hide();
+                                            //    $.ajax({
+                                            //        url: "/Ahkam/TasfeyaListJson",
+                                            //        type: "POST",
+                                            //        data: { "SarchTasfyaParms": tasfyaObj },
+                                            //        success: function (d) {
+                                            //            $rootScope.$apply(function () {
 
-                                        //}
+                                            //            $('#Div-tasfya').show(); $('#tasfyaLood').hide();
+                                            //            data.datalist.listAllTasfya = d[0][1];
+                                            //            data.datalist.listAllCatg = d[1][1];
+                                            //            $rootScope.$broadcast('getTasfiyaList');
+                                            //            });
+
+                                            //        }
+                                            //    });
+
+                                            //}
+                                        });
+
+                                        if (data.newSearch == true) {
+                                            data.TotalCount = 0;
+                                            if (searchresult.find('#resultCount').length) {
+                                                data.TotalCount = $("#resultCount").val();
+                                                $('#TotalCount').html('');
+                                                if (data.TotalCount > 0) {
+                                                    $('#TotalCount').html(" <i class='fa fa-line-chart '></i> وجد اجمالي [" + data.TotalCount + "] حكم")
+                                                }
+                                            }
+                                            if ((data.currentPage <= 1) || (data.currentPage == undefined)) {
+                                                var countpage = 1;
+                                                if (data.TotalCount > Number(data.pageSize)) {
+                                                    countpage = Math.ceil(data.TotalCount / Number(data.pageSize));
+                                                }
+                                                data.pageCount = countpage;
+                                                data.currentPage = 1;
+
+                                            }
+
+
+
+
+                                        }
+
+
+
+
+                                        //get tasfya
+
+
+
+
                                     });
-
-                                    if (data.newSearch == true) {
-                                        data.TotalCount = 0;
-                                        if (searchresult.find('#resultCount').length) {
-                                            data.TotalCount = $("#resultCount").val();
-                                            $('#TotalCount').html('');
-                                            if (data.TotalCount > 0) {
-                                                $('#TotalCount').html(" <i class='fa fa-line-chart '></i> وجد اجمالي [" + data.TotalCount + "] حكم")
-                                            }
-                                        }
-                                        if ((data.currentPage <= 1) || (data.currentPage == undefined)) {
-                                            var countpage = 1;
-                                            if (data.TotalCount > Number(data.pageSize)) {
-                                                countpage = Math.ceil(data.TotalCount / Number(data.pageSize));
-                                            }
-                                            data.pageCount = countpage;
-                                            data.currentPage = 1;
-
-                                        }
-
-
-                            
-
-                                    }
-
-                                    
-
-
-                                    //get tasfya
-                                  
-
-                                    
-
-                                });
-                            }
-                        });
+                                }
+                            });
+                        }
 
 
                         if (data.newtasfya == true) {
@@ -600,6 +603,8 @@
                                         $('#Div-tasfya').show(); $('#tasfyaLood').hide();
                                         data.datalist.listAllTasfya = d[0][1];
                                         data.datalist.listAllCatg = d[1][1];
+
+                                        //console.log(data.datalist.listAllTasfya)
                                         $rootScope.$broadcast('getTasfiyaList');
                                     });
 
@@ -653,6 +658,7 @@
                      //    }
                      //    return result;
                  }
+
 
 
                      $scope.limit = 20;
@@ -733,6 +739,19 @@
                          SearchData.Latest = false;
                          SearchData.GetSearch();
                      };
+
+                     $scope.gettasfya = function () {
+                        // console.log($scope.tasfyatext);
+
+                         SearchData.TasfeyaSearchText = $scope.tasfyatext;
+                         SearchData.newSearch = false;
+                         SearchData.newtasfya = true;
+                         //SearchData.ahkamlist = sendobj;
+                         SearchData.Latest = false;
+                         SearchData.GetSearch();
+                     }
+                      
+
                  })
             .controller('selectedElementCtrl', function ($scope, tasfiaData, SearchData, $rootScope, $compile, $timeout) {
 
