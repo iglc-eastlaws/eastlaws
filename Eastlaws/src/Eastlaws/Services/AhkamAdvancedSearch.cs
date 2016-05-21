@@ -11,9 +11,9 @@ namespace Eastlaws.Services
         public FTSPredicate PredicateAny { get; set; } = new FTSPredicate("");
 
         public FTSPredicate PredicateMabade2 { get; set; } = new FTSPredicate("");
-        public FTSPredicate PredicateWakae3  { get; set; } = new FTSPredicate("");
+        public FTSPredicate PredicateWakae3 { get; set; } = new FTSPredicate("");
         public FTSPredicate PredicateDestoreya { get; set; } = new FTSPredicate("");
-        public FTSPredicate PredicateHay2a  { get; set; } = new FTSPredicate("");
+        public FTSPredicate PredicateHay2a { get; set; } = new FTSPredicate("");
         public FTSPredicate PredicateMantoo2 { get; set; } = new FTSPredicate("");
         public FTSPredicate PredicateHaytheyat { get; set; } = new FTSPredicate("");
 
@@ -33,19 +33,19 @@ namespace Eastlaws.Services
 
         public List<FTSPredicate> GetValidPredicates()
         {
-        
+
             PredicateAny.Tag = 5000;
             PredicateMabade2.Tag = 1;
             PredicateDestoreya.Tag = -50;
-            PredicateWakae3.Tag= -1 ;
-            PredicateMantoo2.Tag  = -3;//canceled
-            PredicateHaytheyat.Tag  = -2;
+            PredicateWakae3.Tag = -1;
+            PredicateMantoo2.Tag = -3;//canceled
+            PredicateHaytheyat.Tag = -2;
             PredicateHay2a.Tag = 0;
 
-            FTSPredicate[] MyArray = { PredicateAny , PredicateMabade2 , PredicateDestoreya  , PredicateWakae3 , PredicateMantoo2 , PredicateHaytheyat , PredicateHay2a };
+            FTSPredicate[] MyArray = { PredicateAny, PredicateMabade2, PredicateDestoreya, PredicateWakae3, PredicateMantoo2, PredicateHaytheyat, PredicateHay2a };
 
             List<FTSPredicate> retVal = new List<FTSPredicate>();
-            for(int i=0; i< MyArray.Length; i++)
+            for (int i = 0; i < MyArray.Length; i++)
             {
                 if (MyArray[i].IsValid)
                 {

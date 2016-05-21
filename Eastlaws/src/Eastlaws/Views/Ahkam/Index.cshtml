@@ -92,6 +92,7 @@
                                 @*<p ng-repeat="data in categoryList">000000</p>*@
 
                                 <div class="panel panel-default" ng-repeat="data in categoryList" ng-show="displayCatg(data.ID)" on-finish-render="ngRepeatFinished">
+                 
                                     <div class="panel-heading">
                                         <h5 class="panel-title">
                                             <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#{{data.ID}}">
@@ -633,13 +634,27 @@
 
                    }
                  $scope.displayCatg = function (catgID) {
-                         var result = false;
-                         var indx = $rootScope.catgDistinct.indexOf(catgID);
-                         if (indx !== -1) {
+                     var result = false;
+                     var catgLength = $scope.categoryList.length;
+                     for (var i = 0; i < $scope.tasfyaList.length; i++) {
+                         if ($scope.tasfyaList[i].CategoryID == catgID)
+                         {
                              result = true;
+                             return result;
                          }
-                         return result;
                      }
+
+                     return result;
+                     //console.log($rootScope.catgDistinct.length);
+                     //    var result = false;
+                     //    var indx = $rootScope.catgDistinct.indexOf(catgID);
+                     //    if (indx !== -1) {
+                     //        result = true;
+                     //    }
+                     //    return result;
+                 }
+
+
                      $scope.limit = 20;
                      $scope.increaseLimit = function () {
                          if ($scope.limit < $scope.tasfyaList.length) {
@@ -682,8 +697,8 @@
                      });
 
                      $scope.changeCheck = function (item, event) {
-                        // console.log(item.Name);
-
+                      //console.log(item.Name);
+                       $rootScope.catgDistinct.length = 0;
                          //$rootScope.$apply(function () {
                              if ($(event.target).is(':checked')) {
                                  tasfiaData.PushList(item.CategoryID + '_' + item.ID, item.Name, item.Count, item.CategoryID, item.ID);
@@ -715,7 +730,7 @@
                          SearchData.newtasfya = true;
                          SearchData.currentPage = 1;
                          SearchData.ahkamlist = sendobj;
-                        SearchData.Latest = false;
+                         SearchData.Latest = false;
                          SearchData.GetSearch();
                      };
                  })
