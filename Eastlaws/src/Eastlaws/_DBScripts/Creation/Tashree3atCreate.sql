@@ -20,9 +20,10 @@ Create Table Tashree3atTypes
 Go 
 
 
+
 Create Table Tashree3at 
-(ID int Primary Key  , CountryID int ,TypeID int , BassmaID int , GaridaID int ,TashNo int , TashYear int , TashDate Date 
-, Name nvarchar(max) , EnName nvarchar(max)  , NafazDate Date , EsdarDate Date , GaridaNumber int,  GaridaSuffix nvarchar(64)
+(ID int Primary Key  , CountryID int ,TypeID int , BassmaID int , GaridaID int ,TashNo int , TashYear int , TashDate Datetime
+, Name nvarchar(max) , EnName nvarchar(max)  , NafazDate Date , EsdarDate Date , GaridaNumber nvarchar(100),  GaridaSuffix nvarchar(100)
 ,MawadCount int,  AhkamCount int , FakaratCount int  , ImagesCount int )
 
 
@@ -49,6 +50,8 @@ Go
 Use iglc
 
 Go 
+
+
 
 Select top 9999 * From Tash_Master --
 Select Top 9999 * From Tash_Type   --
