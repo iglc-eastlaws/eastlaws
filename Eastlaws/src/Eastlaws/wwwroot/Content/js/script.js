@@ -74,6 +74,13 @@ $(document).ready(function () {
 
     //});
 
+    // muilt select
+    $('#example-getting-started').multiselect();
+
+    //$('#example-enableCollapsibleOptGroups-enableClickableOptGroups').multiselect({
+    //    enableClickableOptGroups: true,
+    //    enableCollapsibleOptGroups: true
+    //});
     // muilt check
 
     // Hide Element Filter
