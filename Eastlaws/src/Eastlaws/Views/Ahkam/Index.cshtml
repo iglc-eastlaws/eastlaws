@@ -339,7 +339,7 @@
                     SearchData.sortType = type;
                     SearchData.currentPage = 1;
                     SearchData.newtasfya = false;
-                    SearchData.newSearch = false;
+                    SearchData.newSearch = true;
 
                     SearchData.GetSearch();
                     switch (type) {
@@ -369,7 +369,7 @@
                     SearchData.sortTypeDir = dir;
                     SearchData.currentPage = 1;
                     SearchData.newtasfya = false;
-                    SearchData.newSearch = false;
+                    SearchData.newSearch = true;
 
                     SearchData.GetSearch();
                 }
@@ -379,13 +379,13 @@
                     SearchData.pageSize = $scope.pSize;
                     SearchData.currentPage = 1;
                     SearchData.newtasfya = false;
-                    SearchData.newSearch = false;
+                    SearchData.newSearch = true;
                     SearchData.GetSearch();
                 }
                 $scope.changeTypeView = function (v) {
                     SearchData.typeView = v;
                     SearchData.newtasfya = false;
-                    SearchData.newSearch = false;
+                    SearchData.newSearch = true;
                     SearchData.GetSearch();
                 }
             })
