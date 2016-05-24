@@ -144,6 +144,7 @@ namespace Eastlaws.Services
             return List;
         }
 
+
         private static string GetCategoryQuery(int MasterQueryID , AhkamTasfeyaCategory Cat , string Filter, bool isSafyList = false , AhkamTasfeyaCategoryIds? Sender = null)
         {
             string SafyListJoinClause = (isSafyList) ? " Join #IDS I on I.ID = QCR.ItemID "  : "";

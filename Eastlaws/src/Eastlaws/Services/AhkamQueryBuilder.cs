@@ -237,9 +237,86 @@ namespace Eastlaws.Services
         }
 
 
-        public static string MadaSearch(int?  CountryID, string TashNo, string TashYear, string MadaNo , FTSPredicate TashTextFilter , bool SearchInTashTile = true , bool SearchInTashMawad = true)
+        public static string MadaSearch(AhkamMadaSearch ObjSearch , out string FakaratQuery , out List<FTSPredicate> TextMatches)
         {
-            return "";
+            TextMatches = null;
+            FakaratQuery = null;
+            
+
+           
+
+            StringBuilder Builder = new StringBuilder();
+            Builder.AppendLine("SELECT T.ID , 0 AS DefaultRank FROM Tashree3at T ");
+            Range MadaNoRange = new Range(ObjSearch.MadaNo, "TM.MadaNo");
+            string MadaNoCondition = MadaNoRange.GetCondition();
+            if (!string.IsNullOrWhiteSpace(MadaNoCondition))
+            {
+                Builder.AppendLine("Join Tashree3atMawad TM on TM.Tashree3ID = T.ID  ");
+            }
+            Builder.AppendLine(" Where (1 = 1 )");
+
+            if (!string.IsNullOrWhiteSpace(MadaNoCondition))
+            {
+                Builder.AppendLine("And " + MadaNoCondition);
+            }
+
+            Range[] TashRanges = {
+                new Range(ObjSearch.TashNo,"T.TashNo")
+                ,new Range(ObjSearch.TashYear,"T.TashYear")
+                ,new Range(ObjSearch.CountryIds,"T.CountryID")
+            };
+            foreach(var R in TashRanges)
+            {
+                string Condition = R.GetCondition();
+                if(!string.IsNullOrWhiteSpace(Condition))
+                {
+                    Builder.AppendLine(" AND (" + Condition + ")");
+                }
+            }
+
+            
+
+
+            if (!ObjSearch.SearchPredicate.IsValid)
+            {
+                // No Text search return master Query Only 
+                return Builder.ToString();
+            }
+            else
+            {
+                List<string> MasterQueries = new List<string>();
+                // clearing the builder to start building the text queries instead of creating another builder (which is expensive ! ) 
+                MasterQueries.Add(Builder.ToString());
+                Builder.Clear();
+
+                if (!ObjSearch.SearchInMadaText && !ObjSearch.SearchInTashText)
+                {
+                    //if both defined as false , then search in both anyway !
+                    ObjSearch.SearchInTashText = ObjSearch.SearchInMadaText = true;
+                }
+
+                string PredicateText = ObjSearch.SearchPredicate.BuildPredicate();
+
+                string TashTextQuery = "", MadaTextQuery = "";
+                if (ObjSearch.SearchInTashText)
+                {
+                     TashTextQuery = "SELECT TS.[KEY] AS ID , TS.[RANK]  * 10 AS DefaultRank  FROM ContainsTable(Tashree3at , Name , " + PredicateText + ") TS";
+                }
+                if (ObjSearch.SearchInMadaText)
+                {
+                     MadaTextQuery = "SELECT tm.Tashree3ID AS ID  , Sum(TS.[RANK]) AS DefaultRank  FROM ContainsTable(Tashree3atMawad , *	 , 'قتل') TS "
+                        +"\n" + " JOIN dbo.Tashree3atMawad tm ON tm.ID = TS.[KEY] GROUP BY tm.Tashree3ID ";
+                }
+
+
+            }
+
+
+
+
+
+            return Builder.ToString();
+            
         }
 
 

@@ -81,8 +81,9 @@ namespace Eastlaws.Services
         // Mada Search
         public static AhkamPresentation Search(AhkamSearchOptions Options , int? CountryID, string TashNo, string TashYear, string MadaNo, FTSPredicate TashTextPredicate, bool SearchInTashTile = true, bool SearchInTashMawad = true)
         {
-            string InnerQuery = AhkamQueryBuilder.MadaSearch(CountryID, TashNo, TashYear, MadaNo, TashTextPredicate, SearchInTashTile, SearchInTashMawad);
-            return Search(InnerQuery, Options, null, AhkamSearchTypes.Mada);
+            return null;
+           // string InnerQuery = AhkamQueryBuilder.MadaSearch(CountryID, TashNo, TashYear, MadaNo, TashTextPredicate, SearchInTashTile, SearchInTashMawad);
+            //return Search(InnerQuery, Options, null, AhkamSearchTypes.Mada);
         }
 
 
