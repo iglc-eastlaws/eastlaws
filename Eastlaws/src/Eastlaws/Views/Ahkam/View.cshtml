@@ -60,7 +60,7 @@
         <div class="format-result" >
 
             @Html.Partial("_toolbar")
-            <li><a href="#" data-toggle="tooltip" data-placement="top" class="color-tooltip printing" PrintID="view" title=" طباعة"><i class="fa fa-print"></i><span class="name-nav"> طباعة </span></a></li>
+            @*<li><a href="#" data-toggle="tooltip" data-placement="top" class="color-tooltip printing"  title=" طباعة"><i class="fa fa-print"></i><span class="name-nav"> طباعة </span></a></li>*@
         </div>
 
         @if (Model != null)
@@ -68,7 +68,12 @@
             var Hokm = Model.AhkamList.ToArray()[0];
 
              <div class="view-law" >
-
+                 <div class="nav-control pull-left text-left">
+                     <ul>
+                         <li><a data-original-title=" صورة الحكم" href="#" data-toggle="tooltip" data-placement="top" class="color-tooltip" title=""><i class="fa fa-camera"></i><span class="name-nav"> صورة الحكم</span></a></li>
+                         <li><a data-original-title=" طباعة" href="#" data-toggle="tooltip" data-placement="top" class="color-tooltip printing" title="" PrintID="view"><i class="fa fa-print"></i><span class="name-nav"> طباعة </span></a></li>
+                     </ul>
+                 </div>
             <h1>
 
                 @if (!string.IsNullOrEmpty(Hokm.CountryFlagPic))
