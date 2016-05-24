@@ -55,7 +55,15 @@ $(document).ready(function () {
 
     // menu hide
     $(".menu-side").click(function () {
-        $(".container-fluid").toggleClass("hide-sidebar", 1000, "easeOutSine");
+        //$(this).parent().parent().removeClass('show-menu');
+        if (($(window).width() > 1000)||( !$(".container-fluid").hasClass('hide-sidebar'))) {
+            $(".container-fluid").toggleClass("hide-sidebar", 1000, "easeOutSine");
+            //$(this).parent().parent().addClass!('show-menu');
+        } else {
+            $('.container-fluid').removeClass('hide-sidebar');
+           // $(this).parent().parent().removeClass('show-menu');
+
+        }
 
     });
     $(window).on('resize', function () {

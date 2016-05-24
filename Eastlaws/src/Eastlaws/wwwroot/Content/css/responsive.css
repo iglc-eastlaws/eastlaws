@@ -39,19 +39,12 @@
    
 }
 
-	/*small/medium side display*/
-	@media (min-width: 768px) {
- .inside nav.sidebar .van{ left:0px; right:auto;}
-     .inside nav.sidebar:hover  .move-right{transform:translate(0px, 0px); left:auto; right:0px;}
-
-		/*Allow main to be next to Nav*/
-		.main{
-			
-			width: calc(100% - 40px); /*keeps 100% minus nav size*/
-			margin-right: 40px;
-			float: left;
-           
-		}
+/*small/medium side display*/
+@media (min-width: 768px) {
+.inside nav.sidebar .van{ left:0px; right:auto;}
+.inside nav.sidebar:hover  .move-right{transform:translate(0px, 0px); left:auto; right:0px;}
+/*Allow main to be next to Nav*/
+.main{width: calc(100% - 40px); /*keeps 100% minus nav size*/margin-right: 40px;float: left;}
 
 		/*lets nav bar to be showed on mouseover*/
 		nav.sidebar:hover + .main{
@@ -149,7 +142,7 @@
 
 	/* .....NavBar: Fully showing nav bar..... */
 
-	@media (min-width: 1330px) {
+	@media (min-width: 1300px) {
         .inside nav.sidebar .van{ left:auto; right:0px;}
      .inside nav.sidebar:hover  .move-right{transform:translate(0px, 0px); left:auto; right:0px;}
      

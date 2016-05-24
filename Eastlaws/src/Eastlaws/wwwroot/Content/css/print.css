@@ -1,5 +1,6 @@
 ﻿
    
-    .nav-control{
-        display:none;
-    }
+.nav-control, .search-inner{ display:none;}
+footer{ background:#4d4a4a url("../images/pattern.png") repeat; border-top:6px solid #d9b672; margin-top:100px;}
+.copyright{ background:rgba(29,29,29,0.5); }
+.copyright p{font:0.8em/5em "Droid Arabic Kufi";color:#FFF; padding:0px; margin:20px 0 0px;}
