@@ -172,7 +172,11 @@ nav:hover .forAnimate{opacity: 1;}
 .inside .navbar-inverse{ background-image: none;background-color:#FFF;  }
 .inside .navbar-inverse  li { position:relative; border-top:1px solid #f9e8e2;}
 .inside .navbar-inverse .navbar-nav > li > a{ line-height:42px; padding:0 42px 0 0; font-size:0.72em;color:#333;}
-.inside .navbar-inverse .glyphicon, .inside .navbar-inverse .fa{ /*background-image:linear-gradient(to bottom, #d9b163 0px, #f0c675 100%);*/ background-color:#D9B672; padding:13px 0; width:35px; text-align:center; }
+.inside .navbar-inverse .glyphicon, .inside .navbar-inverse .fa{  background-color:#D9B672; padding:13px 0; width:35px; text-align:center; }
+.inside .navbar-inverse .dropdown-menu > li > a .glyphicon, .inside .navbar-inverse .dropdown-menu > li > a .fa{ padding:0px; width:initial; background-color:transparent; color:#D9B672;}
+.inside .navbar-inverse .navbar-nav .open .dropdown-menu > li > a{padding:5px; color:#675650;transition:all 0.5s ease; border-right:5px solid #FFF; }
+.inside .navbar-inverse .navbar-nav .open .dropdown-menu > li > a:hover{ background-image:none; background-color:#bbaaa4; color:#675650; border-color:#d9b672;}
+.inside .navbar-inverse .navbar-nav .open .dropdown-menu > li > a:hover .glyphicon{ color:#FFF;}
 .menu-side{ background-color:#4d4a4a !important; color:#daae4f; cursor:pointer;}
 .menu-side:hover{background-color:#daae4f !important; color:#4d4a4a;}
 .sidebar  .navbar-brand, .sidebar  .navbar-brand:hover, .sidebar  .navbar-brand:hover, .sidebar   .navbar-brand:focus{color:#FFF; background-color:#4d4a4a;}
