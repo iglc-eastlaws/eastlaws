@@ -297,25 +297,41 @@ namespace Eastlaws.Services
 
                 string PredicateText = ObjSearch.SearchPredicate.BuildPredicate();
 
-                string TashTextQuery = "", MadaTextQuery = "";
+                string TashTextQuery = "", MadaTextQuery = "" , TextQuery = "";
                 if (ObjSearch.SearchInTashText)
                 {
                      TashTextQuery = "SELECT TS.[KEY] AS ID , TS.[RANK]  * 10 AS DefaultRank  FROM ContainsTable(Tashree3at , Name , " + PredicateText + ") TS";
                 }
                 if (ObjSearch.SearchInMadaText)
                 {
-                     MadaTextQuery = "SELECT tm.Tashree3ID AS ID  , Sum(TS.[RANK]) AS DefaultRank  FROM ContainsTable(Tashree3atMawad , *	 , 'قتل') TS "
-                        +"\n" + " JOIN dbo.Tashree3atMawad tm ON tm.ID = TS.[KEY] GROUP BY tm.Tashree3ID ";
+                     MadaTextQuery = "SELECT tm.Tashree3ID AS ID  , Sum(TS.[RANK]) AS DefaultRank  FROM ContainsTable(Tashree3atMawad , *	 , " + PredicateText + ") TS "
+                        + "\n" + " JOIN dbo.Tashree3atMawad tm ON tm.ID = TS.[KEY] GROUP BY tm.Tashree3ID ";
                 }
 
+                
+                if(ObjSearch.SearchInMadaText && ObjSearch.SearchInTashText)
+                {
+                    TextQuery = "Select ID , Sum(DefaultRank) From ("
+                        + "\n" + TashTextQuery
+                        + "\n" + "Union All "
+                        + "\n" + MadaTextQuery
+                        + "\n" + " ) TT  "
+                        + "Group By ID ";
 
-            }
+                }
+                else if (ObjSearch.SearchInTashText)
+                {
+                    TextQuery = TashTextQuery;
+                }
+                else if (ObjSearch.SearchInMadaText)
+                {
+                    TextQuery = MadaTextQuery;
+                }
 
+                string RetVal = "Select TTS.* From ("  + TextQuery + ") TTS Join (" +  MasterQueries[0]  +  ") MQ on MQ.ID = TTS.ID";
 
-
-
-
-            return Builder.ToString();
+                return RetVal;
+            }    
             
         }
 
