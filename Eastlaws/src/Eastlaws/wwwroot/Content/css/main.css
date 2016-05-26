@@ -5,8 +5,8 @@ font-face {font-family: "Droid Arabic Kufi"; font-style: normal;font-weight: 400
 .fa{ font-family:FontAwesome !important;}
 .glyphicon{ font-size:initial;}
 html {font-size: 100%;font-size: 62.5%;}    
-body{height: 100%; width:100%;background-color:#F7F7F7;font-family:Arial,Verdana, Geneva, Tahoma, sans-serif;}
-placeholder(@color: @input-color-placeholder) {&::-moz-placeholder{ color:#d9b672;} &:-ms-input-placeholder{ color:#d9b672;}  &::-webkit-input-placeholder{color:#d9b672;} }
+body{height: 100%; width:100%;background-color:#fafafa;font-family:Arial,Verdana, Geneva, Tahoma, sans-serif;}
+/*placeholder(@color: @input-color-placeholder) {&::-moz-placeholder{ color:#d9b672;} &:-ms-input-placeholder{ color:#d9b672;}  &::-webkit-input-placeholder{color:#d9b672;} }*/
 
 a:focus{ outline:thin none; }
 .navbar-toggle{ margin:0px; background-color:#666;}
@@ -40,7 +40,7 @@ section{ margin:0 0 20px;}
 .control .hvr-underline-from-right::before{ background-color:#E8BE6F;}
 .search .input-group .form-control, .search .input-group-btn .btn {border-radius: 0 0 0 0; font-family:droid arabic kufi;}
 .search .form-control:focus{ box-shadow:0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(217, 177, 99, 0.6); border-color:#d9b163; outline:0 none;}
-.btn-success:hover, .btn-success:focus, .search .btn-success, .news-butt, .butt-yellow{ background-color:#d9b672; background-image:  linear-gradient(to bottom, #d9b163 0px, #f0c675 100%); border-color:#d9b672;color: #ffffff; font-family:"Droid Arabic Kufi";}
+.btn-success:hover, .btn-success:focus, .search .btn-success, .news-butt, .butt-yellow, .login{ border-radius:0 0; background-color:#d9b672; background-image:  linear-gradient(to bottom, #d9b163 0px, #f0c675 100%); border-color:#d9b672;color: #ffffff; font-family:"Droid Arabic Kufi";}
 .search .btn-success:hover, .search .btn-success:focus .news-butt:hover, .input-group-btn > .btn-hover{ background-color: #E2C894!important; color:#000;}
 .description{font-size:1.2em; color:#47423d; font-family:"Droid Arabic Kufi";}
 .new-eastlaws{ margin-top:40px;}
@@ -299,7 +299,8 @@ p.total-chart {color:#666; font:bold 14px arial;}
 .filter-section .panel-heading{ padding:0px;}
 .filter-search .panel-default > .panel-heading{}
 .filter-search .filter-section .well .panel-body{ padding:0px; overflow-y:auto;}
-.filter-section h5 a{ font-size:0.78em; background-color:#675650; color:#FFF; padding:12px 10px; margin:0px; border-bottom:4px solid #e8bf6f; display:block; text-decoration:none;} 
+.filter-section h5 a{ font-size:0.78em; background-color:#675650; background-image:linear-gradient(to bottom, #61504a 0px, #52413b 50%); color:#FFF; padding:12px 10px; margin:0px; border-bottom:4px solid #e8bf6f; display:block; text-decoration:none;} 
+.filter-section h5 a:hover{ color:#d9b163;}
 .filter-section .list-group-item.active, .filter-section .list-group-item.active:focus, .filter-section .list-group-item.active:hover{ background-color:#1b9e74; background-image:none; margin-left:2px; border-bottom:1px solid #CCC;}
 .filter-element{ margin:10px 0 20px;}
 .filter-element ul{ list-style:none outside none; padding:0px; margin:0px;}
@@ -464,6 +465,12 @@ thead { background-color:#fff9d9;  color:#333; font:0.68em "Droid Arabic Kufi",a
 .inner-tab .tabs-right > .nav-tabs > li > a:hover, .inner-tab .tabs-right > .nav-tabs > li > a:focus {}
 .inner-tab .tabs-right > .nav-tabs .active > a, .inner-tab .tabs-right > .nav-tabs .active > a:hover, .tabs-right > .nav-tabs .active > a:focus { /*border-color: #ddd #ddd #ddd transparent;*/ background-color:#675650;}
 
-
+/*Register*/
+.login-sign-up{ font-family:'Droid Arabic Kufi';}
+.login-sign-up .panel-info{box-shadow:0 2px 5px rgba(0, 0, 0, 0.1), 0 1px 0 white inset, 0 -1px 0 rgba(255, 255, 255, 0.7) inset; border:1px solid #f3e2dc;}
+.login-sign-up .panel-info > .panel-heading{background-image:linear-gradient(to bottom, #61504a 0px, #52413b 50%);background-repeat: repeat-x; /*background-color:#675650;*/ border-color: transparent;color: #31708f;}
+.login-sign-up .panel-title{ font:1em 'Droid Arabic Kufi'; color:#FFF;}
+.login-sign-up .input-group-addon:first-child{background-image:linear-gradient(to bottom, #d9b163 0px, #f0c675 100%);background-repeat: repeat-x; background-color:#675650; border-color:#cccccc;}
+.login-sign-up .panel-heading a{color:#ebbf70; font-size:0.8em;}
 
 
