@@ -26,9 +26,9 @@ namespace Eastlaws.Infrastructure
         private const int MIN_PREDICATE_LENGTH = 2;
         private const int MAX_PREDICATE_LENGTH = 1000;
 
-        
 
-        public string Input { get; }
+
+        public string Input { get; set; } = "";
         public string Output { get; private set; } = null;    
         public FTSSqlModes SqlMode { get; set; } = FTSSqlModes.None;
         private bool IsPredicateBuilt { get; set; } = false;
@@ -46,7 +46,10 @@ namespace Eastlaws.Infrastructure
         }
 
 
+        public FTSPredicate()
+        {
 
+        }
         public FTSPredicate(string Input)
         {
             this.Input = Input;

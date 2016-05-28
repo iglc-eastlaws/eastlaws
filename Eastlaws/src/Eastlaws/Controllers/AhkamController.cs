@@ -68,7 +68,22 @@ namespace Eastlaws.Controllers
 
 
        
+        // Mada Search 
+        [HttpPost]
+        public IActionResult SearchResultAssemblyMada(AhkamMadaSearch MadaObj , AhkamSearchOptions Options , List<AhkamTasfeyaSelection> TasfeyaSelection)
+        {
+            AhkamPresentation Model =  AhkamService.Search(Options, MadaObj, TasfeyaSelection);
+            if (Model.IsValid)
+            {
+                return View("SearchResult", Model);
+            }
+            else
+            {
+                return View("SearchResult");
+            } 
+        }
 
+        // Full Advanced Search 
         [HttpPost]
         public IActionResult SearchResultAssembly(SearchParms SearchParms)
         {
@@ -204,8 +219,7 @@ namespace Eastlaws.Controllers
             // needs to be sent as a param 
             AhkamSearchTypes SearchType = AhkamSearchTypes.Advanced;
 
-            List<AhkamTasfeyaCategory> UsedCategories;
-            //   var Data = AhkamTasfeya.List(Obj, SearchType, out UsedCategories, SarchTasfyaParms.TasfeyaSearchText, PreviousSelectedItems,null);
+            List<AhkamTasfeyaCategory> UsedCategories;            
             var Data = AhkamTasfeya.List(Obj, SearchType, out UsedCategories, SarchTasfyaParms.TasfeyaSearchText, PreviousSelectedItems,(AhkamTasfeyaCategoryIds?)SarchTasfyaParms.SelectedCatgID);
 
             var datajson = new[] {
@@ -213,9 +227,8 @@ namespace Eastlaws.Controllers
                 new object[] { "Catg" , UsedCategories }
             };
             return new JsonResult(datajson);
-
-
         }
+
 
         public JsonResult GetCountries()
         {

@@ -36,7 +36,7 @@ namespace Eastlaws.ViewModels.Ahkam
 
     }
 
-        public class AssemblySearch
+    public class AssemblySearch
     {
         public int? alltextSearchType { get; set; } = 0;
         public string Alltext { get; set; } = "";

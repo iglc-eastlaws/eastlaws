@@ -285,7 +285,7 @@ namespace Eastlaws.Services
             
 
 
-            if (!ObjSearch.SearchPredicate.IsValid)
+            if (ObjSearch.SearchPredicate != null && !ObjSearch.SearchPredicate.IsValid)
             {
                 // No Text search return master Query Only 
                 return TashToAhkam( Builder.ToString());

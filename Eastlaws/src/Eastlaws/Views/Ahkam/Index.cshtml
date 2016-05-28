@@ -863,7 +863,28 @@
 
 
 
+        function TestMadaSearch() {
+            var Data = {};
+            Data.MadaObj = {
+                SearchInMadaText: false,
+                CountryIds: '1,2,3,4,5,6',
+                TashNo: '1-150'
+                ,SearchPredicate: { Input: 'عقوبات' }
 
+            };
+            Data.Options = {
+                SortBy : 3
+            };
+            Data.TasfeyaSelection = {
+
+            };
+   
+
+            $.post('/Ahkam/SearchResultAssemblyMada/', Data, function (Return) {
+                alert(Return);
+            });
+
+        }
 
 
     </script>
