@@ -92,6 +92,20 @@ namespace Eastlaws.Services
             return Data;
         }
 
+
+        public static IEnumerable<TasfeyaItem> List(AhkamMadaSearch Obj, AhkamSearchTypes SearchType, out List<AhkamTasfeyaCategory> UsedCategories, string TasfeyaFilter = "", IEnumerable<AhkamTasfeyaSelection> SelectedTasfeya = null, AhkamTasfeyaCategoryIds? CategorySender = null)
+        {
+
+
+            string FakaratQueryCustom;
+            List<FTSPredicate> SearchPredicates;
+            string InnerQuery = AhkamQueryBuilder.MadaSearch(Obj, out FakaratQueryCustom, out SearchPredicates);
+            QueryCacher Cacher = new QueryCacher((int)LegalServices.Ahkam, InnerQuery, SearchType.ToString(), NewSearch: false, SecondaryQuery: FakaratQueryCustom);
+            int QueryID = Cacher.ID;
+            var Data = AhkamTasfeya.List(QueryID, SearchType, out UsedCategories, TasfeyaFilter, SelectedTasfeya, CategorySender);
+            return Data;
+        }
+
         public static IEnumerable<TasfeyaItem> List (int QueryID , AhkamSearchTypes SearchType, out List<AhkamTasfeyaCategory> UsedCategories , string TasfeyaFilter = "" , IEnumerable<AhkamTasfeyaSelection> SelectedTasfeya = null, AhkamTasfeyaCategoryIds? CategorySender = null )
         {
             List<AhkamTasfeyaCategory> Cats =  GetAllCategories();

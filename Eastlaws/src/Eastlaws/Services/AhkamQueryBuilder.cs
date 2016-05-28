@@ -237,6 +237,14 @@ namespace Eastlaws.Services
         }
 
 
+        private static string TashToAhkam(string TashQuery)
+        {
+            return "SELECT TA.HokmID AS ID ,Sum(TQ.DefaultRank) AS DefaultRank  FROM  "
+                + "\n" + "( " + TashQuery + " ) TQ"
+                + "\n" + "JOIN dbo.Tashree3atAhkam TA  ON ta.TashID = TQ.ID "
+                + "\n" + "GROUP BY TA.HokmID ";            
+        }
+
         public static string MadaSearch(AhkamMadaSearch ObjSearch , out string FakaratQuery , out List<FTSPredicate> TextMatches)
         {
             TextMatches = null;
@@ -280,7 +288,7 @@ namespace Eastlaws.Services
             if (!ObjSearch.SearchPredicate.IsValid)
             {
                 // No Text search return master Query Only 
-                return Builder.ToString();
+                return TashToAhkam( Builder.ToString());
             }
             else
             {
@@ -311,7 +319,7 @@ namespace Eastlaws.Services
                 
                 if(ObjSearch.SearchInMadaText && ObjSearch.SearchInTashText)
                 {
-                    TextQuery = "Select ID , Sum(DefaultRank) From ("
+                    TextQuery = "Select ID , Sum(DefaultRank) as  DefaultRank From ("
                         + "\n" + TashTextQuery
                         + "\n" + "Union All "
                         + "\n" + MadaTextQuery
@@ -329,7 +337,7 @@ namespace Eastlaws.Services
                 }
 
                 string RetVal = "Select TTS.* From ("  + TextQuery + ") TTS Join (" +  MasterQueries[0]  +  ") MQ on MQ.ID = TTS.ID";
-
+                RetVal = TashToAhkam(RetVal);
                 return RetVal;
             }    
             
@@ -467,9 +475,6 @@ namespace Eastlaws.Services
         public static string GetOuterQuery(QueryCacher Cacher, AhkamSearchOptions Options, string CustomFakaratQuery = null , List<AhkamTasfeyaSelection> TasfeyaSelection = null)
         {
             StringBuilder builder = new StringBuilder(2048);
-
-
-
 
             QuerySortInfo Info = GetSortQuery(Options);
             string InnerQuery = Cacher.GetCachedQuery(Info.SortQuery , Info.ColumnName);
