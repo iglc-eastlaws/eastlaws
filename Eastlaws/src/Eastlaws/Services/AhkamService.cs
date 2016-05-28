@@ -77,14 +77,15 @@ namespace Eastlaws.Services
             throw new NotImplementedException();
         }
 
-
         // Mada Search
-        public static AhkamPresentation Search(AhkamSearchOptions Options , int? CountryID, string TashNo, string TashYear, string MadaNo, FTSPredicate TashTextPredicate, bool SearchInTashTile = true, bool SearchInTashMawad = true)
+        public static AhkamPresentation Search(AhkamSearchOptions Options, AhkamMadaSearch SrchObj, List<AhkamTasfeyaSelection> TasfeyaSelection = null)
         {
-            return null;
-           // string InnerQuery = AhkamQueryBuilder.MadaSearch(CountryID, TashNo, TashYear, MadaNo, TashTextPredicate, SearchInTashTile, SearchInTashMawad);
-            //return Search(InnerQuery, Options, null, AhkamSearchTypes.Mada);
+            string FakaratQueryCustom;
+            List<FTSPredicate> SearchPredicates;
+            string InnerQuery =  AhkamQueryBuilder.MadaSearch(SrchObj, out FakaratQueryCustom, out SearchPredicates);
+            return Search(InnerQuery, Options, FakaratQueryCustom, AhkamSearchTypes.Advanced, null, SearchPredicates, TasfeyaSelection);            
         }
+
 
 
         public static AhkamPresentation GetLatest(AhkamSearchOptions Options , int DaysCount = 10)
