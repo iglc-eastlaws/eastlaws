@@ -28,10 +28,10 @@
                     </div>
 
                     <div role="tabpanel" class="tab-pane" id="mada">
-                        <div class="search-form form-horizontal">@Html.Partial("_tadbekMadaSearch")</div>
+                        <div class="search-form form-horizontal" ng-controller="tadbekMadaSerachCtrl"> @Html.Partial("_tadbekMadaSearch")</div>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="fahras">
-                        <div class="search-form ">@Html.Partial("_MowdoeSearch")  </div>
+                        <div class="search-form ">@Html.Partial("_FehresSearch")  </div>
                     </div>
 
                 </div>
@@ -783,6 +783,38 @@
                 }
 
             })
+            .controller('tadbekMadaSerachCtrl', function ($scope) {
+               // function TestMadaSearch() {
+                    var Data = {};
+                    Data.MadaObj = {
+                        SearchInMadaText: false,
+                        CountryIds: '1,2,3,4,5,6',
+                        TashNo: '1-150'
+                        , SearchPredicate: { Input: '' }
+
+                    };
+                    Data.Options = {
+                        SortBy: 3
+                    };
+                    Data.TasfeyaSelection = {
+
+                    };
+
+
+                    //$.post('/Ahkam/SearchResultAssemblyMada/', Data, function (Return) {
+                    //    alert(Return);
+                    //});
+
+                //}
+
+                $scope.search = function () {
+                    $.post('/Ahkam/SearchResultAssemblyMada/', Data, function (Return) {
+                       // alert(Return);
+
+                        $('#searchResult').html(Return);
+                    });
+                }
+            })
             .factory('tasfiaData', function ($http, $rootScope) {
                 var data = {};
                 data.list = [];
@@ -863,28 +895,7 @@
 
 
 
-        function TestMadaSearch() {
-            var Data = {};
-            Data.MadaObj = {
-                SearchInMadaText: false,
-                CountryIds: '1,2,3,4,5,6',
-                TashNo: '1-150'
-                ,SearchPredicate: { Input: 'عقوبات' }
-
-            };
-            Data.Options = {
-                SortBy : 3
-            };
-            Data.TasfeyaSelection = {
-
-            };
    
-
-            $.post('/Ahkam/SearchResultAssemblyMada/', Data, function (Return) {
-                alert(Return);
-            });
-
-        }
 
 
     </script>
