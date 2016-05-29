@@ -31,7 +31,7 @@
                         <div class="search-form form-horizontal" ng-controller="tadbekMadaSerachCtrl"> @Html.Partial("_tadbekMadaSearch")</div>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="fahras">
-                        <div class="search-form ">@Html.Partial("_FehresSearch")  </div>
+                        <div class="search-form" ng-controller="fehressSearchCtrl">@Html.Partial("_FehresSearch")  </div>
                     </div>
 
                 </div>
@@ -427,6 +427,18 @@
                 }
 
               //  $scope.getmypage();
+            })
+            .controller('fehressSearchCtrl', function ($scope, $http) {
+
+                $http.get('/Fehres/GetProgramsByService?servicesID='+1+'', {}).then(function (d) {
+                    $scope.fehressPrograms = d.data;
+                   // console.log($scope.fehressPrograms);
+  
+                });
+
+                $scope.search = function () {
+                    alert('fehres')
+                }
             })
             .factory('SearchData', function ($http, tasfiaData, tasfiaAllData, $rootScope) {
                 var data = {};

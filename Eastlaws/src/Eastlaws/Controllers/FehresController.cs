@@ -18,5 +18,12 @@ namespace Eastlaws.Controllers
             var m = FaharesService.GetProgramsByService(1);
             return View(m);
         }
+
+
+        public JsonResult GetProgramsByService(int servicesID)
+        {
+            var m = FaharesService.GetProgramsByService(servicesID);
+            return new JsonResult(m);
+        }
     }
 }
