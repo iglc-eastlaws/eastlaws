@@ -14,7 +14,8 @@ namespace Eastlaws.Controllers
         // GET: /<controller>/
         public IActionResult Index()
         {
-            var m = FaharesService.GetCountriesByFehressID(30);
+            //var m = FaharesService.GetCountriesByFehressID(30);
+            var m = FaharesService.GetProgramsByService(1);
             return View(m);
         }
     }

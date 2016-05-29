@@ -15,7 +15,7 @@ namespace Eastlaws.Services
     {
       
 
-        public IEnumerable<FehresProgram> GetProgramsByService (int? ServiceID)
+        public static IEnumerable<FehresProgram> GetProgramsByService (int? ServiceID)
         {
             string WhereCondition = "";
             if (ServiceID.HasValue)

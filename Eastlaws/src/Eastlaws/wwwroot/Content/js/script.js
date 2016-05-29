@@ -83,7 +83,7 @@ $(document).ready(function () {
     //});
 
     // muilt select
-    $('#example-getting-started').multiselect();
+    //$('#example-getting-started').multiselect();
 
     //$('#example-enableCollapsibleOptGroups-enableClickableOptGroups').multiselect({
     //    enableClickableOptGroups: true,
