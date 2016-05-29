@@ -14,14 +14,14 @@
                 <hr class="spacer" />
                 <label for="ddlCountries" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title"> اختيار الدولة :</label>
                 <div class="col-lg-9 col-md-9 col-sm-9 search">
-                    <select id="example-getting-started" multiple="multiple" >
+                    @*<select id="example-getting-started" multiple="multiple" >
                     <option value="جمهورية مصر العربية" >جمهورية مصر العربية</option>
                         <option value="الجمهورية اليمنية" >الجمهورية اليمنية</option>
                         <option value="المملكة المغربية" >المملكة المغربية</option>
                         <option value="دولة ليبيا" >دولة ليبيا</option>
                         <option value="دولة فلسطين" >دولة فلسطين</option>
                         <option value="سلطنة عمان" >سلطنة عمان</option>
-                    </select>
+                    </select>*@
                     <select tabindex="3" class="string search  form-control" id="ddlCountries" name="d"
                             ng-options="t.Name for t in countries track by t.ID" ng-model="country" ng-change="updatecountry()"></select>
                 </div>  <!--End Country-->
