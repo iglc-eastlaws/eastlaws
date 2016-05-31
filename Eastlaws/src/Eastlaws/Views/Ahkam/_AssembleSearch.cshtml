@@ -98,46 +98,46 @@
 
                 </div>
                 <hr class="spacer" />
-                <label for="yearTec" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title helper">  سنة المكتب الفنى : <i class="glyphicon glyphicon-question-sign fa-pull-left help " data-toggle="tooltip" data-placement="right" title="30 : 50 ( تعني من 30 الى  50)  "></i></label>
-                <div class="col-lg-3 col-md-3 col-sm-3 col-sm-2 search">
+                <label for="yearTec" class="col-lg-3 col-md-4 col-sm-3 control-label bg-color title helper search">  سنة المكتب الفنى <i class="glyphicon glyphicon-question-sign fa-pull-left help " data-toggle="tooltip" data-placement="right" title="مثال : 51,50,49-63"></i></label>
+                <div class="col-lg-3 col-md-2  col-sm-2 search">
                     <input type="text" class="form-control" id="yearTec" ng-model="Inputs.officeYear">
                 </div>
-                <label ng-show="omarGroupShow" for="amor" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title">  مجموعة عمر : <input type="checkbox" id="amor" ng-model="omarGroup" ng-click="omarGroupChecked($event)"></label>
+                <label ng-show="omarGroupShow" for="amor" class="col-lg-4 col-md-4 col-sm-4 control-label bg-color title">  مجموعة عمر : <input type="checkbox" id="amor" ng-model="omarGroup" ng-click="omarGroupChecked($event)"></label>
                 <div class="col-lg-3 col-md-3 col-sm-3 search checkbox">
 
                 </div>
                 <hr class="spacer" />
-                <label for="ta3an" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title helper">  رقم الحكم : <i class="glyphicon glyphicon-question-sign fa-pull-left help " data-toggle="tooltip" data-placement="right" title="500 : 1000, 200:400 ( تعني من1000 الى 400 و 100 الى  500)  "></i></label>
-                <div class="col-lg-3 col-md-3 col-sm-3 search">
+                <label for="ta3an" class="col-lg-3 col-md-4 col-sm-4 control-label bg-color title helper">  رقم الحكم : <i class="glyphicon glyphicon-question-sign fa-pull-left help " data-toggle="tooltip" data-placement="right" title="مثال : 2550,2500-5000 "></i></label>
+                <div class="col-lg-3 col-md-2 col-sm-2 search">
                     <input type="text" ng-model="Inputs.caseNo" class="form-control" id="ta3an">
                 </div>
-                <label class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title helper" for="yearKada">السنة القضائية :  <i class="glyphicon glyphicon-question-sign fa-pull-left help " data-toggle="tooltip" data-placement="right" title="30 : 50 ( تعني من سنة 30 الى  سنة 50)  "></i></label>
-                <div class="col-lg-3 col-md-3 col-sm-3 search">
+                <label class="col-lg-3 col-md-4 col-sm-4 control-label bg-color title helper" for="yearKada">السنة القضائية :  <i class="glyphicon glyphicon-question-sign fa-pull-left help " data-toggle="tooltip" data-placement="right" title="مثال : 60,61,62-70"></i></label>
+                <div class="col-lg-3 col-md-2 col-sm-2 search">
                     <input type="text" ng-model="Inputs.caseYear" class="form-control" id="yearKada">
                 </div>
                 <hr class="spacer" />
 
-                <label for="horizontal_search" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title helper">
+                <label for="horizontal_search" class="col-lg-3 col-md-4 col-sm4 control-label bg-color title helper">
                     رقم الجزء :
-                    <i class="glyphicon glyphicon-question-sign fa-pull-left help " data-toggle="tooltip" data-placement="right" title="1الى  50 "></i>
+                    <i class="glyphicon glyphicon-question-sign fa-pull-left help " data-toggle="tooltip" data-placement="right" title="مثال : 11,10-150 "></i>
                 </label>
-                <div class="col-lg-3 col-md-3 col-sm-3 search">
+                <div class="col-lg-3 col-md-2 col-sm-2 search">
                     <input type="text" ng-model="Inputs.partNo" class="string   form-control">
                 </div>
 
-                <label for="pageNumber" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title helper"> رقم الصفحة : <i class="glyphicon glyphicon-question-sign fa-pull-left help " data-toggle="tooltip" data-placement="right" title="1الى  50 "></i></label>
-                <div class="col-lg-3 col-md-3 col-sm-3 search">
+                <label for="pageNumber" class="col-lg-3 col-md-4 col-sm-4 control-label bg-color title helper"> رقم الصفحة : <i class="glyphicon glyphicon-question-sign fa-pull-left help " data-toggle="tooltip" data-placement="right" title="مثال : 2,1-4 "></i></label>
+                <div class="col-lg-3 col-md-2 col-sm-2 search">
                     <input type="text" ng-model="Inputs.pageNo" class="string   form-control" id="pageNumber">
                 </div>
                 <hr class="spacer" />
-                <label for="horizontal_search" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title helper"> تاريخ الجلسة من : <i class="glyphicon glyphicon-question-sign fa-pull-left help " data-toggle="tooltip" data-placement="right" title="18-05-2016"></i></label>
-                <div class="col-lg-3 col-md-3   search">
+                <label for="horizontal_search" class="col-lg-3 col-md-4 col-sm-4 control-label bg-color title helper search"> تاريخ الجلسة من : <i class="glyphicon glyphicon-question-sign fa-pull-left help " data-toggle="tooltip" data-placement="right" title="مثال: 28/12/2014"></i></label>
+                <div class="col-lg-3 col-md-2   search">
                     <c-date-picker date="Inputs.dateGalsaFrom"></c-date-picker>
                 </div>
 
-                <label for="horizontal_search" class="col-lg-3 col-md-3 col-sm-3 control-label bg-color title helper "> إلى: <i class="glyphicon glyphicon-question-sign fa-pull-left help " data-toggle="tooltip" data-placement="right" title="18-05-2016"></i></label>
+                <label for="horizontal_search" class="col-lg-3 col-md-4 col-sm-4 control-label bg-color title helper "> إلى: <i class="glyphicon glyphicon-question-sign fa-pull-left help " data-toggle="tooltip" data-placement="right" title="مثال: 28/12/2015"></i></label>
 
-                <div class="col-lg-3 col-md-3 search">
+                <div class="col-lg-3 col-md-2 search">
                     <c-date-picker date="Inputs.dateGalsaTo"></c-date-picker>
                 </div>
 
