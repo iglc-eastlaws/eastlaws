@@ -3,10 +3,12 @@
     <hr class="spacer" />
     <div class="tabbable tabs-right">
         <ul class="nav nav-tabs">
-             <li class="active"><a href="#GeneralTab" data-toggle="tab">الفهرس العام</a></li>
+
+            <li ng-repeat="n in fehressPrograms"><a href="#defoaTab" data-toggle="tab">{{n.Name}}</a></li>
+             @*<li class="active"><a href="#GeneralTab" data-toggle="tab">الفهرس العام</a></li>
             <li><a href="#defoaTab" data-toggle="tab">بحث بالدفوع </a></li>
             <li><a href="#manaeTab" data-toggle="tab">بحث بالمناعي</a></li>
-            <li><a href="#systemTab" data-toggle="tab">النظام العام</a></li>
+            <li><a href="#systemTab" data-toggle="tab">النظام العام</a></li>*@
         </ul>
         <div class="tab-content">
            <div class="input-group">
@@ -42,7 +44,7 @@
                        &nbsp; &nbsp;
                        @*<label class="control-label bg-color title" >بحث فى الفهرس :  </label>*@
                        <input type="text"  class="form-control " placeholder="بحث فى الفهرس " style="width:auto;">
-                       <input type="submit" value="بـحـث" class="btn butt-yellow">
+                       <input type="submit" value="بـحـث" class="btn butt-yellow" ng-click="search()">
                  </form>
                </div>
 

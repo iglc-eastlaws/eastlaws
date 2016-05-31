@@ -29,15 +29,19 @@ namespace Eastlaws.Services
                 {
                     WhereCondition = "";
                 }
+                else if(ServiceID.Value == 3)
+                {
+
+                }
             }
             else
             {
                 // All Fehres Programs 
-                WhereCondition = " Where (IfShow = 1 ) ";
+                WhereCondition = " Where (fp.IfShow = 1 ) ";
             }
-            string Query = " SELECT fp.ID, Name, AlterName, IfShow, MyOrder FROM dbo.FehresPrograms fp "
+            string Query = " SELECT fp.ID, fp.Name, fp.AlterName, fp.IfShow, fp.MyOrder FROM dbo.FehresPrograms fp "
                 + "\n" +  WhereCondition 
-                + "\n" + " ORDER BY MyOrder ";
+                + "\n" + " ORDER BY fp.MyOrder ";
 
 
             using (var Connection = DataHelpers.GetConnection(DbConnections.Data))
@@ -48,20 +52,21 @@ namespace Eastlaws.Services
         }
 
 
-        public static IEnumerable<Country> GetCountriesByFehressID(int FehressID)
+        public static IEnumerable<Country> GetCountriesByFehressID(int FehresProgramID)
         {
             StringBuilder Q = new StringBuilder();
             Q.AppendFormat(@"select t2.ID,t2.Name,t2.EnName,t2.FlagPic
                                     from FehresProgCountry as t1
                                     inner join Countries as t2 on t1.CountryID = t2.ID
-                                    where t1.FehresPogramID = {0}", FehressID);
+                                    where t1.FehresPogramID = {0}", FehresProgramID);
 
             using (var Connection = DataHelpers.GetConnection(DbConnections.Data))
             {
                 return Connection.Query<Country>(Q.ToString());
             }
-
         }
+
+        
 
 
 
