@@ -9,6 +9,7 @@ namespace Eastlaws.ViewModels.Ahkam
     public class SearchParms
     {
         public AssemblySearch AssemblySearch { get; set; }
+        public Tadbe2atMadaSearch Tadbe2atMadaSearchSearch { get; set; }
         public SearchTools SearchTools { get; set; }
         public List<AhkamTasfeyaSelection> ahkamTasfeya { get; set; }
  
@@ -59,5 +60,15 @@ namespace Eastlaws.ViewModels.Ahkam
         public string mahakem { get; set; } = "";
         public string MahkamaReplay { get; set; } = "";
         public string omarGroup { get; set; } = "";
+    }
+
+    public class Tadbe2atMadaSearch
+    {
+        public int? MadaTextType { get; set; } = 0;
+        public string MadaText { get; set; } = "";
+        public string country { get; set; } = "";
+        public string tashNo { get; set; } = "";
+        public string tashYear { get; set; } = "";
+        public string madaNo { get; set; } = "";
     }
 }

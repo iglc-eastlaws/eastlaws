@@ -313,7 +313,7 @@
                      SearchData.GetSearch();
                  };
             })
-            .controller('tadbekMadaSerachCtrl', function ($scope, $http) {
+            .controller('tadbekMadaSerachCtrl', function ($scope, $http, SearchData, tasfiaData) {
                 $scope.Inputs = {};
                 $scope.countries = [];
                 $scope.updatecountry = function () {
@@ -328,6 +328,16 @@
                 $scope.search = function () {
                     
                     console.log($scope.Inputs);
+
+
+                    tasfiaData.clearall();
+                    SearchData.searchType = 2;
+                    SearchData.newSearch = true;
+                    SearchData.newtasfya = true;
+                    SearchData.currentPage = 1;
+                    SearchData.MadaTadbeatSearchInputs = $scope.Inputs;
+                    SearchData.Latest = false;
+                    SearchData.GetSearch();
                 }
 
                 /* // function TestMadaSearch() {
@@ -488,10 +498,11 @@
             })
             .factory('SearchData', function ($http, tasfiaData, tasfiaAllData, $rootScope) {
                 var data = {};
-                data.searchType = 1;             //GeneralSearch 1   advancedserch 2  .... etc
+                data.searchType = 1;             //assymbleSearch 1   tadbeaatMada 2  .... etc
                 data.pageSize = 10;
                 data.pageCount = 0;
                 data.AssembleSearchInputs = {};
+                data.MadaTadbeatSearchInputs = {};
                 data.TotalCount = 0;
                 data.currentPage = 1;
                 data.typeView = 2;                   //rows - grid - table
@@ -511,10 +522,11 @@
 
                 data.TasfeyaSearchText = '';
 
+           
+
                 data.GetSearch = function () {
 
-                    if (data.searchType === 1) // AssymbleSearch
-                    {
+                    if ((data.searchType === 1) || (data.searchType === 2)) {
                         data.SearchTools.PageNo = data.currentPage;
                         data.SearchTools.Sort = data.sortType;
                         data.SearchTools.pageSize = data.pageSize;
@@ -522,6 +534,13 @@
                         data.SearchTools.Days = data.days;
                         data.SearchTools.typeView = data.typeView;
                         data.SearchTools.SortDir = data.sortTypeDir;
+                    }
+
+                    if (data.searchType === 1) // AssymbleSearch
+                    {
+                        var SearchURL = '/Ahkam/SearchResultAssembly';
+                        var tasfyaURL = '/Ahkam/TasfeyaListJson';
+
                         var obj = {
                             AssemblySearch: data.AssembleSearchInputs,
                             SearchTools: data.SearchTools,
@@ -534,15 +553,38 @@
                             TasfeyaSearchText: data.TasfeyaSearchText,
                             SelectedCatgID: data.SelectedCatgID
                         };
+                    }
 
-                     
-                     // console.log(obj);
+
+                    if (data.searchType === 2) // TadbeaatMadaSearch
+                    {
+                        alert('000000');
+
+                        var SearchURL = '/Ahkam/SearchResultTadbe2atMada';
+                        var tasfyaURL = '/Ahkam/TasfeyaListJson';
+
+                        var obj = {
+                            AssemblySearch: data.MadaTadbeatSearchInputs,
+                            SearchTools: data.SearchTools,
+                            ahkamTasfeya: data.ahkamlist
+                        };
+
+                        var tasfyaObj = {
+                            AssemblySearch: data.AssembleSearchInputs,
+                            ahkamTasfeyaList: data.ahkamlist,
+                            TasfeyaSearchText: data.TasfeyaSearchText,
+                            SelectedCatgID: data.SelectedCatgID
+                        };
+                    }
+
+                    if ((data.searchType === 1) || (data.searchType === 2))
+                    {
 
                         if (data.newSearch == true) {
                             $('#searchResult').html('<img src="/content/images/preload.gif" />');
 
                             $.ajax({
-                                url: "/Ahkam/SearchResultAssembly",
+                                url: SearchURL,
                                 type: "POST",
                                 data: { "SearchParms": obj },
 
@@ -552,47 +594,6 @@
                                         searchresult.html(d);
 
                                         $('body').animate({ scrollTop: $("#TotalCount").offset().top }, 1000, function () {
-                                            //console.log(data.newtasfya)
-                                            //if (data.newtasfya == true) {
-
-                                            //    //console.log('------------- 1 ----------------')
-                                            //    for (var i = 0; i < $rootScope.catgDistinct.length; i++) {
-                                            //        //console.log($rootScope.catgDistinct[i])
-                                            //    }
-
-                                            //    //console.log('------------- 2 ----------------')
-
-                                            //    $rootScope.catgDistinct = [];
-                                            //    //console.log('------------- 3 ----------------')
-                                            //    for (var i = 0; i < $rootScope.catgDistinct.length; i++) {
-                                            //      //  console.log($rootScope.catgDistinct[i])
-                                            //    }
-                                            //    //console.log('------------- 4 ----------------')
-                                            //    //tasfiaAllData.getTasyaList();
-
-
-                                            //    //console.log(tasfyaObj.ahkamTasfeyaList)
-
-
-                                            //    $('#tasfyaLood').show();
-                                            //    $('#Div-tasfya').hide();
-                                            //    $.ajax({
-                                            //        url: "/Ahkam/TasfeyaListJson",
-                                            //        type: "POST",
-                                            //        data: { "SarchTasfyaParms": tasfyaObj },
-                                            //        success: function (d) {
-                                            //            $rootScope.$apply(function () {
-
-                                            //            $('#Div-tasfya').show(); $('#tasfyaLood').hide();
-                                            //            data.datalist.listAllTasfya = d[0][1];
-                                            //            data.datalist.listAllCatg = d[1][1];
-                                            //            $rootScope.$broadcast('getTasfiyaList');
-                                            //            });
-
-                                            //        }
-                                            //    });
-
-                                            //}
                                         });
 
                                         if (data.newSearch == true) {
@@ -614,24 +615,12 @@
 
                                             }
 
-
-
-
                                         }
-
-
-
-
-                                        //get tasfya
-
-
-
 
                                     });
                                 }
                             });
                         }
-
 
                         if (data.newtasfya == true) {
 
@@ -646,23 +635,20 @@
                             //for (var i = 0; i < $rootScope.catgDistinct.length; i++) {
                             //    //  console.log($rootScope.catgDistinct[i])
                             //}
-  
+
 
 
                             $('#tasfyaLood').show();
                             $('#Div-tasfya').hide();
                             $.ajax({
-                                url: "/Ahkam/TasfeyaListJson",
+                                url: tasfyaURL,
                                 type: "POST",
                                 data: { "SarchTasfyaParms": tasfyaObj },
                                 success: function (d) {
                                     $rootScope.$apply(function () {
-
                                         $('#Div-tasfya').show(); $('#tasfyaLood').hide();
                                         data.datalist.listAllTasfya = d[0][1];
                                         data.datalist.listAllCatg = d[1][1];
-
-                                        //console.log(data.datalist.listAllTasfya)
                                         $rootScope.$broadcast('getTasfiyaList');
                                     });
 
@@ -670,10 +656,11 @@
                             });
 
                         }
-
-
-
                     }
+
+
+
+                   
                 };
 
                 return data;

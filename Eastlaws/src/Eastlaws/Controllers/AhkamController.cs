@@ -113,7 +113,56 @@ namespace Eastlaws.Controllers
             }
 
         }
-       
+
+
+        // tadbe2at mada Search 
+        [HttpPost]
+        public IActionResult SearchResultTadbe2atMada(SearchParms SearchParms)
+        {
+            //AssemblySearch AssembleSearchInputs = SearchParms.AssemblySearch;
+            //SearchTools SearchTools = SearchParms.SearchTools;
+
+            //int PageNo = SearchTools.PageNo;
+            //int Sort = SearchTools.Sort;
+            //int pageSize = SearchTools.pageSize;
+            //bool Latest = SearchTools.Latest;
+            //int Days = SearchTools.Days;
+            //int typeView = SearchTools.typeView;
+            //int SortDir = SearchTools.SortDir;
+
+            //ViewBag.typeView = typeView;
+            //AhkamPresentation Model = new AhkamPresentation();
+            //AhkamSearchOptions Options = new AhkamSearchOptions { SortBy = (AhkamSortColumns)Sort, PageNo = PageNo, PageSize = pageSize, SortDirection = (SearchSortType)SortDir };
+
+            //if (Latest == true)
+            //{
+            //    Model = AhkamService.GetLatestByDate(Options, SearchParms.ahkamTasfeya);
+            //}
+            //else
+            //{
+            //    AhkamAdvancedSearch Obj = GetSearchObject(AssembleSearchInputs);
+            //    if (SearchParms.ahkamTasfeya != null)
+            //    {
+            //        Model = AhkamService.Search(Options, Obj, SearchParms.ahkamTasfeya);
+            //    }
+            //    else
+            //    {
+            //        Model = AhkamService.Search(Options, Obj);
+            //    }
+
+            //}
+            //if (Model.IsValid)
+            //{
+            //    return View("SearchResult", Model);
+            //}
+            //else
+            //{
+            //    return View("SearchResult");
+            //}
+
+            return View("SearchResult");
+
+        }
         // Mada Search 
         [HttpPost]
         public IActionResult SearchResultAssemblyMada(AhkamMadaSearch MadaObj , AhkamSearchOptions Options , List<AhkamTasfeyaSelection> TasfeyaSelection)
