@@ -151,8 +151,8 @@ namespace Eastlaws.Services
             if(TasfeyaSelection != null && TasfeyaSelection.Count > 0)
             {
                 string CountQuery = AhkamQueryBuilder.ResolveTasfeyaQuery(TasfeyaSelection ,
-                    @"SELECT Count(*) FROM EastlawsUsers..QueryCacheRecords QCR 
-                    Join Ahkam AMS  on AMS.ID = QCR.ItemID
+                    @"SELECT Count(*) FROM EastlawsUsers..QueryCacheRecords QCR With (Nolock)
+                    Join Ahkam AMS  With (Nolock) on AMS.ID = QCR.ItemID
                     WHERE QCR.MasterID = " + Cacher.ID);
                 int NewCount = 0;
                 using(var conCount = DataHelpers.GetConnection(DbConnections.Data))
