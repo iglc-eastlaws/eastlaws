@@ -72,9 +72,11 @@ namespace Eastlaws.Controllers
             Obj.SearchPredicate = new FTSPredicate(string.IsNullOrEmpty(Tadbe2atMadaSearch.MadaText) ? "" : Tadbe2atMadaSearch.MadaText, (FTSSqlModes)Tadbe2atMadaSearch.MadaTextType);
             Obj.SearchInMadaText = true;
             Obj.SearchInTashText = true;
+            Obj.CountryIds = Tadbe2atMadaSearch.country;
             Obj.MadaNo = Tadbe2atMadaSearch.madaNo;
             Obj.MadaNo = Tadbe2atMadaSearch.tashNo;
             Obj.MadaNo = Tadbe2atMadaSearch.tashYear;
+           
 
             return Obj;
         }
