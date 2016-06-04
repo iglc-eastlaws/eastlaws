@@ -66,6 +66,18 @@ namespace Eastlaws.Controllers
             return Obj;
         }
 
+        private AhkamMadaSearch GetTadbe2atMadaSearchObject(Tadbe2atMadaSearch Tadbe2atMadaSearch)
+        {
+            AhkamMadaSearch Obj = new AhkamMadaSearch();
+            Obj.SearchPredicate = new FTSPredicate(string.IsNullOrEmpty(Tadbe2atMadaSearch.MadaText) ? "" : Tadbe2atMadaSearch.MadaText, (FTSSqlModes)Tadbe2atMadaSearch.MadaTextType);
+            Obj.SearchInMadaText = true;
+            Obj.SearchInTashText = true;
+            Obj.MadaNo = Tadbe2atMadaSearch.madaNo;
+            Obj.MadaNo = Tadbe2atMadaSearch.tashNo;
+            Obj.MadaNo = Tadbe2atMadaSearch.tashYear;
+
+            return Obj;
+        }
 
         // Full Advanced Search 
         [HttpPost]
@@ -119,48 +131,38 @@ namespace Eastlaws.Controllers
         [HttpPost]
         public IActionResult SearchResultTadbe2atMada(SearchParms SearchParms)
         {
-            //AssemblySearch AssembleSearchInputs = SearchParms.AssemblySearch;
-            //SearchTools SearchTools = SearchParms.SearchTools;
+            Tadbe2atMadaSearch tadbe2atSearchInputs = SearchParms.Tadbe2atMadaSearchSearch;
+             SearchTools SearchTools = SearchParms.SearchTools;
 
-            //int PageNo = SearchTools.PageNo;
-            //int Sort = SearchTools.Sort;
-            //int pageSize = SearchTools.pageSize;
-            //bool Latest = SearchTools.Latest;
-            //int Days = SearchTools.Days;
-            //int typeView = SearchTools.typeView;
-            //int SortDir = SearchTools.SortDir;
+            int PageNo = SearchTools.PageNo;
+            int Sort = SearchTools.Sort;
+            int pageSize = SearchTools.pageSize;
+            int Days = SearchTools.Days;
+            int typeView = SearchTools.typeView;
+            int SortDir = SearchTools.SortDir;
 
-            //ViewBag.typeView = typeView;
-            //AhkamPresentation Model = new AhkamPresentation();
-            //AhkamSearchOptions Options = new AhkamSearchOptions { SortBy = (AhkamSortColumns)Sort, PageNo = PageNo, PageSize = pageSize, SortDirection = (SearchSortType)SortDir };
+            ViewBag.typeView = typeView;
+            AhkamPresentation Model = new AhkamPresentation();
+            AhkamSearchOptions Options = new AhkamSearchOptions { SortBy = (AhkamSortColumns)Sort, PageNo = PageNo, PageSize = pageSize, SortDirection = (SearchSortType)SortDir };
 
-            //if (Latest == true)
-            //{
-            //    Model = AhkamService.GetLatestByDate(Options, SearchParms.ahkamTasfeya);
-            //}
-            //else
-            //{
-            //    AhkamAdvancedSearch Obj = GetSearchObject(AssembleSearchInputs);
-            //    if (SearchParms.ahkamTasfeya != null)
-            //    {
-            //        Model = AhkamService.Search(Options, Obj, SearchParms.ahkamTasfeya);
-            //    }
-            //    else
-            //    {
-            //        Model = AhkamService.Search(Options, Obj);
-            //    }
-
-            //}
-            //if (Model.IsValid)
-            //{
-            //    return View("SearchResult", Model);
-            //}
-            //else
-            //{
-            //    return View("SearchResult");
-            //}
-
-            return View("SearchResult");
+            AhkamMadaSearch Obj = GetTadbe2atMadaSearchObject(tadbe2atSearchInputs);
+            if (SearchParms.ahkamTasfeya != null)
+            {
+                Model = AhkamService.Search(Options, Obj, SearchParms.ahkamTasfeya);
+            }
+            else
+            {
+                Model = AhkamService.Search(Options, Obj);
+            }
+            if (Model.IsValid)
+            {
+               
+                return View("SearchResult", Model);
+            }
+            else
+            {
+                return View("SearchResult");
+            }
 
         }
         // Mada Search 

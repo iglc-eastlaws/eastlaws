@@ -525,6 +525,8 @@
            
 
                 data.GetSearch = function () {
+                    var SearchURL = '';
+                    var tasfyaURL = '';
 
                     if ((data.searchType === 1) || (data.searchType === 2)) {
                         data.SearchTools.PageNo = data.currentPage;
@@ -538,8 +540,8 @@
 
                     if (data.searchType === 1) // AssymbleSearch
                     {
-                        var SearchURL = '/Ahkam/SearchResultAssembly';
-                        var tasfyaURL = '/Ahkam/TasfeyaListJson';
+                       SearchURL = '/Ahkam/SearchResultAssembly';
+                       tasfyaURL = '/Ahkam/TasfeyaListJson';
 
                         var obj = {
                             AssemblySearch: data.AssembleSearchInputs,
@@ -558,13 +560,13 @@
 
                     if (data.searchType === 2) // TadbeaatMadaSearch
                     {
-                        alert('000000');
+                       // alert('000000');
 
-                        var SearchURL = '/Ahkam/SearchResultTadbe2atMada';
-                        var tasfyaURL = '/Ahkam/TasfeyaListJson';
+                       SearchURL = '/Ahkam/SearchResultTadbe2atMada';
+                       tasfyaURL = '/Ahkam/TasfeyaListJson';
 
                         var obj = {
-                            AssemblySearch: data.MadaTadbeatSearchInputs,
+                            Tadbe2atMadaSearchSearch: data.MadaTadbeatSearchInputs,
                             SearchTools: data.SearchTools,
                             ahkamTasfeya: data.ahkamlist
                         };
