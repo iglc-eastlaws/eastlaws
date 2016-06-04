@@ -313,6 +313,52 @@
                      SearchData.GetSearch();
                  };
             })
+            .controller('tadbekMadaSerachCtrl', function ($scope, $http) {
+                $scope.Inputs = {};
+                $scope.countries = [];
+                $scope.updatecountry = function () {
+                    $scope.Inputs.country = $scope.country.ID; 
+                }
+                $http.get('/Ahkam/GetCountries', {}).then(function (d) {
+                    $scope.countries = d.data;
+                    $scope.countries.unshift({ ID: 0, Name: 'جميع الدول' });
+                    $scope.country = { ID: 0 };
+                });
+
+                $scope.search = function () {
+                    
+                    console.log($scope.Inputs);
+                }
+
+                /* // function TestMadaSearch() {
+                        var Data = {};
+                        Data.MadaObj = {
+                            SearchInMadaText: false,
+                            CountryIds: '1,2,3,4,5,6',
+                            TashNo: '1-150'
+                            , SearchPredicate: { Input: '' }
+                  
+                        };
+                        Data.Options = {
+                            SortBy: 3
+                        };
+                        Data.TasfeyaSelection = {
+                  
+                        };
+                  
+                  
+                        //$.post('/Ahkam/SearchResultAssemblyMada/', Data, function (Return) {
+                        //    alert(Return);
+                        //});
+                  
+                    //}
+                  
+                    $scope.search = function () {
+                        //$.post('/Ahkam/SearchResultAssemblyMada/', Data, function (Return) {
+                        //    $('#searchResult').html(Return);
+                        //});
+                    }*/
+            })
             .controller('toolbarCtrl', function ($scope, SearchData) {
                 $scope.pageSizes = [10, 50, 100];
                 $scope.pSize = 10;
@@ -795,38 +841,7 @@
                 }
 
             })
-            .controller('tadbekMadaSerachCtrl', function ($scope) {
-               // function TestMadaSearch() {
-                    var Data = {};
-                    Data.MadaObj = {
-                        SearchInMadaText: false,
-                        CountryIds: '1,2,3,4,5,6',
-                        TashNo: '1-150'
-                        , SearchPredicate: { Input: '' }
 
-                    };
-                    Data.Options = {
-                        SortBy: 3
-                    };
-                    Data.TasfeyaSelection = {
-
-                    };
-
-
-                    //$.post('/Ahkam/SearchResultAssemblyMada/', Data, function (Return) {
-                    //    alert(Return);
-                    //});
-
-                //}
-
-                $scope.search = function () {
-                    $.post('/Ahkam/SearchResultAssemblyMada/', Data, function (Return) {
-                       // alert(Return);
-
-                        $('#searchResult').html(Return);
-                    });
-                }
-            })
             .factory('tasfiaData', function ($http, $rootScope) {
                 var data = {};
                 data.list = [];

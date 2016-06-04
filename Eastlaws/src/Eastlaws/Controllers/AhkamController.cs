@@ -67,23 +67,6 @@ namespace Eastlaws.Controllers
         }
 
 
-       
-        // Mada Search 
-        [HttpPost]
-        public IActionResult SearchResultAssemblyMada(AhkamMadaSearch MadaObj , AhkamSearchOptions Options , List<AhkamTasfeyaSelection> TasfeyaSelection)
-        {
-            AhkamPresentation Model =  AhkamService.Search(Options, MadaObj, TasfeyaSelection);
-            if (Model.IsValid)
-            {
-                ViewBag.typeView = 2;
-                return View("SearchResult", Model);
-            }
-            else
-            {
-                return View("SearchResult");
-            } 
-        }
-
         // Full Advanced Search 
         [HttpPost]
         public IActionResult SearchResultAssembly(SearchParms SearchParms)
@@ -95,7 +78,7 @@ namespace Eastlaws.Controllers
             int Sort = SearchTools.Sort;
             int pageSize = SearchTools.pageSize;
             bool Latest = SearchTools.Latest;
-            int Days =  SearchTools.Days;
+            int Days = SearchTools.Days;
             int typeView = SearchTools.typeView;
             int SortDir = SearchTools.SortDir;
 
@@ -118,19 +101,36 @@ namespace Eastlaws.Controllers
                 {
                     Model = AhkamService.Search(Options, Obj);
                 }
-                   
+
             }
-          //  AhkamPresentation Model1 = AhkamService.Search(Options, Obj);
-                if (Model.IsValid)
-                {
-                    return View("SearchResult", Model);
-                }
-                else
-                {
-                    return View("SearchResult");
-                }
-           
+            if (Model.IsValid)
+            {
+                return View("SearchResult", Model);
+            }
+            else
+            {
+                return View("SearchResult");
+            }
+
         }
+       
+        // Mada Search 
+        [HttpPost]
+        public IActionResult SearchResultAssemblyMada(AhkamMadaSearch MadaObj , AhkamSearchOptions Options , List<AhkamTasfeyaSelection> TasfeyaSelection)
+        {
+            AhkamPresentation Model =  AhkamService.Search(Options, MadaObj, TasfeyaSelection);
+            if (Model.IsValid)
+            {
+                ViewBag.typeView = 2;
+                return View("SearchResult", Model);
+            }
+            else
+            {
+                return View("SearchResult");
+            } 
+        }
+
+
 
         //public IActionResult Latest(int Days = 10, int PageNo = 1, int Sort = 5, int pageSize = 10, int typeView = 1)
         //{
