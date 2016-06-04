@@ -52,18 +52,36 @@ namespace Eastlaws.Services
         }
 
 
-        public static IEnumerable<Country> GetCountriesByFehressID(int FehresProgramID)
+        public static IEnumerable<FehresCountry> GetCountriesByFehressID(int FehresProgramID)
         {
             StringBuilder Q = new StringBuilder();
-            Q.AppendFormat(@"select t2.ID,t2.Name,t2.EnName,t2.FlagPic
+            Q.AppendFormat(@"select t2.ID,t2.Name,t2.EnName,t2.FlagPic , t1.ID as ProgCountryID
                                     from FehresProgCountry as t1
                                     inner join Countries as t2 on t1.CountryID = t2.ID
                                     where t1.FehresPogramID = {0}", FehresProgramID);
 
+
+
             using (var Connection = DataHelpers.GetConnection(DbConnections.Data))
             {
-                return Connection.Query<Country>(Q.ToString());
+                return Connection.Query<FehresCountry>(Q.ToString());
             }
+        }
+
+        public static IEnumerable<FehresCategory> GetCategoriesByProgCountry(int ProgCountry)
+        {
+            string Query = @"SELECT fc.ID , fc.Name , fc.MyOrder , fc.ProgCountryID FROM 
+                            dbo.FehresProgCountry fpc	
+                            JOIN dbo.FehresCategories fc ON fc.ProgCountryID = fpc.ID
+                            Where fc.ProgCountryID = {0}
+                            ORDER BY MyOrder";
+
+            Query = string.Format(Query, ProgCountry);
+            using (var Connection = DataHelpers.GetConnection(DbConnections.Data))
+            {
+                return Connection.Query<FehresCategory>(Query.ToString());
+            }
+        
         }
 
         

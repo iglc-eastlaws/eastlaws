@@ -15,15 +15,39 @@ namespace Eastlaws.Controllers
         public IActionResult Index()
         {
             //var m = FaharesService.GetCountriesByFehressID(30);
-            var m = FaharesService.GetProgramsByService(1);
-            return View(m);
+            var data = FaharesService.GetProgramsByService(1);
+            return View(data);
         }
 
 
-        public JsonResult GetProgramsByService(int servicesID)
+
+        public JsonResult ServicePrograms(int servicesID)
         {
-            var m = FaharesService.GetProgramsByService(servicesID);
-            return new JsonResult(m);
+            var data = FaharesService.GetProgramsByService(servicesID);
+            return new JsonResult(data);
         }
+
+        public JsonResult ProgramCountries(int FehresProgramID)
+        {
+            var data = FaharesService.GetCountriesByFehressID(FehresProgramID);
+            return new JsonResult(data);
+        }
+
+        public JsonResult Categories (int ProgCountryID)
+        {
+            var data = FaharesService.GetCategoriesByProgCountry(ProgCountryID);
+            return new JsonResult(data);
+            
+        }
+
+        public JsonResult Items(int CategoryID , string SearchText , int? ParentID)
+        {
+
+            return null; 
+        }
+
+
+
+
     }
 }
