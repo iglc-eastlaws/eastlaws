@@ -166,20 +166,20 @@ namespace Eastlaws.Controllers
 
         }
         // Mada Search 
-        [HttpPost]
-        public IActionResult SearchResultAssemblyMada(AhkamMadaSearch MadaObj , AhkamSearchOptions Options , List<AhkamTasfeyaSelection> TasfeyaSelection)
-        {
-            AhkamPresentation Model =  AhkamService.Search(Options, MadaObj, TasfeyaSelection);
-            if (Model.IsValid)
-            {
-                ViewBag.typeView = 2;
-                return View("SearchResult", Model);
-            }
-            else
-            {
-                return View("SearchResult");
-            } 
-        }
+        //[HttpPost]
+        //public IActionResult SearchResultAssemblyMada(AhkamMadaSearch MadaObj , AhkamSearchOptions Options , List<AhkamTasfeyaSelection> TasfeyaSelection)
+        //{
+        //    AhkamPresentation Model =  AhkamService.Search(Options, MadaObj, TasfeyaSelection);
+        //    if (Model.IsValid)
+        //    {
+        //        ViewBag.typeView = 2;
+        //        return View("SearchResult", Model);
+        //    }
+        //    else
+        //    {
+        //        return View("SearchResult");
+        //    } 
+        //}
 
 
 
