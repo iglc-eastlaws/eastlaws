@@ -486,14 +486,15 @@
             })
             .controller('fehressSearchCtrl', function ($scope, $http) {
 
-                $http.get('/Fehres/GetProgramsByService?servicesID='+1+'', {}).then(function (d) {
+
+                $http.get('/Fehres/ServicePrograms?servicesID=' + 1 + '', {}).then(function (d) {
                     $scope.fehressPrograms = d.data;
-                   // console.log($scope.fehressPrograms);
-  
+                    // console.log($scope.fehressPrograms);
+
                 });
 
                 $scope.search = function () {
-                    alert('fehres')
+                    console.log('fehres')
                 }
             })
             .factory('SearchData', function ($http, tasfiaData, tasfiaAllData, $rootScope) {
