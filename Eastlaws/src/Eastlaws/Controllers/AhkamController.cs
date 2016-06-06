@@ -126,24 +126,16 @@ namespace Eastlaws.Controllers
 
             }
 
-
             [HttpPost]
             public JsonResult TasfeyaListJson(SarchTasfyaParms SarchTasfyaParms)
             {
                 List<AhkamTasfeyaSelection> PreviousSelectedItems = new List<AhkamTasfeyaSelection>();
                 PreviousSelectedItems = SarchTasfyaParms.ahkamTasfeyaList;
-
-                // Uncomment the Following line to Safy the Tasfeya list 
-                // PreviousSelectedItems.Add(new AhkamTasfeyaSelection { CategoryID = AhkamTasfeyaCategoryIds.Country, Parameter = "1,2,3,4" });
-
                 AhkamAdvancedSearch Obj = GetSearchObject(SarchTasfyaParms.AssemblySearch);
-
-                // needs to be sent as a param 
                 AhkamSearchTypes SearchType = AhkamSearchTypes.Advanced;
+                List<AhkamTasfeyaCategory> UsedCategories;
 
-                List<AhkamTasfeyaCategory> UsedCategories;            
-                var Data = AhkamTasfeya.List(Obj, SearchType, out UsedCategories, SarchTasfyaParms.TasfeyaSearchText, PreviousSelectedItems,(AhkamTasfeyaCategoryIds?)SarchTasfyaParms.SelectedCatgID);
-
+              var Data = AhkamTasfeya.List(Obj, SearchType, out UsedCategories, SarchTasfyaParms.TasfeyaSearchText, PreviousSelectedItems,(AhkamTasfeyaCategoryIds?)SarchTasfyaParms.SelectedCatgID);
                 var datajson = new[] {
                     new object[] { "Data" , Data},
                     new object[] { "Catg" , UsedCategories }
@@ -265,6 +257,11 @@ namespace Eastlaws.Controllers
             }
         }
         #endregion
+
+
+
+
+
 
         //public IActionResult TasfeyaList(int QueryID)
         //{
