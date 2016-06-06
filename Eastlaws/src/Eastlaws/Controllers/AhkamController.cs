@@ -187,75 +187,75 @@ namespace Eastlaws.Controllers
         #endregion
 
         #region  mapping object
-        private AhkamAdvancedSearch GetSearchObject(AssemblySearch AssembleSearchInputs)
-        {
-            AhkamAdvancedSearch Obj = new AhkamAdvancedSearch();
-            Obj.PredicateAny = new FTSPredicate(string.IsNullOrEmpty(AssembleSearchInputs.Alltext) ? "" : AssembleSearchInputs.Alltext, (FTSSqlModes)AssembleSearchInputs.alltextSearchType);
-            Obj.PredicateHay2a = new FTSPredicate(string.IsNullOrEmpty(AssembleSearchInputs.hay2a) ? "" : AssembleSearchInputs.hay2a, (FTSSqlModes)AssembleSearchInputs.hay2aSearchType);
-            Obj.PredicateHaytheyat = new FTSPredicate(string.IsNullOrEmpty(AssembleSearchInputs.hyseyt) ? "" : AssembleSearchInputs.hyseyt, (FTSSqlModes)AssembleSearchInputs.hyseytSearchType);
-            Obj.PredicateMabade2 = new FTSPredicate(string.IsNullOrEmpty(AssembleSearchInputs.Mabdaa) ? "" : AssembleSearchInputs.Mabdaa, (FTSSqlModes)AssembleSearchInputs.MabdaaSearchType);
-            Obj.PredicateWakae3 = new FTSPredicate(string.IsNullOrEmpty(AssembleSearchInputs.waka23) ? "" : AssembleSearchInputs.waka23, (FTSSqlModes)AssembleSearchInputs.waka23SearchType);
-            Obj.CaseDatefrom = AssembleSearchInputs.dateGalsaFrom;
-            Obj.CaseDateTo = AssembleSearchInputs.dateGalsaTo;
-            Obj.CaseYear = AssembleSearchInputs.caseYear;
-            Obj.CaseNo = AssembleSearchInputs.caseNo;
-            Obj.CountryIDs = AssembleSearchInputs.country == "0" ? "" : AssembleSearchInputs.country;
-            Obj.IFAgree = AssembleSearchInputs.MahkamaReplay == "0" ? "" : AssembleSearchInputs.MahkamaReplay;
-            Obj.Ma7akemIds = AssembleSearchInputs.mahakem;
-            Obj.OfficeSuffix = AssembleSearchInputs.omarGroup;
-            Obj.OfficeYear = AssembleSearchInputs.officeYear;
-            Obj.PageNo = AssembleSearchInputs.pageNo;
-            Obj.PartNo = AssembleSearchInputs.partNo;
-            return Obj;
-        }
+            private AhkamAdvancedSearch GetSearchObject(AssemblySearch AssembleSearchInputs)
+            {
+                AhkamAdvancedSearch Obj = new AhkamAdvancedSearch();
+                Obj.PredicateAny = new FTSPredicate(string.IsNullOrEmpty(AssembleSearchInputs.Alltext) ? "" : AssembleSearchInputs.Alltext, (FTSSqlModes)AssembleSearchInputs.alltextSearchType);
+                Obj.PredicateHay2a = new FTSPredicate(string.IsNullOrEmpty(AssembleSearchInputs.hay2a) ? "" : AssembleSearchInputs.hay2a, (FTSSqlModes)AssembleSearchInputs.hay2aSearchType);
+                Obj.PredicateHaytheyat = new FTSPredicate(string.IsNullOrEmpty(AssembleSearchInputs.hyseyt) ? "" : AssembleSearchInputs.hyseyt, (FTSSqlModes)AssembleSearchInputs.hyseytSearchType);
+                Obj.PredicateMabade2 = new FTSPredicate(string.IsNullOrEmpty(AssembleSearchInputs.Mabdaa) ? "" : AssembleSearchInputs.Mabdaa, (FTSSqlModes)AssembleSearchInputs.MabdaaSearchType);
+                Obj.PredicateWakae3 = new FTSPredicate(string.IsNullOrEmpty(AssembleSearchInputs.waka23) ? "" : AssembleSearchInputs.waka23, (FTSSqlModes)AssembleSearchInputs.waka23SearchType);
+                Obj.CaseDatefrom = AssembleSearchInputs.dateGalsaFrom;
+                Obj.CaseDateTo = AssembleSearchInputs.dateGalsaTo;
+                Obj.CaseYear = AssembleSearchInputs.caseYear;
+                Obj.CaseNo = AssembleSearchInputs.caseNo;
+                Obj.CountryIDs = AssembleSearchInputs.country == "0" ? "" : AssembleSearchInputs.country;
+                Obj.IFAgree = AssembleSearchInputs.MahkamaReplay == "0" ? "" : AssembleSearchInputs.MahkamaReplay;
+                Obj.Ma7akemIds = AssembleSearchInputs.mahakem;
+                Obj.OfficeSuffix = AssembleSearchInputs.omarGroup;
+                Obj.OfficeYear = AssembleSearchInputs.officeYear;
+                Obj.PageNo = AssembleSearchInputs.pageNo;
+                Obj.PartNo = AssembleSearchInputs.partNo;
+                return Obj;
+            }
 
-        private AhkamMadaSearch GetTadbe2atMadaSearchObject(Tadbe2atMadaSearch Tadbe2atMadaSearch)
-        {
-            AhkamMadaSearch Obj = new AhkamMadaSearch();
-            Obj.SearchPredicate = new FTSPredicate(string.IsNullOrEmpty(Tadbe2atMadaSearch.MadaText) ? "" : Tadbe2atMadaSearch.MadaText, (FTSSqlModes)Tadbe2atMadaSearch.MadaTextType);
-            Obj.SearchInMadaText = true;
-            Obj.SearchInTashText = true;
-            Obj.CountryIds = Tadbe2atMadaSearch.country;
-            Obj.MadaNo = Tadbe2atMadaSearch.madaNo;
-            Obj.TashNo = Tadbe2atMadaSearch.tashNo;
-            Obj.TashYear = Tadbe2atMadaSearch.tashYear;
+            private AhkamMadaSearch GetTadbe2atMadaSearchObject(Tadbe2atMadaSearch Tadbe2atMadaSearch)
+            {
+                AhkamMadaSearch Obj = new AhkamMadaSearch();
+                Obj.SearchPredicate = new FTSPredicate(string.IsNullOrEmpty(Tadbe2atMadaSearch.MadaText) ? "" : Tadbe2atMadaSearch.MadaText, (FTSSqlModes)Tadbe2atMadaSearch.MadaTextType);
+                Obj.SearchInMadaText = true;
+                Obj.SearchInTashText = true;
+                Obj.CountryIds = Tadbe2atMadaSearch.country;
+                Obj.MadaNo = Tadbe2atMadaSearch.madaNo;
+                Obj.TashNo = Tadbe2atMadaSearch.tashNo;
+                Obj.TashYear = Tadbe2atMadaSearch.tashYear;
 
 
-            return Obj;
-        }
+                return Obj;
+            }
         #endregion
 
         #region displayHokm
-        public IActionResult View(int ID)
-        {
-            var Model = AhkamService.GetHokm(ID, null);
-            if (Model.IsValid)
+            public IActionResult View(int ID)
             {
-                return View(Model);
-            }
-            else
-            {
-                return View();
-            }
-        }
-
-        [HttpPost]
-        public IActionResult FullHokmView(int ID, int[] fakarat)
-        {
-            var Model = AhkamService.GetHokm(ID, null);
-            if (Model.IsValid)
-            {
-                if (fakarat.Length > 0)
+                var Model = AhkamService.GetHokm(ID, null);
+                if (Model.IsValid)
                 {
-                    ViewBag.PrintedFakarat = fakarat;
+                    return View(Model);
                 }
-                return View(Model);
+                else
+                {
+                    return View();
+                }
             }
-            else
+
+            [HttpPost]
+            public IActionResult FullHokmView(int ID, int[] fakarat)
             {
-                return View();
+                var Model = AhkamService.GetHokm(ID, null);
+                if (Model.IsValid)
+                {
+                    if (fakarat.Length > 0)
+                    {
+                        ViewBag.PrintedFakarat = fakarat;
+                    }
+                    return View(Model);
+                }
+                else
+                {
+                    return View();
+                }
             }
-        }
         #endregion
 
 
