@@ -18,6 +18,7 @@ namespace Eastlaws.ViewModels.Ahkam
     public class SarchTasfyaParms
     {
         public AssemblySearch AssemblySearch { get; set; }
+        public Tadbe2atMadaSearch Tadbe2atMadaSearchSearch { get; set; }
         public List<AhkamTasfeyaSelection> ahkamTasfeyaList { get; set; }
         public string TasfeyaSearchText { get; set; } = "";
         public int SelectedCatgID { get; set; }
