@@ -83,6 +83,9 @@ namespace Eastlaws.Infrastructure
             return "";
         }
 
-
+        public override string ToString()
+        {
+            return this.GetCondition();
+        }
     }
 }

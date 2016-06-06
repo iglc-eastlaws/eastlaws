@@ -68,7 +68,7 @@ namespace Eastlaws.Services
             Cats.Add(new AhkamTasfeyaCategory { ID = AhkamTasfeyaCategoryIds.CrimeType, Name = "نوع الجريمة", Display = AhkamTasfeyaCategoryDisplay.List, ParentProgram = FehresPrograms.Da3awaGena2ya });
             Cats.Add(new AhkamTasfeyaCategory { ID = AhkamTasfeyaCategoryIds.Da3waType, Name = "نوع الدعوى", Display = AhkamTasfeyaCategoryDisplay.List, ParentProgram = FehresPrograms.Da3awaMadaneya });
 
-
+            Cats.Add(new AhkamTasfeyaCategory { ID = AhkamTasfeyaCategoryIds.RelatedTash, Name = "التشريع المرتبط", Display = AhkamTasfeyaCategoryDisplay.List });
             Cats.Add(new AhkamTasfeyaCategory { ID = AhkamTasfeyaCategoryIds.Country, Name = "الدولة", Display = AhkamTasfeyaCategoryDisplay.List });
             Cats.Add(new AhkamTasfeyaCategory { ID = AhkamTasfeyaCategoryIds.Ma7kama, Name = "المحكمة", Display = AhkamTasfeyaCategoryDisplay.List });
             Cats.Add(new AhkamTasfeyaCategory { ID = AhkamTasfeyaCategoryIds.JudgeYear, Name = "السنة القضائية", Display = AhkamTasfeyaCategoryDisplay.List });
@@ -171,7 +171,27 @@ namespace Eastlaws.Services
 
             switch (Cat.ID )
             {
-                
+                case AhkamTasfeyaCategoryIds.RelatedTash:
+                    {
+                        string ProcessedFilter = "";
+                        FTSPredicate P = new FTSPredicate(Filter, FTSSqlModes.AND);
+                        if (P.IsValid)
+                        {
+                            ProcessedFilter = " And Contains (T.Name , " + P.BuildPredicate() + ")";
+                        }
+                        return string.Format(@"
+                                Select Top {0} T.ID , T.Name , Count(A.ID)  as Count , 3 as CategoryID , Count(A.ID	) as SortValue  From 
+                                Ahkam A JOIN dbo.Tashree3atAhkam ta ON ta.HokmID = A.ID
+                                Join EastlawsUsers..QueryCacheRecords QCR With (Nolock)  On QCR.ItemID = A.ID         
+                                Join dbo.Tashree3at T ON T.ID = ta.TashID      
+                                {3}
+                                Where QCR.MasterID  =  {1}  {2}
+                                Group By T.ID , T.Name 
+                                Order By Count(A.ID) desc "
+                            , MAX_RECORD_COUNT_PER_CATEGORY, MasterQueryID, ProcessedFilter, SafyListJoinClause);
+
+
+                    }
                 case AhkamTasfeyaCategoryIds.Country:
                     {
                         string ProcessedFilter = "";
