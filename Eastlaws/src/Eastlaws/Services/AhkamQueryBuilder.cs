@@ -406,7 +406,12 @@ namespace Eastlaws.Services
                     }
                 case AhkamTasfeyaCategoryIds.RelatedTash:
                     {
-                        break;
+                        Range R = new Range(Params, "TashID");
+                        string Query = " AMS.ID in (Select HokmID From Tashree3atAhkam Where  " + R.GetCondition()  +  " )";
+                        AhkamTasfeyaParamInfo Info = new AhkamTasfeyaParamInfo
+                        { IsSeparateQuery = false, Predicate = Query };
+                        return Info;
+                        
                     }
                 case AhkamTasfeyaCategoryIds.Fehres:
                     {

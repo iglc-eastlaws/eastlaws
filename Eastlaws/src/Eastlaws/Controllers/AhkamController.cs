@@ -18,94 +18,55 @@ namespace Eastlaws.Controllers
         public IActionResult Index() => View();
 
         #region Search Result, Input Search Box, Filter Section
-            public IActionResult SearchResult(int searchtype, int Countsearchchange, int PageNo, int Match,int Sort, string q)
-            {
-                AhkamSearchOptions Options = new AhkamSearchOptions();
-                Options.PageNo = PageNo;
-                Options.SortBy = (AhkamSortColumns)Sort;
+        public IActionResult SearchResult(int searchtype, int Countsearchchange, int PageNo, int Match, int Sort, string q)
+        {
+            AhkamSearchOptions Options = new AhkamSearchOptions();
+            Options.PageNo = PageNo;
+            Options.SortBy = (AhkamSortColumns)Sort;
 
-                if (searchtype == 1)
+            if (searchtype == 1)
+            {
+                AhkamPresentation Model = AhkamService.Search(Options, new FTSPredicate(q, (FTSSqlModes)Match));
+                if (Model.IsValid)
                 {
-                    AhkamPresentation Model = AhkamService.Search(Options, new FTSPredicate(q, (FTSSqlModes)Match));
-                    if (Model.IsValid)
-                    {
-                        return View(Model);
-                    }
-                    else
-                    {
-                        return View();
-                    }
+                    return View(Model);
                 }
                 else
                 {
                     return View();
                 }
             }
-
-            [HttpPost]
-            public IActionResult SearchResultAssembly(SearchParms SearchParms)
+            else
             {
-                AssemblySearch AssembleSearchInputs = SearchParms.AssemblySearch;
-                SearchTools SearchTools = SearchParms.SearchTools;
-
-                int PageNo = SearchTools.PageNo;
-                int Sort = SearchTools.Sort;
-                int pageSize = SearchTools.pageSize;
-                bool Latest = SearchTools.Latest;
-                int Days = SearchTools.Days;
-                int typeView = SearchTools.typeView;
-                int SortDir = SearchTools.SortDir;
-
-                ViewBag.typeView = typeView;
-                AhkamPresentation Model = new AhkamPresentation();
-                AhkamSearchOptions Options = new AhkamSearchOptions { SortBy = (AhkamSortColumns)Sort, PageNo = PageNo, PageSize = pageSize, SortDirection = (SearchSortType)SortDir };
-
-                if (Latest == true)
-                {
-                    Model = AhkamService.GetLatestByDate(Options, SearchParms.ahkamTasfeya);
-                }
-                else
-                {
-                    AhkamAdvancedSearch Obj = GetSearchObject(AssembleSearchInputs);
-                    if (SearchParms.ahkamTasfeya != null)
-                    {
-                        Model = AhkamService.Search(Options, Obj, SearchParms.ahkamTasfeya);
-                    }
-                    else
-                    {
-                        Model = AhkamService.Search(Options, Obj);
-                    }
-
-                }
-                if (Model.IsValid)
-                {
-                    return View("SearchResult", Model);
-                }
-                else
-                {
-                    return View("SearchResult");
-                }
-
+                return View();
             }
+        }
 
-            [HttpPost]
-            public IActionResult SearchResultTadbe2atMada(SearchParms SearchParms)
+        [HttpPost]
+        public IActionResult SearchResultAssembly(SearchParms SearchParms)
+        {
+            AssemblySearch AssembleSearchInputs = SearchParms.AssemblySearch;
+            SearchTools SearchTools = SearchParms.SearchTools;
+
+            int PageNo = SearchTools.PageNo;
+            int Sort = SearchTools.Sort;
+            int pageSize = SearchTools.pageSize;
+            bool Latest = SearchTools.Latest;
+            int Days = SearchTools.Days;
+            int typeView = SearchTools.typeView;
+            int SortDir = SearchTools.SortDir;
+
+            ViewBag.typeView = typeView;
+            AhkamPresentation Model = new AhkamPresentation();
+            AhkamSearchOptions Options = new AhkamSearchOptions { SortBy = (AhkamSortColumns)Sort, PageNo = PageNo, PageSize = pageSize, SortDirection = (SearchSortType)SortDir };
+
+            if (Latest == true)
             {
-                Tadbe2atMadaSearch tadbe2atSearchInputs = SearchParms.Tadbe2atMadaSearchSearch;
-                 SearchTools SearchTools = SearchParms.SearchTools;
-
-                int PageNo = SearchTools.PageNo;
-                int Sort = SearchTools.Sort;
-                int pageSize = SearchTools.pageSize;
-                int Days = SearchTools.Days;
-                int typeView = SearchTools.typeView;
-                int SortDir = SearchTools.SortDir;
-
-                ViewBag.typeView = typeView;
-                AhkamPresentation Model = new AhkamPresentation();
-                AhkamSearchOptions Options = new AhkamSearchOptions { SortBy = (AhkamSortColumns)Sort, PageNo = PageNo, PageSize = pageSize, SortDirection = (SearchSortType)SortDir };
-
-                AhkamMadaSearch Obj = GetTadbe2atMadaSearchObject(tadbe2atSearchInputs);
+                Model = AhkamService.GetLatestByDate(Options, SearchParms.ahkamTasfeya);
+            }
+            else
+            {
+                AhkamAdvancedSearch Obj = GetSearchObject(AssembleSearchInputs);
                 if (SearchParms.ahkamTasfeya != null)
                 {
                     Model = AhkamService.Search(Options, Obj, SearchParms.ahkamTasfeya);
@@ -114,76 +75,115 @@ namespace Eastlaws.Controllers
                 {
                     Model = AhkamService.Search(Options, Obj);
                 }
-                if (Model.IsValid)
-                {
-               
-                    return View("SearchResult", Model);
-                }
-                else
-                {
-                    return View("SearchResult");
-                }
 
             }
-
-            [HttpPost]
-            public JsonResult TasfeyaListJson(SarchTasfyaParms SarchTasfyaParms)
+            if (Model.IsValid)
             {
-                List<AhkamTasfeyaSelection> PreviousSelectedItems = new List<AhkamTasfeyaSelection>();
-                PreviousSelectedItems = SarchTasfyaParms.ahkamTasfeyaList;
-                AhkamAdvancedSearch Obj = GetSearchObject(SarchTasfyaParms.AssemblySearch);
-                AhkamSearchTypes SearchType = AhkamSearchTypes.Advanced;
-                List<AhkamTasfeyaCategory> UsedCategories;
+                return View("SearchResult", Model);
+            }
+            else
+            {
+                return View("SearchResult");
+            }
 
-              var Data = AhkamTasfeya.List(Obj, SearchType, out UsedCategories, SarchTasfyaParms.TasfeyaSearchText, PreviousSelectedItems,(AhkamTasfeyaCategoryIds?)SarchTasfyaParms.SelectedCatgID);
-                var datajson = new[] {
+        }
+
+        [HttpPost]
+        public IActionResult SearchResultTadbe2atMada(SearchParms SearchParms)
+        {
+            Tadbe2atMadaSearch tadbe2atSearchInputs = SearchParms.Tadbe2atMadaSearchSearch;
+            SearchTools SearchTools = SearchParms.SearchTools;
+
+            int PageNo = SearchTools.PageNo;
+            int Sort = SearchTools.Sort;
+            int pageSize = SearchTools.pageSize;
+            int Days = SearchTools.Days;
+            int typeView = SearchTools.typeView;
+            int SortDir = SearchTools.SortDir;
+
+            ViewBag.typeView = typeView;
+            AhkamPresentation Model = new AhkamPresentation();
+            AhkamSearchOptions Options = new AhkamSearchOptions { SortBy = (AhkamSortColumns)Sort, PageNo = PageNo, PageSize = pageSize, SortDirection = (SearchSortType)SortDir };
+
+            AhkamMadaSearch Obj = GetTadbe2atMadaSearchObject(tadbe2atSearchInputs);
+            if (SearchParms.ahkamTasfeya != null)
+            {
+                Model = AhkamService.Search(Options, Obj, SearchParms.ahkamTasfeya);
+            }
+            else
+            {
+                Model = AhkamService.Search(Options, Obj);
+            }
+            if (Model.IsValid)
+            {
+
+                return View("SearchResult", Model);
+            }
+            else
+            {
+                return View("SearchResult");
+            }
+
+        }
+
+        [HttpPost]
+        public JsonResult TasfeyaListJson(SarchTasfyaParms SarchTasfyaParms)
+        {
+            List<AhkamTasfeyaSelection> PreviousSelectedItems = new List<AhkamTasfeyaSelection>();
+            PreviousSelectedItems = SarchTasfyaParms.ahkamTasfeyaList;
+            AhkamAdvancedSearch Obj = GetSearchObject(SarchTasfyaParms.AssemblySearch);
+            AhkamSearchTypes SearchType = AhkamSearchTypes.Advanced;
+            List<AhkamTasfeyaCategory> UsedCategories;
+
+            var Data = AhkamTasfeya.List(Obj, SearchType, out UsedCategories, SarchTasfyaParms.TasfeyaSearchText, PreviousSelectedItems, (AhkamTasfeyaCategoryIds?)SarchTasfyaParms.SelectedCatgID);
+            var datajson = new[] {
                     new object[] { "Data" , Data},
                     new object[] { "Catg" , UsedCategories }
                 };
-                return new JsonResult(datajson);
-            }
+            return new JsonResult(datajson);
+        }
 
-            [HttpPost]
-            public JsonResult TasfeyaListJsonMada(SarchTasfyaParms SarchTasfyaParms)
-            {
-                List<AhkamTasfeyaSelection> PreviousSelectedItems = new List<AhkamTasfeyaSelection>();
-                PreviousSelectedItems = SarchTasfyaParms.ahkamTasfeyaList;
-                AhkamMadaSearch Obj = GetTadbe2atMadaSearchObject(SarchTasfyaParms.Tadbe2atMadaSearchSearch);
+        [HttpPost]
+        public JsonResult TasfeyaListJsonMada(SarchTasfyaParms SarchTasfyaParms)
+        {
+            List<AhkamTasfeyaSelection> PreviousSelectedItems = new List<AhkamTasfeyaSelection>();
+            PreviousSelectedItems = SarchTasfyaParms.ahkamTasfeyaList;
+            AhkamMadaSearch Obj = GetTadbe2atMadaSearchObject(SarchTasfyaParms.Tadbe2atMadaSearchSearch);
 
-                AhkamSearchTypes SearchType = AhkamSearchTypes.Mada;
+            AhkamSearchTypes SearchType = AhkamSearchTypes.Mada;
 
-                List<AhkamTasfeyaCategory> UsedCategories;
-                var Data = AhkamTasfeya.List(Obj, SearchType, out UsedCategories, SarchTasfyaParms.TasfeyaSearchText, PreviousSelectedItems, (AhkamTasfeyaCategoryIds?)SarchTasfyaParms.SelectedCatgID);
+            List<AhkamTasfeyaCategory> UsedCategories;
+            var Data = AhkamTasfeya.List(Obj, SearchType, out UsedCategories, SarchTasfyaParms.TasfeyaSearchText, PreviousSelectedItems, (AhkamTasfeyaCategoryIds?)SarchTasfyaParms.SelectedCatgID);
 
-                var datajson = new[] {new object[] { "Data" , Data}, new object[] { "Catg" , UsedCategories } };
-                return new JsonResult(datajson);
-            }
+            var datajson = new[] { new object[] { "Data", Data }, new object[] { "Catg", UsedCategories } };
+            return new JsonResult(datajson);
+        }
         #endregion
 
         #region droplist
-            public JsonResult GetCountries()
-            {
-                var Countries = AhkamService.GetCountries();
-                return new JsonResult(Countries);
-            }
+        public JsonResult GetCountries()
+        {
+            var Countries = AhkamService.GetCountries();
+            return new JsonResult(Countries);
+        }
 
-            public JsonResult GetGehaType()
-            {
-                var Countries = AhkamService.GetGehaType();
-                return new JsonResult(Countries);
-            }
+        public JsonResult GetGehaType()
+        {
+            var Countries = AhkamService.GetGehaType();
+            return new JsonResult(Countries);
+        }
 
-            public JsonResult GetMahakem(int countryID)
-            {
-                var Mahakem = AhkamService.GetMahakem(countryID);
-                return new JsonResult(Mahakem);
-            }
+        public JsonResult GetMahakem(int countryID)
+        {
+            var Mahakem = AhkamService.GetMahakem(countryID);
+            return new JsonResult(Mahakem);
+        }
 
-            public JsonResult GetMahkamaReplies()
-            {
-                var MahkamaReplies = AhkamService.GetMahkamaReplies();
-                return new JsonResult(MahkamaReplies);
-            }
+        public JsonResult GetMahkamaReplies()
+        {
+            var MahkamaReplies = AhkamService.GetMahkamaReplies();
+            return new JsonResult(MahkamaReplies);
+        }
         #endregion
 
         #region  mapping object
