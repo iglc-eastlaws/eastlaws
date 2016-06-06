@@ -74,8 +74,8 @@ namespace Eastlaws.Controllers
             Obj.SearchInTashText = true;
             Obj.CountryIds = Tadbe2atMadaSearch.country;
             Obj.MadaNo = Tadbe2atMadaSearch.madaNo;
-            Obj.MadaNo = Tadbe2atMadaSearch.tashNo;
-            Obj.MadaNo = Tadbe2atMadaSearch.tashYear;
+            Obj.TashNo = Tadbe2atMadaSearch.tashNo;
+            Obj.TashYear = Tadbe2atMadaSearch.tashYear;
            
 
             return Obj;
