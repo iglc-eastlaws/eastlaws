@@ -10,5 +10,11 @@ namespace Eastlaws.Entities
         public int ID { get; set; }
         public string Name { get; set; }
         public int? ParentID { get; set; }
+        public int FehresCategoryID { get; set; }
+        public int? MyOrder { get; set; }
+        public int Level { get; set; }
+        public string Path { get; set; }
+        public string FullName { get; set; }
+
     }
 }

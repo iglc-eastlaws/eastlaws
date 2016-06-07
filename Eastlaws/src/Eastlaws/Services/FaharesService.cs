@@ -6,6 +6,7 @@ using Eastlaws.Entities;
 using Eastlaws.Infrastructure;
 using Dapper;
 using System.Text;
+using System.Data;
 
 namespace Eastlaws.Services
 {
@@ -31,7 +32,7 @@ namespace Eastlaws.Services
                 }
                 else if(ServiceID.Value == 3)
                 {
-
+                    WhereCondition = "";
                 }
             }
             else
@@ -82,6 +83,28 @@ namespace Eastlaws.Services
                 return Connection.Query<FehresCategory>(Query.ToString());
             }
         
+        }
+
+
+        public static IEnumerable<Object> GetItems(int CategoryID , string SearchText)
+        {
+            if (!string.IsNullOrWhiteSpace(SearchText))
+            {
+                SearchText = new FTSPredicate(SearchText, FTSSqlModes.AND).BuildPredicate();
+            }
+            else
+            {
+                SearchText = null;
+            }
+
+            DynamicParameters Params = new DynamicParameters();
+            Params.Add("@CategoryID", CategoryID);
+            Params.Add("@SearchText", SearchText);
+            CommandDefinition Cmd = new CommandDefinition(commandText: "GetFehresItems",parameters  : Params ,commandType : CommandType.StoredProcedure);
+            using (var Connection = DataHelpers.GetConnection(DbConnections.Data))
+            {
+                return Connection.Query<FehresItem>(Cmd);
+            }
         }
 
         
