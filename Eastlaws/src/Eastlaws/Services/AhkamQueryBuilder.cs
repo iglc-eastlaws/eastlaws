@@ -12,6 +12,9 @@ namespace Eastlaws.Services
 {
     public class AhkamQueryBuilder
     {
+
+
+
         public static string GeneralSearch(FTSPredicate Predicate)
         {
             if (Predicate.IsValid)
@@ -343,6 +346,22 @@ namespace Eastlaws.Services
             
         }
 
+        public static string FehresSearch(int FehresItemID , out string FakaratQuery , out List<FTSPredicate> TextMatches )
+        {
+            TextMatches = null;
+            FakaratQuery = string.Format(@"
+                                    Select AF.* From VW_AhkamFakarat AF Join @ResultsPage RP  on AF.HokmID = RP.ItemID
+                                    JOIN FehresItemsDetails FID ON  FID.ServiceItemID = AF.ID 
+                                    WHERE  FID.FehresItemID = {0} AND FID.ServiceID = 1 " , FehresItemID);
+
+
+
+            return string.Format(@"
+                                    SELECT AF.HokmID AS ID , Count(*) AS DefaultRank FROM FehresItemsDetails FID
+                                    JOIN dbo.AhkamFakarat AF ON AF.ID = FID.ServiceItemID
+                                    WHERE FID.FehresItemID = {0} AND FID.ServiceID = 1 
+                                    GROUP BY AF.HokmID" , FehresItemID);
+        }
 
         public static string ResolveTasfeyaQuery(IEnumerable<AhkamTasfeyaSelection> SelectedItems)
         {

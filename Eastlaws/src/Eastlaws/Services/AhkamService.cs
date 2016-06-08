@@ -31,7 +31,8 @@ namespace Eastlaws.Services
     public enum AhkamSearchTypes
 
     {
-        General , Custom , Advanced , Mada 
+        General , Custom , Advanced , Mada,
+        Fehres
     }
 
 
@@ -69,13 +70,7 @@ namespace Eastlaws.Services
             string InnerQuery = AhkamQueryBuilder.AdvancedCustomSearch(SrchObj , out FakaratQueryCustom , out SearchPredicates);
             return Search(InnerQuery, Options, FakaratQueryCustom, AhkamSearchTypes.Advanced , null , SearchPredicates, TasfeyaSelection);
         }
-        
-
-
-        public static AhkamPresentation Search(AhkamSearchOptions Options , int CachedQueryID)
-        {
-            throw new NotImplementedException();
-        }
+       
 
         // Mada Search
         public static AhkamPresentation Search(AhkamSearchOptions Options, AhkamMadaSearch SrchObj, List<AhkamTasfeyaSelection> TasfeyaSelection = null)
@@ -83,7 +78,16 @@ namespace Eastlaws.Services
             string FakaratQueryCustom;
             List<FTSPredicate> SearchPredicates;
             string InnerQuery =  AhkamQueryBuilder.MadaSearch(SrchObj, out FakaratQueryCustom, out SearchPredicates);
-            return Search(InnerQuery, Options, FakaratQueryCustom, AhkamSearchTypes.Advanced, null, SearchPredicates, TasfeyaSelection);            
+            return Search(InnerQuery, Options, FakaratQueryCustom, AhkamSearchTypes.Mada, null, SearchPredicates, TasfeyaSelection);            
+        }
+
+        //Fehres Search 
+        public static AhkamPresentation Search(AhkamSearchOptions Options , int FehresItemID , List<AhkamTasfeyaSelection> TasfeyaSelection = null)
+        {
+            string FakaratQueryCustom;
+            List<FTSPredicate> SearchPredicates;
+            string InnerQuery = AhkamQueryBuilder.FehresSearch(FehresItemID, out FakaratQueryCustom, out SearchPredicates);
+            return Search(InnerQuery, Options, FakaratQueryCustom, AhkamSearchTypes.Fehres, null, SearchPredicates, TasfeyaSelection);
         }
 
 
@@ -160,12 +164,9 @@ namespace Eastlaws.Services
                     NewCount = conCount.QuerySingle<int>(CountQuery);
                     P.ResultsCount = NewCount;
                 }
-
             }
-
             return P;
         }
-
 
         public static IEnumerable<Country> GetCountries()
         {
