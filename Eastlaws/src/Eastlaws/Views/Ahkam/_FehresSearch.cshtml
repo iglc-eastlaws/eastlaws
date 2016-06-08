@@ -50,8 +50,9 @@
 
            </div>
                  <div class="tab-pane fade active in" id="GeneralTab">
+                     GeneralTab
             
-                    <ul id="tree1" class="tree-fahrs">
+                    @*<ul id="tree1" class="tree-fahrs">
                         <li>
                             <a href="#">الأحكام الصادرة في طلبات رجال القضاء</a>
                           <ul>
@@ -143,11 +144,26 @@
                                 </li>
                             </ul>
                         </li>
-                    </ul>
+                    </ul>*@
                 </div>
           
             <div class="tab-pane fade " id="defoaTab">
-                <ul id="tree2" class="tree-fahrs">
+            
+                <c-tree-view></c-tree-view>
+
+                @*<script type="text/ng-template"  id="tree_item_renderer.html">
+                    
+                    <ul id="tree2" class="tree-fahrs">
+                        <li ng-repeat="n in tree1"> 
+                            <a href="javascript:;">{{n.text}}</a>
+                            <div ng-include="'tree_item_renderer.html'" onload="tree1 = n.node"></div>
+                        </li>
+                    </ul>
+               
+                </script>
+                <div ng-include="'tree_item_renderer.html'"></div>*@
+
+                    @*<ul id="tree2" class="tree-fahrs">
                     <li>
                         <a href="#">الأحكام الصادرة في طلبات رجال القضاء</a>
                         <ul>
@@ -239,10 +255,11 @@
                             </li>
                         </ul>
                     </li>
-                </ul>
+                </ul>*@
             </div>
             <div class="tab-pane fade" id="manaeTab">
-                <ul id="tree3" class="tree-fahrs">
+                manaeTab
+                @*<ul id="tree3" class="tree-fahrs">
                     <li>
                         <a href="#">الأحكام الصادرة في طلبات رجال القضاء</a>
                         <ul>
@@ -334,10 +351,11 @@
                             </li>
                         </ul>
                     </li>
-                </ul>
+                </ul>*@
             </div>
             <div class="tab-pane fade" id="systemTab">
-                <ul id="tree4" class="tree-fahrs">
+                systemTab
+                @*<ul id="tree4" class="tree-fahrs">
                     <li>
                         <a href="#">الأحكام الصادرة في طلبات رجال القضاء</a>
                         <ul>
@@ -429,7 +447,7 @@
                             </li>
                         </ul>
                     </li>
-                </ul>
+                </ul>*@
             </div>
             @*<div class="form-group radio_buttons optional col-md-6 ">
                 <label class="radio_buttons  col-sm-3  " for="serachText">بحث فى الفهرس :  </label>

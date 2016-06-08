@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Eastlaws.Infrastructure
 {
     public enum Build_Option{ and , or }
- 
+
     public class TextHelpers
     {
         static public StringBuilder Build_and(string InputText, Build_Option buildoption)

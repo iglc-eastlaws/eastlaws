@@ -450,6 +450,293 @@
         };
     });
 
+
+
+    //---- verions 2
+    //sharedModule.directive('cTreeView', function () {
+
+    //    return {
+    //        restrict: 'E',
+    //        replace: true,
+    //        template:  '<div>' +
+    //                '<ul id="tree2" class="tree-fahrs1">'+
+    //                    '<li ng-repeat="n in tree1"> '+
+    //                        '<a href="#">{{n.text}}</a>' +
+    //                          '<ul ng-repeat="d in tree1 | filter :{parentId:n.id}"><li>{{d.text}}</li></ul>' +
+    //                    '</li>'+
+    //                '</ul>' +
+    //                '</div>'
+    //        ,
+    //        scope: {
+    //        },
+    //        link: function (scope, elem, attr, ctrl, transclude) {
+    //            var nodes = [{ "id": "1", "parentId": "0", "text": "text1" },
+    //                        { "id": "2", "parentId": "0", "text": "text2" },
+    //                        { "id": "3", "parentId": "1", "text": "text3" },
+    //                        { "id": "4", "parentId": "3", "text": "text4" },
+    //                        { "id": "5", "parentId": "0", "text": "text5" }];
+    //            var map = {}, node, roots = [];
+    //            for (var i = 0; i < nodes.length; i += 1) {
+    //                node = nodes[i];
+    //                node.children = [];
+    //                map[node.id] = i; // use map to look-up the parents
+    //                if (node.parentId !== "0") {
+    //                    nodes[map[node.parentId]].children.push(node);
+    //                } else {
+    //                    roots.push(node);
+    //                }
+    //            }
+    //            //  console.log(roots); // <-- there's your tree
+
+    //            scope.tree1 = roots;
+    //            //transclude(function (clone) {
+    //            //    elem.parent().append(clone);
+    //            //});
+    //            //$(elem).first('ul').css('color', 'blue');
+    //            //r elementResult = $(elem).first('ul');
+    //            //console.log(elementResult.html)
+    //            $('#tree2').treed({ openedClass: 'glyphicon-folder-open', closedClass: 'glyphicon-folder-close' });
+    //        }
+
+    //    };
+
+
+    //})
+
+    //---- verions 1
+    sharedModule.directive('cTreeView', function () {
+
+        return {
+            restrict: 'E',
+            replace: true,
+            template: '<div class="mytree">' +
+
+                '<script type="text/ng-template"  id="tree_item_renderer.html">'+
+                    '<ul class="tree-fahrs">'+
+                        '<li ng-repeat="n in tree1"> '+
+                            '<a href="#">{{n.text}}</a>' +
+                              '<div ng-include="\'tree_item_renderer.html\'" onload="tree1 = n.children" include-replace></div>' +
+                        '</li>'+
+                    '</ul>' +
+                     '</script>'+
+                    '<div ng-include="\'tree_item_renderer.html\'"></div>'+
+                  '</div>'
+            ,
+            scope: {
+            },
+            link: function (scope, elem, attr, ctrl, transclude) {
+                var nodes = [{ "id": "1","parentId": "0", "text": "text1" },
+                            { "id": "2", "parentId": "0", "text": "text2" },
+                            { "id": "3", "parentId": "1", "text": "text3" },
+                            { "id": "4", "parentId": "3", "text": "text4" },
+                            { "id": "5", "parentId": "0", "text": "text5" },                          
+                            { "id": "6", "parentId": "1", "text": "text6" },
+                            { "id": "7", "parentId": "4", "text": "text7" },
+                            { "id": "8", "parentId": "1", "text": "text8" },
+                            { "id": "9", "parentId": "5", "text": "text9" },
+                            { "id": "10","parentId": "5", "text": "text10" }
+                ];
+                var map = {}, node, roots = [];
+                for (var i = 0; i < nodes.length; i += 1) {
+                    node = nodes[i];
+                    node.children = [];
+                    map[node.id] = i; // use map to look-up the parents
+                    if (node.parentId !== "0") {
+                        nodes[map[node.parentId]].children.push(node);
+                    } else {
+                        roots.push(node);
+                    }
+                }
+              //  console.log(roots); // <-- there's your tree
+
+                scope.tree1 = roots;
+                //transclude(function (clone) {
+                //    elem.parent().append(clone);
+                //});
+                //$(elem).first('ul').css('color', 'blue');
+                var elementResult = $(elem).first('ul');
+                //console.log(elementResult.html)
+              $(elementResult).treed({ openedClass: 'glyphicon-folder-open', closedClass: 'glyphicon-folder-close' });
+            }
+
+        };
+
+
+    })
+
+    //-- 
+    /*
+    //sharedModule.directive('cTreeView', function () {
+
+    //    return {
+    //        restrict: 'E',
+    //        replace: true,
+    //        template: ''
+    //        ,
+    //        scope: {
+    //        },
+    //        link: function (scope, elem) {
+    //            var nodes = [{ "id": "1", "parentId": "0", "text": "text1" },
+    //                        { "id": "2", "parentId": "0", "text": "text2" },
+    //                        { "id": "3", "parentId": "1", "text": "text3" },
+    //                        { "id": "4", "parentId": "3", "text": "text4" },
+    //                        { "id": "5", "parentId": "0", "text": "text5" }];
+    //            var map = {}, node, roots = [];
+    //            for (var i = 0; i < nodes.length; i += 1) {
+    //                node = nodes[i];
+    //                node.children = [];
+    //                map[node.id] = i; // use map to look-up the parents
+    //                console.log(node);
+    //                if (node.parentId !== "0") {
+    //                    console.log("1");
+    //                    nodes[map[node.parentId]].children.push(node);
+    //                } else {
+    //                    console.log("0");
+    //                    roots.push(node);
+    //                }
+    //            }
+    //            console.log(roots); // <-- there's your tree
+
+    //            var html = '<div>' +
+    //                    '<ul id="tree2" class="tree-fahrs">' +
+    //                    '<li><a href="javascript:;">itemA</a><ul><li><a href="javascript:;">item A 1</a></li></ul></li>' +
+    //                    '<li><a href="javascript:;">itemB</a></li>' +
+    //                    '<li><a href="javascript:;">itemC</a></li>' +
+    //                   '</ul>' +
+    //                '</div>';
+    //            elem.html(html)
+    //            elem.treed({ openedClass: 'glyphicon-folder-open', closedClass: 'glyphicon-folder-close' });
+    //        }
+
+    //    };
+
+
+    //})
+
+
+    //sharedModule.directive('cTreeView', function () {
+
+    //    return {
+    //        restrict: 'E',
+    //        replace: true,
+    //        template: ''
+    //        ,
+    //        scope: {
+    //        },
+    //        link: function (scope, elem) {
+    //            var html = '<div>' +
+    //                    '<ul id="tree2" class="tree-fahrs">' +
+    //                    '<li><a href="javascript:;">itemA</a><ul><li><a href="javascript:;">item A 1</a></li></ul></li>' +
+    //                    '<li><a href="javascript:;">itemB</a></li>' +
+    //                    '<li><a href="javascript:;">itemC</a></li>' +
+    //                   '</ul>' +
+    //                '</div>';
+    //            elem.html(html)
+    //            elem.treed({ openedClass: 'glyphicon-folder-open', closedClass: 'glyphicon-folder-close' });
+    //        }
+
+    //    };
+
+
+    //})
+
+
+    //sharedModule.directive('cTreeView', function () {
+
+    //    return {
+    //        restrict: 'E',
+    //        replace: true,
+    //        template: '<div class="mytree">' +
+
+    //            '<script type="text/ng-template"  id="tree_item_renderer.html">'+
+    //                '<ul class="tree-fahrs1">'+
+    //                    '<li ng-repeat="n in tree1"> '+
+    //                        '<a href="javascript:;">{{n.text}}</a>' +
+    //                          '<div ng-include="\'tree_item_renderer.html\'" onload="tree1 = n.node" include-replace>></div>' +
+    //                    '</li>'+
+    //                '</ul>' +
+    //                 '</script>'+
+    //                '<div ng-include="\'tree_item_renderer.html\'"></div>'+
+    //              '</div>'
+    //        ,
+    //        scope: {
+    //        },
+    //        link: function (scope, elem, attr, ctrl, transclude) {
+
+    //            scope.tree1 = [
+    //               {
+    //                   text: "item A",
+    //                   node: [
+    //                       {
+    //                           text: "item a 1",
+    //                           node: [
+    //                           {
+    //                               text: "item a 1-1",
+    //                               node: [{ text: "item a 1-1-1" }
+    //                               ]
+    //                           },
+    //                           {}
+    //                           ]
+    //                       },
+    //                         {
+    //                             text: "item b 1",
+    //                             node: [
+    //                             {
+    //                                 text: "item b 1-1",
+    //                                 node: [{ text: "item b 1-1-1" }
+    //                                 ]
+    //                             },
+    //                             {}
+    //                             ]
+    //                         }
+    //                   ]
+    //               },
+    //               { text: "item B" },
+    //               { text: "item C" },
+    //               { text: "item D" }
+    //            ]
+    //            //transclude(function (clone) {
+    //            //    elem.parent().append(clone);
+    //            //});
+    //            $(elem).first('ul').css('color', 'blue');
+    //            var elementResult = $(elem).first('ul');
+    //            console.log(elementResult.html)
+    //           $(elementResult).treed({ openedClass: 'glyphicon-folder-open', closedClass: 'glyphicon-folder-close' });
+    //        }
+
+    //    };
+
+
+    //})
+
+    //sharedModule.directive('cTreeView', function () {
+
+    //    return {
+    //        restrict: 'E',
+    //        replace: true,
+    //        template: '<div>' +
+    //                   'TreeView' +
+    //                   '<ul id="tree2" class="tree-fahrs">'+
+    //                    '<li><a href="javascript:;">itemA</a><ul><li><a href="javascript:;">item A 1</a></li></ul></li>'+
+    //                    '<li><a href="javascript:;">itemB</a></li>'+
+    //                    '<li><a href="javascript:;">itemC</a></li>'+
+    //                   '</ul>'+
+    //                '</div>'
+    //        ,
+    //        scope: {
+    //        },
+    //        link: function (scope, elem) {
+
+
+    //            elem.treed({ openedClass: 'glyphicon-folder-open', closedClass: 'glyphicon-folder-close' });
+    //        }
+
+    //    };
+
+
+    //})
+    */
+
     //sharedModule.directive('cDateText', function () {
     //    return {
     //        link: function (scope, elm, attr, ctrl, transclude) {
@@ -493,7 +780,15 @@
                 });
             };
         });
- 
+    sharedModule.directive('includeReplace', function () {
+        return {
+            require: 'ngInclude',
+            restrict: 'A', /* optional */
+            link: function (scope, el, attrs) {
+                el.replaceWith(el.children());
+            }
+        };
+    });
 
     //----- Global pure js 
     Array.prototype.findElemnet = function (val, typeElemnet) {
