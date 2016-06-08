@@ -84,7 +84,7 @@ namespace Eastlaws.Services
             string FakaratQueryCustom;
             List<FTSPredicate> SearchPredicates;
             string InnerQuery = AhkamQueryBuilder.AdvancedCustomSearch(Obj, out FakaratQueryCustom, out SearchPredicates);
-            QueryCacher Cacher = new QueryCacher((int)LegalServices.Ahkam, InnerQuery, AhkamSearchTypes.Advanced.ToString(), NewSearch: false, SecondaryQuery: FakaratQueryCustom);
+            QueryCacher Cacher = new QueryCacher((int)LegalServices.Ahkam, InnerQuery, AhkamSearchTypes.Advanced.ToString(), NewSearch: false, SecondaryQuery: FakaratQueryCustom , IsTasfeya : true);
             int QueryID = Cacher.ID;  
             var Data = AhkamTasfeya.List(QueryID, AhkamSearchTypes.Advanced, out UsedCategories, TasfeyaFilter, SelectedTasfeya, CategorySender);
             return Data;
@@ -96,7 +96,7 @@ namespace Eastlaws.Services
             string FakaratQueryCustom;
             List<FTSPredicate> SearchPredicates;
             string InnerQuery = AhkamQueryBuilder.MadaSearch(Obj, out FakaratQueryCustom, out SearchPredicates);
-            QueryCacher Cacher = new QueryCacher((int)LegalServices.Ahkam, InnerQuery, AhkamSearchTypes.Mada.ToString(), NewSearch: false, SecondaryQuery: FakaratQueryCustom);
+            QueryCacher Cacher = new QueryCacher((int)LegalServices.Ahkam, InnerQuery, AhkamSearchTypes.Mada.ToString(), NewSearch: false, SecondaryQuery: FakaratQueryCustom, IsTasfeya: true);
             int QueryID = Cacher.ID;
             var Data = AhkamTasfeya.List(QueryID, AhkamSearchTypes.Mada, out UsedCategories, TasfeyaFilter, SelectedTasfeya, CategorySender);
             return Data;
@@ -107,7 +107,7 @@ namespace Eastlaws.Services
             string FakaratQueryCustom;
             List<FTSPredicate> SearchPredicates;
             string InnerQuery = AhkamQueryBuilder.FehresSearch(FehresItemID, out FakaratQueryCustom, out SearchPredicates);
-            QueryCacher Cacher = new QueryCacher((int)LegalServices.Ahkam, InnerQuery, AhkamSearchTypes.Fehres.ToString(), NewSearch: false, SecondaryQuery: FakaratQueryCustom);
+            QueryCacher Cacher = new QueryCacher((int)LegalServices.Ahkam, InnerQuery, AhkamSearchTypes.Fehres.ToString(), NewSearch: false, SecondaryQuery: FakaratQueryCustom, IsTasfeya: true);
             int QueryID = Cacher.ID;
             var Data = AhkamTasfeya.List(QueryID, AhkamSearchTypes.Fehres, out UsedCategories, TasfeyaFilter, SelectedTasfeya, CategorySender);
             return Data;
