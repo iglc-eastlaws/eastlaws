@@ -40,7 +40,7 @@ namespace Eastlaws.Controllers
             
         }
 
-        public JsonResult Items(int CategoryID , string SearchText , int? ParentID)
+        public JsonResult Items(int CategoryID , int? ParentID = null, string SearchText = null)
         {
             var Data = FaharesService.GetItems(CategoryID, SearchText);
             return new JsonResult(Data);

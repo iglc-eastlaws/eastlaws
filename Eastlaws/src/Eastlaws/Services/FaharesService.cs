@@ -86,7 +86,7 @@ namespace Eastlaws.Services
         }
 
 
-        public static IEnumerable<Object> GetItems(int CategoryID , string SearchText)
+        public static IEnumerable<FehresItem> GetItems(int CategoryID , string SearchText = null)
         {
             if (!string.IsNullOrWhiteSpace(SearchText))
             {
