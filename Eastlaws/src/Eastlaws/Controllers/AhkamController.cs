@@ -17,7 +17,9 @@ namespace Eastlaws.Controllers
     {
         public IActionResult Index() => View();
 
-        #region Search Result, Input Search Box, Filter Section
+        #region SearchResults, Input Search Box, Filter Section
+        // Unused , To be deleted 
+        /*
         public IActionResult SearchResult(int searchtype, int Countsearchchange, int PageNo, int Match, int Sort, string q)
         {
             AhkamSearchOptions Options = new AhkamSearchOptions();
@@ -41,7 +43,7 @@ namespace Eastlaws.Controllers
                 return View();
             }
         }
-
+        */
         [HttpPost]
         public IActionResult SearchResultAssembly(SearchParms SearchParms)
         {
