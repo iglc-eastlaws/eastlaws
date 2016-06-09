@@ -49,8 +49,6 @@
                                 <th>المحكمه</th>
                                 <th>رقم</th>
                                 <th>السنة</th>
-                                @*<th>تاريخ الجلسة</th>*@
-                                @*<th>مكتب فنى</th>*@
                             </tr>
                         </thead>
                         <tbody id="tabHokmBody">
@@ -130,7 +128,7 @@
                             var CurrentFakra = Fakrat[i];
                             string FakraText = GetFakraText(CurrentFakra.Text,
                                                             CurrentFakra.FakraNo,
-                                                            Model.TextPredicates).ToString();
+                                                            Model.TextPredicates,250).ToString();
 
 
                             <p>
@@ -149,11 +147,10 @@
                             }
                         }
                     </div>
-
                     <div class="nav-control">
                          
                         <ul>
-                            <li><a href="javascipt:;" data-toggle="tooltip" data-placement="top" class="color-tooltip" title=" قراءة النص"><i class="fa fa-desktop"></i><span class="name-nav"> قراءة النص</span></a></li>
+                            <li><a href="javascipt:;" data-toggle="tooltip" data-placement="top" class="color-tooltip fullfakra" printID="@item.ID" title=" قراءة النص"><i class="fa fa-desktop"></i><span class="name-nav"> قراءة النص</span></a></li>
                             <li><a href="#" data-toggle="tooltip" data-placement="top" class="color-tooltip" title=" صورة الحكم"><i class="fa fa-camera"></i><span class="name-nav"> صورة الحكم</span></a></li>
                             <li><a href="#" data-toggle="tooltip" data-placement="top" class="color-tooltip printing" printid="result_@item.ID"  title=" طباعة"><i class="fa fa-print"></i><span class="name-nav"> طباعة </span></a></li>
 
@@ -178,16 +175,11 @@
     }
 }
 
-
-
-
-
-
 @functions{
-    public static StringBuilder GetFakraText(string FakraText, int FakraNo, List<FTSPredicate> PredicatesHighlight)
+    public static StringBuilder GetFakraText(string FakraText, int FakraNo, List<FTSPredicate> PredicatesHighlight,int MaxFakraTextLen)
     {
         var Result = new StringBuilder();
-        int MaxFakraTextLen = 250;
+       // int MaxFakraTextLen = 250;
 
         if (PredicatesHighlight == null || PredicatesHighlight.Count == 0)
         {
@@ -243,5 +235,17 @@
 
         });
 
-   
+    $(document).on('click', '.fullfakra', function () {
+        var ID = $(this).attr('printID');
+        var fakarat = [];
+        $('#Content_' + ID).find('.fakra-text').each(function () {
+            var fakraID = $(this).attr('fakraID')
+            fakarat.push(fakraID)
+        })
+        console.log(fakarat);
+        $.post('/Ahkam/FullFakra', { 'ID': ID, 'fakarat': fakarat }, function (data) {
+            $('#Content_' + ID).html(data)
+        });
+
+    });
 </script>

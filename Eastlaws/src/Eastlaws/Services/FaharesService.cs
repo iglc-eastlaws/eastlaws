@@ -14,8 +14,6 @@ namespace Eastlaws.Services
 
     public class FaharesService
     {
-      
-
         public static IEnumerable<FehresProgram> GetProgramsByService (int? ServiceID)
         {
             string WhereCondition = "";
@@ -52,7 +50,6 @@ namespace Eastlaws.Services
             
         }
 
-
         public static IEnumerable<FehresCountry> GetCountriesByFehressID(int FehresProgramID)
         {
             StringBuilder Q = new StringBuilder();
@@ -85,7 +82,6 @@ namespace Eastlaws.Services
         
         }
 
-
         public static IEnumerable<Object> GetItems(int CategoryID , string SearchText)
         {
             if (!string.IsNullOrWhiteSpace(SearchText))
@@ -106,10 +102,5 @@ namespace Eastlaws.Services
                 return Connection.Query<FehresItem>(Cmd);
             }
         }
-
-        
-
-
-
     }
 }

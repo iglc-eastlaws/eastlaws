@@ -255,7 +255,7 @@ namespace Eastlaws.Controllers
         #endregion
 
         #region displayHokm
-            public IActionResult View(int ID)
+       public IActionResult View(int ID)
             {
                 var Model = AhkamService.GetHokm(ID, null);
                 if (Model.IsValid)
@@ -268,8 +268,8 @@ namespace Eastlaws.Controllers
                 }
             }
 
-            [HttpPost]
-            public IActionResult FullHokmView(int ID, int[] fakarat)
+      [HttpPost]
+       public IActionResult FullHokmView(int ID, int[] fakarat)
             {
                 var Model = AhkamService.GetHokm(ID, null);
                 if (Model.IsValid)
@@ -285,6 +285,24 @@ namespace Eastlaws.Controllers
                     return View();
                 }
             }
+
+        [HttpPost]
+      public IActionResult FullFakra(int ID, int[] fakarat)
+        {
+            var Model = AhkamService.GetHokm(ID, null);
+            if (Model.IsValid)
+            {
+                if (fakarat.Length > 0)
+                {
+                    ViewBag.PrintedFakarat = fakarat;
+                }
+                return View(Model);
+            }
+            else
+            {
+                return View();
+            }
+        }
         #endregion
 
 

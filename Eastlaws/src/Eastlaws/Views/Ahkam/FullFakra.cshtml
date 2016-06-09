@@ -4,5 +4,31 @@
 }
 @if (Model != null)
 {
+    var Hokm = Model.AhkamList.ToArray()[0];
+    var FakaratArray = Model.FakaratList.ToArray();
+
+    if (ViewBag.PrintedFakarat != null)
+    {
+        int[] numbers = ViewBag.PrintedFakarat;
+
+        var results = (from n in Model.FakaratList
+                       where numbers.Contains(n.ID)
+                       select n).ToList();
+        FakaratArray = results.ToArray();
+    }
+    @foreach (var CurrentFakra in FakaratArray)
+    {
+        <p>
+            <span class="fakr-title-search" style="color:red;">
+                @CurrentFakra.Title :
+            </span>
+            <a class="fakra-text" fakraID="@CurrentFakra.ID" target="_blank" href="View?ID=@Hokm.ID#@CurrentFakra.ID">@Html.Raw(CurrentFakra.Text)</a>
+        </p>
+      
+            <div class="fakarat-search-separator">
+                <hr class="spacer" />
+            </div>
+
+    }
 
 }
