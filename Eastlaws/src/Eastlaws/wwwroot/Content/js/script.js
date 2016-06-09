@@ -159,6 +159,7 @@ $(document).ready(function () {
             var tree = $(this);
             tree.addClass("tree");
             tree.find('li').has("ul").each(function () {
+             
                 var branch = $(this); //li with children ul
                 branch.prepend("<i class='indicator glyphicon " + closedClass + "'></i>");
                 branch.addClass('branch');
