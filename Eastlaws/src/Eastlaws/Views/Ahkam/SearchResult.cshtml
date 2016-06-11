@@ -126,6 +126,7 @@
                         @for (int i = 0; i < Fakrat.Length; i++)
                         {
                             var CurrentFakra = Fakrat[i];
+                            var Fakralength = CurrentFakra.Text.Length;
                             string FakraText = GetFakraText(CurrentFakra.Text,
                                                             CurrentFakra.FakraNo,
                                                             Model.TextPredicates,250).ToString();
@@ -135,7 +136,7 @@
                                 <span class="fakr-title-search" style="color:red;">
                                     @CurrentFakra.Title :
                                 </span>
-                                <a class="fakra-text" fakraID="@CurrentFakra.ID"  target="_blank" href="View?ID=@item.ID#@CurrentFakra.ID">@Html.Raw(FakraText)</a>
+                                <a class="fakra-text" fakraID="@CurrentFakra.ID" length="@Fakralength" target="_blank" href="View?ID=@item.ID#@CurrentFakra.ID">@Html.Raw(FakraText)</a>
                             </p>
 
 
@@ -150,7 +151,7 @@
                     <div class="nav-control">
                          
                         <ul>
-                            <li><a href="javascipt:;" data-toggle="tooltip" data-placement="top" class="color-tooltip fullfakra" printID="@item.ID" title=" قراءة النص"><i class="fa fa-desktop"></i><span class="name-nav"> قراءة النص</span></a></li>
+                            <li><a href="javascipt:;" data-toggle="tooltip" data-placement="top" class="color-tooltip fullfakra"  printID="@item.ID" title=" قراءة النص"><i class="fa fa-desktop"></i><span class="name-nav"> قراءة النص</span></a></li>
                             <li><a href="#" data-toggle="tooltip" data-placement="top" class="color-tooltip" title=" صورة الحكم"><i class="fa fa-camera"></i><span class="name-nav"> صورة الحكم</span></a></li>
                             <li><a href="#" data-toggle="tooltip" data-placement="top" class="color-tooltip printing" printid="result_@item.ID"  title=" طباعة"><i class="fa fa-print"></i><span class="name-nav"> طباعة </span></a></li>
 
@@ -228,7 +229,7 @@
                 var fakraID = $(this).attr('fakraID')
                 fakarat.push(fakraID)
             })
-            console.log(fakarat);
+            //console.log(fakarat);
             $.post('/Ahkam/FullHokmView', { 'ID': ID, 'fakarat': fakarat }, function (data) {
                 printdiv(1, null, data);
             });
@@ -236,16 +237,19 @@
         });
 
     $(document).on('click', '.fullfakra', function () {
-        var ID = $(this).attr('printID');
-        var fakarat = [];
-        $('#Content_' + ID).find('.fakra-text').each(function () {
-            var fakraID = $(this).attr('fakraID')
-            fakarat.push(fakraID)
-        })
-        console.log(fakarat);
-        $.post('/Ahkam/FullFakra', { 'ID': ID, 'fakarat': fakarat }, function (data) {
-            $('#Content_' + ID).html(data)
-        });
 
+        var ID = $(this).attr('printID');
+        var fakralenght = $('#Content_' + ID + '>p>a').attr('length');
+        if (fakralenght >= 250) {
+            var fakarat = [];
+            $('#Content_' + ID).find('.fakra-text').each(function () {
+                var fakraID = $(this).attr('fakraID')
+                fakarat.push(fakraID)
+            })
+            //console.log(fakarat);
+            $.post('/Ahkam/FullFakra', { 'ID': ID, 'fakarat': fakarat }, function (data) {
+                $('#Content_' + ID).html(data)
+            });
+        }
     });
 </script>
