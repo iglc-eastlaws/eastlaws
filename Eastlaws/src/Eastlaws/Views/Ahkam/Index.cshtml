@@ -485,22 +485,76 @@
               //  $scope.getmypage();
             })
             .controller('fehressSearchCtrl', function ($scope, $http) {
-
-           
-
-
+                $scope.countries = [];
+                $scope.courts = [];
+                $scope.treeItems = [];
 
                 $http.get('/Fehres/ServicePrograms?servicesID=' + 1 + '', {}).then(function (d) {
                     $scope.fehressPrograms = d.data;
-                    // console.log($scope.fehressPrograms);
-
                 });
+                
+                $scope.getTreeItems = function () {
+                   // console.log($scope.court)
+                    $http.get('/Fehres/Items?CategoryID=' + $scope.court.ID + '', {}).then(function (d) {
+                        console.log($scope.court.ID)
+                        $scope.treeItems = d.data;
 
-                $scope.search = function () {
-                    console.log('fehres')
+                      var draw = '';
+                      var h = buildTreeRec($scope.treeItems, 0, draw);
+                      $('#treeview').html(h)
+
+                     // console.log(html);
+                       // console.log($scope.treeItems);
+                    });
+                }
+
+                $scope.getCourt = function () {
+                    $http.get('/Fehres/Categories?ProgCountryID=' + $scope.country.ProgCountryID + '', {}).then(function (d) {
+                        $scope.courts = d.data;
+                        if (($scope.courts[0])) {
+                            $scope.court = { ID: $scope.courts[0].ID };
+                        }
+                    });
+                }
+
+                $scope.serviceProg = function ( obj) {
+                    $http.get('/Fehres/ProgramCountries?FehresProgramID=' + obj.ID + '', {}).then(function (d) {
+                        $scope.countries = d.data;
+                        $scope.country = { ID: 1 };
+                        $scope.getCourt();
+                    });
                 }
 
 
+
+
+
+                $scope.search = function () {
+                  //  console.log('fehres')
+                }
+
+                function buildTreeRec(arr, parentID, html) {
+                    var html = '';
+                    var rows = arr.where(function (t) { return t.ParentID == parentID });
+                    if (rows.length > 0) {
+                        html += "<ul>";
+                    }
+
+                    for (var i = 0; i < rows.length; i++) {
+                       // console.log(rows[i]);
+                        html += "<li id=" + rows[i].ID + " class='lidd'>";
+                        html += "<a href='javascript:;'><span class='mytext'>" + rows[i].Name + "</span></a>";
+                        html += buildTreeRec(arr, rows[i].ID, html);
+                        html += "</li>";
+
+                    }
+
+                    if (rows.length > 0) {
+                        html += "</ul>";
+                    }
+                   // console.log(html);
+                    return html;
+                }
             })
             .factory('SearchData', function ($http, tasfiaData, tasfiaAllData, $rootScope) {
                 var data = {};
