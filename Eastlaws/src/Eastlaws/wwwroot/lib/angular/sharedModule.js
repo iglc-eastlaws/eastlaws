@@ -500,7 +500,7 @@
 
                     for (var i = 0; i < rows.length; i++) {
                         html += "<li id=" + rows[i].ID + ">";
-                        html += "<a href='javascript:;' ng-click='clicknode()'> " + rows[i].Name + "</a>";
+                        html += "<i class='fa fa-angle-double-left' aria-hidden='true'></i> <a href='javascript:;' ng-click='clicknode()'> " + rows[i].Name + "</a>";
                         html += buildTreeRec(arr, rows[i].ID, html);
                         html += "</li>";
 

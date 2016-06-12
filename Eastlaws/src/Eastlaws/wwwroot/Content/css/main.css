@@ -431,9 +431,10 @@ thead { background-color:#fff9d9;  color:#333; font:0.68em "Droid Arabic Kufi",a
 .tree ul li:last-child:before {background:#fff;height:auto;top:1em;bottom:0}
 .indicator { margin-right:5px;}
 .tree li a {text-decoration: none; color:#675650;transition:all ease 0.5s;font:0.69em droid arabic kufi;}
-.tree li a:hover{  color: #D9B672; }
 .tree li button, .tree li button:active, .tree li button:focus {text-decoration: none;color: #D9B672; border:none;background:transparent;margin:0px;padding:0px; outline: 0;}
-.tree i{ color:#675650}
+.tree i{ color:#675650;}
+.tree li a:hover, .fa-angle-double-left{ color: #D9B672!important; }
+.branch > .fa-angle-double-left{display:none!important;}
 /*Right tabs*/
 .inner-tab{ padding:0px;}
 .inner-tab .select-option{}
