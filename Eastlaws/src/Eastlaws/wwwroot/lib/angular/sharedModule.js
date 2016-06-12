@@ -473,42 +473,41 @@
                         nodes = scope.nodeItems;
 
                         var draw = '';
-                        scope.mytree = buildTreeRec(nodes, 0, draw);
+                        var h = buildTreeRec(nodes, 0, draw);
+                      //  $('#treeview').html(h)
+                        ///scope.mytree = buildTreeRec(nodes, 0, draw);
+                        elem.html(h);
 
-                        elem.html(scope.mytree);
+                        var elementResult = $(elem).first('ul');
+                        $(elementResult).treed({ openedClass: 'glyphicon-folder-open', closedClass: 'glyphicon-folder-close' });
                   
-                       // var parent0 = nodes.where(function (t) { return t.ParentID == 0 });
-                       //console.log(nodes);
-                       //console.log(parent0)
+                       // console.log(h)
                     }
                 });
 
 
-                
-                function buildTreeRec(arr,parentID,html)
-                {
-                    //var html = '';
+                function buildTreeRec(arr, parentID, html) {
+                    var html = '';
                     var rows = arr.where(function (t) { return t.ParentID == parentID });
-                    if (rows.length > 0)
-                    {
-                        html += "<ul>";
+                    if (rows.length > 0) {
+                        html += "<ul id='treeV' class='tree-fahrs'>";
                     }
 
                     for (var i = 0; i < rows.length; i++) {
-             
-                        html += "<li id=" + rows[i].ID + " class='lidd'>";
-                        html += "<a href='javascript:;'><span class='mytext'>" + rows[i].Name + "</span></a>";
-                        buildTreeRec(arr, rows[i].ID, html);
+                        html += "<li id=" + rows[i].ID + ">";
+                        html += "<a href='javascript:;'><span>" + rows[i].Name + "</span></a>";
+                        html += buildTreeRec(arr, rows[i].ID, html);
                         html += "</li>";
-                  
+
                     }
 
                     if (rows.length > 0) {
                         html += "</ul>";
                     }
-                    console.log(html);
                     return html;
                 }
+
+
             }
 
         };
@@ -614,7 +613,7 @@
                         }
                         roots = unflatten(nodes);
                         scope.tree1 = roots;
-                        console.log(roots);
+                       // console.log(roots);
                         var elementResult = $(elem).first('ul');
                         $(elementResult).treed({ openedClass: 'glyphicon-folder-open', closedClass: 'glyphicon-folder-close' });
                     }

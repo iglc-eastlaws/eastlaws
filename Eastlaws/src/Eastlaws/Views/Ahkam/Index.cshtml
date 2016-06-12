@@ -537,13 +537,12 @@
                     var html = '';
                     var rows = arr.where(function (t) { return t.ParentID == parentID });
                     if (rows.length > 0) {
-                        html += "<ul>";
+                        html += "<ul id='treeV' class='tree-fahrs'>";
                     }
 
                     for (var i = 0; i < rows.length; i++) {
-                       // console.log(rows[i]);
-                        html += "<li id=" + rows[i].ID + " class='lidd'>";
-                        html += "<a href='javascript:;'><span class='mytext'>" + rows[i].Name + "</span></a>";
+                        html += "<li id=" + rows[i].ID + ">";
+                        html += "<a href='javascript:;'><span>" + rows[i].Name + "</span></a>";
                         html += buildTreeRec(arr, rows[i].ID, html);
                         html += "</li>";
 
@@ -552,9 +551,10 @@
                     if (rows.length > 0) {
                         html += "</ul>";
                     }
-                   // console.log(html);
                     return html;
                 }
+
+                $('#treeV').treed({ openedClass: 'glyphicon-folder-open', closedClass: 'glyphicon-folder-close' });
             })
             .factory('SearchData', function ($http, tasfiaData, tasfiaAllData, $rootScope) {
                 var data = {};
