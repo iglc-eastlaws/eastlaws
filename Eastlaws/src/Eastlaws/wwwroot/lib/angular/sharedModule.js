@@ -460,15 +460,30 @@
             replace: true,
             template: '<div class="mytree"></div>' ,
             scope: {
-                nodeItems: '='
+                nodeItems: '=',
+                onClickItem: '&',
+                selectedItemId:'='
             },
             link: function (scope, elem, attr, ctrl, transclude) {
 
                 scope.tree1 = [];
                 scope.mytree = '';
-                scope.clicknode = function () {
-                    console.log('click tree');
+                scope.clicknode = function (treeid) {
+                    //console.log('clicknode ' + treeid);
+                   // $event.stopPropagation();
+                  //  $event.preventDefault();
+                    scope.selectedItemId = treeid;
+                   //scope.onClickItem();
+           
                 }
+
+                elem.on('click', function ($event) {
+                   // $event.stopPropagation();
+                    console.log('directive ' + scope.selectedItemId);
+                    scope.onClickItem();
+                });
+
+
                 scope.$watch('nodeItems', function (newVal, oldVal) {
                     if (newVal !== oldVal) {
                         var nodes = [];
@@ -500,7 +515,8 @@
 
                     for (var i = 0; i < rows.length; i++) {
                         html += "<li id=" + rows[i].ID + ">";
-                        html += "<i class='fa fa-angle-double-left' aria-hidden='true'></i> <a href='javascript:;' ng-click='clicknode()'> " + rows[i].Name + "</a>";
+                        html += "<i class='fa fa-angle-double-left' aria-hidden='true'></i> ";
+                        html += "<a href='javascript:;' ng-click='clicknode(" + rows[i].ID + ");'> " + rows[i].Name + "</a>";
                         html += buildTreeRec(arr, rows[i].ID, html);
                         html += "</li>";
 
