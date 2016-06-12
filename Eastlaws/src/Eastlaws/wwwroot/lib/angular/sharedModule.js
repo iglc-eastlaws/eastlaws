@@ -490,12 +490,12 @@
                     var html = '';
                     var rows = arr.where(function (t) { return t.ParentID == parentID });
                     if (rows.length > 0) {
-                        html += "<ul id='treeV' class='tree-fahrs'>";
+                        html += "<ul id='treeV' class='tree-fahrs tree'>";
                     }
 
                     for (var i = 0; i < rows.length; i++) {
                         html += "<li id=" + rows[i].ID + ">";
-                        html += "<a href='javascript:;'><span>" + rows[i].Name + "</span></a>";
+                        html += "<a href='javascript:;'> " + rows[i].Name + "</a>";
                         html += buildTreeRec(arr, rows[i].ID, html);
                         html += "</li>";
 
