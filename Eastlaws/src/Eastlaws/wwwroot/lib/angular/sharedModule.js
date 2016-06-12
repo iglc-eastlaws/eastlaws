@@ -478,8 +478,8 @@
                         ///scope.mytree = buildTreeRec(nodes, 0, draw);
                         elem.html(h);
 
-                        // var elementResult = $(elem).find('ul:first');
-                        var elementResult = $(elem).first('ul');
+                        var elementResult = $(elem).find('ul:first');
+                        //var elementResult = $(elem).first('ul');
                         $(elementResult).treed({ openedClass: 'glyphicon-folder-open', closedClass: 'glyphicon-folder-close' });
                   
                        // console.log(h)
