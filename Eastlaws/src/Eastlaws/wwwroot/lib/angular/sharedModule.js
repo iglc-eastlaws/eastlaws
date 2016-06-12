@@ -452,6 +452,194 @@
 
 
 
+
+    sharedModule.directive('cTreeV', function ($compile) {
+
+        return {
+            restrict: 'E',
+            replace: true,
+            template: '<div class="mytree"></div>' ,
+            scope: {
+                nodeItems: '='
+            },
+            link: function (scope, elem, attr, ctrl, transclude) {
+
+                scope.tree1 = [];
+                scope.mytree = '';
+                scope.clicknode = function () {
+                    console.log('click tree');
+                }
+                scope.$watch('nodeItems', function (newVal, oldVal) {
+                    if (newVal !== oldVal) {
+                        var nodes = [];
+
+                        nodes = scope.nodeItems;
+
+                        var draw = '';
+                        var h = buildTreeRec(nodes, 0, draw);
+                      //  $('#treeview').html(h)
+                        ///scope.mytree = buildTreeRec(nodes, 0, draw);
+                        elem.html(h);
+
+                        var elementResult = $(elem).find('ul:first');
+                        //var elementResult = $(elem).first('ul');
+                        $(elementResult).treed({ openedClass: 'glyphicon-folder-open', closedClass: 'glyphicon-folder-close' });
+
+                        $compile(elem.contents())(scope);
+                       // console.log(h)
+                    }
+                });
+
+
+                function buildTreeRec(arr, parentID, html) {
+                    var html = '';
+                    var rows = arr.where(function (t) { return t.ParentID == parentID });
+                    if (rows.length > 0) {
+                        html += "<ul class='tree-fahrs tree'>";
+                    }
+
+                    for (var i = 0; i < rows.length; i++) {
+                        html += "<li id=" + rows[i].ID + ">";
+                        html += "<i class='fa fa-angle-double-left' aria-hidden='true'></i> <a href='javascript:;' ng-click='clicknode()'> " + rows[i].Name + "</a>";
+                        html += buildTreeRec(arr, rows[i].ID, html);
+                        html += "</li>";
+
+                    }
+
+                    if (rows.length > 0) {
+                        html += "</ul>";
+                    }
+                    return html;
+                }
+
+
+            }
+
+        };
+
+
+    })
+
+
+
+    //--- by angularjs   and too slow
+    //---- verions 1
+    sharedModule.directive('cTreeView', function () {
+
+        return {
+            restrict: 'E',
+            replace: true,
+            template: '<div class="mytree">' +
+
+                '<script type="text/ng-template"  id="tree_item_renderer.html">' +
+                    '<ul class="tree-fahrs">' +
+                        '<li ng-repeat="n in tree1"> ' +
+                            '<a href="#">{{n.Name}}</a>' +
+                              '<div ng-include="\'tree_item_renderer.html\'" onload="tree1 = n.children" include-replace></div>' +
+                        '</li>' +
+                    '</ul>' +
+                     '</script>' +
+                    '<div ng-include="\'tree_item_renderer.html\'"></div>' +
+                  '</div>'
+            ,
+            scope: {
+                nodeItems: '='
+            },
+            link: function (scope, elem, attr, ctrl, transclude) {
+
+                scope.tree1 = [];
+                // var nodes = scope.nodeItems;
+
+                /*var nodes = [{ "id": "1","parentId": "0", "text": "text1" },
+                               { "id": "2", "parentId": "0", "text": "text2" },
+                               { "id": "3", "parentId": "1", "text": "text3" },
+                               { "id": "4", "parentId": "3", "text": "text4" },
+                               { "id": "5", "parentId": "0", "text": "text5" },                          
+                               { "id": "6", "parentId": "1", "text": "text6" },
+                               { "id": "7", "parentId": "4", "text": "text7" },
+                               { "id": "8", "parentId": "1", "text": "text8" },
+                               { "id": "9", "parentId": "5", "text": "text9" },
+                               { "id": "10","parentId": "5", "text": "text10" }
+                   ];
+                   var map = {}, node, roots = [];
+                   for (var i = 0; i < nodes.length; i += 1) {
+                       node = nodes[i];
+                       node.children = [];
+                       map[node.id] = i; // use map to look-up the parents
+                       if (node.parentId !== "0") {
+                           nodes[map[node.parentId]].children.push(node);
+                       } else {
+                           roots.push(node);
+                       }
+                   }
+                   console.log(roots); // <-- there's your tree
+   
+                   scope.tree1 = roots;
+                          //  var elementResult = $(elem).first('ul');
+                          // $(elementResult).treed({ openedClass: 'glyphicon-folder-open', closedClass: 'glyphicon-folder-close' });
+                   
+                   */
+
+                scope.$watch('nodeItems', function (newVal, oldVal) {
+                    if (newVal !== oldVal) {
+                        var nodes = [];
+                        //nodes = [
+
+                        //               { "ID": "5", "ParentID": "0", "Name": "text5" },
+                        //               { "ID": "6", "ParentID": "1", "Name": "text6" },
+                        //               { "ID": "7", "ParentID": "4", "Name": "text7" },
+                        //               { "ID": "8", "ParentID": "1", "Name": "text8" },
+                        //               { "ID": "9", "ParentID": "5", "Name": "text9" },
+                        //               { "ID": "10", "ParentID": "5", "Name": "text10" },
+                        //                { "ID": "1", "ParentID": "0", "Name": "text1" },
+                        //               { "ID": "2", "ParentID": "0", "Name": "text2" },
+                        //               { "ID": "3", "ParentID": "1", "Name": "text3" },
+                        //               { "ID": "4", "ParentID": "3", "Name": "text4" }
+                        //   ];
+                        nodes = scope.nodeItems;
+
+                        // console.log(nodes);
+
+                        unflatten = function (array, parent, tree) {
+                            tree = typeof tree !== 'undefined' ? tree : [];
+                            parent = typeof parent !== 'undefined' ? parent : { ID: 0 };
+                            var children = _.filter(array, function (child) { return child.ParentID == parent.ID; });
+
+                            if (!_.isEmpty(children)) {
+                                if (parent.ID == 0) {
+                                    tree = children;
+                                } else {
+                                    parent['children'] = children;
+                                }
+                                _.each(children, function (child) { unflatten(array, child) });
+                            }
+
+                            return tree;
+                        }
+                        roots = unflatten(nodes);
+                        scope.tree1 = roots;
+                       // console.log(roots);
+                        var elementResult = $(elem).first('ul');
+                        $(elementResult).treed({ openedClass: 'glyphicon-folder-open', closedClass: 'glyphicon-folder-close' });
+                    }
+                });
+
+
+                //transclude(function (clone) {
+                //    elem.parent().append(clone);
+                //});
+                //$(elem).first('ul').css('color', 'blue');
+                //  var elementResult = $(elem).first('ul');
+                //  //console.log(elementResult.html)
+                //$(elementResult).treed({ openedClass: 'glyphicon-folder-open', closedClass: 'glyphicon-folder-close' });
+            }
+
+        };
+
+
+    })
+
+    //--
     //---- verions 2
     //sharedModule.directive('cTreeView', function () {
 
@@ -503,66 +691,7 @@
 
     //})
 
-    //---- verions 1
-    sharedModule.directive('cTreeView', function () {
 
-        return {
-            restrict: 'E',
-            replace: true,
-            template: '<div class="mytree">' +
-
-                '<script type="text/ng-template"  id="tree_item_renderer.html">'+
-                    '<ul class="tree-fahrs">'+
-                        '<li ng-repeat="n in tree1"> '+
-                            '<a href="#">{{n.text}}</a>' +
-                              '<div ng-include="\'tree_item_renderer.html\'" onload="tree1 = n.children" include-replace></div>' +
-                        '</li>'+
-                    '</ul>' +
-                     '</script>'+
-                    '<div ng-include="\'tree_item_renderer.html\'"></div>'+
-                  '</div>'
-            ,
-            scope: {
-            },
-            link: function (scope, elem, attr, ctrl, transclude) {
-                var nodes = [{ "id": "1","parentId": "0", "text": "text1" },
-                            { "id": "2", "parentId": "0", "text": "text2" },
-                            { "id": "3", "parentId": "1", "text": "text3" },
-                            { "id": "4", "parentId": "3", "text": "text4" },
-                            { "id": "5", "parentId": "0", "text": "text5" },                          
-                            { "id": "6", "parentId": "1", "text": "text6" },
-                            { "id": "7", "parentId": "4", "text": "text7" },
-                            { "id": "8", "parentId": "1", "text": "text8" },
-                            { "id": "9", "parentId": "5", "text": "text9" },
-                            { "id": "10","parentId": "5", "text": "text10" }
-                ];
-                var map = {}, node, roots = [];
-                for (var i = 0; i < nodes.length; i += 1) {
-                    node = nodes[i];
-                    node.children = [];
-                    map[node.id] = i; // use map to look-up the parents
-                    if (node.parentId !== "0") {
-                        nodes[map[node.parentId]].children.push(node);
-                    } else {
-                        roots.push(node);
-                    }
-                }
-              //  console.log(roots); // <-- there's your tree
-
-                scope.tree1 = roots;
-                //transclude(function (clone) {
-                //    elem.parent().append(clone);
-                //});
-                //$(elem).first('ul').css('color', 'blue');
-                var elementResult = $(elem).first('ul');
-                //console.log(elementResult.html)
-              $(elementResult).treed({ openedClass: 'glyphicon-folder-open', closedClass: 'glyphicon-folder-close' });
-            }
-
-        };
-
-
-    })
 
     //-- 
     /*
@@ -826,5 +955,24 @@
         }
         return Result;
     }
+
+
+    Array.prototype.select = Array.prototype.map || function (selector, context) {
+        context = context || window;
+        var arr = [];
+        var l = this.length;
+        for (var i = 0; i < l; i++)
+            arr.push(selector.call(context, this[i], i, this));
+        return arr;
+    };
     
+
+    Array.prototype.where = Array.prototype.filter || function (predicate, context) {
+        context = context || window;
+        var arr = [];
+        var l = this.length;
+        for (var i = 0; i < l; i++)
+            if (predicate.call(context, this[i], i, this) === true) arr.push(this[i]);
+        return arr;
+    };
 })();
