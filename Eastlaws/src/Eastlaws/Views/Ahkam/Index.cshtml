@@ -488,6 +488,11 @@
                 $scope.countries = [];
                 $scope.courts = [];
                 $scope.treeItems = [];
+                $scope.itemID = 0;
+
+                $scope.itemtreeClick = function () {
+                    console.log('controller ' + $scope.itemID)
+                }
 
                 $http.get('/Fehres/ServicePrograms?servicesID=' + 1 + '', {}).then(function (d) {
                     $scope.fehressPrograms = d.data;

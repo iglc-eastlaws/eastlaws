@@ -173,7 +173,10 @@
             
                 @*<div id="treeview"></div>*@
                 @*<c-tree-view node-items="treeItems"></c-tree-view>*@
-                <c-tree-v node-items="treeItems"></c-tree-v>
+                <c-tree-v node-items="treeItems"
+                          on-click-item="itemtreeClick()"
+                          selected-item-id ="itemID"
+                          ></c-tree-v>
 
              
 
