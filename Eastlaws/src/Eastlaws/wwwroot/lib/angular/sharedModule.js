@@ -453,7 +453,7 @@
 
 
 
-    sharedModule.directive('cTreeV', function () {
+    sharedModule.directive('cTreeV', function ($compile) {
 
         return {
             restrict: 'E',
@@ -466,6 +466,9 @@
 
                 scope.tree1 = [];
                 scope.mytree = '';
+                scope.clicknode = function () {
+                    console.log('click tree');
+                }
                 scope.$watch('nodeItems', function (newVal, oldVal) {
                     if (newVal !== oldVal) {
                         var nodes = [];
@@ -481,7 +484,8 @@
                         var elementResult = $(elem).find('ul:first');
                         //var elementResult = $(elem).first('ul');
                         $(elementResult).treed({ openedClass: 'glyphicon-folder-open', closedClass: 'glyphicon-folder-close' });
-                  
+
+                        $compile(elem.contents())(scope);
                        // console.log(h)
                     }
                 });
@@ -496,7 +500,7 @@
 
                     for (var i = 0; i < rows.length; i++) {
                         html += "<li id=" + rows[i].ID + ">";
-                        html += "<a href='javascript:;'> " + rows[i].Name + "</a>";
+                        html += "<a href='javascript:;' ng-click='clicknode()'> " + rows[i].Name + "</a>";
                         html += buildTreeRec(arr, rows[i].ID, html);
                         html += "</li>";
 
