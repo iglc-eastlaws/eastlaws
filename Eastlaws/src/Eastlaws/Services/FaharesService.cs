@@ -86,21 +86,29 @@ namespace Eastlaws.Services
         }
 
 
-        public static IEnumerable<FehresItem> GetItems(int CategoryID , string SearchText = null)
+        public static IEnumerable<FehresItem> GetItems(int CategoryID , string SearchText = null , int? ParentID = null)
         {
             if (!string.IsNullOrWhiteSpace(SearchText))
             {
-                SearchText = new FTSPredicate(SearchText, FTSSqlModes.AND).BuildPredicate();
+                SearchText =  " N" +  new FTSPredicate(SearchText, FTSSqlModes.AND).BuildPredicate().Trim() + "";
             }
             else
             {
-                SearchText = null;
+                SearchText = "null";
             }
 
-            DynamicParameters Params = new DynamicParameters();
-            Params.Add("@CategoryID", CategoryID);
-            Params.Add("@SearchText", SearchText);
-            CommandDefinition Cmd = new CommandDefinition(commandText: "GetFehresItems",parameters  : Params ,commandType : CommandType.StoredProcedure);
+            //DynamicParameters Params = new DynamicParameters();
+            //Params.Add("@CategoryID", CategoryID);
+            //Params.Add("@SearchText", SearchText , DbType.String );
+            //Params.Add("@ParentID", ParentID);
+            //CommandDefinition Cmd = new CommandDefinition(commandText: "GetFehresItems",parameters  : Params ,commandType : CommandType.StoredProcedure);
+
+            string cmdText = string.Format("Exec GetFehresItems @CategoryID={0} , @ParentID={1} , @SearchText={2} "
+                , CategoryID, (ParentID.HasValue ? ParentID.Value.ToString() : "null"), SearchText);
+
+            CommandDefinition Cmd = new CommandDefinition(cmdText);
+ 
+
             using (var Connection = DataHelpers.GetConnection(DbConnections.Data))
             {
                 return Connection.Query<FehresItem>(Cmd);
