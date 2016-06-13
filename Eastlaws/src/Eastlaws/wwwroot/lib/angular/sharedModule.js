@@ -463,7 +463,9 @@
                 nodeItems: '=',
                 onClickItem: '&',
                 selectedItemId: '=',
-                isLastLevel: '='
+                isLastLevel: '=',
+                startParentId: '=',
+                ajaxTree:'='
             },
             link: function (scope, elem, attr, ctrl, transclude) {
 
@@ -487,7 +489,7 @@
 
                         nodes = scope.nodeItems;
                         var draw = '';
-                        var h = buildTreeRec(nodes, 0, draw);
+                        var h = buildTreeRec(nodes, scope.startParentId, draw);
                         elem.html(h);
 
                         var elementResult = $(elem).find('ul:first');
@@ -510,7 +512,9 @@
                         html += "<li id=" + rows[i].ID + ">";
                         html += "<i class='fa fa-angle-double-left' aria-hidden='true'></i> ";
                         html += "<a href='javascript:;' ng-click='clicknode(" + rows[i].ID + "," + rows[i].IsLastLevel + ");'> " + rows[i].Name + "</a>";
-                        html += buildTreeRec(arr, rows[i].ID, html);
+                        if (scope.ajaxTree == false) {
+                            html += buildTreeRec(arr, rows[i].ID, html);
+                        }
                         html += "</li>";
 
                     }

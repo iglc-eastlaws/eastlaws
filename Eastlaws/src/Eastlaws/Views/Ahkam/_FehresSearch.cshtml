@@ -36,7 +36,7 @@
                                name="d"
                                ng-options="t.Name for t in courts track by t.ID"
                                ng-model="court"
-                               ng-change="getTreeItems('',null)">
+                               ng-change="getTreeItems('','')">
 
                        </select>
 
@@ -154,7 +154,9 @@
                 <c-tree-v node-items="treeItems"
                           on-click-item="itemtreeClick()"
                           selected-item-id ="itemID" 
-                          is-last-level="IsLastLevel"
+                          is-last-level="IsLastLevel" 
+                          start-parent-id="startparentID" 
+                          ajax-tree="ajaxTree"
                           ></c-tree-v>
 
              

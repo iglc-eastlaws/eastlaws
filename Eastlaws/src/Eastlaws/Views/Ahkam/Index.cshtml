@@ -343,6 +343,8 @@
                 $scope.treeItems = [];
                 $scope.itemID = 0;
                 $scope.IsLastLevel = false;
+                $scope.startparentID = 0;
+                $scope.ajaxTree = false;
 
                 $scope.itemtreeClick = function () {
                     if ($scope.IsLastLevel === true) {
@@ -367,10 +369,16 @@
                     $scope.fehressPrograms = d.data;
                 });
 
-                $scope.getTreeItems = function (parentid, searchtext) {
+                $scope.getTreeItems = function (searchtext,parentid) {
 
-                    $http.get('/Fehres/Items?CategoryID=' + $scope.court.ID + '&SearchText=' + searchtext + '&ParentID=' + parentid + '', {}).then(function (d) {
+                    parentid = parentid;//407470;//
+                    var courtID = $scope.court.ID;//133;//
+                    $scope.startparentID = 0;//407470;
+
+                    $http.get('/Fehres/Items?CategoryID=' + courtID + '&SearchText=' + searchtext + '&ParentID=' + parentid + '', {}).then(function (d) {
                         $scope.treeItems = d.data;
+
+                        //console.log(d.data)
                     });
                 }
 
