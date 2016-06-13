@@ -153,7 +153,6 @@ namespace Eastlaws.Controllers
             }
         #endregion
 
-
         #region Tasfeya 
         [HttpPost]
         public JsonResult TasfeyaListJson(SarchTasfyaParms SarchTasfyaParms)
