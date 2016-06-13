@@ -326,10 +326,6 @@
                 });
 
                 $scope.search = function () {
-                    
-                    //console.log($scope.Inputs);
-
-
                     tasfiaData.clearall();
                     SearchData.searchType = 2;
                     SearchData.newSearch = true;
@@ -340,34 +336,88 @@
                     SearchData.GetSearch();
                 }
 
-                /* // function TestMadaSearch() {
-                        var Data = {};
-                        Data.MadaObj = {
-                            SearchInMadaText: false,
-                            CountryIds: '1,2,3,4,5,6',
-                            TashNo: '1-150'
-                            , SearchPredicate: { Input: '' }
-                  
-                        };
-                        Data.Options = {
-                            SortBy: 3
-                        };
-                        Data.TasfeyaSelection = {
-                  
-                        };
-                  
-                  
-                        //$.post('/Ahkam/SearchResultAssemblyMada/', Data, function (Return) {
-                        //    alert(Return);
-                        //});
-                  
-                    //}
-                  
-                    $scope.search = function () {
-                        //$.post('/Ahkam/SearchResultAssemblyMada/', Data, function (Return) {
-                        //    $('#searchResult').html(Return);
-                        //});
-                    }*/
+            })
+            .controller('fehressSearchCtrl', function ($scope, $http, SearchData, tasfiaData) {
+                $scope.countries = [];
+                $scope.courts = [];
+                $scope.treeItems = [];
+                $scope.itemID = 0;
+                $scope.IsLastLevel = false;
+
+                $scope.itemtreeClick = function () {
+                    if ($scope.IsLastLevel === true) {
+                        //console.log('controller ' + $scope.itemID + ' --- ' + $scope.IsLastLevel);
+
+
+                        tasfiaData.clearall();
+                        SearchData.searchType = 3;
+                        SearchData.newSearch = true;
+                        SearchData.newtasfya = true;
+                        SearchData.currentPage = 1;
+                        SearchData.fehresItemID = $scope.itemID;
+                       // SearchData.MadaTadbeatSearchInputs = $scope.Inputs;
+                        SearchData.Latest = false;
+                        SearchData.GetSearch();
+                    }
+                }
+
+                $http.get('/Fehres/ServicePrograms?servicesID=' + 1 + '', {}).then(function (d) {
+                    $scope.fehressPrograms = d.data;
+                });
+
+                $scope.getTreeItems = function () {
+                    $http.get('/Fehres/Items?CategoryID=' + $scope.court.ID + '', {}).then(function (d) {
+                        $scope.treeItems = d.data;
+                    });
+                }
+
+                $scope.getCourt = function () {
+                    $http.get('/Fehres/Categories?ProgCountryID=' + $scope.country.ProgCountryID + '', {}).then(function (d) {
+                        $scope.courts = d.data;
+                        if (($scope.courts[0])) {
+                            $scope.court = { ID: $scope.courts[0].ID };
+                        }
+                    });
+                }
+
+                $scope.serviceProg = function (obj) {
+                    $http.get('/Fehres/ProgramCountries?FehresProgramID=' + obj.ID + '', {}).then(function (d) {
+                        $scope.countries = d.data;
+                        $scope.country = { ID: 1 };
+                        $scope.getCourt();
+                    });
+                }
+
+
+
+
+
+                $scope.search = function () {
+                    //  console.log('fehres')
+                }
+
+                function buildTreeRec(arr, parentID, html) {
+                    var html = '';
+                    var rows = arr.where(function (t) { return t.ParentID == parentID });
+                    if (rows.length > 0) {
+                        html += "<ul id='treeV' class='tree-fahrs'>";
+                    }
+
+                    for (var i = 0; i < rows.length; i++) {
+                        html += "<li id=" + rows[i].ID + ">";
+                        html += "<a href='javascript:;'><span>" + rows[i].Name + "</span></a>";
+                        html += buildTreeRec(arr, rows[i].ID, html);
+                        html += "</li>";
+
+                    }
+
+                    if (rows.length > 0) {
+                        html += "</ul>";
+                    }
+                    return html;
+                }
+
+               // $('#treeV').treed({ openedClass: 'glyphicon-folder-open', closedClass: 'glyphicon-folder-close' });
             })
             .controller('toolbarCtrl', function ($scope, SearchData) {
                 $scope.pageSizes = [10, 50, 100];
@@ -484,77 +534,7 @@
 
               //  $scope.getmypage();
             })
-            .controller('fehressSearchCtrl', function ($scope, $http) {
-                $scope.countries = [];
-                $scope.courts = [];
-                $scope.treeItems = [];
-                $scope.itemID = 0;
-                $scope.IsLastLevel = false;
 
-                $scope.itemtreeClick = function () {
-                    if ($scope.IsLastLevel === true) {
-                        console.log('controller ' + $scope.itemID + ' --- ' + $scope.IsLastLevel)
-                    }
-                }
-
-                $http.get('/Fehres/ServicePrograms?servicesID=' + 1 + '', {}).then(function (d) {
-                    $scope.fehressPrograms = d.data;
-                });
-                
-                $scope.getTreeItems = function () {
-                    $http.get('/Fehres/Items?CategoryID=' + $scope.court.ID + '', {}).then(function (d) {
-                        $scope.treeItems = d.data;
-                    });
-                }
-
-                $scope.getCourt = function () {
-                    $http.get('/Fehres/Categories?ProgCountryID=' + $scope.country.ProgCountryID + '', {}).then(function (d) {
-                        $scope.courts = d.data;
-                        if (($scope.courts[0])) {
-                            $scope.court = { ID: $scope.courts[0].ID };
-                        }
-                    });
-                }
-
-                $scope.serviceProg = function ( obj) {
-                    $http.get('/Fehres/ProgramCountries?FehresProgramID=' + obj.ID + '', {}).then(function (d) {
-                        $scope.countries = d.data;
-                        $scope.country = { ID: 1 };
-                        $scope.getCourt();
-                    });
-                }
-
-
-
-
-
-                $scope.search = function () {
-                  //  console.log('fehres')
-                }
-
-                function buildTreeRec(arr, parentID, html) {
-                    var html = '';
-                    var rows = arr.where(function (t) { return t.ParentID == parentID });
-                    if (rows.length > 0) {
-                        html += "<ul id='treeV' class='tree-fahrs'>";
-                    }
-
-                    for (var i = 0; i < rows.length; i++) {
-                        html += "<li id=" + rows[i].ID + ">";
-                        html += "<a href='javascript:;'><span>" + rows[i].Name + "</span></a>";
-                        html += buildTreeRec(arr, rows[i].ID, html);
-                        html += "</li>";
-
-                    }
-
-                    if (rows.length > 0) {
-                        html += "</ul>";
-                    }
-                    return html;
-                }
-
-                $('#treeV').treed({ openedClass: 'glyphicon-folder-open', closedClass: 'glyphicon-folder-close' });
-            })
             .factory('SearchData', function ($http, tasfiaData, tasfiaAllData, $rootScope) {
                 var data = {};
                 data.searchType = 1;             //assymbleSearch 1   tadbeaatMada 2  .... etc
@@ -562,6 +542,7 @@
                 data.pageCount = 0;
                 data.AssembleSearchInputs = {};
                 data.MadaTadbeatSearchInputs = {};
+                data.fehresItemID = 0;
                 data.TotalCount = 0;
                 data.currentPage = 1;
                 data.typeView = 2;                   //rows - grid - table
@@ -587,7 +568,7 @@
                     var SearchURL = '';
                     var tasfyaURL = '';
 
-                    if ((data.searchType === 1) || (data.searchType === 2)) {
+                    if ((data.searchType === 1) || (data.searchType === 2) || (data.searchType === 3)) {
                         data.SearchTools.PageNo = data.currentPage;
                         data.SearchTools.Sort = data.sortType;
                         data.SearchTools.pageSize = data.pageSize;
@@ -639,7 +620,31 @@
                         };
                     }
 
-                    if ((data.searchType === 1) || (data.searchType === 2))
+
+                    if (data.searchType === 3) // Fehress
+                    {
+
+                         SearchURL = '/Ahkam/SearchResultFehres';
+                         tasfyaURL = '/Ahkam/TasfeyaListJsonFehres';
+
+                        var obj = {
+                            FehresItemID: data.fehresItemID,
+                            SearchTools: data.SearchTools,
+                            ahkamTasfeya: data.ahkamlist
+                        };
+
+                        var tasfyaObj = {
+                            AssemblySearch: data.AssembleSearchInputs,
+                            Tadbe2atMadaSearchSearch: data.MadaTadbeatSearchInputs,
+                            ahkamTasfeyaList: data.ahkamlist,
+                            TasfeyaSearchText: data.TasfeyaSearchText,
+                            SelectedCatgID: data.SelectedCatgID,
+                            FehresItemID: data.fehresItemID
+                        };
+                    }
+
+
+                    if ((data.searchType === 1) || (data.searchType === 2) || (data.searchType === 3))
                     {
                        // console.log('>> ' + data.searchType + '  --  ' + data.searchType)
 

@@ -12,7 +12,7 @@ namespace Eastlaws.ViewModels.Ahkam
         public Tadbe2atMadaSearch Tadbe2atMadaSearchSearch { get; set; }
         public SearchTools SearchTools { get; set; }
         public List<AhkamTasfeyaSelection> ahkamTasfeya { get; set; }
- 
+        public int FehresItemID { get; set; }
     }
 
     public class SarchTasfyaParms
@@ -22,8 +22,7 @@ namespace Eastlaws.ViewModels.Ahkam
         public List<AhkamTasfeyaSelection> ahkamTasfeyaList { get; set; }
         public string TasfeyaSearchText { get; set; } = "";
         public int SelectedCatgID { get; set; }
-
-
+        public int FehresItemID { get; set; }
     }
 
     public class SearchTools
