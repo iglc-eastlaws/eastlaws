@@ -369,7 +369,7 @@
 
                 $scope.getTreeItems = function (parentid, searchtext) {
 
-                    $http.get('/Fehres/Items?CategoryID=' + $scope.court.ID + '&ParentID=' + parentid + '&SearchText=' + searchtext + '', {}).then(function (d) {
+                    $http.get('/Fehres/Items?CategoryID=' + $scope.court.ID + '&SearchText=' + searchtext + '&ParentID=' + parentid + '', {}).then(function (d) {
                         $scope.treeItems = d.data;
                     });
                 }
