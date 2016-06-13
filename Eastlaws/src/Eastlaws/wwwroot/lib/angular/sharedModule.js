@@ -458,28 +458,25 @@
         return {
             restrict: 'E',
             replace: true,
-            template: '<div class="mytree"></div>' ,
+            template: '' ,
             scope: {
                 nodeItems: '=',
                 onClickItem: '&',
-                selectedItemId:'='
+                selectedItemId: '=',
+                isLastLevel: '='
             },
             link: function (scope, elem, attr, ctrl, transclude) {
 
-                scope.tree1 = [];
-                scope.mytree = '';
-                scope.clicknode = function (treeid) {
-                    //console.log('clicknode ' + treeid);
+                scope.clicknode = function (treeid, IsLastLevel) {
                    // $event.stopPropagation();
                   //  $event.preventDefault();
                     scope.selectedItemId = treeid;
-                   //scope.onClickItem();
-           
+                    scope.isLastLevel = IsLastLevel;
                 }
 
                 elem.on('click', function ($event) {
                    // $event.stopPropagation();
-                    console.log('directive ' + scope.selectedItemId);
+                   // console.log('directive ' + scope.selectedItemId);
                     scope.onClickItem();
                 });
 
@@ -489,19 +486,14 @@
                         var nodes = [];
 
                         nodes = scope.nodeItems;
-
                         var draw = '';
                         var h = buildTreeRec(nodes, 0, draw);
-                      //  $('#treeview').html(h)
-                        ///scope.mytree = buildTreeRec(nodes, 0, draw);
                         elem.html(h);
 
                         var elementResult = $(elem).find('ul:first');
                         //var elementResult = $(elem).first('ul');
                         $(elementResult).treed({ openedClass: 'glyphicon-folder-open', closedClass: 'glyphicon-folder-close' });
-
                         $compile(elem.contents())(scope);
-                       // console.log(h)
                     }
                 });
 
@@ -514,9 +506,10 @@
                     }
 
                     for (var i = 0; i < rows.length; i++) {
+                      //  console.log(rows[i]);
                         html += "<li id=" + rows[i].ID + ">";
                         html += "<i class='fa fa-angle-double-left' aria-hidden='true'></i> ";
-                        html += "<a href='javascript:;' ng-click='clicknode(" + rows[i].ID + ");'> " + rows[i].Name + "</a>";
+                        html += "<a href='javascript:;' ng-click='clicknode(" + rows[i].ID + "," + rows[i].IsLastLevel + ");'> " + rows[i].Name + "</a>";
                         html += buildTreeRec(arr, rows[i].ID, html);
                         html += "</li>";
 

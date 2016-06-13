@@ -489,9 +489,12 @@
                 $scope.courts = [];
                 $scope.treeItems = [];
                 $scope.itemID = 0;
+                $scope.IsLastLevel = false;
 
                 $scope.itemtreeClick = function () {
-                    console.log('controller ' + $scope.itemID)
+                    if ($scope.IsLastLevel === true) {
+                        console.log('controller ' + $scope.itemID + ' --- ' + $scope.IsLastLevel)
+                    }
                 }
 
                 $http.get('/Fehres/ServicePrograms?servicesID=' + 1 + '', {}).then(function (d) {
@@ -499,17 +502,8 @@
                 });
                 
                 $scope.getTreeItems = function () {
-                   // console.log($scope.court)
                     $http.get('/Fehres/Items?CategoryID=' + $scope.court.ID + '', {}).then(function (d) {
-                        console.log($scope.court.ID)
                         $scope.treeItems = d.data;
-
-                      var draw = '';
-                      var h = buildTreeRec($scope.treeItems, 0, draw);
-                      $('#treeview').html(h)
-
-                     // console.log(html);
-                       // console.log($scope.treeItems);
                     });
                 }
 
