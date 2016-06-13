@@ -7,10 +7,6 @@
             <li ng-repeat="n in fehressPrograms">
                     <a href="#defoaTab" data-toggle="tab" ng-click="serviceProg(n)">{{n.Name}}</a>
             </li>
-             @*<li class="active"><a href="#GeneralTab" data-toggle="tab">الفهرس العام</a></li>
-            <li><a href="#defoaTab" data-toggle="tab">بحث بالدفوع </a></li>
-            <li><a href="#manaeTab" data-toggle="tab">بحث بالمناعي</a></li>
-            <li><a href="#systemTab" data-toggle="tab">النظام العام</a></li>*@
         </ul>
         <div class="tab-content">
            <div class="input-group">
@@ -30,15 +26,6 @@
                   
                        </select>
 
-                               @*<select name="d" id="ddlCountriesSearch" class="string   form-control" tabindex="3">
-                                   <option value="1" selected="selected"> جمهورية مصر العربية</option>
-                                   <option value="2">المملكة الأردنية الهاشمية</option>
-                                   <option value="3">الجمهورية اليمنية</option>
-                                   <option value="4">دولة الإمارات العربية المتحدة</option>
-                                   <option value="20">إمارة أبوظبي</option>
-                                   <option value="21">إمارة رأس الخيمة</option>
-                                   <option value="1007">إمارة أم القيوين</option>
-                               </select>*@
                         &nbsp; &nbsp;
 
                            <label class="control-label bg-color title" for="ddmahkamSearch">المحكمة :</label>&nbsp;
@@ -49,23 +36,14 @@
                                name="d"
                                ng-options="t.Name for t in courts track by t.ID"
                                ng-model="court"
-                               ng-change="getTreeItems()">
+                               ng-change="getTreeItems(null,'')">
 
                        </select>
 
-                               @*<select name="d" id="ddmahkamSearch" class="string search  form-control" tabindex="3">
-                                   <option value="101">النقض المدني</option>
-                                   <option value="102">النقض الجنائي</option>
-                                   <option value="103">الإدارية العليا</option>
-                                   <option value="104">الدستورية العليا</option>
-                                   <option value="105">المحكمة العليا</option>
-                                   <option value="106">القضاء الإداري</option>
-                                   <option value="464">المحاكم الإقتصادية</option>
-                                   <option value="677">الأحكام المتعارضة</option>
-                               </select>*@
+
                        &nbsp; &nbsp;
                        @*<label class="control-label bg-color title" >بحث فى الفهرس :  </label>*@
-                       <input type="text"  class="form-control " placeholder="بحث فى الفهرس " style="width:auto;">
+                       <input type="text"  ng-model="fehresSearch"  class="form-control " placeholder="بحث فى الفهرس " style="width:auto;">
                        <input type="submit" value="بـحـث" class="btn butt-yellow" ng-click="search()">
                  </form>
                </div>

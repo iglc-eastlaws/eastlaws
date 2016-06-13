@@ -348,25 +348,28 @@
                     if ($scope.IsLastLevel === true) {
                         //console.log('controller ' + $scope.itemID + ' --- ' + $scope.IsLastLevel);
 
-
                         tasfiaData.clearall();
                         SearchData.searchType = 3;
                         SearchData.newSearch = true;
                         SearchData.newtasfya = true;
                         SearchData.currentPage = 1;
                         SearchData.fehresItemID = $scope.itemID;
-                       // SearchData.MadaTadbeatSearchInputs = $scope.Inputs;
                         SearchData.Latest = false;
                         SearchData.GetSearch();
                     }
+                }
+
+                $scope.search = function () {
+                    $scope.getTreeItems(null, $scope.fehresSearch);
                 }
 
                 $http.get('/Fehres/ServicePrograms?servicesID=' + 1 + '', {}).then(function (d) {
                     $scope.fehressPrograms = d.data;
                 });
 
-                $scope.getTreeItems = function () {
-                    $http.get('/Fehres/Items?CategoryID=' + $scope.court.ID + '', {}).then(function (d) {
+                $scope.getTreeItems = function (parentid, searchtext) {
+
+                    $http.get('/Fehres/Items?CategoryID=' + $scope.court.ID + '&ParentID=' + parentid + '&SearchText=' + searchtext + '', {}).then(function (d) {
                         $scope.treeItems = d.data;
                     });
                 }
@@ -388,36 +391,6 @@
                     });
                 }
 
-
-
-
-
-                $scope.search = function () {
-                    //  console.log('fehres')
-                }
-
-                function buildTreeRec(arr, parentID, html) {
-                    var html = '';
-                    var rows = arr.where(function (t) { return t.ParentID == parentID });
-                    if (rows.length > 0) {
-                        html += "<ul id='treeV' class='tree-fahrs'>";
-                    }
-
-                    for (var i = 0; i < rows.length; i++) {
-                        html += "<li id=" + rows[i].ID + ">";
-                        html += "<a href='javascript:;'><span>" + rows[i].Name + "</span></a>";
-                        html += buildTreeRec(arr, rows[i].ID, html);
-                        html += "</li>";
-
-                    }
-
-                    if (rows.length > 0) {
-                        html += "</ul>";
-                    }
-                    return html;
-                }
-
-               // $('#treeV').treed({ openedClass: 'glyphicon-folder-open', closedClass: 'glyphicon-folder-close' });
             })
             .controller('toolbarCtrl', function ($scope, SearchData) {
                 $scope.pageSizes = [10, 50, 100];
