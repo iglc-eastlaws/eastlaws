@@ -932,6 +932,27 @@
         };
     });
 
+    sharedModule.directive("repeatEnd", function () {
+        return {
+            restrict: "A",
+            link: function (scope, element, attrs) {
+                if (scope.$last) {
+                    scope.$eval(attrs.repeatEnd);
+                }
+            }
+        };
+    });
+
+    sharedModule.directive("repeatFirst", function () {
+        return {
+            restrict: "A",
+            link: function (scope, element, attrs) {
+                if (scope.$first) {
+                    scope.$eval(attrs.repeatFirst);
+                }
+            }
+        };
+    });
     //----- Global pure js 
     Array.prototype.findElemnet = function (val, typeElemnet) {
         var Result = 0;

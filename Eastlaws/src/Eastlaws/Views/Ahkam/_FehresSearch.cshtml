@@ -2,10 +2,13 @@
 
     <hr class="spacer" />
     <div class="tabbable tabs-right">
-        <ul class="nav nav-tabs">
+        <ul id="ulFehresPro" class="nav nav-tabs">
 
             <li ng-repeat="n in fehressPrograms">
-                    <a href="#defoaTab" data-toggle="tab" ng-click="serviceProg(n)">{{n.Name}}</a>
+                    <a ng-class="$first ? 'firstfehressP' : ''" class="hreffehressP" href="#defoaTab" 
+                       data-toggle="tab" 
+                       ng-click="serviceProg(n)"
+                       repeat-first="firstFehresProg(n)">{{n.Name}}</a>
             </li>
         </ul>
         <div class="tab-content">

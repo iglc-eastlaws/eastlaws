@@ -337,7 +337,7 @@
                 }
 
             })
-            .controller('fehressSearchCtrl', function ($scope, $http, SearchData, tasfiaData) {
+            .controller('fehressSearchCtrl', function ($scope, $http, SearchData, tasfiaData, $rootScope, $timeout) {
                 $scope.countries = [];
                 $scope.courts = [];
                 $scope.treeItems = [];
@@ -377,8 +377,6 @@
 
                     $http.get('/Fehres/Items?CategoryID=' + courtID + '&SearchText=' + searchtext + '&ParentID=' + parentid + '', {}).then(function (d) {
                         $scope.treeItems = d.data;
-
-                        //console.log(d.data)
                     });
                 }
 
@@ -386,7 +384,8 @@
                     $http.get('/Fehres/Categories?ProgCountryID=' + $scope.country.ProgCountryID + '', {}).then(function (d) {
                         $scope.courts = d.data;
                         if (($scope.courts[0])) {
-                            $scope.court = { ID: $scope.courts[0].ID };
+                            $scope.court = $scope.courts[0];
+                            $scope.getTreeItems('', 0);
                         }
                     });
                 }
@@ -394,9 +393,16 @@
                 $scope.serviceProg = function (obj) {
                     $http.get('/Fehres/ProgramCountries?FehresProgramID=' + obj.ID + '', {}).then(function (d) {
                         $scope.countries = d.data;
-                        $scope.country = { ID: 1 };
+                        $scope.country = $scope.countries[0];
                         $scope.getCourt();
                     });
+                }
+
+                $scope.firstFehresProg = function (n) {
+                    $timeout(function () {
+                        $('#ulFehresPro').find('.firstfehressP').trigger('click');
+                    }, 100);
+
                 }
 
             })
