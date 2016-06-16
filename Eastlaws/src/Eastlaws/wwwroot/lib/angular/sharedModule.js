@@ -451,7 +451,85 @@
     });
 
 
+    sharedModule.directive('cTreeAjax', function ($compile) {
 
+        return {
+            restrict: 'E',
+            replace: true,
+            template: '',
+            scope: {
+                nodeItems: '=',
+                onClickItem: '&',
+                selectedItemId: '=',
+                isLastLevel: '=',
+                startParentId: '=',
+                ajaxTree: '='
+            },
+            link: function (scope, elem, attr, ctrl, transclude) {
+
+                scope.clicknode = function (treeid, IsLastLevel) {
+                    // $event.stopPropagation();
+                    //  $event.preventDefault();
+                    scope.selectedItemId = treeid;
+                    scope.isLastLevel = IsLastLevel;
+                }
+
+                elem.on('click', function ($event) {
+                    // $event.stopPropagation();
+                    // console.log('directive ' + scope.selectedItemId);
+                    scope.onClickItem();
+                });
+
+
+                scope.$watch('nodeItems', function (newVal, oldVal) {
+                    if (newVal !== oldVal) {
+                        var nodes = [];
+
+                        nodes = scope.nodeItems;
+                        var draw = '';
+                        var h = buildTreeRec(nodes, scope.startParentId, draw);
+                        elem.html(h);
+
+                        var elementResult = $(elem).find('ul:first');
+                        //var elementResult = $(elem).first('ul');
+                        $(elementResult).treed({ openedClass: 'glyphicon-folder-open', closedClass: 'glyphicon-folder-close' });
+                        $compile(elem.contents())(scope);
+                    }
+                });
+
+
+                function buildTreeRec(arr, parentID, html) {
+                    var html = '';
+                    var rows = arr.where(function (t) { return t.ParentID == parentID });
+                    if (rows.length > 0) {
+                        html += "<ul class='tree-fahrs tree'>";
+                    }
+
+                    for (var i = 0; i < rows.length; i++) {
+                        //  console.log(rows[i]);
+                        html += "<li id=" + rows[i].ID + ">";
+                        html += "<i class='fa fa-angle-double-left' aria-hidden='true'></i> ";
+                        html += "<a href='javascript:;' ng-click='clicknode(" + rows[i].ID + "," + rows[i].IsLastLevel + ");'> " + rows[i].Name + "</a>";
+                        if (scope.ajaxTree == false) {
+                            html += buildTreeRec(arr, rows[i].ID, html);
+                        }
+                        html += "</li>";
+
+                    }
+
+                    if (rows.length > 0) {
+                        html += "</ul>";
+                    }
+                    return html;
+                }
+
+
+            }
+
+        };
+
+
+    })
 
     sharedModule.directive('cTreeV', function ($compile) {
 
