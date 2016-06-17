@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
+using System.Data.SqlClient;
 
 namespace Eastlaws.Services
 {
@@ -86,7 +87,7 @@ namespace Eastlaws.Services
             string InnerQuery = AhkamQueryBuilder.AdvancedCustomSearch(Obj, out FakaratQueryCustom, out SearchPredicates);
             QueryCacher Cacher = new QueryCacher((int)LegalServices.Ahkam, InnerQuery, AhkamSearchTypes.Advanced.ToString(), NewSearch: false, SecondaryQuery: FakaratQueryCustom , IsTasfeya : true);
             int QueryID = Cacher.ID;  
-            var Data = AhkamTasfeya.List(QueryID, AhkamSearchTypes.Advanced, out UsedCategories, TasfeyaFilter, SelectedTasfeya, CategorySender);
+            var Data = AhkamTasfeya.List(QueryID, AhkamSearchTypes.Advanced, out UsedCategories, TasfeyaFilter, SelectedTasfeya, CategorySender, Obj);
             return Data;
         }
 
@@ -98,7 +99,7 @@ namespace Eastlaws.Services
             string InnerQuery = AhkamQueryBuilder.MadaSearch(Obj, out FakaratQueryCustom, out SearchPredicates);
             QueryCacher Cacher = new QueryCacher((int)LegalServices.Ahkam, InnerQuery, AhkamSearchTypes.Mada.ToString(), NewSearch: false, SecondaryQuery: FakaratQueryCustom, IsTasfeya: true);
             int QueryID = Cacher.ID;
-            var Data = AhkamTasfeya.List(QueryID, AhkamSearchTypes.Mada, out UsedCategories, TasfeyaFilter, SelectedTasfeya, CategorySender);
+            var Data = AhkamTasfeya.List(QueryID, AhkamSearchTypes.Mada, out UsedCategories, TasfeyaFilter, SelectedTasfeya, CategorySender, Obj);
             return Data;
         }
         // Fehres Search Tasfeya 
@@ -109,14 +110,15 @@ namespace Eastlaws.Services
             string InnerQuery = AhkamQueryBuilder.FehresSearch(FehresItemID, out FakaratQueryCustom, out SearchPredicates);
             QueryCacher Cacher = new QueryCacher((int)LegalServices.Ahkam, InnerQuery, AhkamSearchTypes.Fehres.ToString(), NewSearch: false, SecondaryQuery: FakaratQueryCustom, IsTasfeya: true);
             int QueryID = Cacher.ID;
-            var Data = AhkamTasfeya.List(QueryID, AhkamSearchTypes.Fehres, out UsedCategories, TasfeyaFilter, SelectedTasfeya, CategorySender);
+            var Data = AhkamTasfeya.List(QueryID, AhkamSearchTypes.Fehres, out UsedCategories, TasfeyaFilter, SelectedTasfeya, CategorySender, FehresItemID);
             return Data;
         }
 
 
-        public static IEnumerable<TasfeyaItem> List (int QueryID , AhkamSearchTypes SearchType, out List<AhkamTasfeyaCategory> UsedCategories , string TasfeyaFilter = "" , IEnumerable<AhkamTasfeyaSelection> SelectedTasfeya = null, AhkamTasfeyaCategoryIds? CategorySender = null )
+        public static IEnumerable<TasfeyaItem> List (int QueryID , AhkamSearchTypes SearchType, out List<AhkamTasfeyaCategory> UsedCategories , string TasfeyaFilter = "" , IEnumerable<AhkamTasfeyaSelection> SelectedTasfeya = null, AhkamTasfeyaCategoryIds? CategorySender = null , object SearchParams = null )
         {
             List<AhkamTasfeyaCategory> Cats =  GetAllCategories();
+            Cats = HandleCategories(SearchType, SearchParams , Cats);
 
             string PreviousTasfeyaQuery = "";
             if (SelectedTasfeya != null && SelectedTasfeya.Count() > 0)
@@ -128,15 +130,6 @@ namespace Eastlaws.Services
             string SafyListQuery = "";
             if (IsSafyList)
             {
-                //if (CategorySender.HasValue)
-                //{
-                //    var ItemToBeRemoved = (from C in Cats where C.ID == CategorySender.Value select C).FirstOrDefault();
-                //    if(ItemToBeRemoved != null)
-                //    {
-                //        Cats.Remove(ItemToBeRemoved);
-                //    }              
-                //}
-
                 SafyListQuery = 
                     @"Create  Table #IDS(ID int Primary Key ) ; 
                       Insert Into #IDS(ID ) 
@@ -166,6 +159,76 @@ namespace Eastlaws.Services
             return List;
         }
 
+
+        /// <summary>
+        ///  handles tasfeya categories according to search type 
+        /// </summary>
+        /// <param name="searchType"></param>
+        /// <param name="searchParams"></param>
+        /// <param name="AllCats"></param>
+        /// <returns></returns>
+        private static List<AhkamTasfeyaCategory> HandleCategories(AhkamSearchTypes searchType, object searchParams , List<AhkamTasfeyaCategory> AllCats)
+        {
+            if(searchParams == null)
+            {
+                return AllCats;
+            }
+
+            List<AhkamTasfeyaCategoryIds> ListToRemove = new List<AhkamTasfeyaCategoryIds>();
+
+
+            if(searchType == AhkamSearchTypes.Advanced)
+            {
+                var MyParams = (AhkamAdvancedSearch)searchParams;
+            }
+            else if(searchType == AhkamSearchTypes.Fehres)
+            {
+                var FehresID = (int)searchParams;
+                ListToRemove.Add(AhkamTasfeyaCategoryIds.Country);
+                ListToRemove.Add(AhkamTasfeyaCategoryIds.Ma7kama);
+                using (SqlConnection con = DataHelpers.GetConnection(DbConnections.Data))
+                {
+                    int ProgramID = con.QuerySingle<int>("SELECT TOP 1 ProgramID FROM dbo.FehresItems FI JOIN dbo.VW_FehresMap FM ON FI.FehresCategoryID = FM.CategoryID  WHERE FI.ID  = " + FehresID);
+                    foreach (var item in AllCats)
+                    {
+                        if(item.ParentProgram.HasValue && item.ParentProgram == (FehresPrograms)ProgramID)
+                        {
+                            ListToRemove.Add(item.ID);
+                            break;
+                        }
+                    }
+
+                }
+            }
+            else if(searchType == AhkamSearchTypes.Mada)
+            {
+                var MyParams = (AhkamMadaSearch)searchParams;
+
+            }
+
+
+
+            // Removing Decided Categories !;
+            if(ListToRemove != null &&  ListToRemove.Count > 0)
+            {
+                for(int i = 0; i < ListToRemove.Count; i++)
+                {
+                    for(int x = 0;x < AllCats.Count; x++)
+                    {
+                        if(AllCats[x].ID == ListToRemove[i])
+                        {
+                            AllCats.RemoveAt(x);
+                            break;                            
+                        }
+                    }
+                }                
+            }
+
+
+
+
+            return AllCats;
+        }
 
         private static string GetCategoryQuery(int MasterQueryID , AhkamTasfeyaCategory Cat , string Filter, bool isSafyList = false , AhkamTasfeyaCategoryIds? Sender = null)
         {

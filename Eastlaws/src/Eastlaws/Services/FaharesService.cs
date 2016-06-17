@@ -107,7 +107,6 @@ namespace Eastlaws.Services
                 , CategoryID, (ParentID.HasValue ? ParentID.Value.ToString() : "null"), SearchText);
 
             CommandDefinition Cmd = new CommandDefinition(cmdText);
- 
 
             using (var Connection = DataHelpers.GetConnection(DbConnections.Data))
             {
