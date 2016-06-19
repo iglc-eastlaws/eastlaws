@@ -1,8 +1,6 @@
-﻿html:after { content: "© حقوق النشر محفوظة لشبكة قوانين الشرق www.eastlaws.com "; color: rgba(0, 0, 0, .2);z-index: 9999;cursor: default;display: block;position: fixed;top: 30%;right: 0%;font:italic bold 560%/120% arial;text-align: center;
--webkit-pointer-events: none;-moz-pointer-events: none;-ms-pointer-events: none;-o-pointer-events: none; pointer-events: none;
--webkit-transform: rotate(-45deg);-moz-transform: rotate(-45deg);-ms-transform: rotate(-45deg);-o-transform: rotate(-45deg);transform: rotate(-45deg);
--webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;-o-user-select: none; user-select: none;}
- header{ border:0 none; margin:0 0 20px; padding:0px;} 
+﻿html:after { content: "www.eastlaws.com"; color: rgba(0, 0, 0, .2);z-index: 9999;cursor: default;display: block;position: fixed;top: 45%;right: 0%;font:italic bold 560%/120% arial;text-align: center;-webkit-pointer-events: none;-moz-pointer-events: none;-ms-pointer-events: none;-o-pointer-events: none; pointer-events: none;
+-webkit-transform: rotate(-45deg);-moz-transform: rotate(-45deg);-ms-transform: rotate(-45deg);-o-transform: rotate(-45deg);transform: rotate(-45deg);-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;-o-user-select: none; user-select: none;}
+header{ border:0 none; margin:0 0 20px; padding:0px;} 
 .nav-control, .search-inner, .title-module, .format-result{ display:none;}
 .view-law {background:transparent none repeat scroll 0 0;border: 1px solid #d9b672;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);padding: 0 12px; text-align:justify;}
 .view-law h1 {font-size: 1.2em;  color:#9f7324;}
