@@ -327,7 +327,12 @@ namespace Eastlaws.Controllers
         }
         #endregion
 
-
+        #region  imageviwer
+        public IActionResult ImageViewer()
+        {
+                return View();
+        }
+        #endregion
 
     }
 
