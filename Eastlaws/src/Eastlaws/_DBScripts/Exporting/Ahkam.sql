@@ -45,9 +45,32 @@ SELECT 3 , ID , myOrder, null From dbo.Country c WHERE c.Show_In_FatwaMG = 1
 
 
 GO 
+---Images
+
+DELETE FROM EastlawsData..ServicesImages WHERE ImageID NOT IN (
+SELECT ID FROM dbo.AH_Images img
+)
+and ServiceTypeID=1
+
+GO 
+
+UPDATE D 
+SET D.ServiceTypeID =1 , D.ImageID = img.ID , D.ServiceID = img.Master_ID , D.ImagePath  =img.ImagePath
+From 
+dbo.AH_Images img 
+JOIN EastlawsData..ServicesImages D  ON img.ID = D.ImageID
+WHERE Binary_CheckSum(D.ImageID,D.ServiceID,D.ImagePath) <>  Binary_CheckSum(img.ID, img.Master_ID, img.ImagePath)
+and ServiceTypeID=1
 
 
+GO 
 
+INSERT INTO EastlawsData..ServicesImages(ServiceTypeID,ImageID,ServiceID,ImagePath)
+SELECT  1,ID,Master_ID,ImagePath  FROM dbo.AH_Images am
+WHERE ID NOT IN (SELECT ID FROM EastlawsData..ServicesImages where ServiceTypeID=1 )
+
+
+GO 
 
 
 --Mahakem 
