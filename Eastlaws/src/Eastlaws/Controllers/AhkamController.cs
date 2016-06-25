@@ -22,19 +22,6 @@ namespace Eastlaws.Controllers
             [HttpPost]
             public IActionResult SearchResultAssembly(SearchParms SearchParms)
             {
-                //AssemblySearch AssembleSearchInputs = SearchParms.AssemblySearch;
-                //SearchTools SearchTools = SearchParms.SearchTools;
-
-                //int PageNo = SearchTools.PageNo;
-                //int Sort = SearchTools.Sort;
-                //int pageSize = SearchTools.pageSize;
-                //bool Latest = SearchTools.Latest;
-                //int Days = SearchTools.Days;
-                //int typeView = SearchTools.typeView;
-                //int SortDir = SearchTools.SortDir;
-
-                //ViewBag.typeView = typeView;
-
                 ViewBag.typeView = SearchParms.SearchTools.typeView;
                 AhkamPresentation Model = new AhkamPresentation();
                 AhkamSearchOptions Options = new AhkamSearchOptions

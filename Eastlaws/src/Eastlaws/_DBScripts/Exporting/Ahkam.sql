@@ -10,6 +10,13 @@ ORDER BY name
 
 --Countries 
 
+
+
+
+
+
+
+
 DELETE FROM EastlawsData..Countries 
 WHERE ID NOT IN (SELECT ID FROM dbo.Country c)
 
@@ -126,7 +133,11 @@ WHERE ID NOT IN (SELECT ID FROM EastlawsData..Ahkam)
 
 GO 
 
+---AhkamImages
 
+Update  A
+set ImagesCount=(select COUNT(ImageID) From ServicesImages where ServiceTypeID=1 and ServiceID=A.ID)
+from Ahkam A 
 
 
 

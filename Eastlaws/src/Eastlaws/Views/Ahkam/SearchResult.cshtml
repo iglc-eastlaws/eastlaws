@@ -152,8 +152,11 @@
                          
                         <ul>
                             <li><a href="javascipt:;" data-toggle="tooltip" data-placement="top" class="color-tooltip fullfakra"  printID="@item.ID" title=" قراءة النص"><i class="fa fa-desktop"></i><span class="name-nav"> قراءة النص</span></a></li>
-                            <li><a href="/ahkam/ImageViewer" target="_blank" data-toggle="tooltip" data-placement="top" class="color-tooltip" title=" صورة الحكم">
-                                <i class="fa fa-camera"></i><span class="name-nav"> صورة الحكم</span></a></li>
+                            @if (@item.ImagesCount > 0)
+                            {
+                            <li><a href="/ahkam/ImageViewer" target="_blank" data-toggle="tooltip" data-placement="top" class="color-tooltip" count="@item.ImagesCount" title=" صورة الحكم">
+                            <i class="fa fa-camera"></i><span class="name-nav"> صورة الحكم</span></a></li>
+                            }
                             <li><a href="#" data-toggle="tooltip" data-placement="top" class="color-tooltip printing" printid="result_@item.ID"  title=" طباعة"><i class="fa fa-print"></i><span class="name-nav"> طباعة </span></a></li>
 
                         </ul>
