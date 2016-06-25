@@ -12,7 +12,11 @@
 	
 }
 
+    @media screen and (min-width: 1024px) {
 
+    #myModal .modal-dialog  {width:1170px;}
+
+    }
 
 @media (max-width: 767px) {
 	.carousel-inner .active.left { left: -100%; }
