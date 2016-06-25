@@ -6,6 +6,15 @@
 
     var countrow = 0;
 }
+@*<script src="~/lib/jquery/dist/jquery.js"></script>*@
+@*<script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>*@
+@*<link href="~/lib/bootstrap/dist/css/bootstrap-theme.css" rel="stylesheet" />
+<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+<link href="~/lib/bootstrap/dist/css/bootstrap.rtl.min.css" rel="stylesheet" />
+<link href="~/content/css/main.css" rel="stylesheet" />
+<link href="~/content/css/responsive.css" rel="stylesheet" />*@ 
+
+
 
 
 
@@ -152,10 +161,22 @@
                          
                         <ul>
                             <li><a href="javascipt:;" data-toggle="tooltip" data-placement="top" class="color-tooltip fullfakra"  printID="@item.ID" title=" قراءة النص"><i class="fa fa-desktop"></i><span class="name-nav"> قراءة النص</span></a></li>
-                            @if (@item.ImagesCount > 0)
+ 
+                              @if (@item.ImagesCount > 0)
                             {
-                            <li><a href="/ahkam/ImageViewer" target="_blank" data-toggle="tooltip" data-placement="top" class="color-tooltip" count="@item.ImagesCount" title=" صورة الحكم">
-                            <i class="fa fa-camera"></i><span class="name-nav"> صورة الحكم</span></a></li>
+                            <li>
+
+            
+                                @*<a href="#myModal" class="btn btn-lg btn-primary" data-toggle="modal">صورة الحكم</a>*@
+                                 <a href="/ahkam/ImageViewer?count=@item.ImagesCount&hokmID=@item.ID"
+                                target="_blank" data-toggle="tooltip" data-placement="top" class="color-tooltip"
+                                count="@item.ImagesCount"><i class="fa fa-camera"></i><span class="name-nav"> صورة الحكم</span></a> 
+
+                                @*<a href="#myModal"  data-toggle="modal" data-placement="top" class="color-tooltip"
+                                   count="@item.ImagesCount" >
+                                    <i class="fa fa-camera"></i><span class="name-nav"> صورة الحكم</span>
+                                </a>*@
+                            </li>
                             }
                             <li><a href="#" data-toggle="tooltip" data-placement="top" class="color-tooltip printing" printid="result_@item.ID"  title=" طباعة"><i class="fa fa-print"></i><span class="name-nav"> طباعة </span></a></li>
 
@@ -179,6 +200,38 @@
         <h3>لا يوجد نتائج</h3>
     }
 }
+
+@*<div class="modal-dialog">
+
+    <div class="modal-content">
+
+
+        <div class="modal-body">
+            <img src="~/content/images/canvas.png" class="img-responsive " />
+
+        </div>
+        <div class="modal-footer">
+
+            <span id="imgChooseTitle">إختار الصورة </span>
+            <select class="small_txt_box" id="ddlImageChanger">
+                <option value="1.1.269401.1200.936">1</option>
+                <option value="1.1.269402.794.1400">2</option>
+                <option value="1.1.269403.1200.606">3</option>
+            </select>
+
+            <button type="button" class="btn btn-primary">تحميل</button>
+            <button type="button" class="btn btn-primary">مقاس الشاشة</button>
+            <button type="button" class="btn btn-primary">تكبير</button>
+            <button type="button" class="btn btn-primary">تصغير</button>
+            <button type="button" class="btn btn-primary">إلتفاف</button>
+            <button type="button" class="btn btn-primary">حفظ</button>
+            <button type="button" class="btn btn-primary">طباعة الحالى</button>
+            <button type="button" class="btn btn-primary">طباعة الكل</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">اغلاق</button>
+
+        </div>
+    </div>
+</div>*@
 
 @functions{
     public static StringBuilder GetFakraText(string FakraText, int FakraNo, List<FTSPredicate> PredicatesHighlight,int MaxFakraTextLen)
@@ -215,6 +268,19 @@
 
 
 <script>
+
+            (function () {
+                "use strict"; 
+
+                var app1 = angular.module('imageView', []);
+                app1
+                .controller('imageCtrl', function ($scope) {
+                    $scope.clickme = function () {
+                        alert('0000')
+                    }
+                });
+            });
+
     $(document).ready(function () {
         $('#tabHokmBody').children('tr:first').trigger('click');
         $('[data-toggle="tooltip"]').tooltip();

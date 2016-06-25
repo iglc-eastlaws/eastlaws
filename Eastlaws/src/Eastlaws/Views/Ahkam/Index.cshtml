@@ -179,8 +179,10 @@
                     //});
                 });
             })
-            .controller('searchResultCtrl', function () {
-                       $(document).on('click', '.hokmView', function () {
+            .controller('searchResultCtrl', function ($scope) {
+            
+ 
+                $(document).on('click', '.hokmView', function () {
                            $(".hokmView").removeClass("active");
                            var obj = $(this);
                            if (obj.hasClass("active")) {

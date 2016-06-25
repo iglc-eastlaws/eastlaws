@@ -11,25 +11,21 @@
     <link href="~/lib/bootstrap/dist/css/bootstrap.rtl.min.css" rel="stylesheet" />
     <link href="~/content/css/main.css" rel="stylesheet" />
     <link href="~/content/css/responsive.css" rel="stylesheet" />
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#myModal").modal('show');
-        });
-    </script>
+
 
 </head>
 <body>
 
-    <a href="#myModal" class="btn btn-lg btn-primary" data-toggle="modal">صورة الحكم</a>
+    @*<a href="#myModal" class="btn btn-lg btn-primary" data-toggle="modal">صورة الحكم</a>*@
     <div id="myModal" class="modal fade">
         <div class="modal-dialog ">
       
             <div class="modal-content">
              
-                <div class="modal-header">
+                @*<div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title">  دولة الإمارات العربية المتحدة - المحكمة الإتحادية العليا - الأحكام الجزائية الطعن رقم 416 لسنة 2015 قضائية بتاريخ 2015-12-28 </h4>
-                </div>
+                </div>*@
 
                         <div class="modal-body">
                             <img src="~/content/images/canvas.png" class="img-responsive " />
@@ -39,9 +35,9 @@
                       
                             <span id="imgChooseTitle">إختار الصورة </span>
                             <select class="small_txt_box" id="ddlImageChanger">
-                                <option value="1.1.269401.1200.936">1</option>
+                                @*<option value="1.1.269401.1200.936">1</option>
                                 <option value="1.1.269402.794.1400">2</option>
-                                <option value="1.1.269403.1200.606">3</option>
+                                <option value="1.1.269403.1200.606">3</option>*@
                             </select>
                           
                             <button type="button" class="btn btn-primary">تحميل</button>
@@ -58,5 +54,38 @@
                 </div>
         </div>
     </div>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $("#myModal").modal('show');
+
+            var count = getParameterByName('count');
+            var hokmID = getParameterByName('hokmID');
+            //console.log(count + '   ' + hokmID)
+            for (var i = 0; i < count; i++) {
+                $('#ddlImageChanger').append($("<option/>").val(i).text(i));
+            }
+
+            $('#ddlImageChanger').on('change', function () {
+                alert(this.value);
+            })
+    
+
+        function getParameterByName(name) {
+            name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+            var regexS = "[\\?&]" + name + "=([^&#]*)";
+
+            var regex = new RegExp(regexS);
+            var results = regex.exec(window.location.href);
+            if (results == null)
+                return "";
+            else
+                return decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+
+        });
+
+    </script>
 </body>
 </html>
