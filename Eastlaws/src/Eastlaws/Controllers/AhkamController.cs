@@ -319,6 +319,12 @@ namespace Eastlaws.Controllers
         {
                 return View();
         }
+
+        public JsonResult GetImages(int ServiceID)
+        {
+            var Images = ImageService.GetImages(ServiceID);
+            return new JsonResult(Images);
+        }
         #endregion
 
     }
