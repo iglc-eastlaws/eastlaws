@@ -59,7 +59,9 @@
 
         $(document).ready(function () {
             $("#myModal").modal('show');
-
+            $.get('/Ahkam/GetImages', { 'ServiceID': getParameterByName('hokmID') }, function (data) {
+                console.log(data)
+            });
             var count = getParameterByName('count');
             var hokmID = getParameterByName('hokmID');
             //console.log(count + '   ' + hokmID)
