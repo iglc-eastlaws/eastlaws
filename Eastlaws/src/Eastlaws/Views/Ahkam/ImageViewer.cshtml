@@ -12,14 +12,25 @@
     <link href="~/content/css/main.css" rel="stylesheet" />
     <link href="~/content/css/responsive.css" rel="stylesheet" />
     <script type="text/javascript">
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
         $(document).ready(function () {
             $("#myModal").modal('show');
+            $.get('/Ahkam/GetImages', { 'ServiceID': getParameterByName('ServiceID') }, function (data) {
+                console.log(data)
+            });
         });
     </script>
 
 </head>
 <body>
-
     <a href="#myModal" class="btn btn-lg btn-primary" data-toggle="modal">صورة الحكم</a>
     <div id="myModal" class="modal fade">
         <div class="modal-dialog ">

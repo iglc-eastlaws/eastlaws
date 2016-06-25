@@ -48,8 +48,6 @@ namespace Eastlaws.Services
 
     public class AhkamService
     {
-
-
         // General Search 
         public static AhkamPresentation Search(AhkamSearchOptions Options , FTSPredicate SearchPredicate)
         {
@@ -91,7 +89,6 @@ namespace Eastlaws.Services
         }
 
 
-
         public static AhkamPresentation GetLatest(AhkamSearchOptions Options , int DaysCount = 10)
         {
             string InnerQuery = AhkamQueryBuilder.LatestAhkam(DaysCount);
@@ -122,8 +119,6 @@ namespace Eastlaws.Services
             }
             return P;
         }
-
-
 
         // Internal Search Assembler !
         private static AhkamPresentation Search(string InnerQuery, AhkamSearchOptions Options , string CustomFakaratQuery , AhkamSearchTypes SearchType , 
@@ -174,7 +169,6 @@ namespace Eastlaws.Services
             var Data = con.Query<Country>("GetServiceCountries", new { ServiceID = 1 }, null, true, null, System.Data.CommandType.StoredProcedure);
             return Data;
         }
-
     
         public static IEnumerable<AhkamGehaType> GetGehaType()
         {
@@ -246,12 +240,5 @@ namespace Eastlaws.Services
 
             return Items;
         }
-
-
-
-
-
-
-
     }
 }
