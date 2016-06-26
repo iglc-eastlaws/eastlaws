@@ -172,8 +172,9 @@
                                 target="_blank" data-toggle="tooltip" data-placement="top" class="color-tooltip"
                                 count="@item.ImagesCount"><i class="fa fa-camera"></i><span class="name-nav"> صورة الحكم</span></a>*@ 
 
-                                <a href="#myModal"  data-toggle="modal" data-placement="top" class="color-tooltip"
-                                   count="@item.ImagesCount" >
+                                <a href="#myModal" class="color-tooltip ImageView"  
+                                   data-toggle="modal" data-placement="top" 
+                                   count="@item.ImagesCount" hokmid="@item.ID"  >
                                     <i class="fa fa-camera"></i><span class="name-nav"> صورة الحكم</span>
                                 </a>
                             </li>
@@ -210,16 +211,12 @@
         </div>
 
                 <div class="modal-body">
-                    <img src="~/content/images/canvas.png" class="img-responsive " />
-
+                    <img id="imagePanal" src="~/content/images/canvas.png" class="img-responsive " />
                 </div>
                 <div class="modal-footer">
 
                     <span id="imgChooseTitle">إختار الصورة </span>
                     <select class="small_txt_box" id="ddlImageChanger">
-                        <option value="1.1.269401.1200.936">1</option>
-                        <option value="1.1.269402.794.1400">2</option>
-                        <option value="1.1.269403.1200.606">3</option>
                     </select>
 
                     <button type="button" class="btn btn-primary">تحميل</button>
@@ -272,17 +269,27 @@
 
 <script>
 
-            (function () {
-                "use strict"; 
 
-                var app1 = angular.module('imageView', []);
-                app1
-                .controller('imageCtrl', function ($scope) {
-                    $scope.clickme = function () {
-                        alert('0000')
-                    }
-                });
+    $(document).off('click', '.ImageView').on('click', '.ImageView', function () {
+        var obj = $(this);
+        var count = obj.attr('count');
+        var hokmid = obj.attr('hokmid');
+        var jsonData;
+        $.getJSON('/Ahkam/GetImages', { 'ServiceID': hokmid }, function (data) {
+            $('#ddlImageChanger').html('');
+            $.each(data, function (e) {
+                var item = this;
+                $('#ddlImageChanger').append($("<option/>").val(item.ImagePath).text(e + 1));
             });
+        });
+
+    });
+
+
+    $('#ddlImageChanger').on('change', function () {
+        alert(this.value);
+    })
+
 
     $(document).ready(function () {
         $('#tabHokmBody').children('tr:first').trigger('click');
