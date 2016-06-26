@@ -10,6 +10,7 @@
     "EntityFramework.Core": "7.0.0-rc1-final",
     "Dapper": "1.50.0-beta8",
     "Microsoft.AspNet.StaticFiles": "1.0.0-rc1-final"
+
   },
 
   "commands": {
@@ -17,7 +18,11 @@
   },
 
   "frameworks": {
-    "dnx451": { }
+    "dnx451": {
+      "frameworkAssemblies": {
+        "System.Drawing": "4.0.0.0"
+      }
+    }
   },
   "exclude": [
     "wwwroot",
