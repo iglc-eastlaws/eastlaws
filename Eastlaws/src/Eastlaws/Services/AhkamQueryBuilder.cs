@@ -240,42 +240,48 @@ namespace Eastlaws.Services
         }
 
 
-        private static string TashToAhkam(string TashQuery)
+        private static string TashToAhkam(string TashQuery,bool MadaNoCondition = false)
         {
-            return "SELECT TA.HokmID AS ID ,Sum(TQ.DefaultRank) AS DefaultRank  FROM  "
+            if (!MadaNoCondition)
+            {
+                return "SELECT TA.HokmID AS ID ,Sum(TQ.DefaultRank) AS DefaultRank  FROM  "
+                    + "\n" + "( " + TashQuery + " ) TQ"
+                    + "\n" + "JOIN dbo.Tashree3atAhkam TA  ON ta.TashID = TQ.ID "
+                    + "\n" + "GROUP BY TA.HokmID ";
+            }
+            else
+            {
+                // result relate to mada  only
+                return "SELECT TA.HokmID AS ID ,Sum(TQ.DefaultRank) AS DefaultRank  FROM  "
                 + "\n" + "( " + TashQuery + " ) TQ"
-                + "\n" + "JOIN dbo.Tashree3atAhkam TA  ON ta.TashID = TQ.ID "
+                + "\n" + "JOIN dbo.Tashree3atAhkam TA  ON TA.MadaID= TQ.madaID  "
                 + "\n" + "GROUP BY TA.HokmID ";
 
-            // result relate to mada  only
-             //return "SELECT TA.HokmID AS ID ,Sum(TQ.DefaultRank) AS DefaultRank  FROM  "
-              //+ "\n" + "( " + TashQuery + " ) TQ"
-              //+ "\n" + "JOIN dbo.Tashree3atAhkam TA  ON TA.MadaID= TQ.madaID  "
-              //+ "\n" + "GROUP BY TA.HokmID ";
-        }
+            }
+           }
 
         public static string MadaSearch(AhkamMadaSearch ObjSearch , out string FakaratQuery , out List<FTSPredicate> TextMatches)
         {
             TextMatches = null;
             FakaratQuery = null;
-            
+            bool isMadaNoCondition = false; // result relate to mada  only
 
-           
 
             StringBuilder Builder = new StringBuilder();
             Builder.AppendLine("SELECT T.ID , 0 AS DefaultRank FROM Tashree3at T ");
          
-            /*====================== 
-            special case where user set mada no 
-            
-            */
-            // Builder.AppendLine("SELECT T.ID ,TM.ID as madaID, 0 AS DefaultRank FROM Tashree3at T "); // result relate to mada  only
+        
 
             Range MadaNoRange = new Range(ObjSearch.MadaNo, "TM.MadaNo");
             string MadaNoCondition = MadaNoRange.GetCondition();
             if (!string.IsNullOrWhiteSpace(MadaNoCondition))
             {
-                Builder.AppendLine("Join Tashree3atMawad TM on TM.Tashree3ID = T.ID  ");
+                // result relate to mada  only
+                isMadaNoCondition = true;
+                Builder.Length = 0;
+                Builder.AppendLine("SELECT T.ID ,TM.ID as madaID, 0 AS DefaultRank FROM Tashree3at T ");
+
+                Builder.AppendLine("Join Tashree3atMawad TM on TM.Tashree3ID = T.ID ");
             
             }
             Builder.AppendLine(" Where (1 = 1 )");
@@ -301,11 +307,10 @@ namespace Eastlaws.Services
 
             
 
-
             if (ObjSearch.SearchPredicate != null && !ObjSearch.SearchPredicate.IsValid)
             {
                 // No Text search return master Query Only 
-                return TashToAhkam( Builder.ToString());
+                return TashToAhkam( Builder.ToString(),isMadaNoCondition);
             }
             else
             {
@@ -354,7 +359,7 @@ namespace Eastlaws.Services
                 }
 
                 string RetVal = "Select TTS.* From ("  + TextQuery + ") TTS Join (" +  MasterQueries[0]  +  ") MQ on MQ.ID = TTS.ID";
-                RetVal = TashToAhkam(RetVal);
+                RetVal = TashToAhkam(RetVal, isMadaNoCondition);
                 return RetVal;
             }    
             
