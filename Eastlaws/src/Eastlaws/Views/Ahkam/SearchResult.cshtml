@@ -210,7 +210,7 @@
             @*<h4 class="modal-title">  دولة الإمارات العربية المتحدة - المحكمة الإتحادية العليا - الأحكام الجزائية الطعن رقم 416 لسنة 2015 قضائية بتاريخ 2015-12-28 </h4>*@
         </div>
 
-                <div class="modal-body">
+                <div class="modal-body" style="overflow:auto">
                     <img id="imagePanal" src="~/content/images/canvas.png" class="img-responsive " />
                 </div>
                 <div class="modal-footer">
@@ -220,9 +220,9 @@
                     </select>
 
                     <button type="button" class="btn btn-primary">تحميل</button>
-                    <button type="button" class="btn btn-primary">مقاس الشاشة</button>
-                    <button type="button" class="btn btn-primary">تكبير</button>
-                    <button type="button" class="btn btn-primary">تصغير</button>
+                    <button id ="zoomScreenImage" zoomprop="0" type="button" class="btn btn-primary">مقاس الشاشة</button>
+                    <button id="zoomOutImage" zoomprop="1" type="button" class="btn btn-primary">تكبير</button>
+                    <button id="zoomInImage" zoomprop="-1" type="button" class="btn btn-primary">تصغير</button>
                     <button type="button" class="btn btn-primary">إلتفاف</button>
                     <button type="button" class="btn btn-primary">حفظ</button>
                     <button type="button" class="btn btn-primary">طباعة الحالى</button>
@@ -289,6 +289,24 @@
     $('#ddlImageChanger').on('change', function () {
         alert(this.value);
     })
+
+    $('#zoomOutImage,#zoomInImage,#zoomScreenImage').on('click', function () {
+        var obj = $(this);
+        var zoomprop = parseInt(obj.attr('zoomprop'));
+        var imageObj = $('#imagePanal');
+        var imageChangeSzieRate = 1;
+        switch (zoomprop)
+        {
+            case 1:  { imageChangeSzieRate = 1.1;break; }
+            case -1:{ imageChangeSzieRate = 0.9;  break;  }
+        }
+        imageObj.width(parseInt(imageObj.width() * imageChangeSzieRate));
+        imageObj.height(parseInt(imageObj.height() * imageChangeSzieRate));
+    })
+
+    
+
+
 
 
     $(document).ready(function () {
