@@ -280,6 +280,7 @@
             $.each(data, function (e) {
                 var item = this;
                 $('#ddlImageChanger').append($("<option/>").val(item.ImagePath).text(e + 1));
+                console.log(data)
             });
         });
 
@@ -305,15 +306,15 @@
     })
 
     $('#loadImage').on('click', function () {
+        alert('kk')
         $.getJSON('/Ahkam/GetImagesbase64Test', {}, function (data) {
             console.log(data);
             document.getElementById("imagePanal").src = '';
             //    $('#imagePanal').src(data);
-       document.getElementById("imagePanal").src = "data:image/gif;base64," + data;
+            document.getElementById("imagePanal").src = "data:image/gif;base64," + data;
         });
         
     })
-
 
 
 

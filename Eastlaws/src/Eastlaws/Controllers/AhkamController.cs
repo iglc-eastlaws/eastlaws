@@ -327,17 +327,11 @@ namespace Eastlaws.Controllers
             return new JsonResult(Images);
         }
 
-        public JsonResult GetImagesTest()
-        {
-            var Images = ImageService.testPath();
-            return new JsonResult(Images);
-        }
-
- 
+      
 
         public JsonResult GetImagesbase64Test()
         {
-            var Images = ImageService.testPath();
+            var Images = ImageService.ConvertImage(626435);
             byte[] fileBytes = System.IO.File.ReadAllBytes(Images);
             var base64 = Convert.ToBase64String(fileBytes);
             return new JsonResult(base64);
