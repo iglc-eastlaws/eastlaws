@@ -52,6 +52,14 @@ namespace Eastlaws.Services
             return "";
         }
 
+        public static string testPath()
+        {
+            string ConvertedFoldertest = "C:\\ImgConverted\\";
+            
+            // string ConvertedFoldertest = "C:\\ConvertedImages\\";
+            return ConvertedFoldertest + "1_1_269402" + ".gif";
+        }
+
         public static string GetImagePath(byte RecType, int MasterID, int ImageID)
         {
             return ConvertedFolder + RecType + "_" + MasterID + "_" + ImageID + ".gif";
