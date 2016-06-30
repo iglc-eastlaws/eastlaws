@@ -219,7 +219,7 @@
                     <select class="small_txt_box" id="ddlImageChanger">
                     </select>
 
-                    <button type="button" class="btn btn-primary">تحميل</button>
+                    <button id="loadImage" type="button" class="btn btn-primary">تحميل</button>
                     <button id ="zoomScreenImage" zoomprop="0" type="button" class="btn btn-primary">مقاس الشاشة</button>
                     <button id="zoomOutImage" zoomprop="1" type="button" class="btn btn-primary">تكبير</button>
                     <button id="zoomInImage" zoomprop="-1" type="button" class="btn btn-primary">تصغير</button>
@@ -304,7 +304,15 @@
         imageObj.height(parseInt(imageObj.height() * imageChangeSzieRate));
     })
 
-    
+    $('#loadImage').on('click', function () {
+        $.getJSON('/Ahkam/GetImagesbase64Test', {}, function (data) {
+            console.log(data);
+            document.getElementById("imagePanal").src = '';
+            //    $('#imagePanal').src(data);
+       document.getElementById("imagePanal").src = "data:image/gif;base64," + data;
+        });
+        
+    })
 
 
 
