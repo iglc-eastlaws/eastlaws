@@ -329,9 +329,9 @@ namespace Eastlaws.Controllers
 
       
 
-        public JsonResult GetImagesbase64Test()
+        public JsonResult GetImagesbase64Test(int ImageID,string OldPath,int ServiceType)
         {
-            var Images = ImageService.ConvertImage(626435);
+            var Images = ImageService.ConvertImage(OldPath,ImageID, ServiceType);
             byte[] fileBytes = System.IO.File.ReadAllBytes(Images);
             var base64 = Convert.ToBase64String(fileBytes);
             return new JsonResult(base64);

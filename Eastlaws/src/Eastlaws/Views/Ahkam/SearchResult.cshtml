@@ -269,7 +269,6 @@
 
 <script>
 
-
     $(document).off('click', '.ImageView').on('click', '.ImageView', function () {
         var obj = $(this);
         var count = obj.attr('count');
@@ -279,7 +278,7 @@
             $('#ddlImageChanger').html('');
             $.each(data, function (e) {
                 var item = this;
-                $('#ddlImageChanger').append($("<option/>").val(item.ImagePath).text(e + 1));
+                $('#ddlImageChanger').append($("<option/>").val(item.ImagePath + " ImageID=" + item.ImageID).text(e + 1));
                 console.log(data)
             });
         });
@@ -306,8 +305,9 @@
     })
 
     $('#loadImage').on('click', function () {
-        alert('kk')
-        $.getJSON('/Ahkam/GetImagesbase64Test', {}, function (data) {
+        var selectedText = $('#ddlImageChanger').val();
+        var arr = selectedText.split(" ImageID=");
+        $.getJSON('/Ahkam/GetImagesbase64Test', {'ImageID':arr[1],'OldPath':arr[0],'ServiceType':'1'}, function (data) {
             console.log(data);
             document.getElementById("imagePanal").src = '';
             //    $('#imagePanal').src(data);

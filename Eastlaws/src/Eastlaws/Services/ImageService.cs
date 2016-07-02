@@ -19,14 +19,6 @@ namespace Eastlaws.Services
     {
         public static string ClearFolder = "C:\\Images\\";
         public static string ConvertedFolder = "C:\\ImgConverted\\";
-        private readonly IApplicationEnvironment _appEnvironment;
-        public static string rootpath = "";
-
-        public ImageService(IApplicationEnvironment appEnvironment)
-        {
-            _appEnvironment = appEnvironment;
-            var rootPath = _appEnvironment.ApplicationBasePath;
-        }
 
 
         public static IEnumerable<Images> GetImages(int ServiceID)
@@ -36,30 +28,38 @@ namespace Eastlaws.Services
             return Data;
         }
 
-        public static string ConvertImage(int ImageID)
+        public static string ConvertImage(string OldPath, int ImageID,int ServiceType)
         {
-            //OldPath = OldPath.Substring(3);
-           string  OldPath = "C:\\Image\\0074.tif";
-
-            FileInfo fi = new FileInfo(OldPath);
-           
-            string newPath = ConvertedFolder + ImageID + ".gif";
-
-            var res = CopyRight(OldPath, newPath);
-            if (res) return newPath;
-
+             OldPath = OldPath.Substring(3);
+             OldPath = ClearFolder+OldPath;
+            string newPath = GetImagePath(ServiceType, ImageID);
+            FileInfo ConvertedFile = new FileInfo(newPath);
+            if (ConvertedFile.Exists)
+            {
+                return newPath;
+            }
+            else
+            {
+                FileInfo fi = new FileInfo(OldPath);
+                if (!fi.Exists)
+                {
+                    return "";
+                }
+                var res = CopyRight(OldPath, newPath);
+                if (res) return newPath;
+            }
             return "";
         }
 
-        //public static string GetImagePath(byte RecType, int MasterID, int ImageID)
-        //{
-        //    return ConvertedFolder + RecType + "_" + MasterID + "_" + ImageID + ".gif";
-        //}
+        public static string GetImagePath(int ServiceType, int ImageID)
+        {
+            return ConvertedFolder + ServiceType + "_" + ImageID + ".gif";
+        }
 
         public static bool CopyRight(string oldPath, string NewPath)
         {
           
-            Image imgLogo = Image.FromFile("C:\\Image\\CopyRight.gif");
+            Image imgLogo = Image.FromFile(ClearFolder+"CopyRight.gif");
             int lWidth = imgLogo.Width, lHeight = imgLogo.Height;
 
             Image imgOriginal = Image.FromFile(oldPath);
@@ -75,7 +75,7 @@ namespace Eastlaws.Services
             g.DrawImage(imgOriginal, new Rectangle(0, 80, w, h));
 
 
-            Image imgWaterMrk = Image.FromFile("C:\\Image\\Watermark.png");
+            Image imgWaterMrk = Image.FromFile(ClearFolder+"Watermark.png");
             Size wtrMarkSize = imgWaterMrk.Size;
             if (wtrMarkSize.Width > w || wtrMarkSize.Height > h)
                 wtrMarkSize = getScaledSize(imgWaterMrk.Size, newSize);
