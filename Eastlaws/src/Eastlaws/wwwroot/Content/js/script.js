@@ -25,6 +25,13 @@ $('#myCarousel').carousel({
     interval: 10000
 })
 $(document).ready(function () {
+
+    //Iamge  popup
+    //var h = $(window).height() + "px";
+    //alert(h);
+    //$(".modal-dialog").css({"heigh":h});
+
+
     function toggleChevron(e) {
         $(e.target)
             .prev('.panel-heading')

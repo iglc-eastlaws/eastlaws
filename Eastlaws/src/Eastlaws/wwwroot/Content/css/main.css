@@ -460,14 +460,7 @@ thead { background-color:#fff9d9;  color:#333; font:0.68em "Droid Arabic Kufi",a
 .inner-tab .tabs-right > .nav-tabs > li > a:hover, .inner-tab .tabs-right > .nav-tabs > li > a:focus {}
 .inner-tab .tabs-right > .nav-tabs .active > a, .inner-tab .tabs-right > .nav-tabs .active > a:hover, .tabs-right > .nav-tabs .active > a:focus {  background-color:#675650;}
 /*Modul*/
-.modal-content{ border-radius:0 0 0 0;   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  border: 2px solid #3c7dcf;
-  border-radius: 0;
-  box-shadow: none;}
+.modal-content{ border-radius:0 0 0 0;   position: absolute;top: 0;right: 0;bottom: 0;left: 0;border: 0px solid #3c7dcf;box-shadow: none;}
 
 
 .modal {
@@ -498,11 +491,29 @@ thead { background-color:#fff9d9;  color:#333; font:0.68em "Droid Arabic Kufi",a
 }
 
 .modal-body {position: absolute;top: 50px;bottom: 60px;width: 100%;font-weight: 300;overflow: auto;}
-.modal-footer {position: absolute;right: 0;bottom: 0;left: 0;height: 60px;padding: 10px;background: #f1f3f5;}
+.modal-footer {position: absolute;right: 0;bottom: 0;left: 0;height: 60px;padding: 10px;background: #f1f3f5; border-top:2px solid #E8BF6F ;}
 .btn-modal {position: absolute; top: 50%;left: 50%;margin-top: -20px;margin-left: -100px; width: 200px;}
 .btn-primary,.btn-primary:hover,.btn-primary:focus,.btn-primary:active {font-weight: 300;font-size: 1.6rem;color: #fff; color: lighten(#484b5b, 20%);color: #fff;text-align: center;background: #60cc69;border: 1px solid #36a940; border-bottom: 3px solid #36a940; box-shadow: 0 2px 4px rgba(0,0,0,0.15);}
 ::-webkit-scrollbar {-webkit-appearance: none; width: 10px; background: #f1f3f5;border-left: 1px solid darken(#f1f3f5, 10%);}
 ::-webkit-scrollbar-thumb {background: darken(#f1f3f5, 20%);}
+.modal-footer .btn-primary{ padding:0 5px; background: #e8bf6f none repeat scroll 0 0;border-color: #52413b;color: #000;}
+.modal-footer .btn:focus,.modal-footer .btn:active,.modal-footer .btn:active:focus {box-shadow: none;outline: none;}
+.modal-footer.btn-primary:hover,.modal-footer.btn-primary:focus,.modal-footer.btn-primary:active {
+  font-weight: 300;
+  font-size: 1.6rem;
+  color: #fff;
+  color: lighten(#484b5b, 20%);
+  color: #fff;
+  text-align: center;
+  background: #60cc69;
+  border: 1px solid #36a940;
+  border-bottom: 3px solid #FFF;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+ }
+.modal-footer .btn:active {
+    border-bottom: 1px solid #36a940;
+ 
+}
 
 
 
