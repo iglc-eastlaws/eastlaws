@@ -16,8 +16,8 @@
 </head>
 <body>
 
-    @*<a href="#myModal" class="btn btn-lg btn-primary" data-toggle="modal">صورة الحكم</a>*@
-    <div id="myModal" class="modal fade">
+    @*<a href="#myModal"class="modal fade" class="btn btn-lg btn-primary" data-toggle="modal">صورة الحكم</a>*@
+    <div id="myModal"  class="modal animated bounceIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog ">
       
             <div class="modal-content">
@@ -27,17 +27,15 @@
                     <h4 class="modal-title">  دولة الإمارات العربية المتحدة - المحكمة الإتحادية العليا - الأحكام الجزائية الطعن رقم 416 لسنة 2015 قضائية بتاريخ 2015-12-28 </h4>
                 </div>*@
 
-                        <div class="modal-body">
-                            <img src="~/content/images/canvas.png" class="img-responsive " />
+                        <div class="modal-body text-center">
+                            <img src="~/content/images/canvas.png" class="img-responsive " style="margin:0 auto;" />
 
                         </div>
                         <div class="modal-footer">
                       
                             <span id="imgChooseTitle">إختار الصورة </span>
-                            <select class="small_txt_box" id="ddlImageChanger">
-                                @*<option value="1.1.269401.1200.936">1</option>
-                                <option value="1.1.269402.794.1400">2</option>
-                                <option value="1.1.269403.1200.606">3</option>*@
+                            <select class="small_txt_box selectpicker" id="ddlImageChanger">
+                    
                             </select>
                           
                             <button type="button" class="btn btn-primary">تحميل</button>
@@ -48,7 +46,7 @@
                             <button type="button" class="btn btn-primary">حفظ</button>
                             <button type="button" class="btn btn-primary">طباعة الحالى</button>
                             <button type="button" class="btn btn-primary">طباعة الكل</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">اغلاق</button>
+                            @*<button type="button" class="btn btn-default" data-dismiss="modal">اغلاق</button>*@
                      
                         </div>
                 </div>
