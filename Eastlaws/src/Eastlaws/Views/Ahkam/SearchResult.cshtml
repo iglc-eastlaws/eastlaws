@@ -216,11 +216,10 @@
                 </div>
                 <div class="modal-footer" style="text-align:center;">
 
-                    <a href="javascript:;">السابق</a>
-                    <span id="imgChooseTitle">إختار الصورة </span>
-                    <select class="small_txt_box" id="ddlImageChanger">
-                    </select>
-                    <a href="javascript:;">التالى</a>
+                    <a id="prevImage" valstep="-1" href="javascript:;" >السابق</a>
+                        <span id="imgChooseTitle">إختار الصورة </span>
+                        <select class="small_txt_box" id="ddlImageChanger"></select>
+                    <a id="NextImage" valstep="1" href="javascript:;">التالى</a>
 
                     @*<button id="loadImage" type="button" class="btn btn-primary"> تحميل</button>*@
                     <button  zoomprop="0" type="button" class="btn btn-primary"><i class="fa fa-arrows" aria-hidden="true"></i> الحجم الاصلى</button>
@@ -284,18 +283,43 @@
             $.each(data, function (e) {
                 var item = this;
                 $('#ddlImageChanger').append($("<option/>").val(item.ImagePath + " ImageID=" + item.ImageID).text(e + 1));
-              //  console.log(data)
-            });
-        });
+            })
+        }).then(function () {
+            getLoadImage();
+        })
 
     });
 
 
-    $('#ddlImageChanger').on('change', function () {
-       // alert(this.value);
-        // $('#loadImage').trigger('click');
-        getLoadImage();
-    })
+    $('#ddlImageChanger').on('change', function () { getLoadImage(); })
+
+    $('#prevImage,#NextImage').on('click', function () {
+        var obj = $(this);
+        var valstep = parseInt(obj.attr('valstep'));
+
+        var optionObj = $('#ddlImageChanger');
+        var index = optionObj[0].selectedIndex;
+        var imgCount = optionObj.find('option').length;
+        switch (valstep) {
+            case -1: {
+                if (index >= 1) {
+                    optionObj[0].selectedIndex = (index - 1);
+                    getLoadImage();
+                }
+                break;
+            }
+            case 1:
+                {
+                    if (index < (imgCount - 1)) {
+                        optionObj[0].selectedIndex = (index + 1);
+                        getLoadImage();
+                    }
+                }
+        }
+    });
+
+
+     
 
     $('#zoomOutImage,#zoomInImage,#zoomScreenImage').on('click', function () {
         var obj = $(this);
@@ -319,18 +343,6 @@
             document.getElementById("imagePanal").src = "data:image/gif;base64," + data;
         });
     }
-
-    //$('#loadImage').on('click', function () {
-    //    var selectedText = $('#ddlImageChanger').val();
-    //    var arr = selectedText.split(" ImageID=");
-    //    $.getJSON('/Ahkam/GetImagesbase64Test', {'ImageID':arr[1],'OldPath':arr[0],'ServiceType':'1'}, function (data) {
-    //       // console.log(data);
-    //        document.getElementById("imagePanal").src = '';
-    //        //    $('#imagePanal').src(data);
-    //        document.getElementById("imagePanal").src = "data:image/gif;base64," + data;
-    //    });
-    //    //alert('0000')
-    //})
 
 
 
