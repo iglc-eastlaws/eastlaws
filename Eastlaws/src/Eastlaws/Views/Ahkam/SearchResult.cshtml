@@ -216,11 +216,14 @@
                 </div>
                 <div class="modal-footer" style="text-align:center;">
 
+                    <a href="javascript:;">السابق</a>
                     <span id="imgChooseTitle">إختار الصورة </span>
                     <select class="small_txt_box" id="ddlImageChanger">
                     </select>
+                    <a href="javascript:;">التالى</a>
 
-                    <button id="loadImage" type="button" class="btn btn-primary"> تحميل</button>
+                    @*<button id="loadImage" type="button" class="btn btn-primary"> تحميل</button>*@
+                    <button  zoomprop="0" type="button" class="btn btn-primary"><i class="fa fa-arrows" aria-hidden="true"></i> الحجم الاصلى</button>
                     <button id ="zoomScreenImage" zoomprop="0" type="button" class="btn btn-primary"><i class="fa fa-arrows" aria-hidden="true"></i> مقاس الشاشة</button>
                     <button id="zoomOutImage" zoomprop="1" type="button" class="btn btn-primary"><i class="fa fa-search-plus" aria-hidden="true"></i>  تكبير</button>
                     <button id="zoomInImage" zoomprop="-1" type="button" class="btn btn-primary"><i class="fa fa-search-minus" aria-hidden="true"></i> تصغير</button>
@@ -290,7 +293,8 @@
 
     $('#ddlImageChanger').on('change', function () {
        // alert(this.value);
-        $('#loadImage').trigger('click');
+        // $('#loadImage').trigger('click');
+        getLoadImage();
     })
 
     $('#zoomOutImage,#zoomInImage,#zoomScreenImage').on('click', function () {
@@ -307,17 +311,26 @@
         imageObj.height(parseInt(imageObj.height() * imageChangeSzieRate));
     })
 
-    $('#loadImage').on('click', function () {
+    function getLoadImage() {
         var selectedText = $('#ddlImageChanger').val();
         var arr = selectedText.split(" ImageID=");
-        $.getJSON('/Ahkam/GetImagesbase64Test', {'ImageID':arr[1],'OldPath':arr[0],'ServiceType':'1'}, function (data) {
-           // console.log(data);
+        $.getJSON('/Ahkam/GetImagesbase64Test', { 'ImageID': arr[1], 'OldPath': arr[0], 'ServiceType': '1' }, function (data) {
             document.getElementById("imagePanal").src = '';
-            //    $('#imagePanal').src(data);
             document.getElementById("imagePanal").src = "data:image/gif;base64," + data;
         });
-        //alert('0000')
-    })
+    }
+
+    //$('#loadImage').on('click', function () {
+    //    var selectedText = $('#ddlImageChanger').val();
+    //    var arr = selectedText.split(" ImageID=");
+    //    $.getJSON('/Ahkam/GetImagesbase64Test', {'ImageID':arr[1],'OldPath':arr[0],'ServiceType':'1'}, function (data) {
+    //       // console.log(data);
+    //        document.getElementById("imagePanal").src = '';
+    //        //    $('#imagePanal').src(data);
+    //        document.getElementById("imagePanal").src = "data:image/gif;base64," + data;
+    //    });
+    //    //alert('0000')
+    //})
 
 
 
