@@ -17,4 +17,13 @@ namespace Eastlaws.Entities
         public string FullName { get; set; }
         public bool IsLastLevel { get; set; }
     }
+
+    public class FehresLink
+    {
+        public int FehresItemID { get; set; }
+        public int MasterItemID { get; set; }
+        public int ChildItemID { get; set; }
+        public int? StartColor { get; set; }
+        public int? EndColor { get; set; }
+    }
 }

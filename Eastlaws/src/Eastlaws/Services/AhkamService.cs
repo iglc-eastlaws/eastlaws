@@ -113,7 +113,10 @@ namespace Eastlaws.Services
             var Grid = con.QueryMultiple(Query);
             P.AhkamList = Grid.Read<VW_Ahkam>();
             P.FakaratList = Grid.Read<VW_AhkamFakarat>();
-            if(P.AhkamList.Count() == 0)
+            P.FaharesList = Grid.Read<FehresItem>();
+            P.FaharesLinks = Grid.Read<FehresLink>();
+
+            if (P.AhkamList.Count() == 0)
             {
                 P.IsValid = false;
             }

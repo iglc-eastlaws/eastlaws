@@ -570,8 +570,33 @@ namespace Eastlaws.Services
 
         public static string GetSingleHokm(int ID )
         {
-            return string.Format(@"Select A.* From VW_Ahkam A Where A.ID = {0}
-                                    Select AF.* From VW_AhkamFakarat AF Where AF.HokmID = {0} Order By AF.MyOrder ", ID);
+            StringBuilder Builder = new StringBuilder();
+
+            // Master Hokm + Fakarat  
+            Builder.AppendLine(
+                    string.Format(@"
+                                Select A.* From VW_Ahkam A Where A.ID = {0}
+                                Select AF.* From VW_AhkamFakarat AF Where AF.HokmID = {0} Order By AF.MyOrder ", ID
+                                 )                                    
+                            ); ;
+
+            // Fehres Items 
+            Builder.AppendLine(string.Format(@"
+                            SELECT DISTINCT FI.* FROM dbo.FehresItems FI
+                            JOIN ServicesFehresDetails SFD  ON FI.ID = SFD.FehresItemID
+                            WHERE SFD.ServiceID = 1 AND SFD.ItemID = {0} " 
+                        , ID));
+
+
+            // Fehres Links 
+            Builder.AppendLine(string.Format(@"
+                        SELECT SFD.FehresItemID , SFD.ItemID AS MasterItemID , SFD.SubItemID AS ChildItemID , StartColor , EndColor 
+                        FROM dbo.ServicesFehresDetails SFD 
+                        JOIN dbo.FehresItemsDetails FID ON FID.FehresItemID = SFD.FehresItemID AND SFD.SubItemID = FID.ServiceItemID
+                        WHERE SFD.ServiceID = 1 AND SFD.ItemID = {0}"
+                            , ID));
+
+            return Builder.ToString();
         }
 
         public static QuerySortInfo GetSortQuery(AhkamSearchOptions Options)
