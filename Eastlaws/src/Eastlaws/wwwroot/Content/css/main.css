@@ -173,7 +173,7 @@ nav:hover .forAnimate{opacity: 1;}
 .inside .navbar-inverse{ background-image: none;background-color:#FFF;  }
 .inside .navbar-inverse  li { position:relative; border-top:1px solid #f9e8e2;}
 .inside .navbar-inverse .navbar-nav > li > a{ line-height:34px; padding:0 42px 0 0; font-size:0.70em;color:#333;}
-.inside .navbar-inverse .glyphicon, .inside .navbar-inverse .fa{  background-color:#D9B672; padding:11px 0; width:35px; text-align:center; }
+.inside .navbar-inverse .glyphicon, .inside .navbar-inverse .fa{  background-color:#D9B672; padding:9px 0; width:35px; text-align:center; }
 .inside .navbar-inverse .dropdown-menu > li > a .glyphicon, .inside .navbar-inverse .dropdown-menu > li > a .fa{ padding:0px; width:initial; background-color:transparent; color:#D9B672;}
 .inside .navbar-inverse .navbar-nav .open .dropdown-menu > li > a{padding:5px; color:#675650;transition:all 0.5s ease; border-right:5px solid #FFF; }
 .inside .navbar-inverse .navbar-nav .open .dropdown-menu > li > a:hover{ background-image:none; background-color:#bbaaa4; color:#675650; border-color:#d9b672;}
@@ -461,59 +461,26 @@ thead { background-color:#fff9d9;  color:#333; font:0.68em "Droid Arabic Kufi",a
 .inner-tab .tabs-right > .nav-tabs .active > a, .inner-tab .tabs-right > .nav-tabs .active > a:hover, .tabs-right > .nav-tabs .active > a:focus {  background-color:#675650;}
 /*Modul*/
 .modal-content{ border-radius:0 0 0 0;   position: absolute;top: 0;right: 0;bottom: 0;left: 0;border: 0px solid #3c7dcf;box-shadow: none;}
-
-
-.modal {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  overflow: hidden;
-}
-
-.modal-dialog {
-  position: fixed;
-  margin: 0;
-  width: 100%;
-  height: 100%;
-  padding: 0;
-}
-
-
+.modal {position: fixed;top: 0;right: 0;bottom: 0;left: 0; overflow: hidden;}
+.modal-dialog {position: fixed;margin: 0;width: 100%; height: 100%;padding: 0;}
 .modal-header {position: absolute;top: 0; right: 0; left: 0;height: 50px;padding: 10px;border-bottom:4px solid #e8bf6f;background-image:linear-gradient(to bottom, #61504a 0px, #52413b 50%);}
-
-.modal-title {
-  font-weight: 300;
-  font-size: 2em;
-  color: #fff;
-  line-height: 30px;
-}
-
+.modal-title {font-weight: 300;font-size: 2em;color: #fff;line-height: 30px;}
+.modal-header .close{ opacity:100; color:#daae4f; text-shadow: 0 1px 0 #675650;}
+.modal-header .close:hover{color:#FFF;}
+#imgChooseTitle{font:0.8em 'Droid Arabic Kufi';}
 .modal-body {position: absolute;top: 50px;bottom: 60px;width: 100%;font-weight: 300;overflow: auto;}
-.modal-footer {position: absolute;right: 0;bottom: 0;left: 0;height: 60px;padding: 10px;background: #f1f3f5; border-top:2px solid #E8BF6F ;}
+.modal-footer {position: absolute;right: 0;bottom: 0;left: 0;height: 50px;padding: 10px;background: #f1f3f5; border-top:2px solid #E8BF6F ;}
 .btn-modal {position: absolute; top: 50%;left: 50%;margin-top: -20px;margin-left: -100px; width: 200px;}
-.btn-primary,.btn-primary:hover,.btn-primary:focus,.btn-primary:active {font-weight: 300;font-size: 1.6rem;color: #fff; color: lighten(#484b5b, 20%);color: #fff;text-align: center;background: #60cc69;border: 1px solid #36a940; border-bottom: 3px solid #36a940; box-shadow: 0 2px 4px rgba(0,0,0,0.15);}
-::-webkit-scrollbar {-webkit-appearance: none; width: 10px; background: #f1f3f5;border-left: 1px solid darken(#f1f3f5, 10%);}
-::-webkit-scrollbar-thumb {background: darken(#f1f3f5, 20%);}
-.modal-footer .btn-primary{ padding:0 5px; background: #e8bf6f none repeat scroll 0 0;border-color: #52413b;color: #000;}
-.modal-footer .btn:focus,.modal-footer .btn:active,.modal-footer .btn:active:focus {box-shadow: none;outline: none;}
-.modal-footer.btn-primary:hover,.modal-footer.btn-primary:focus,.modal-footer.btn-primary:active {
-  font-weight: 300;
-  font-size: 1.6rem;
-  color: #fff;
-  color: lighten(#484b5b, 20%);
-  color: #fff;
-  text-align: center;
-  background: #60cc69;
-  border: 1px solid #36a940;
-  border-bottom: 3px solid #FFF;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
- }
-.modal-footer .btn:active {
-    border-bottom: 1px solid #36a940;
- 
-}
+.modal-footer .btn-primary, .modal-footer .btn-primary:focus, .modal-footer .btn-primary:active {color: #fff; color: lighten(#484b5b, 20%);color: #fff;text-align: center;border: 1px solid #675650; border-bottom: 3px solid #675650; box-shadow: 0 2px 4px rgba(0,0,0,0.15);}
+/*::-webkit-scrollbar {-webkit-appearance: none; width: 10px; background: #f1f3f5;border-left: 1px solid darken(#f1f3f5, 10%);}
+::-webkit-scrollbar-thumb {background: darken(#f1f3f5, 20%);}*/
+.modal-footer .btn-primary{ padding:3px 5px; background: #e8bf6f none repeat scroll 0 0;border-color: #52413b;color: #000;font:0.8em 'Droid Arabic Kufi';}
+.modal-footer.btn-primary:hover{background-color:#d9b672; background-image:  linear-gradient(to bottom, #d9b163 0px, #f0c675 100%); }
+.modal-footer.btn-primary:focus,.modal-footer.btn-primary:active {box-shadow: none;outline: none;font-weight: 300;font-size: 1.6em;color: #fff; color: #fff;text-align: center;background: #60cc69;border: 1px solid #675650; border-bottom: 3px solid #FFF;box-shadow: 0 2px 4px rgba(0,0,0,0.15);}
+.modal-footer .btn:active {border-bottom: 1px solid #675650;}
+.modal-footer .btn-primary .fa{ font:initial;}
+
+  
 
 
 

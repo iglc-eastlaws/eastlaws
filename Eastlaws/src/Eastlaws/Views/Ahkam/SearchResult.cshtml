@@ -214,25 +214,35 @@
                 <div class="modal-body" style="overflow:auto">
                     <img id="imagePanal" src="~/content/images/canvas.png" class="img-responsive " style="margin:0 auto;" />
                 </div>
-                <div class="modal-footer" style="text-align:center;">
+                <div class="modal-footer form-inline" style="text-align:center;">
+            
+                    <div class="form-group">
+                        @*<button id="loadImage" type="button" class="btn btn-primary"> تحميل</button>*@
+                        <button id="orginalSize" zoomprop="0" type="button" class="btn btn-primary"><i class="fa fa-desktop" aria-hidden="true"></i> الحجم الاصلى</button>
+                        <button id="zoomScreenImage" zoomprop="2" type="button" class="btn btn-primary"><i class="fa fa-arrows" aria-hidden="true"></i> مقاس الشاشة </button>
+                        <button id="zoomOutImage" zoomprop="1" type="button" class="btn btn-primary"><i class="fa fa-search-plus" aria-hidden="true"></i>  تكبير </button>
+                        <button id="zoomInImage" zoomprop="-1" type="button" class="btn btn-primary"><i class="fa fa-search-minus" aria-hidden="true"></i> تصغير </button>
+                        </div>
+                    | 
+                    <div class="form-group">
+                        <label class="sr-only">
+                            <span id="imgChooseTitle"> إختار الصورة </span>
+                        </label>
+                        <a id="prevImage" valstep="-1" href="javascript:;"><i class="fa fa-chevron-circle-right " aria-hidden="true"></i></a>
 
-                    <span id="imgChooseTitle">إختار الصورة </span>
-                    <select class="small_txt_box" id="ddlImageChanger">
-                    </select>
-
-                    <button id="loadImage" type="button" class="btn btn-primary"> تحميل</button>
-                    <button id ="zoomScreenImage" zoomprop="0" type="button" class="btn btn-primary"><i class="fa fa-arrows" aria-hidden="true"></i> مقاس الشاشة</button>
-                    <button id="zoomOutImage" zoomprop="1" type="button" class="btn btn-primary"><i class="fa fa-search-plus" aria-hidden="true"></i>  تكبير</button>
-                    <button id="zoomInImage" zoomprop="-1" type="button" class="btn btn-primary"><i class="fa fa-search-minus" aria-hidden="true"></i> تصغير</button>
-                    <button type="button" class="btn btn-primary"><i class="fa fa-undo" aria-hidden="true"></i>
- إلتفاف</button>
-                    <button type="button" class="btn btn-primary">حفظ</button>
-                    <button type="button" class="btn btn-primary"><i class="fa fa-print" aria-hidden="true"></i> طباعة الحالى</button>
-                    <button type="button" class="btn btn-primary"><i class="fa fa-print" aria-hidden="true"></i> طباعة الكل</button>
-                    @*<button type="button" class="btn btn-default" data-dismiss="modal">اغلاق</button>*@
-
+                        <select class="small_txt_box form-control input-sm" id="ddlImageChanger"></select>
+                        <a id="NextImage" valstep="1" href="javascript:;"><i class="fa fa-chevron-circle-left " aria-hidden="true"></i></a>
+                    </div>
+                    | 
+                        <div class="form-group">
+                        <button id="imageRotate" type="button" class="btn btn-primary"><i class="fa fa-undo" aria-hidden="true"></i> إلتفاف</button>
+                        <button type="button" class="btn btn-primary"> حفظ </button>
+                        <button type="button" class="btn btn-primary"><i class="fa fa-print" aria-hidden="true"></i> طباعة الحالى </button>
+                        <button type="button" class="btn btn-primary"><i class="fa fa-print" aria-hidden="true"></i> طباعة الكل </button>
+                        @*<button type="button" class="btn btn-default" data-dismiss="modal">اغلاق</button>*@
+                        </div>
+                    </div>
                 </div>
-            </div>
         </div>
 </div>
 @functions{
@@ -281,58 +291,88 @@
             $.each(data, function (e) {
                 var item = this;
                 $('#ddlImageChanger').append($("<option/>").val(item.ImagePath + " ImageID=" + item.ImageID).text(e + 1));
-              //  console.log(data)
+            })
+        }).then(function () {
+            getLoadImage();
+        })
+
+    });
+
+
+    $('#ddlImageChanger').on('change', function () { getLoadImage(); })
+
+    $('#prevImage,#NextImage').on('click', function () {
+        var obj = $(this);
+        var valstep = parseInt(obj.attr('valstep'));
+
+        var optionObj = $('#ddlImageChanger');
+        var index = optionObj[0].selectedIndex;
+        var imgCount = optionObj.find('option').length;
+        switch (valstep) {
+            case -1: {
+                if (index >= 1) {
+                    optionObj[0].selectedIndex = (index - 1);
+                    getLoadImage();
+                }
+                break;
+            }
+            case 1:
+                {
+                    if (index < (imgCount - 1)) {
+                        optionObj[0].selectedIndex = (index + 1);
+                        getLoadImage();
+                    }
+                }
+        }
+    });
+
+    $('#imageRotate').on('click', function () {
+        $('#imagePanal').css({
+            "-webkit-transform": "rotate(90deg)",
+            "-moz-transform": "rotate(90deg)",
+            "transform": "rotate(90deg)" 
+        });
+    })
+
+    $('#zoomOutImage,#zoomInImage,#zoomScreenImage,#orginalSize').on('click', function () {
+            var obj = $(this);
+            var zoomprop = parseInt(obj.attr('zoomprop'));
+            var imageObj = $('#imagePanal');
+            var imageChangeSzieRate = 1;
+            switch (zoomprop)
+            {
+                case 1:  { imageChangeSzieRate = 1.1;break; }
+                case -1: { imageChangeSzieRate = 0.9; break; }
+                case 0: { console.log('000'); break; }
+                case 2: { console.log('22'); break; }
+            }
+            imageObj.width(parseInt(imageObj.width() * imageChangeSzieRate));
+            imageObj.height(parseInt(imageObj.height() * imageChangeSzieRate));
+        })
+
+        function getLoadImage() {
+            var selectedText = $('#ddlImageChanger').val();
+            var arr = selectedText.split(" ImageID=");
+            $.getJSON('/Ahkam/GetImagesbase64Test', { 'ImageID': arr[1], 'OldPath': arr[0], 'ServiceType': '1' }, function (data) {
+                document.getElementById("imagePanal").src = '';
+                document.getElementById("imagePanal").src = "data:image/gif;base64," + data;
+            });
+        }
+
+
+
+        $(document).ready(function () {
+            $('#tabHokmBody').children('tr:first').trigger('click');
+            $('[data-toggle="tooltip"]').tooltip();
+
+            $('.height-scroll .content-result').mCustomScrollbar({
+                setHeight: "130px",
+                theme: "3d",
+                scrollButtons: "1"
+
             });
         });
-
-    });
-
-
-    $('#ddlImageChanger').on('change', function () {
-       // alert(this.value);
-        $('#loadImage').trigger('click');
-    })
-
-    $('#zoomOutImage,#zoomInImage,#zoomScreenImage').on('click', function () {
-        var obj = $(this);
-        var zoomprop = parseInt(obj.attr('zoomprop'));
-        var imageObj = $('#imagePanal');
-        var imageChangeSzieRate = 1;
-        switch (zoomprop)
-        {
-            case 1:  { imageChangeSzieRate = 1.1;break; }
-            case -1:{ imageChangeSzieRate = 0.9;  break;  }
-        }
-        imageObj.width(parseInt(imageObj.width() * imageChangeSzieRate));
-        imageObj.height(parseInt(imageObj.height() * imageChangeSzieRate));
-    })
-
-    $('#loadImage').on('click', function () {
-        var selectedText = $('#ddlImageChanger').val();
-        var arr = selectedText.split(" ImageID=");
-        $.getJSON('/Ahkam/GetImagesbase64Test', {'ImageID':arr[1],'OldPath':arr[0],'ServiceType':'1'}, function (data) {
-           // console.log(data);
-            document.getElementById("imagePanal").src = '';
-            //    $('#imagePanal').src(data);
-            document.getElementById("imagePanal").src = "data:image/gif;base64," + data;
-        });
-        //alert('0000')
-    })
-
-
-
-    $(document).ready(function () {
-        $('#tabHokmBody').children('tr:first').trigger('click');
-        $('[data-toggle="tooltip"]').tooltip();
-
-        $('.height-scroll .content-result').mCustomScrollbar({
-            setHeight: "130px",
-            theme: "3d",
-            scrollButtons: "1"
-
-        });
-    });
-    $(document).off('click', '.printing').on('click', '.printing', function () {
+        $(document).off('click', '.printing').on('click', '.printing', function () {
             var ID = $(this).attr('printid').split("_", 2)[1];
             var fakarat = [];
             $('#Content_' + ID).find('.fakra-text').each(function () {
@@ -346,20 +386,20 @@
 
         });
 
-    $(document).on('click', '.fullfakra', function () {
+        $(document).on('click', '.fullfakra', function () {
 
-        var ID = $(this).attr('printID');
-        var fakralenght = $('#Content_' + ID + '>p>a').attr('length');
-        if (fakralenght >= 250) {
-            var fakarat = [];
-            $('#Content_' + ID).find('.fakra-text').each(function () {
-                var fakraID = $(this).attr('fakraID')
-                fakarat.push(fakraID)
-            })
-            //console.log(fakarat);
-            $.post('/Ahkam/FullFakra', { 'ID': ID, 'fakarat': fakarat }, function (data) {
-                $('#Content_' + ID).html(data)
-            });
-        }
-    });
+            var ID = $(this).attr('printID');
+            var fakralenght = $('#Content_' + ID + '>p>a').attr('length');
+            if (fakralenght >= 250) {
+                var fakarat = [];
+                $('#Content_' + ID).find('.fakra-text').each(function () {
+                    var fakraID = $(this).attr('fakraID')
+                    fakarat.push(fakraID)
+                })
+                //console.log(fakarat);
+                $.post('/Ahkam/FullFakra', { 'ID': ID, 'fakarat': fakarat }, function (data) {
+                    $('#Content_' + ID).html(data)
+                });
+            }
+        });
 </script>
