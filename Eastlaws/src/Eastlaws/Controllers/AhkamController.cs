@@ -278,6 +278,21 @@ namespace Eastlaws.Controllers
             }
         }
 
+        //js version
+        public IActionResult ViewHokm(int ID)
+        {
+            var Model = AhkamService.GetHokm(ID, null);
+            if (Model.IsValid)
+            {
+                return View(Model);
+            }
+            else
+            {
+                return View();
+            }
+        }
+        
+
         [HttpPost]
         public IActionResult FullHokmView(int ID, int[] fakarat)
         {
