@@ -112,6 +112,18 @@
                 <p class="fakra-text">
                     @Fakra.Text
                 </p>
+                @foreach (var item in Model.FaharesLinks)
+                {
+                    if(item.ChildItemID == Fakra.ID)
+                    {
+                        <b>
+                           @item.FehresItemID 
+                        </b>
+
+                    }
+                    @*<p>@Fakra.ID</p>
+                    <a>@item.FehresItemID</a>*@
+                }
 
             }
         </div>
@@ -124,7 +136,11 @@
             </div>
             <div class="join-list">
                 <ul class="list-group">
-                    <li>
+                    @foreach (var item in Model.FaharesList)
+                    {
+                        <li><a href="#"><i class="fa fa-link"></i>@item.FullName </a></li>
+                    }
+                    @*<li>
                         <a href="#">
                             <i class="fa fa-link"></i> إنتهاك حرمة ملك الغـير - دخل مكاناً مسكوناً أو أحد ملحقاته أو محلاً معداً لحفظ المال أو عقاراً خلافاً لإرادة صاحب الشأن
                         </a></li>
@@ -132,7 +148,7 @@
                     <li><a href="#"><i class="fa fa-link"></i> أديان - مسلم قام بشرب الخمر </a></li>
                     <li><a href="#"><i class="fa fa-link"></i> القـتل - القتل العمدي في صورته البسيطة </a></li>
                     <li><a href="#"><i class="fa fa-link"></i> السرقة - ارتكب السرقة مع حمل السلاح </a></li>
-                    <li><a href="#"><i class="fa fa-link"></i>  السرقة - ارتكب السرقة بالإكراه أو بالتهديد باستعمال السلاح للحصول على المسروق أو الاحتفاظ به أو الفرار به </a></li>
+                    <li><a href="#"><i class="fa fa-link"></i>  السرقة - ارتكب السرقة بالإكراه أو بالتهديد باستعمال السلاح للحصول على المسروق أو الاحتفاظ به أو الفرار به </a></li>*@
 
                 </ul>
             </div>
