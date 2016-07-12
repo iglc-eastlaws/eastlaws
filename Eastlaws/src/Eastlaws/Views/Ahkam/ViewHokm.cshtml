@@ -4,6 +4,51 @@
 }
 <div class="title-module">
     <h2> <span class="main-title">منظومة أحكام المحاكم العربية </span></h2>
-
-
 </div>
+<hr class="spacer" />
+@Html.Partial("_ManzomatLinks")
+
+
+
+
+
+<script>
+    var ID = getParameterByName('ID');
+    var Fakra = gethashAfterParamter('ID');
+    console.log(ID);
+    console.log(Fakra);
+
+
+
+
+
+    function getParameterByName(name) {
+        name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+        var regexS = "[\\?&]" + name + "=([^&#]*)";
+
+        var regex = new RegExp(regexS);
+        var results = regex.exec(window.location.href);
+        if (results == null)
+            return "";
+        else
+            return decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+
+    function gethashAfterParamter(name) {
+        var hash = '';
+        var parm = '';
+        name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+        var regexS = "[\\?&]" + name + "=([^&]*)";
+
+        var regex = new RegExp(regexS);
+        var results = regex.exec(window.location.href);
+        if (results == null) {
+            return "";
+        }
+        else {
+            parm = decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+        var hash = parm.split('#');
+        return hash[1];
+    }
+</script>
