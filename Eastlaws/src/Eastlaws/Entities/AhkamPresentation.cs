@@ -17,14 +17,23 @@ namespace Eastlaws.Entities
         {
             get
             {
-                return this.QueryInfo.Hash;
+                if (this.QueryInfo != null)
+                {
+                    return this.QueryInfo.Hash;
+                }
+               return "";
             }
         }
         public int QueryID
         {
             get
             {
-                return this.QueryInfo.ID;
+                if(this.QueryInfo != null)
+                {
+                    return this.QueryInfo.ID;
+                }
+               
+                return -1;
             }
         }
         public string PresentationTitle { get; set; } = "";

@@ -8,47 +8,235 @@
 <hr class="spacer" />
 @Html.Partial("_ManzomatLinks")
 
+<div ng-app="ahkamViewApp">
+    <div class="main inner views" ng-controller="ahkamViewCtrl">
 
+
+        <div class="col-lg-9 col-md-8  col-sm-8 " id="view">
+
+
+            <div class="search-inner  ">
+
+                <div class=" ">
+                    <form class="search-form form-horizontal form-inline">
+                        <div class="form-group col-sm-6 search">
+                            <div class="multiple-form-group input-group">
+                                <div class="input-group-btn input-group-select">
+                                    <button data-toggle="dropdown" class="btn btn-default dropdown-toggle" type="button">
+                                        <span class="concept">مطابق للجملة</span>
+                                        <span class="caret"></span>
+                                    </button><ul role="menu" class="dropdown-menu">
+                                        <li>
+                                            <a href="javascript:;">مطابق للجملة</a>
+                                        </li>
+                                        <li> <a href="javascript:;">مطابق جميع الكلمات</a></li>
+                                    </ul>
+                                </div>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group  search">
+                            <select name="" id="" class="string search form-control " tabindex="3">
+                                <option value="0">تصفية الحكم</option>
+                                <option value="1">تحديد الكلمة</option>
+                            </select>
+                        </div>
+                        <div class="form-group  search">
+                            <input type="submit" class="btn btn-success" name="commit" value="بـحـث">
+
+
+                        </div>
+                        <hr class="spacer" />
+
+                    </form>
+                </div>
+                <hr class="spacer" />
+            </div>
+            <div class="format-result">
+
+                @Html.Partial("_toolbar")
+                @*<li><a href="#" data-toggle="tooltip" data-placement="top" class="color-tooltip printing"  title=" طباعة"><i class="fa fa-print"></i><span class="name-nav"> طباعة </span></a></li>*@
+            </div>
+
+
+            @*var Hokm = Model.AhkamList.ToArray()[0];*@
+
+            <div class="view-law">
+                <div class="nav-control pull-left text-left">
+                    <ul>
+                        <li><a data-original-title=" صورة الحكم" href="#" data-toggle="tooltip" data-placement="top" class="color-tooltip" title=""><i class="fa fa-camera"></i><span class="name-nav"> صورة الحكم</span></a></li>
+                        <li><a data-original-title=" طباعة" href="#" data-toggle="tooltip" data-placement="top" class="color-tooltip printing" title="" PrintID="view"><i class="fa fa-print"></i><span class="name-nav"> طباعة </span></a></li>
+                    </ul>
+                </div>
+                <h1>
+
+                    @*@if (!string.IsNullOrEmpty(Hokm.CountryFlagPic))
+                        {
+                                <img src="~/Content/images/Flags/Small/@Hokm.CountryFlagPic" />
+
+                            }
+                            @Hokm.FullName*@
+                </h1>
+
+
+                @*@foreach (var Fakra in Model.FakaratList)
+                    {
+                        @if (@Fakra.FakraNo <= 1)
+                        {*@
+                <h4 class="fakr-title">
+                    <i class="fa fa-file" aria-hidden="true"></i>
+                    <span> 000000</span>
+                </h4>
+                @*}*@
+
+                @*@if (@Fakra.FakraNo >= 1)
+                    {
+                        <h4 class="number-title">
+                            <span> @Fakra.FakraNo </span>
+                        </h4>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(Fakra.MogazText))
+                    {
+                        <p class="FakraMogaz">
+                            @Fakra.MogazText
+                        </p>
+                    }*@
+
+                <p class="fakra-text">
+                    @*@Fakra.Text*@
+                </p>
+                @*@foreach (var item in Model.FaharesLinks)
+                    {
+                        if (item.ChildItemID == Fakra.ID)
+                        {
+                            <b>
+                                @item.FehresItemID
+                            </b>
+
+                        }
+
+                    }*@
+
+                @*}*@
+            </div>
+
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-4 filter-search tabel-views">
+            <div class="filter-section widget ">
+                <div class="widget-header">
+                    <h5>نوع الدعوى</h5>
+                </div>
+                <div class="join-list">
+                    <ul class="list-group">
+
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-link"></i> إنتهاك حرمة ملك الغـير - دخل مكاناً مسكوناً أو أحد ملحقاته أو محلاً معداً لحفظ المال أو عقاراً خلافاً لإرادة صاحب الشأن
+                            </a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-link"></i> إتلاف المال والتعـدى على الحيوان - إتلاف مال مملوك للغـير </a></li>
+                        <li><a href="#"><i class="fa fa-link"></i> أديان - مسلم قام بشرب الخمر </a></li>
+                        <li><a href="#"><i class="fa fa-link"></i> القـتل - القتل العمدي في صورته البسيطة </a></li>
+                        <li><a href="#"><i class="fa fa-link"></i> السرقة - ارتكب السرقة مع حمل السلاح </a></li>
+                        <li><a href="#"><i class="fa fa-link"></i>  السرقة - ارتكب السرقة بالإكراه أو بالتهديد باستعمال السلاح للحصول على المسروق أو الاحتفاظ به أو الفرار به </a></li>
+
+                    </ul>
+                </div>
+            </div>
+
+            <div class="filter-section widget">
+                <div class="widget-header">
+                    <h5>التشريع المرتبط</h5>
+                </div>
+                <div class="join-list">
+                    <ul class="list-group">
+                        <li>
+                            <a href="#"><i class="fa fa-link"></i> قانون اتحادي 3 لسنة 1987 بشأن إصدار قانون العقوبات.</a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-link"></i>   بشأن إصدار قانون الإجراءات الجزائية.</a></li>
+                        <li>
+                            <a href="#"><i class="fa fa-link"></i> قانون اتحادي 3 لسنة 1987 بشأن إصدار قانون العقوبات.</a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-link"></i>   بشأن إصدار قانون الإجراءات الجزائية.</a></li>
+                        <li>
+                            <a href="#"><i class="fa fa-link"></i> قانون اتحادي 3 لسنة 1987 بشأن إصدار قانون العقوبات.</a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-link"></i>   بشأن إصدار قانون الإجراءات الجزائية.</a></li>
+
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 
 
 <script>
-    var ID = getParameterByName('ID');
-    var Fakra = gethashAfterParamter('ID');
-    console.log(ID);
-    console.log(Fakra);
+
+
+ 
+            var appview = angular.module('ahkamViewApp', []);
+            appview
+            .controller('ahkamViewCtrl', function ($http) {
+
+                var ID = getParameterByName('ID');
+                var Fakra = gethashAfterParamter('ID');
+                console.log(ID);
+                console.log(Fakra);
+                $http.get('/Ahkam/HokmData?ID=' + ID + '', {}).then(function (d) {
+                    console.log(d);
+                });
+                //$.getJSON('/Ahkam/HokmData?ID=' + ID + '', {}).then(function (d) {
+                //    console.log(d);
+                //});
+
+                $.get('/Ahkam/HokmData', { 'ID': ID }, function (data) {
+                    console.log(data);
+                });
+                $.getJSON('/Ahkam/HokmData', { 'ID': ID }, function (data) {
+                    console.log(data);
+                });
+
+            })
 
 
 
 
 
-    function getParameterByName(name) {
-        name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
-        var regexS = "[\\?&]" + name + "=([^&#]*)";
 
-        var regex = new RegExp(regexS);
-        var results = regex.exec(window.location.href);
-        if (results == null)
-            return "";
-        else
-            return decodeURIComponent(results[1].replace(/\+/g, " "));
-    }
 
-    function gethashAfterParamter(name) {
-        var hash = '';
-        var parm = '';
-        name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
-        var regexS = "[\\?&]" + name + "=([^&]*)";
 
-        var regex = new RegExp(regexS);
-        var results = regex.exec(window.location.href);
-        if (results == null) {
-            return "";
-        }
-        else {
-            parm = decodeURIComponent(results[1].replace(/\+/g, " "));
-        }
-        var hash = parm.split('#');
-        return hash[1];
-    }
+            function getParameterByName(name) {
+                name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+                var regexS = "[\\?&]" + name + "=([^&#]*)";
+
+                var regex = new RegExp(regexS);
+                var results = regex.exec(window.location.href);
+                if (results == null)
+                    return "";
+                else
+                    return decodeURIComponent(results[1].replace(/\+/g, " "));
+            }
+
+            function gethashAfterParamter(name) {
+                var hash = '';
+                var parm = '';
+                name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+                var regexS = "[\\?&]" + name + "=([^&]*)";
+
+                var regex = new RegExp(regexS);
+                var results = regex.exec(window.location.href);
+                if (results == null) {
+                    return "";
+                }
+                else {
+                    parm = decodeURIComponent(results[1].replace(/\+/g, " "));
+                }
+                var hash = parm.split('#');
+                return hash[1];
+            }
+   
 </script>

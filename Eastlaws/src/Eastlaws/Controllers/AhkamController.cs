@@ -273,6 +273,8 @@ namespace Eastlaws.Controllers
             var Data = AhkamService.GetHokmRelatedDetails(ID);
             return new JsonResult(Data);
         }
+
+
         public IActionResult View(int ID)
         {
             var Model = AhkamService.GetHokm(ID, null);
@@ -286,18 +288,28 @@ namespace Eastlaws.Controllers
             }
         }
 
+
         //js version
+
+
+        public JsonResult HokmData(int ID)
+        {
+            var Data = AhkamService.GetHokm(ID,null);
+            return new JsonResult(Data);
+
+        }
+
         public IActionResult ViewHokm(int ID)
         {
-            var Model = AhkamService.GetHokm(ID, null);
-            if (Model.IsValid)
-            {
-                return View(Model);
-            }
-            else
-            {
+           // var Model = AhkamService.GetHokm(ID, null);
+            //if (Model.IsValid)
+            //{
+            //    return View(Model);
+            //}
+            //else
+            //{
                 return View();
-            }
+            //}
         }
         
 
