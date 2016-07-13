@@ -105,6 +105,18 @@ namespace Eastlaws.Services
             return Search(InnerQuery, Options, null, AhkamSearchTypes.Custom, "أحدث الأحكام",null,TasfeyaSelection);  
         }
 
+        public static AhkamRelatedDetails GetHokmRelatedDetails(int ID)
+        {
+            string Query = AhkamQueryBuilder.GetHokmRelatedDetails(ID);
+            SqlConnection con = DataHelpers.GetConnection(DbConnections.Data);
+            AhkamRelatedDetails Retval = new AhkamRelatedDetails();
+            var Grid = con.QueryMultiple(Query);
+            Retval.ProgramsList = Grid.Read<FehresProgram>();
+            Retval.FaharesList = Grid.Read<FehresItem>();
+            Retval.FaharesLinks = Grid.Read<FehresLink>();
+            return Retval;
+
+        }
         public static AhkamPresentation GetHokm(int ID , FTSPredicate PredicateHighlight )
         {
             AhkamPresentation P = new AhkamPresentation();
@@ -113,8 +125,7 @@ namespace Eastlaws.Services
             var Grid = con.QueryMultiple(Query);
             P.AhkamList = Grid.Read<VW_Ahkam>();
             P.FakaratList = Grid.Read<VW_AhkamFakarat>();
-            P.FaharesList = Grid.Read<FehresItem>();
-            P.FaharesLinks = Grid.Read<FehresLink>();
+
 
             if (P.AhkamList.Count() == 0)
             {

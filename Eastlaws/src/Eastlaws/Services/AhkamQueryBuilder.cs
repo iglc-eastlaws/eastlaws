@@ -213,6 +213,41 @@ namespace Eastlaws.Services
             return builderRetVal.ToString();            
         }
 
+        internal static string GetHokmRelatedDetails(int ID)
+        {
+            StringBuilder Builder = new StringBuilder();
+
+
+
+            // Fehres Programs   
+            Builder.AppendLine(string.Format(@"
+                            SELECT Distinct  FM.ProgramID AS ID, FM.ProgramName AS Name, FM.AlterName FROM dbo.FehresItems FI
+                            JOIN ServicesFehresDetails SFD  ON FI.ID = SFD.FehresItemID
+                            JOIN dbo.FehresCategories FC ON FC.ID = FI.FehresCategoryID
+                            JOIN VW_FehresMap FM ON FM.CategoryID = FC.ID
+                            WHERE SFD.ServiceID = 1 AND SFD.ItemID = {0} "
+                        , ID));
+
+
+            // Fehres Items 
+            Builder.AppendLine(string.Format(@"
+                            SELECT DISTINCT FI.* , M.ProgramID as ProgramID FROM dbo.FehresItems FI
+                            JOIN ServicesFehresDetails SFD  ON FI.ID = SFD.FehresItemID
+                            Join VW_FehresMap M on M.CategoryID = FI.FehresCategoryID
+                            WHERE SFD.ServiceID = 1 AND SFD.ItemID = {0} "
+                        , ID));
+
+
+            // Fehres Links 
+            Builder.AppendLine(string.Format(@"
+                        SELECT SFD.FehresItemID , SFD.ItemID AS MasterItemID , SFD.SubItemID AS ChildItemID , StartColor , EndColor 
+                        FROM dbo.ServicesFehresDetails SFD 
+                        JOIN dbo.FehresItemsDetails FID ON FID.FehresItemID = SFD.FehresItemID AND SFD.SubItemID = FID.ServiceItemID
+                        WHERE SFD.ServiceID = 1 AND SFD.ItemID = {0}"
+                            , ID));
+
+            return Builder.ToString();
+        }
 
         public static string LatestAhkam(int daysCount = 5)
         {
@@ -580,21 +615,7 @@ namespace Eastlaws.Services
                                  )                                    
                             ); ;
 
-            // Fehres Items 
-            Builder.AppendLine(string.Format(@"
-                            SELECT DISTINCT FI.* FROM dbo.FehresItems FI
-                            JOIN ServicesFehresDetails SFD  ON FI.ID = SFD.FehresItemID
-                            WHERE SFD.ServiceID = 1 AND SFD.ItemID = {0} " 
-                        , ID));
 
-
-            // Fehres Links 
-            Builder.AppendLine(string.Format(@"
-                        SELECT SFD.FehresItemID , SFD.ItemID AS MasterItemID , SFD.SubItemID AS ChildItemID , StartColor , EndColor 
-                        FROM dbo.ServicesFehresDetails SFD 
-                        JOIN dbo.FehresItemsDetails FID ON FID.FehresItemID = SFD.FehresItemID AND SFD.SubItemID = FID.ServiceItemID
-                        WHERE SFD.ServiceID = 1 AND SFD.ItemID = {0}"
-                            , ID));
 
             return Builder.ToString();
         }

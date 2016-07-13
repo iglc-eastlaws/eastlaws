@@ -30,8 +30,7 @@ namespace Eastlaws.Entities
         public string PresentationTitle { get; set; } = "";
         public List<FTSPredicate> TextPredicates { get;  set; }
 
-        public IEnumerable<FehresItem> FaharesList { get; set; }
-        public IEnumerable<FehresLink> FaharesLinks { get; set; }
+
 
         public AhkamPresentation()
         {

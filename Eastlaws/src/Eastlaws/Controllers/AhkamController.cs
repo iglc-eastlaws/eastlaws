@@ -199,6 +199,8 @@ namespace Eastlaws.Controllers
         }
         #endregion
 
+
+
         #region droplist
         public JsonResult GetCountries()
         {
@@ -265,6 +267,12 @@ namespace Eastlaws.Controllers
         #endregion
 
         #region displayHokm
+
+        public JsonResult HokmRelatedDetails (int ID)
+        {
+            var Data = AhkamService.GetHokmRelatedDetails(ID);
+            return new JsonResult(Data);
+        }
         public IActionResult View(int ID)
         {
             var Model = AhkamService.GetHokm(ID, null);

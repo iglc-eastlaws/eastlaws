@@ -16,6 +16,7 @@ namespace Eastlaws.Entities
         public string Path { get; set; }
         public string FullName { get; set; }
         public bool IsLastLevel { get; set; }
+        public int ProgramID { get; set; }
     }
 
     public class FehresLink
