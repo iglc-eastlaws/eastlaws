@@ -53,13 +53,10 @@
                 <hr class="spacer" />
             </div>
             <div class="format-result">
-
                 @Html.Partial("_toolbar")
-                @*<li><a href="#" data-toggle="tooltip" data-placement="top" class="color-tooltip printing"  title=" طباعة"><i class="fa fa-print"></i><span class="name-nav"> طباعة </span></a></li>*@
             </div>
 
 
-            @*var Hokm = Model.AhkamList.ToArray()[0];*@
 
             <div class="view-law">
                 <div class="nav-control pull-left text-left">
@@ -69,56 +66,29 @@
                     </ul>
                 </div>
                 <h1>
-
-                    @*@if (!string.IsNullOrEmpty(Hokm.CountryFlagPic))
-                        {
-                                <img src="~/Content/images/Flags/Small/@Hokm.CountryFlagPic" />
-
-                            }
-                            @Hokm.FullName*@
+                    <img ng-if="AhkamList.CountryFlagPic!= null" src="~/Content/images/Flags/Small/{{AhkamList.CountryFlagPic}}" />
+                    {{AhkamList.FullName}}
                 </h1>
 
+                <div ng-repeat="data in FakaratList">
+                    <h4 ng-if="data.FakraNo <= 1" class="fakr-title">
+                        <i class="fa fa-file" aria-hidden="true"></i>
+                        <span> {{data.Title}}</span>
+                    </h4>
 
-                @*@foreach (var Fakra in Model.FakaratList)
-                    {
-                        @if (@Fakra.FakraNo <= 1)
-                        {*@
-                <h4 class="fakr-title">
-                    <i class="fa fa-file" aria-hidden="true"></i>
-                    <span> 000000</span>
-                </h4>
-                @*}*@
+                    <h4 ng-if="data.FakraNo >= 1" class="number-title">
+                        <span> {{data.FakraNo}}</span>
+                    </h4>
 
-                @*@if (@Fakra.FakraNo >= 1)
-                    {
-                        <h4 class="number-title">
-                            <span> @Fakra.FakraNo </span>
-                        </h4>
-                    }
+                    <p class="FakraMogaz">
+                        {{data.MogazText}}
+                    </p>
 
-                    @if (!string.IsNullOrWhiteSpace(Fakra.MogazText))
-                    {
-                        <p class="FakraMogaz">
-                            @Fakra.MogazText
-                        </p>
-                    }*@
+                    <p class="fakra-text">
+                      {{data.Text}}
+                    </p>
+                </div>
 
-                <p class="fakra-text">
-                    @*@Fakra.Text*@
-                </p>
-                @*@foreach (var item in Model.FaharesLinks)
-                    {
-                        if (item.ChildItemID == Fakra.ID)
-                        {
-                            <b>
-                                @item.FehresItemID
-                            </b>
-
-                        }
-
-                    }*@
-
-                @*}*@
             </div>
 
         </div>
@@ -180,25 +150,37 @@
  
             var appview = angular.module('ahkamViewApp', []);
             appview
-            .controller('ahkamViewCtrl', function ($http) {
+            .controller('ahkamViewCtrl', function ($http, $scope) {
 
                 var ID = getParameterByName('ID');
                 var Fakra = gethashAfterParamter('ID');
-                console.log(ID);
-                console.log(Fakra);
+                $scope.AhkamList = '';
+                $scope.FakaratList = '';
                 $http.get('/Ahkam/HokmData?ID=' + ID + '', {}).then(function (d) {
-                    console.log(d);
+                    $scope.AhkamList = d.data.AhkamList[0];
+                    $scope.FakaratList = d.data.FakaratList;
+                    console.log(d.data);
+                    
                 });
-                //$.getJSON('/Ahkam/HokmData?ID=' + ID + '', {}).then(function (d) {
-                //    console.log(d);
+
+
+                //$.getJSON('/Ahkam/HokmData', { 'ID': ID }, function (data) {
+                //    $scope.AhkamList = data.AhkamList[0];
+                //    console.log($scope.AhkamList.FullName);
                 //});
 
-                $.get('/Ahkam/HokmData', { 'ID': ID }, function (data) {
-                    console.log(data);
-                });
-                $.getJSON('/Ahkam/HokmData', { 'ID': ID }, function (data) {
-                    console.log(data);
-                });
+                //console.log(ID);
+                //console.log(Fakra);
+                //$http.get('/Ahkam/HokmData?ID=' + ID + '', {}).then(function (d) {
+                //    console.log(d.data);
+                //});
+
+ 
+
+                //$.get('/Ahkam/HokmData', { 'ID': ID }, function (data) {
+                //    console.log(data);
+                //});
+             
 
             })
 
