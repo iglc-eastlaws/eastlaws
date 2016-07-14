@@ -93,50 +93,20 @@
 
         </div>
         <div class="col-lg-3 col-md-4 col-sm-4 filter-search tabel-views">
-            <div class="filter-section widget ">
+            <div ng-repeat="data in ProgramsList" class="filter-section widget ">
                 <div class="widget-header">
-                    <h5>نوع الدعوى</h5>
+                    <h5>{{data.AlterName}}</h5>
                 </div>
                 <div class="join-list">
                     <ul class="list-group">
-
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-link"></i> إنتهاك حرمة ملك الغـير - دخل مكاناً مسكوناً أو أحد ملحقاته أو محلاً معداً لحفظ المال أو عقاراً خلافاً لإرادة صاحب الشأن
-                            </a>
+                        <li ng-repeat="details in FaharesList | filter :{ProgramID:data.ID} ">
+                         <a href="#"><i class="fa fa-link"></i> {{details.Name}}</a>
                         </li>
-                        <li><a href="#"><i class="fa fa-link"></i> إتلاف المال والتعـدى على الحيوان - إتلاف مال مملوك للغـير </a></li>
-                        <li><a href="#"><i class="fa fa-link"></i> أديان - مسلم قام بشرب الخمر </a></li>
-                        <li><a href="#"><i class="fa fa-link"></i> القـتل - القتل العمدي في صورته البسيطة </a></li>
-                        <li><a href="#"><i class="fa fa-link"></i> السرقة - ارتكب السرقة مع حمل السلاح </a></li>
-                        <li><a href="#"><i class="fa fa-link"></i>  السرقة - ارتكب السرقة بالإكراه أو بالتهديد باستعمال السلاح للحصول على المسروق أو الاحتفاظ به أو الفرار به </a></li>
-
                     </ul>
                 </div>
             </div>
 
-            <div class="filter-section widget">
-                <div class="widget-header">
-                    <h5>التشريع المرتبط</h5>
-                </div>
-                <div class="join-list">
-                    <ul class="list-group">
-                        <li>
-                            <a href="#"><i class="fa fa-link"></i> قانون اتحادي 3 لسنة 1987 بشأن إصدار قانون العقوبات.</a>
-                        </li>
-                        <li><a href="#"><i class="fa fa-link"></i>   بشأن إصدار قانون الإجراءات الجزائية.</a></li>
-                        <li>
-                            <a href="#"><i class="fa fa-link"></i> قانون اتحادي 3 لسنة 1987 بشأن إصدار قانون العقوبات.</a>
-                        </li>
-                        <li><a href="#"><i class="fa fa-link"></i>   بشأن إصدار قانون الإجراءات الجزائية.</a></li>
-                        <li>
-                            <a href="#"><i class="fa fa-link"></i> قانون اتحادي 3 لسنة 1987 بشأن إصدار قانون العقوبات.</a>
-                        </li>
-                        <li><a href="#"><i class="fa fa-link"></i>   بشأن إصدار قانون الإجراءات الجزائية.</a></li>
-
-                    </ul>
-                </div>
-            </div>
+         
 
         </div>
     </div>
@@ -146,7 +116,7 @@
 
 <script>
 
-
+    //56528#184217
  
             var appview = angular.module('ahkamViewApp', []);
             appview
@@ -154,40 +124,25 @@
 
                 var ID = getParameterByName('ID');
                 var Fakra = gethashAfterParamter('ID');
-                $scope.AhkamList = '';
-                $scope.FakaratList = '';
+
+                $scope.AhkamList, $scope.FakaratList,$scope.FaharesLinks,$scope.FaharesList,$scope.ProgramsList = '';
+
                 $http.get('/Ahkam/HokmData?ID=' + ID + '', {}).then(function (d) {
                     $scope.AhkamList = d.data.AhkamList[0];
                     $scope.FakaratList = d.data.FakaratList;
-                    console.log(d.data);
+                   // console.log(d.data);
                     
                 });
 
+                $http.get('/Ahkam/HokmRelatedDetails?ID=' + ID + '', {}).then(function (d) {
+                    $scope.FaharesLinks = d.data.FaharesLinks;
+                    $scope.FaharesList = d.data.FaharesList;
+                    $scope.ProgramsList = d.data.ProgramsList;
+                    //console.log(d.data);
 
-                //$.getJSON('/Ahkam/HokmData', { 'ID': ID }, function (data) {
-                //    $scope.AhkamList = data.AhkamList[0];
-                //    console.log($scope.AhkamList.FullName);
-                //});
-
-                //console.log(ID);
-                //console.log(Fakra);
-                //$http.get('/Ahkam/HokmData?ID=' + ID + '', {}).then(function (d) {
-                //    console.log(d.data);
-                //});
-
- 
-
-                //$.get('/Ahkam/HokmData', { 'ID': ID }, function (data) {
-                //    console.log(data);
-                //});
-             
+                });
 
             })
-
-
-
-
-
 
 
 
