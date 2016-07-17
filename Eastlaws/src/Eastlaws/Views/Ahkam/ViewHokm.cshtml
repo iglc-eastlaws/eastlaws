@@ -87,6 +87,16 @@
                     <p class="fakra-text">
                       {{data.Text}}
                     </p>
+
+                    <p>
+                        @*<span ng-repeat="d in FaharesList | fehressRelate:data.ID" style="border:solid #675650 2px;margin:1px;">
+                            {{d.Name}}
+                        </span>*@
+
+                        <span ng-repeat="d in fehressRelate(data.ID)" style="border:solid #675650 2px;margin:1px;">
+                            {{d.Name}}
+                        </span>
+                    </p>
                 </div>
 
             </div>
@@ -125,24 +135,57 @@
                 var ID = getParameterByName('ID');
                 var Fakra = gethashAfterParamter('ID');
 
-                $scope.AhkamList, $scope.FakaratList,$scope.FaharesLinks,$scope.FaharesList,$scope.ProgramsList = '';
+                $scope.AhkamList, $scope.FakaratList, $scope.FaharesLinks, $scope.FaharesList, $scope.ProgramsList = '';
 
                 $http.get('/Ahkam/HokmData?ID=' + ID + '', {}).then(function (d) {
                     $scope.AhkamList = d.data.AhkamList[0];
                     $scope.FakaratList = d.data.FakaratList;
-                   // console.log(d.data);
-                    
+                    console.log(d.data);
+
+
+
                 });
+
 
                 $http.get('/Ahkam/HokmRelatedDetails?ID=' + ID + '', {}).then(function (d) {
                     $scope.FaharesLinks = d.data.FaharesLinks;
                     $scope.FaharesList = d.data.FaharesList;
                     $scope.ProgramsList = d.data.ProgramsList;
-                    //console.log(d.data);
+                    console.log(d.data);
 
                 });
 
-            })
+
+                $scope.fehressRelate = function (fakraID) {
+                    var result = [];
+                    if ($scope.FaharesList && $scope.FaharesLinks) {
+                            for (var i = 0; i < $scope.FaharesLinks.length; i++) {
+                                if ($scope.FaharesLinks[i].ChildItemID === fakraID) {
+                                    result.push($scope.FaharesList[i]);
+                                }
+                            }
+                    }
+                    return result ;
+                }
+
+
+            });
+
+            //appview.filter('fehressRelate', function ($filter) {
+            //    return function (items, fehressRelateID,scope) {
+            //        //console.log()
+            //       // console.log(fehressRelateID)      
+            //        var filtered = [];
+            //        angular.forEach(items, function (item) {
+            //            if (item.ID > 100) {
+            //                filtered.push(item);
+            //            }
+            //        });
+
+            //        return filtered;
+            //    };
+            //});
+
 
 
 
