@@ -93,7 +93,7 @@
                             {{d.Name}}
                         </span>*@
 
-                        <span ng-repeat="d in fehressRelate(data.ID)" style="border:solid #675650 2px;margin:1px;">
+                        <span ng-repeat="d in fehressRelate(data.ID)" style="border:solid #675650 2px;margin:1px;" data-fehessrelateID="{{d.ID}}">
                             {{d.Name}}
                         </span>
                     </p>
@@ -110,7 +110,7 @@
                 <div class="join-list">
                     <ul class="list-group">
                         <li ng-repeat="details in FaharesList | filter :{ProgramID:data.ID} ">
-                         <a href="#"><i class="fa fa-link"></i> {{details.Name}}</a>
+                         <a href="javascript:;" ng-click="fehressSelect(details.ID)"><i class="fa fa-link"></i> {{details.Name}}</a>
                         </li>
                     </ul>
                 </div>
@@ -136,6 +136,8 @@
                 var Fakra = gethashAfterParamter('ID');
 
                 $scope.AhkamList, $scope.FakaratList, $scope.FaharesLinks, $scope.FaharesList, $scope.ProgramsList = '';
+                $scope.isSelectedFehress = false;
+                $scope.SelectedFehressID = 0;
 
                 $http.get('/Ahkam/HokmData?ID=' + ID + '', {}).then(function (d) {
                     $scope.AhkamList = d.data.AhkamList[0];
@@ -155,6 +157,30 @@
 
                 });
 
+                //$scope.showRelatedFakra = function (fehressID) {
+                    
+                //    if ($scope.isSelectedFehress == true) {
+                //        alert($scope.SelectedFehressID + '     ' + fehressID)
+                //        //alert(fehressID)
+                //        if (fehressID == $scope.SelectedFehressID)
+                //        {
+                //            alert('0000')
+                //            return true;
+                //         }
+                //        else
+                //        {
+                //            return false;
+                //        }
+                //    } else {
+
+                //        return true;
+                //    }
+                //}
+                $scope.fehressSelect = function (fehressID) {
+                    $scope.isSelectedFehress = true;
+                    $scope.SelectedFehressID = fehressID;
+                    console.log(fehressID)
+                }
 
                 $scope.fehressRelate = function (fakraID) {
                     var result = [];
