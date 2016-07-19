@@ -210,8 +210,8 @@
                                             //console.log(txt.substring(0, startcolor))
                                                 html = txt.substring(0, startcolor) +
                                                     //'<span style="color:red;">' + txt.substring(startcolor, endcolor) + '</span> ' +
-                                                    '<span style="color:red;">' + txt.substring(startcolor, endcolor) + '</span> ' +
-                                                txt.substring(endcolor, txt.length);
+                                                    '<span style="color:red;">' + txt.substring(startcolor, startcolor+endcolor) + '</span> ' +
+                                                txt.substring(startcolor + endcolor, txt.length);
                                                 $(this).html(html);
                                             //}
                                         });
