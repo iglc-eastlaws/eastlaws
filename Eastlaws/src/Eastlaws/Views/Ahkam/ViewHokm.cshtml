@@ -70,7 +70,7 @@
                     {{AhkamList.FullName}}
                 </h1>
 
-                <div ng-repeat="data in FakaratList">
+                <div ng-repeat="data in FakaratList" data-fakraID="{{data.ID}}">
                     <h4 ng-if="data.FakraNo <= 1" class="fakr-title">
                         <i class="fa fa-file" aria-hidden="true"></i>
                         <span> {{data.Title}}</span>
@@ -93,7 +93,7 @@
                             {{d.Name}}
                         </span>*@
 
-                        <span ng-repeat="d in fehressRelate(data.ID)" style="border:solid #675650 2px;margin:1px;" data-fehessrelateID="{{d.ID}}">
+                        <span ng-repeat="d in fehressRelate(data.ID) track by $index" style="border:solid #675650 2px;margin:1px;" data-fehessrelateID="{{d.ID}}">
                             {{d.Name}}
                         </span>
                     </p>
@@ -126,8 +126,9 @@
 
 <script>
 
-    //56528#184217
- 
+    //56528#184217   //289094#310738   //289389#311229
+    //292234#321783 <<<   //128177#302510  //326297#464264    //28008#103976   //
+
             var appview = angular.module('ahkamViewApp', []);
             appview
             .controller('ahkamViewCtrl', function ($http, $scope) {
@@ -157,6 +158,8 @@
 
                 });
 
+
+             
                 //$scope.showRelatedFakra = function (fehressID) {
                     
                 //    if ($scope.isSelectedFehress == true) {
@@ -179,15 +182,38 @@
                 $scope.fehressSelect = function (fehressID) {
                     $scope.isSelectedFehress = true;
                     $scope.SelectedFehressID = fehressID;
-                    console.log(fehressID)
+                   // console.log(fehressID)
                 }
 
                 $scope.fehressRelate = function (fakraID) {
                     var result = [];
+                    var colored = [];
+       
                     if ($scope.FaharesList && $scope.FaharesLinks) {
                             for (var i = 0; i < $scope.FaharesLinks.length; i++) {
                                 if ($scope.FaharesLinks[i].ChildItemID === fakraID) {
                                     result.push($scope.FaharesList[i]);
+                                    if ($scope.FaharesLinks[i].StartColor && $scope.FaharesLinks[i].EndColor)
+                                    {
+                                        var startcolor = $scope.FaharesLinks[i].StartColor;
+                                        var endcolor = $scope.FaharesLinks[i].EndColor;
+                                        var coloredObj = fakraID + '.' + startcolor + '.' + endcolor
+     
+                                        var objtext = $('div[data-fakraid="' + fakraID + '"] .fakra-text').text;
+                                        $('div[data-fakraid="' + fakraID + '"] .fakra-text')
+                                        .each(function (edx) {
+                                            //colored.push(coloredObj);
+                                            //if (colored.indexOf(coloredObj) == -1) {
+                                            //    colored.push(coloredObj);
+                                                var txt = $(this).text();
+                                                html = txt.substring(0, startcolor) +
+                                                    '<span style="color:red;">' + txt.substring(startcolor, endcolor) + '</span> ' +
+                                                txt.substring(endcolor, txt.length);
+                                                $(this).html(html);
+                                            //}
+                                        });
+                                  
+                                    }
                                 }
                             }
                     }
@@ -196,23 +222,6 @@
 
 
             });
-
-            //appview.filter('fehressRelate', function ($filter) {
-            //    return function (items, fehressRelateID,scope) {
-            //        //console.log()
-            //       // console.log(fehressRelateID)      
-            //        var filtered = [];
-            //        angular.forEach(items, function (item) {
-            //            if (item.ID > 100) {
-            //                filtered.push(item);
-            //            }
-            //        });
-
-            //        return filtered;
-            //    };
-            //});
-
-
 
 
             function getParameterByName(name) {
