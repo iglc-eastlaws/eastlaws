@@ -199,14 +199,17 @@
                                         var endcolor = $scope.FaharesLinks[i].EndColor;
                                         var coloredObj = fakraID + '.' + startcolor + '.' + endcolor
      
+                                        
                                         var objtext = $('div[data-fakraid="' + fakraID + '"] .fakra-text').text;
                                         $('div[data-fakraid="' + fakraID + '"] .fakra-text')
                                         .each(function (edx) {
                                             //colored.push(coloredObj);
                                             //if (colored.indexOf(coloredObj) == -1) {
                                             //    colored.push(coloredObj);
-                                                var txt = $(this).text();
+                                            var txt = $(this).text().trim();
+                                            //console.log(txt.substring(0, startcolor))
                                                 html = txt.substring(0, startcolor) +
+                                                    //'<span style="color:red;">' + txt.substring(startcolor, endcolor) + '</span> ' +
                                                     '<span style="color:red;">' + txt.substring(startcolor, endcolor) + '</span> ' +
                                                 txt.substring(endcolor, txt.length);
                                                 $(this).html(html);
